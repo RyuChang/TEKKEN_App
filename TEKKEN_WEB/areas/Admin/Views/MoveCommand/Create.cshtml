@@ -1,0 +1,22 @@
+﻿@model MoveType
+
+@{
+    Layout = "_Layout";
+}
+
+<h2 style="text-align:center;">MoveCommand</h2>
+@ViewBag.TitleDescription
+<hr />
+
+<div>
+    <div class="col-md-offset-2 col-md-8 col-md-offset-2">
+        <form asp-controller="MoveCommand" asp-action="Create"
+              enctype="multipart/form-data" method="post">
+            @await Html.PartialAsync("_EditForm")
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

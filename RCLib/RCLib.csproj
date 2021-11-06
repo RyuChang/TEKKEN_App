@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="NewFolder\**" />
+    <EmbeddedResource Remove="NewFolder\**" />
+    <None Remove="NewFolder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="NewFolder1\BoardLibrary.cs" />
+    <Compile Remove="NewFolder1\FileUtility.cs" />
+    <Compile Remove="NewFolder1\HtmlUtility.cs" />
+    <Compile Remove="NewFolder1\StringLibrary.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="NewFolder1\" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,108 @@
+﻿@inject IHtmlLocalizer<SharedResource> SharedLocalizer
+@inject ITranslateNameRepository translateNameRepository
+@{
+
+    translateNameRepository.SetTable(ViewBag.tableName, ViewBag.subTableName);
+}
+
+<div class="container">
+    <div class="m-auto" id="Character-list">
+
+        <h2 style="text-align:center;">@ViewBag.TitleDescription</h2>
+
+        @if (@ViewBag.baseType.ToString() == "Default")
+        {
+            <a asp-action="Create" class="btn btn-primary">추가</a>
+        }
+        @if (@ViewBag.baseType.ToString() == "Character_Code")
+        {
+            <a asp-action="Create" asp-route-character_code="@ViewBag.character_code" class="btn btn-primary">추가</a>
+        }
+        @if (@ViewBag.baseType.ToString() == "StateGroup_Code")
+        {
+            @*================ State그룹 코드 ====================*@
+            <div class="row mb-3">
+                <div class="col-sm-2">
+                    <label class="col-form-label col-form-label-sm">캐릭터</label>
+                </div>
+                <div class="col-sm">
+                    <select id="StateGroup_code" asp-items="@ViewBag.SelectAllStateGroups"></select>
+                </div>
+                <a asp-action="Create" asp-route-StateGroup_Code="@ViewBag.StateGroup_Code" class="btn btn-primary">추가</a>
+            </div>
+        }
+
+        <div class="table-responsive">
+            <table class="table table-bordered border-primary" style="width: 100%; margin-left: auto; margin-right: auto; border: 0;">
+                <colgroup>
+                    <col style="width: 100px;" />
+                    <col style="width: 100px;" />
+                    <col style="width: 150px;" />
+                </colgroup>
+                <thead class="table-dark">
+                    <tr>
+                        <th>@SharedLocalizer["ID"]</th>
+                        <th>@SharedLocalizer["CODE"]</th>
+                        <th>@SharedLocalizer["NUMBER"]</th>
+                        <th>@SharedLocalizer["DESCRIPTION"]</th>
+                        <th>@SharedLocalizer["MODIFY"]</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in @ViewBag.AllList)
+                    {
+                        <tr id="@Html.Raw(@item.Code)">
+                            <td>
+                                @Html.Raw(@item.Id)
+                            </td>
+                            <td>
+                                @Html.Raw(@item.Code)
+                            </td>
+                            <td>
+                                @Html.Raw(@item.Number)
+                            </td>
+                            <td>
+                                @Html.Raw(@item.Description)
+                            </td>
+
+                            <td>
+                                <a asp-action="UpdateMoveCommand" class="btn btn-primary" asp-route-Id="@item.Id">수정</a>
+                                <a asp-action="UpdateAllName" class="btn btn-primary" asp-route-id="@item.Id">명칭 편집</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>@SharedLocalizer["Command"]</th>
+                            <td>@Html.Raw(@item.Command)</td>
+                        </tr>
+                        @*<td>
+                                @Html.Raw(@item.Command)
+                            </td>*@
+
+                        foreach (var item2 in translateNameRepository.GetAllTranslateNamesByCode(@item.Code))
+                        {
+                            <tr>
+                                <td>
+                                    @Html.Raw(@item2.Language_Code)
+                                </td>
+                                <td colspan="2">
+                                    @if (String.IsNullOrEmpty(@item2.Name))
+                                    {
+                                        <a asp-action="CreateName" class="btn btn-primary" asp-route-code="@item.Code" asp-route-languageCode=@item2.Language_Code asp-route-name="@Html.Raw(@item.Description)">추가</a>
+                                    }
+                                    else
+                                    {
+                                        @Html.Raw(@item2.Name)
+                                    }
+                                </td>
+                                <td>
+                                    <a asp-action="UpdateName" class="btn btn-primary" asp-route-id="@item2.Id">명칭 편집</a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

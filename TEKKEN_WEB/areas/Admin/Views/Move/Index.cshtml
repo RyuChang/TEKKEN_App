@@ -1,0 +1,42 @@
+﻿@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .table tbody tr:nth-child(4n-3) {
+        background: #e2e2e2;
+    }
+</style>
+
+<div class="container">
+    @await Html.PartialAsync("_CharacterSelect")
+
+    @await Html.PartialAsync("_ListViewForm")
+</div>
+
+
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+
+<script>
+        $('#Character').change(function () {
+            var url = '/Admin/Move/Index';
+            var character_code = $('#Character').val();
+            location.href = url + '?Character_code=' + character_code;
+        });
+
+        $().ready(function () {
+            var character_code = $('#Character').val();
+            $('#Create').attr('href', '/Admin/Move/Create?Character_code=' + character_code)
+            $('#Character').focus();
+
+            var movePosition =@ViewBag.movePosition;
+            if (movePosition > -1) {
+                moveToPosition(movePosition);
+            }
+        });
+
+
+</script>
+}
+

@@ -1,0 +1,136 @@
+﻿@inject IHtmlLocalizer<SharedResource> SharedLocalizer
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    ViewData["ReturnUrl"] = "~/Areas/MoveCommand";
+}
+
+
+<style>
+    .table tbody tr:nth-child(4n-3) {
+        background: #e2e2e2;
+    }
+</style>
+
+
+<div class="container">
+    <div class="m-auto" id="Character-list">
+        <h2 style="text-align:center;">MoveCommand</h2>
+        <span style="color: #ff0000">=================</span>
+
+        <hr />
+        @ViewData["MoveCommand"]
+
+        @*==================== 캐릭터 코드 ====================*@
+        <div class="row mb-3">
+            <div class="col-sm-2">
+                <label class="col-form-label col-form-label-sm">캐릭터</label>
+            </div>
+            <div class="col-sm">
+                <select id="Character" asp-items="@ViewBag.SelectAllCharacters "></select>
+                @*<input asp-for="Character_code" type="text" class="form-control form-control-sm" id="colFormLabelSm" placeholder="col-form-label-sm" readonly="readonly">*@
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table  table-bordered border-primary" style="width: 100%; margin-left: auto; margin-right: auto; border: 0;">
+                <colgroup>
+                    <col style="width: 20px;" />
+                    <col style="width: 50px;" />
+                    <col style="width: 50px;" />
+                    <col style="width: 50px;" />
+                    <col style="width: 100px;" />
+                    <col style="width: 150px;" />
+                    <col style="width: 100px;" />
+                    <col style="width: 100px;" />
+                    <col style="width: 150px;" />
+                </colgroup>
+                <thead class="table-dark">
+                    <tr>
+                        <th>@SharedLocalizer["Code"]</th>
+                        <th>@SharedLocalizer["Move_name"]</th>
+                        <th>@SharedLocalizer["Command"]</th>
+                        <th>@SharedLocalizer["Modify"]</th>
+                    </tr>
+                </thead>
+
+                <tbody class="table-light">
+
+                    @{int idx = 0;}
+
+                    @foreach (var item in ViewBag.GetAllMoves)
+                    {
+
+                        @if (idx % 3 == 0)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.Raw(@item.Code)
+                                </td>
+
+                                <td>
+                                    @Html.Raw(@item.Move_Name)
+                                </td>
+
+                                <td>
+                                    @Html.Raw(@item.Command)
+                                </td>
+                                <td>
+                                    <a asp-action="Update" class="btn btn-primary" asp-route-code="@item.Code" asp-route-character_code="@ViewBag.Character_Code">수정</a>
+                                </td>
+                                @ViewBag.Character_Code
+                            </tr>
+                        }
+                        <tr>
+
+                            <td>
+                                @Html.Raw(@item.Language_Code)
+                            </td>
+                            <td>
+                                @if (String.IsNullOrEmpty(@item.Name))
+                                {
+                                    <a asp-action="CreateName" class="btn btn-primary" asp-route-code="@item.Code" asp-route-languageCode=@item.Language_Code asp-route-name="@Html.Raw(@item.Move_Name)">추가</a>
+                                }
+                                else
+                                {
+                                    @Html.Raw(@item.Name)
+                                }
+
+                            </td>
+
+                            <td>
+                                <a asp-action="Update" class="btn btn-primary" asp-route-code="@item.Code">수정</a>
+                            </td>
+                        </tr>
+
+                        idx++;
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+
+    <script>
+        $('#Character').change(function () {
+            var url = '/Admin/MoveCommand/Index';
+            var character_code = $('#Character').val();
+            location.href = url + '?Character_code=' + character_code;
+        });
+
+        $().ready(function () {
+            var character_code = $('#Character').val();
+            $('#Create').attr('href', '/Admin/MoveCommand/Create?Character_code=' + character_code)
+            $('#Character').focus();
+        });
+
+
+    </script>
+}
+

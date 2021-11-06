@@ -1,0 +1,67 @@
+﻿@inject IMoveTypeRepository moveTypeRepository
+@inject IHtmlLocalizer<SharedResource> SharedLocalizer
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    ViewData["MoveType"] = "MoveType";
+}
+
+<div class="container">
+    <div class="m-auto" id="Character-list">
+        <h2 style="text-align:center;">MoveType</h2>
+        <span style="color: #ff0000">=================</span>
+
+        <hr />
+        @ViewData["MoveType"]
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" style="width: 100%; margin-left: auto; margin-right: auto; border: 0;">
+                <colgroup>
+                    <col style="width: 100px;" />
+                    <col style="width: 100px;" />
+                    <col style="width: 150px;" />
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>@SharedLocalizer["ID"]</th>
+                        <th>@SharedLocalizer["Code"]</th>
+                        <th>@SharedLocalizer["Description"]</th>
+                        <th>@SharedLocalizer["Name"]</th>
+                        <th>@SharedLocalizer["Number"]</th>
+                        <th>@SharedLocalizer["Modify"]</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var item in moveTypeRepository.GetAllMoveTypes())
+                    {
+                        <tr>
+                            <td>
+                                <a area="Admin" asp-controller="Character" asp-action="Details" asp-route-code="@item.Code">
+                                    @Html.Raw(@item.Id)
+                                </a>
+                            </td>
+                            <td>
+                                @Html.Raw(@item.Code)
+                            </td>
+                            <td>
+                                @Html.Raw(@item.Description)
+                            </td>
+                            <td>
+                                @Html.Raw(@item.Name)
+                            </td>
+                            <td>
+                                @Html.Raw(@item.Number)
+                            </td>
+                            <td>
+                                <a asp-action="Update" class="btn btn-primary" asp-route-id="@item.Id">수정</a>
+                                <a asp-action="UpdateName" class="btn btn-primary" asp-route-code="@item.Code">명칭 편집</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <a asp-action="Create" class="btn btn-primary">추가</a>
+        </div>
+    </div>
+</div>

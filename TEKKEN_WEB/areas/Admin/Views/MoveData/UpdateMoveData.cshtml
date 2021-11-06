@@ -1,0 +1,23 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+<h2 style="text-align:center;">MoveData</h2>
+@ViewBag.TitleDescription
+<hr />
+
+@*<div class="row">*@
+<div>
+    @*<div class="col-md-offset-2 col-md-offset-2">*@
+        <form asp-controller="MoveData" asp-action="UpdateMoveData"
+              enctype="multipart/form-data" method="post">
+            @await Html.PartialAsync("_EditForm")
+        </form>
+    @*</div>*@
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    <script type="text/javascript" src="~/js/command.js"></script>
+    <script>TransCommand();</script>
+}

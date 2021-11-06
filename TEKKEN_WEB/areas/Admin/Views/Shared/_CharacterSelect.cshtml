@@ -1,0 +1,31 @@
+﻿@model Character
+@{
+}
+
+@*==================== 캐릭터 코드 ====================*@
+<div class="row mb-3">
+    <div class="col-sm-2">
+        <label class="col-form-label col-form-label-sm">캐릭터</label>
+    </div>
+    <div class="col-sm">
+        <select id="Character" asp-for="@Model.Code" asp-items="@ViewBag.SelectAllCharacters "></select>
+        @*<input asp-for="Character_code" type="text" class="form-control form-control-sm" id="colFormLabelSm" placeholder="col-form-label-sm" readonly="readonly">*@
+    </div>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    @*<script type="text/javascript" src="~/js/moveSubType.js"></script>*@
+
+    <script>
+        $('#Character').change(function () {
+            var url = '/Admin/MoveSubType/Index';
+            var character_code = $('#Character').val();
+            location.href = url + '?Character_code=' + character_code;
+        });
+
+        $().ready(function () {
+            $('#Character').focus();
+        });
+    </script>
+}

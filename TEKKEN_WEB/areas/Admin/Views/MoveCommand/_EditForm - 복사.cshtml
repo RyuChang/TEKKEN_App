@@ -1,0 +1,224 @@
+﻿@model MoveCommand[]
+@using TEKKEN_WEB.Enums
+
+<div class="row mb-3">
+    <div class="col-3">
+        <label asp-for="@Model[0].Code" class="col-form-label col-form-label-sm"></label>
+    </div>
+    <div class="col-9">
+        <input asp-for="@Model[1].Code" type="text" class="form-control form-control-sm" value="@ViewBag.moveCommand[0].Code" placeholder="col-form-label-sm" readonly="readonly">
+    </div>
+</div>
+
+<div class="row mb-3">
+    <div class="col-3">
+        <label asp-for="@Model[0].Move_Name" class="col-form-label col-form-label-sm"></label>
+    </div>
+    <div class="col">
+        <input asp-for="@Model[1].Move_Name" type="text" class="form-control form-control-sm" value="@ViewBag.moveCommand[0].Move_Name" placeholder="col-form-label-sm" readonly="readonly">
+    </div>
+</div>
+
+<div class="row mb-3">
+    <div class="col-3">
+        <label asp-for="@Model[0].Command" class="col-form-label col-form-label-sm"></label>
+    </div>
+    <div class="col-sm">
+        <input id="Command" asp-for="@Model[1].Command" type="text" class="form-control form-control-sm" value="@ViewBag.moveCommand[0].Command" placeholder="col-form-label-sm" readonly="readonly">
+    </div>
+</div>
+
+<br />
+@{int i = 0; }
+@foreach (var item in @ViewBag.moveCommand)
+{
+    <div class="row mb-1">
+        <div class="col-1">
+            <label asp-for="@Model[i].Id" class="col-form-label col-form-label-sm"></label>
+        </div>
+        <div class="col-2">
+            <input asp-for="@Model[i].Id" class="form-control form-control-sm" value="@item.Id" readonly="readonly" />
+        </div>
+        <div class="col-1">
+            <label class="col-form-label col-form-label-sm">Code</label>
+        </div>
+        <div class="col-2">
+            <label asp-for="@Model[i].Language_Code" class="form-control col-form-label-sm">@item.Language_Code</label>
+        </div>
+
+        <div class="col text-right">
+            <div class="form-check">
+                <input id="@String.Format("Change_{0}", @item.Language_Code)" asp-for="@Model[i].Change" class="form-check-input" type="checkbox">
+                <label class="form-check-label" for="flexCheckChecked">
+                    Modified
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-1">
+        <div class="col-1">
+            <label class="col-form-label col-form-label-sm">AsIs</label>
+        </div>
+        <div class="col-11">
+            <input type="text" class="form-control form-control-sm" value="@item.Name" placeholder="col-form-label-sm" readonly="readonly">
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-1">
+            <label class="col-form-label col-form-label-sm">ToBe</label>
+        </div>
+        <div class="col-11">
+            <input id="@String.Format("TlanslatedCommand_{0}", @item.Language_Code)" language_Code="@item.Language_Code" asp-for="@Model[i].Name" type="text" class="form-control form-control-sm commandName" placeholder="col-form-label-sm">
+        </div>
+    </div>
+    i++;
+}
+
+
+
+<div class="row">
+    <div class="col-sm-3">
+        <button id="TransCommand" type="button" class="col btn btn-primary valid">변환</button>
+    </div>
+    <div class="col-sm-3">
+        <input type="submit" value="@ViewBag.SaveButtonText" class="btn btn-primary" />
+        <div class="col-sm-3">
+        </div>
+        <a asp-action="Index" class="btn btn-default" asp-route-character_code="@ViewBag.Character_Code">리스트</a>
+    </div>
+    <div class="col-sm">
+        <a asp-action="Delete" class="btn btn-primary text-right" asp-route-code="@ViewBag.moveCommand[0].Code" onclick="return confirm('정말 삭제하겠습니까?');">삭제</a>
+    </div>
+
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <span class="text-danger">@ViewBag.ErrorMessage</span>
+</div>
+
+
+
+
+@*==================== 커맨드 ====================*@
+<!--<div class="row mb-3">
+    <div class="col-sm-2">
+        <label class="col-form-label col-form-label-sm"></label>
+    </div>
+    <div class="col-sm">
+        <input id="displayCommand" type="text" class="form-control form-control-sm" placeholder="커맨드 입력" readonly="readonly">
+    </div>
+</div>-->
+@*==================== 변환 커맨드 ====================*@
+<!--<div class="row mb-3">
+    <div class="col-sm-2">
+        <label class="col-form-label col-form-label-sm">변환 커맨드 EN</label>
+    </div>
+    <div class="col-sm">
+        <input id="TlanslatedCommand_en" type="text" class="form-control form-control-sm" placeholder="커맨드 입력" readonly="readonly"></input>
+    </div>
+</div>-->
+@*==================== 변환 커맨드 ====================*@
+<!--<div class="row mb-3">
+    <div class="col-sm-2">
+        <label class="col-form-label col-form-label-sm">변환 커맨드 KO</label>
+    </div>
+    <div class="col-sm">
+        <input id="TlanslatedCommand_ko" type="text" class="form-control form-control-sm" placeholder="커맨드 입력" readonly="readonly"></input>
+    </div>
+</div>-->
+@*==================== 변환 커맨드 ====================*@
+<!--<!--<div class="row mb-3">
+    <div class="col-sm-2">
+        <label class="col-form-label col-form-label-sm">변환 커맨드 JP</label>
+    </div>
+    <div class="col-sm">
+        <input id="TlanslatedCommand_jp" type="text" class="form-control form-control-sm" placeholder="커맨드 입력" readonly="readonly"></input>
+    </div>
+</div>-->
+        -->
+
+
+
+
+
+
+@*<button id="TlanslatedCommand" class="col btn btn-primary " placeholder="커맨드 입력" readonly="readonly">
+
+
+    <div class="row mb-3">
+        <div class="col-sm-2">
+            <label asp-for="Version" class="col-form-label col-form-label-sm"></label>
+        </div>
+        <div class="col-sm">
+            <select asp-for="Version" asp-items="@ViewBag.SelectAllVersions"></select>
+            <input asp-for="Version" type="text" class="form-control form-control-sm" id="colFormLabelSm" placeholder="col-form-label-sm">
+
+
+            <div class="col-sm-12">
+                <input type="submit" value="@ViewBag.SaveButtonText"
+                       class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-default" asp-route-character_code="@ViewBag.moveCommand[0].Code">리스트</a>
+                <div class="col-sm">
+                    <a asp-action="Delete" class="btn btn-primary text-right" asp-route-code="@ViewBag.moveCommand[0].Code" onclick="return confirm('정말 삭제하겠습니까?');">삭제</a>
+                </div>
+
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <span class="text-danger">@ViewBag.ErrorMessage</span>
+            </div>
+
+            <input asp-for="Version" type="text" class="form-control form-control-sm" id="colFormLabelSm" placeholder="col-form-label-sm">
+
+
+            <div class="col-sm-12">
+                <input type="submit" value="@ViewBag.SaveButtonText"
+                       class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-default" asp-route-character_code="@ViewBag.moveCommand[0].Code"></a>
+                <div class="col-sm">
+                    <a asp-action="Delete" class="btn btn-primary text-right" asp-route-code="@ViewBag.moveCommand[0].Code" onclick="return confirm('정말 삭제하겠습니까?');"></a>
+                </div>
+
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <span class="text-danger"></span>
+            </div>
+    <button id="TlanslatedCommand" class="col btn btn-primary " placeholder="커맨드 입력" readonly="readonly">
+
+
+    <div class="row mb-3">
+        <div class="col-sm-2">
+            <label asp-for="Version" class="col-form-label col-form-label-sm"></label>
+        </div>
+        <div class="col-sm">
+            <select asp-for="Version" asp-items="@ViewBag.SelectAllVersions"></select>
+            <input asp-for="Version" type="text" class="form-control form-control-sm" id="colFormLabelSm" placeholder="col-form-label-sm">
+
+
+            <div class="col-sm-12">
+                <input type="submit" value="@ViewBag.SaveButtonText"
+                       class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-default" asp-route-character_code="@ViewBag.moveCommand[0].Code"></a>
+                <div class="col-sm">
+                    <a asp-action="Delete" class="btn btn-primary text-right" asp-route-code="@ViewBag.moveCommand[0].Code" onclick="return confirm('정말 삭제하겠습니까?');"></a>
+                </div>
+
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <span class="text-danger"></span>
+            </div>
+
+            <input asp-for="Version" type="text" class="form-control form-control-sm" id="colFormLabelSm" placeholder="col-form-label-sm">
+
+
+            <div class="col-sm-12">
+                <input type="submit" value="@ViewBag.SaveButtonText"
+                       class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-default" asp-route-character_code="@ViewBag.moveCommand[0].Code"></a>
+                <div class="col-sm">
+                    <a asp-action="Delete" class="btn btn-primary text-right" asp-route-code="@ViewBag.moveCommand[0].Code" onclick="return confirm('정말 삭제하겠습니까?');"></a>
+                </div>
+
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <span class="text-danger"></span>
+            </div>*@

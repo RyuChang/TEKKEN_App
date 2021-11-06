@@ -1,0 +1,65 @@
+﻿@model IEnumerable<Character>
+@inject ICharacterRepository characterRepository
+@inject IHtmlLocalizer<SharedResource> SharedLocalizer
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    ViewData["Version"] = "캐릭터 목록";
+}
+
+<div class="container">
+    <div class="m-auto" id="Character-list">
+        <h2 style="text-align:center;">캐릭터</h2>
+        <span style="color: #ff0000">=================</span>
+
+        <hr />
+        @ViewData["language"]
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" style="width: 100%; margin-left: auto; margin-right: auto; border: 0;">
+                <colgroup>
+                    <col style="width: 100px;" />
+                    <col style="width: 100px;" />
+                    <col style="width: 150px;" />
+                    <col style="width: 150px;" />
+                    <col style="width: 150px;" />
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>@SharedLocalizer["Id"]</th>
+                        <th>@SharedLocalizer["Code"]</th>
+                        <th>@SharedLocalizer["Season"]</th>
+                        <th>@SharedLocalizer["Name"]</th>
+                        <th>@SharedLocalizer["FullName"]</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var item in characterRepository.GetAllCharacters())
+                    {
+                        <tr>
+                            <td>
+                                @Html.Raw(@item.Id)
+                            </td>
+                            <td>
+                                <a area="Admin" asp-controller="Character" asp-action="Details" asp-route-character_code="@item.Code">
+                                    @Html.Raw(@item.Code)
+                                </a>
+                            </td>
+                            <td>
+                                @Html.Raw(@item.Season)
+                            </td>
+                            <td>
+                                @Html.Raw(@item.Name)
+                            </td>
+                            <td>
+                                @Html.Raw(@item.FullName)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">Version</a>.</p>
+        </div>
+    </div>
+</div>

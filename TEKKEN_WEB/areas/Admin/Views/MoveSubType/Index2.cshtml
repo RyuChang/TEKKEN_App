@@ -1,0 +1,104 @@
+﻿@model Character
+@inject IMoveSubTypeRepository moveSubTypeRepository
+@inject IHtmlLocalizer<SharedResource> SharedLocalizer
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    ViewData["MoveSubType"] = "MoveSubType";
+}
+
+<div class="container">
+    <div class="m-auto" id="Character-list">
+        <h2 style="text-align:center;">MoveSubType</h2>
+        <span style="color: #ff0000">=================</span>
+
+        <hr />
+        @ViewData["MoveSubType"]
+
+        @*==================== 캐릭터 코드 ====================*@
+        <div class="row mb-3">
+            <div class="col-sm-2">
+                <label class="col-form-label col-form-label-sm">캐릭터</label>
+            </div>
+            <div class="col-sm">
+                <select id="Character" asp-for="@Model.Code" asp-items="@ViewBag.SelectAllCharacters "></select>
+                @*<input asp-for="Character_code" type="text" class="form-control form-control-sm" id="colFormLabelSm" placeholder="col-form-label-sm" readonly="readonly">*@
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" style="width: 100%; margin-left: auto; margin-right: auto; border: 0;">
+                <colgroup>
+                    <col style="width: 100px;" />
+                    <col style="width: 100px;" />
+                    <col style="width: 150px;" />
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>@SharedLocalizer["ID"]</th>
+                        <th>@SharedLocalizer["Character_code"]</th>
+                        <th>@SharedLocalizer["Number"]</th>
+                        <th>@SharedLocalizer["Code"]</th>
+                        <th>@SharedLocalizer["Description"]</th>
+                        <th>@SharedLocalizer["Name"]</th>
+                        <th>@SharedLocalizer["Modify"]</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var item in @ViewBag.GetAllMoveSubTypes)
+                    {
+                        <tr>
+                            <td>
+                                <a area="Admin" asp-controller="MoveSubType" asp-action="Details" asp-route-id="@item.Id">
+                                    @Html.Raw(@item.Id)
+                                </a>
+                            </td>
+                            <td>
+                                @Html.Raw(@item.Character_code)
+                            </td>
+                            <td>
+                                @Html.Raw(@item.Number)
+                            </td>
+                            <td>
+                                @Html.Raw(@item.Code)
+                            </td>
+                            <td>
+                                @Html.Raw(@item.Description)
+                            </td>
+                            <td>
+                                @Html.Raw(@item.Name)
+                            </td>
+                            <td>
+                                <a asp-action="Update" class="btn btn-primary" asp-route-id="@item.Id">수정</a>
+                                <a asp-action="UpdateName" class="btn btn-primary" asp-route-code="@item.Code">명칭 편집</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <a asp-action="Create" class="btn btn-primary" asp-route-character_code="@Model.Code">추가</a>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    @*<script type="text/javascript" src="~/js/moveSubType.js"></script>*@
+
+    <script>
+        $('#Character').change(function () {
+            var url = '/Admin/MoveSubType/Index';
+            var character_code = $('#Character').val();
+            location.href = url + '?Character_code=' + character_code;
+        });
+
+        $().ready(function () {
+            $('#Character').focus();
+        });
+
+
+    </script>
+}
+

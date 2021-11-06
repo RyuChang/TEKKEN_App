@@ -1,0 +1,28 @@
+﻿@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .table tbody tr:nth-child(4n-3) {
+        background: #e2e2e2;
+    }
+</style>
+
+<div class="container">
+    @await Html.PartialAsync("_ListViewForm")
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+
+    <script>
+            $('#StateGroup_code').change(function () {
+                var url = '/Admin/State/Index';
+                var StateGroup_code = $('#StateGroup_code').val();
+                location.href = url + '?StateGroup_code=' + StateGroup_code;
+            });
+
+            $().ready(function () {
+                $('#StateGroup').focus();
+            });
+    </script>
+}

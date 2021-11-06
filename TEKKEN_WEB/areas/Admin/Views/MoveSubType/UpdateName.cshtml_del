@@ -1,0 +1,25 @@
+﻿
+@{
+    Layout = "_Layout";
+}
+
+<h2 style="text-align:center;">@ViewBag.TitleDescription</h2>
+
+<hr />
+
+@*<div class="row">*@
+<div>
+    <div class="col-md-offset-2 col-md-8 col-md-offset-2">
+        <form asp-controller="MoveSubType" asp-action="UpdateName"
+              enctype="multipart/form-data" method="post">
+            @await Html.PartialAsync("_NameEditForm")
+        </form>
+    </div>
+</div>
+
+@*<select asp-for="Code" asp-items="@ViewBag.SelectMoveType "></select>*@
+
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

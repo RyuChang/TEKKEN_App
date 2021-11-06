@@ -1,0 +1,29 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using TEKKEN_WEB
+@using Localization
+@using Localization.Models
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Localization
+
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+
+    ViewData["Title"] = "Home Page";
+}
+test
+
+
+<footer class="border-top footer text-muted">
+    @*@sharedLocalizer["Version"]*@
+
+    ----------------
+    @requestCulture.RequestCulture.Culture.Name
+    ----------------
+    @requestCulture.RequestCulture.UICulture.Name
+
+    <div class="container">
+
+        @ViewData["Message"]
+        &copy; 2020 - TEKKEN_WEB - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    </div>
+</footer>

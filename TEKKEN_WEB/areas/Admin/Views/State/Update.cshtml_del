@@ -1,0 +1,24 @@
+﻿@model State
+
+@{
+    Layout = "_Layout";
+}
+
+<h2 style="text-align:center;">State</h2>
+@ViewBag.TitleDescription
+<hr />
+
+@*<div class="row">*@
+<div>
+    <div class="col-md-offset-2 col-md-8 col-md-offset-2">
+        <form asp-controller="State" asp-action="Update"
+              enctype="multipart/form-data" method="post">
+            @await Html.PartialAsync("_EditForm")
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

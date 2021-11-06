@@ -1,0 +1,198 @@
+﻿@page
+@model TekkenApp.Pages.MoveData.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.move_data[0].hitCount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.move_data[0].hitLevel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.move_data[0].damage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.move_data[0].startFrame)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.move_data[0].startFrame_Display)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.move_data[0].guardFrame)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.move_data[0].guardFrame_Display)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.move_data[0].hitFrame)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.move_data[0].hitFrame_Display)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.move_data[0].counterFrame)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.move_data[0].counterFrame_Display)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.move_data[0].breakThrow)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.move_data[0].afterBreak)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.move_data[0].homing)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.move_data[0].powerCrush)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.move_data[0].technicallyCrouching)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.move_data[0].technicallyJumping)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.move_data[0].tailSpin)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.move_data[0].wallSplat)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.move_data[0].note)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.move_data[0].version)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.move_data[0].Move_CodeNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.move_data[0].counterType_codeNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.move_data[0].guardType_codeNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.move_data[0].hitType_codeNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.move_data[0].moveSubType_codeNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.move_data[0].moveType_codeNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.move_data[0].startType_codeNavigation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.move_data) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.hitCount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.hitLevel)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.damage)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.startFrame)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.startFrame_Display)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.guardFrame)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.guardFrame_Display)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.hitFrame)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.hitFrame_Display)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.counterFrame)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.counterFrame_Display)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.breakThrow)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.afterBreak)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.homing)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.powerCrush)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.technicallyCrouching)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.technicallyJumping)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.tailSpin)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.wallSplat)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.note)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.version)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Move_CodeNavigation.description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.counterType_codeNavigation.description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.guardType_codeNavigation.description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.hitType_codeNavigation.description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.moveSubType_codeNavigation.description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.moveType_codeNavigation.description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.startType_codeNavigation.description)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

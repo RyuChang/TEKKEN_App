@@ -1,0 +1,159 @@
+﻿@inject IHtmlLocalizer<SharedResource> SharedLocalizer
+@inject IMoveDataRepository moveDataRepository
+@{
+
+    //translateNameRepository.SetTable(ViewBag.tableName, ViewBag.subTableName);
+}
+
+<div class="container">
+    <div class="m-auto" id="Character-list">
+        <h2 style="text-align:center;">@ViewBag.TitleDescription</h2>
+
+        @if (@ViewBag.baseType.ToString() == "Default")
+        {
+            <a asp-action="Create" class="btn btn-primary">추가</a>
+        }
+        @if (@ViewBag.baseType.ToString() == "Character_Code")
+        {
+            <a asp-action="Create" asp-route-character_code="@ViewBag.character_code" class="btn btn-primary">추가</a>
+        }
+        @if (@ViewBag.baseType.ToString() == "StateGroup_Code")
+        {
+            @*================ State그룹 코드 ====================*@
+            <div class="row mb-3">
+                <div class="col-sm-2">
+                    <label class="col-form-label col-form-label-sm">캐릭터</label>
+                </div>
+                <div class="col-sm">
+                    <select id="StateGroup_code" asp-items="@ViewBag.SelectAllStateGroups"></select>
+                </div>
+                <a asp-action="Create" asp-route-StateGroup_Code="@ViewBag.StateGroup_Code" class="btn btn-primary">추가</a>
+            </div>
+        }
+
+        <div class="table-responsive">
+            <table class="table table-bordered border-primary" style="width: 100%; margin-left: auto; margin-right: auto; border: 0;">
+                <colgroup>
+                    <col style="width: 100px;" />
+                    <col style="width: 100px;" />
+                    <col style="width: 150px;" />
+                </colgroup>
+                <thead class="table-dark">
+                    <tr>
+                        <th>@SharedLocalizer["ID"]</th>
+                        <th>@SharedLocalizer["CODE"]</th>
+                        <th>@SharedLocalizer["NUMBER"]</th>
+                        <th colspan="2">@SharedLocalizer["DESCRIPTION"]</th>
+                        <th>@SharedLocalizer["MODIFY"]</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in @ViewBag.AllList)
+                    {
+                        <tr id="@Html.Raw(@item.Code)">
+                            <td>
+                                @Html.Raw(@item.Id)
+                            </td>
+                            <td>
+                                @Html.Raw(@item.Code)
+                            </td>
+                            <td>
+                                @Html.Raw(@item.Number)
+                            </td>
+                            <td colspan="2">
+                                @Html.Raw(@item.Description)
+                            </td>
+                            <td>
+                                <a asp-action="UpdateMoveData" class="btn btn-primary" asp-route-Id="@item.Id" asp-route-character_code="@ViewBag.character_code">수정</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>@SharedLocalizer["HIT COUNT"]</th>
+                            <th>@SharedLocalizer["HIT LEVEL"]</th>
+                            <th>@SharedLocalizer["Damage"]</th>
+                            <th>@SharedLocalizer["BREAK THROW"]</th>
+                            <th>@SharedLocalizer["AFTER BREAK"]</th>
+                        </tr>
+                        <tr>
+                            <td>@Html.Raw(@item.HitCount)</td>
+                            <td>@Html.Raw(@item.HitLevel)</td>
+                            <td>@Html.Raw(@item.Damage)</td>
+                            <td>@Html.Raw(@item.BreakThrow)</td>
+                            <td>@Html.Raw(@item.AfterBreak)</td>
+
+
+                        </tr>
+                        <tr>
+                            <th rowspan="3">@SharedLocalizer["FRAME"]</th>
+                            <th>@SharedLocalizer["START FRAME"]</th>
+                            <th>@SharedLocalizer["GUARD FRAME"]</th>
+                            <th>@SharedLocalizer["HIT FRAME"]</th>
+                            <th>@SharedLocalizer["COUNTER FRAME"]</th>
+                        </tr>
+                        <tr>
+                            <td>@SharedLocalizer["Punish"]</td>
+                            <td>@Html.Raw(@item.StartFrame)</td>
+                            <td>@Html.Raw(@item.GuardFrame)</td>
+                            <td>@Html.Raw(@item.HitFrame)</td>
+                            <td>@Html.Raw(@item.CounterFrame)</td>
+                        </tr>
+
+                        <tr>
+                            <td>@SharedLocalizer["Display"]</td>
+                            <td>@Html.Raw(@item.StartFrame_Display)</td>
+                            <td>@Html.Raw(@item.GuardFrame_Display)</td>
+                            <td>@Html.Raw(@item.HitFrame_Display)</td>
+                            <td>@Html.Raw(@item.CounterFrame_Display)</td>
+                        </tr>
+                        <tr>
+                            <th rowspan="2">@SharedLocalizer["FRAME TYPE"]</th>
+                            <th>@SharedLocalizer["startType_code"]</th>
+                            <th>@SharedLocalizer["GuardType_code"]</th>
+                            <th>@SharedLocalizer["HitType_code"]</th>
+                            <th>@SharedLocalizer["CounterType_code"]</th>
+                        </tr>
+                        <tr>
+                            <td>@Html.Raw(@item.StartType_code)</td>
+                            <td>@Html.Raw(@item.GuardType_code)</td>
+                            <td>@Html.Raw(@item.HitType_code)</td>
+                            <td>@Html.Raw(@item.CounterType_code)</td>
+                        </tr>
+
+                        <tr>
+                            <td rowspan="3">
+                                Language
+                            </td>
+                            @{int i = 0;}
+                            @foreach (var item2 in moveDataRepository.GetAllTranslateNamesByCode(@item.Code))
+                            {
+                                if (i > 0)
+                                {
+                                    @Html.Raw("<tr>");
+                                }
+
+                                <td>
+                                    @Html.Raw(item2.Language_Code)
+                                </td>
+                                <td>
+                                    @Html.Raw(item2.StartType_name)
+                                </td>
+                                <td>
+                                    @Html.Raw(item2.Guardtype_name)
+                                </td>
+                                <td>
+                                    @Html.Raw(item2.HitType_name)
+                                </td>
+                                <td>
+                                    @Html.Raw(item2.CounterType_name)
+                                </td>
+
+                                @Html.Raw("</tr>");
+                                i++;
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

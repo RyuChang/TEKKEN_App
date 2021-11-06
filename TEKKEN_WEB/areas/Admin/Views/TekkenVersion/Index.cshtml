@@ -1,0 +1,58 @@
+﻿@using Admin.Models
+
+@model IEnumerable<TekkenVersion>
+@inject ITekkenVersionRepository tekkenVersionRepository
+@inject IHtmlLocalizer<SharedResource> SharedLocalizer
+
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    ViewData["Version"] = "버전 목록";
+}
+
+
+<div class="container">
+    <div class="m-auto" id="Version-list">
+        <h2 style="text-align:center;">@SharedLocalizer["Version"]</h2>
+        <span style="color: #ff0000">=================</span>
+
+        <hr />
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" style="width: 100%; margin-left: auto; margin-right: auto; border: 0;">
+                <colgroup>
+                    <col style="width: 100px;" />
+                    <col style="width: 400px;" />
+                    <col style="width: 50px;" />
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>@SharedLocalizer["Version"]</th>
+                        <th>@SharedLocalizer["Season"]</th>
+                        <th>@SharedLocalizer["Update Date"]</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var item in tekkenVersionRepository.GetAllVersions())
+                    {
+                        <tr>
+                            <td>
+                                <a area="Admin" asp-controller="TekkenVersion" asp-action="Details" asp-route-version="@item.Version">
+                                    @Html.Raw(@item.Version)
+                                </a>
+                            </td>
+                            <td>
+                                @Html.Raw(@item.Season)
+                            </td>
+                            <td>
+                                @Html.Raw(@item.UpdateDate.ToShortDateString())
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">Version</a>.</p>
+        </div>
+    </div>
+</div>

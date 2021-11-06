@@ -1,0 +1,149 @@
+﻿@inject ITranslateNameRepository translateNameRepository
+@inject IHtmlLocalizer<SharedResource> SharedLocalizer
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    ViewData["Move"] = "Move";
+    translateNameRepository.SetTable(ViewBag.tableName);
+}
+
+<style>
+    .table tbody tr:nth-child(10n-4), tr:nth-child(10n-3), tr:nth-child(10n-2), tr:nth-child(10n-1), tr:nth-child(10n) {
+        background: #e2e2e2;
+    }
+</style>
+<div class="container">
+    <div class="m-auto" id="Character-list">
+        <h2 style="text-align:center;">Move</h2>
+        <span style="color: #ff0000">=================</span>
+
+        <hr />
+        @ViewData["Move"]
+
+        @*==================== 캐릭터 코드 ====================*@
+        <div class="row mb-3">
+            <div class="col-sm-2">
+                <label class="col-form-label col-form-label-sm">캐릭터</label>
+            </div>
+            <div class="col-sm">
+                <select id="Character" asp-items="@ViewBag.SelectAllCharacters "></select>
+                @*<input asp-for="Character_code" type="text" class="form-control form-control-sm" id="colFormLabelSm" placeholder="col-form-label-sm" readonly="readonly">*@
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table  table-bordered border-primary" style="width: 100%; margin-left: auto; margin-right: auto; border: 0;">
+                <colgroup>
+                    <col style="width: 20px;" />
+                    <col style="width: 50px;" />
+                    <col style="width: 50px;" />
+                    <col style="width: 50px;" />
+                    <col style="width: 100px;" />
+                    <col style="width: 150px;" />
+                    <col style="width: 100px;" />
+                    <col style="width: 100px;" />
+                    <col style="width: 150px;" />
+                </colgroup>
+                <thead class="table-dark">
+                    <tr>
+                        <th>@SharedLocalizer["ID"]</th>
+                        <th>@SharedLocalizer["Code"]</th>
+                        <th>@SharedLocalizer["Character_name"]</th>
+                        <th>@SharedLocalizer["Number"]</th>
+                        <th>@SharedLocalizer["Description"]</th>
+                        <th>@SharedLocalizer["Version"]</th>
+                        <th>@SharedLocalizer["Modify"]</th>
+                    </tr>
+                </thead>
+
+                <tbody class="table-light">
+                    @foreach (var item in @ViewBag.GetAllMoves)
+                    {
+                        <tr>
+                            <td rowspan="5">
+                                @Html.Raw(@item.Id)
+
+                            </td>
+                            <td>
+                                @Html.Raw(@item.Code)
+                            </td>
+                            <td>
+                                @Html.Raw(@item.Character_Name)
+                            </td>
+                            <td>
+                                @Html.Raw(@item.Number)
+                            </td>
+                            <td>
+                                @Html.Raw(@item.Version)
+                            </td>
+                            <td>
+                                <a asp-action="Update" class="btn btn-primary" asp-route-id="@item.Id">수정</a>
+                            </td>
+                        </tr>
+
+                        int idx = 0;
+
+                        foreach (var item2 in translateNameRepository.GetAllTranslateNamesByCode( @item.Code))
+                        {
+
+                            @if (idx == 0)
+                            {
+                                <tr>
+                                    <td rowspan="4">
+                                        @SharedLocalizer["Command"]
+                                    </td>
+                                    <td>
+                                        @SharedLocalizer["Description"]
+                                    </td>
+                                    <td colspan="5">
+                                        @Html.Raw(@item.Description)
+                                    </td>
+                                </tr>
+                            }
+
+                            <tr>
+                                <td>
+                                    @Html.Raw(@item2.Language_Code)
+                                </td>
+                                <td colspan="5">
+                                    @Html.Raw(@item2.Name)
+                                </td>
+                                @if (idx == 0)
+                                {
+                                    <td rowspan="3">
+                                        <a asp-action="UpdateName" class="btn btn-primary" asp-route-code="@item.Code">명칭 편집</a>
+                                    </td>
+                                }
+                            </tr>
+                            idx++;
+                        }
+                    }
+                </tbody>
+            </table>
+
+            <a ID="Create" asp-action="Create" class="btn btn-primary">추가</a>
+
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+
+    <script>
+        $('#Character').change(function () {
+            var url = '/Admin/Move/Index';
+            var character_code = $('#Character').val();
+            location.href = url + '?Character_code=' + character_code;
+        });
+
+        $().ready(function () {
+            var character_code = $('#Character').val();
+            $('#Create').attr('href', '/Admin/Move/Create?Character_code=' + character_code)
+            $('#Character').focus();
+        });
+
+    </script>
+}
+

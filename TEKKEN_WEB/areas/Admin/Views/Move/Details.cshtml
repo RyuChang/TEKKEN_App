@@ -1,0 +1,96 @@
+﻿@model Move
+
+@{
+    Layout = "_Layout";
+}
+
+<h2 style="text-align:center;">Move</h2>
+<span style="color: #ff0000">기술 수정 - 현재 기술에 대해서 수정 및 삭제를 할 수 있습니다.</span>
+<hr />
+
+
+<div class="row">
+    <label class="col-sm-2">ID</label>
+    <div class="col-sm-10">
+        <label>@Model.Id</label>
+    </div>
+</div>
+
+<div class="row">
+    <label class="col-sm-2">Character_code</label>
+    <div class="col-sm-10">
+        <label>@Model.Character_code</label>
+    </div>
+</div>
+
+<div class="row">
+    <label class="col-sm-2">Number</label>
+    <div class="col-sm-10">
+        <label>@Model.Number</label>
+    </div>
+</div>
+
+@*<div class="row">
+    <label class="col-sm-2">MoveType_code</label>
+    <div class="col-sm-10">
+        <label>@Model.MoveType_code</label>
+    </div>
+</div>
+
+<div class="row">
+    <label class="col-sm-2">SubType_code</label>
+    <div class="col-sm-10">
+        <label>@Model.MoveSubType_code</label>
+    </div>
+</div>*@
+
+<div class="row">
+    <label class="col-sm-2">Code</label>
+    <div class="col-sm-10">
+        <label>@Model.Code</label>
+    </div>
+</div>
+
+<div class="row">
+    <label class="col-sm-2">Version</label>
+    <div class="col-sm-10">
+        <label>@Model.Version</label>
+    </div>
+</div>
+
+@*<div class="row">
+    <label class="col-sm-2">Command</label>
+    <div class="col-sm-10">
+        <label>@Model.Command</label>
+    </div>
+</div>*@
+
+
+<div style="text-align:center;">
+
+    <a asp-action="Remove" asp-route-Id="@Model.Id" class="btn btn-default">
+        삭제
+    </a>
+    <a asp-action="Update" asp-route-Id="@Model.Id" class="btn btn-default">
+        수정
+    </a>
+    <a asp-action="Remove" asp-route-Id="@Model.Id" class="btn btn-default">
+        답변
+    </a>
+
+    <a asp-action="Index" class="btn btn-default">리스트</a>
+</div>
+<br />
+
+@section Scripts {
+    @if (TempData["Message"] != null)
+    {
+        <link href="~/lib/toastr/toastr.css" rel="stylesheet" />
+        <script src="~/lib/toastr/toastr.js"></script>
+        <script>
+            $(function () {
+                toastr.info('@TempData["Message"]');
+            });
+        </script>
+    }
+}

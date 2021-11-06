@@ -1,0 +1,51 @@
+﻿@model TekkenVersion
+
+
+<script>
+    function ConfirmDelete() {
+        varFlag = false;
+        bootbox.confirm("현재 글을 삭제하시겠습니까?", function (result) {
+            if (result == true) {
+                //document.forms[0].submit();
+                document.getElementById("frmDeleteForm").submit();
+            }
+        });
+        return varFlag;
+    }
+</script>
+
+<h2 style="text-align:center;">버전</h2>
+@ViewBag.TitleDescription
+<hr />
+
+@*<div class="row">
+        <div class="col-md-offset-2 col-md-8 col-md-offset-2">
+            <form asp-controller="TekkenVersion" asp-action="Update"
+                  enctype="multipart/form-data" method="post">
+                @await Html.PartialAsync("_EditForm")
+            </form>
+
+        </div>
+    </div>*@
+
+<div style="text-align: center;">
+    <form id="frmDeleteForm" asp-action="Remove" method="post" onsubmit="return ConfirmDelete();">
+        <span class="text-danger">@ViewBag.Version</span>번 글을 지우시겠습니까?
+        <input type="hidden" name="version" id="vVersion" value="@ViewBag.Version" />
+
+        <input type="submit" value="지우기" class="btn btn-danger" style="display:inline-block;" />
+
+        <a asp-action="Details" asp-route-version="@ViewBag.Version"
+           class="btn btn-default">취소</a>
+        <br />
+        <span class="text-danger">@ViewBag.Message</span>
+        <br />
+    </form>
+</div>
+
+
+
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

@@ -1,0 +1,129 @@
+﻿{
+   "CodeGenerationMode": 0,
+   "ContextClassName": "TEKKENContext",
+   "ContextNamespace": null,
+   "DefaultDacpacSchema": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": true,
+   "ModelNamespace": null,
+   "OutputContextPath": null,
+   "OutputPath": "Models",
+   "ProjectRootNamespace": "Models",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 0,
+   "SelectedToBeGenerated": 0,
+   "Tables": [
+      {
+         "Name": "[dbo].[character]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[character_name]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[command]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[command_name]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[hitType]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[hitType_name]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[language]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Move]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Move_command]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[move_command_name]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[move_data]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Move_Data_Name]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[move_name]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[moveSubType]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[moveSubType_name]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[moveText]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[moveText_name]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[moveType]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[moveType_name]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[State]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[State_name]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[StateGroup]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[StateGroup_name]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tekkenVersion]",
+         "ObjectType": 0
+      }
+   ],
+   "UiHint": "rc-pc\\gmgg.TEKKEN.dbo",
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": false,
+   "UseDbContextSplitting": false,
+   "UseFluentApiOnly": false,
+   "UseHandleBars": false,
+   "UseInflector": false,
+   "UseLegacyPluralizer": false,
+   "UseNoConstructor": false,
+   "UseNoDefaultConstructor": false,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UseSchemaFolders": false,
+   "UseSpatial": false
+}

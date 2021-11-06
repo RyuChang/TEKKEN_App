@@ -1,0 +1,82 @@
+﻿@model TranslateName
+@using TEKKEN_WEB.Enums
+@if (ViewBag.FormType == FormType.Update)
+{
+    <div class="row mb-3">
+        <div class="col-sm-2">
+            <label asp-for="Id" class=" control-label">ID</label>
+        </div>
+        <div class="col-sm">
+            <input asp-for="Id" class="form-control" style="border:0; " maxlength="10" readonly="readonly" />
+        </div>
+    </div>
+
+}
+
+<div class="row mb-3">
+    <div class="col-sm-2">
+        <label asp-for="TableName" class="control-label"></label>
+    </div>
+    <div class="col-sm">
+        <input asp-for="TableName" class="form-control" style="width:150px;" minlength="2" readonly="readonly" />
+        <span asp-validation-for="TableName" class="text-danger"></span>
+    </div>
+</div>
+
+
+<div class="row mb-3">
+    <div class="col-sm-2">
+        <label asp-for="Code" class="control-label"></label>
+    </div>
+    <div class="col-sm">
+        <input asp-for="Code" class="form-control" style="width:150px;"  minlength="8" maxlength="9" readonly="readonly" />
+        <span asp-validation-for="Code" class="text-danger"></span>
+    </div>
+</div>
+
+<div class="row mb-3">
+    <div class="col-sm-2">
+        <label asp-for="Language_Code" class="control-label"></label>
+    </div>
+    <div class="col-sm">
+        <input asp-for="Language_Code" class="form-control" style="width:150px;" minlength="2" maxlength="9" readonly="readonly" />
+        <span asp-validation-for="Language_Code" class="text-danger"></span>
+    </div>
+</div>
+
+<div class="row mb-3">
+    <div class="col-sm-2">
+        <label asp-for="Description" class="control-label"></label>
+    </div>
+    <div class="col-sm">
+        <input asp-for="Description" class="form-control" style="width:150px;" readonly="readonly" />
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+</div>
+
+<div class="row mb-3">
+    <div class="col-sm-2">
+        <label asp-for="Name" class="control-label"></label>
+    </div>
+    <div class="col-sm">
+        <input asp-for="Name" class="form-control" style="width:150px;" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+</div>
+
+<div class="row mb-3">
+    <div class="col-sm-2">
+        <input type="submit" value="@ViewBag.SaveButtonText" class="btn btn-primary" />
+    </div>
+
+    <div class="col-sm">
+        <a asp-action="Index" class="btn btn-default">리스트</a>
+    </div>
+</div>
+
+<div class="row mb-3">
+    <div class="col-sm">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <span class="text-danger">@ViewBag.ErrorMessage</span>
+    </div>
+</div>

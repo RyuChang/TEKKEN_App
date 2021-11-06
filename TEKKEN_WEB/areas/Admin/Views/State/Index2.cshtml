@@ -1,0 +1,99 @@
+﻿@model StateGroup
+@inject IStateRepository stateRepository
+@inject IHtmlLocalizer<SharedResource> SharedLocalizer
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    ViewData["State"] = "State";
+}
+
+<div class="container">
+    <div class="m-auto" id="Character-list">
+        <h2 style="text-align:center;">State</h2>
+        <span style="color: #ff0000">=================</span>
+
+        <hr />
+        @ViewData["State"]
+
+        @*================ State그룹 코드 ====================*@
+        <div class="row mb-3">
+            <div class="col-sm-2">
+                <label class="col-form-label col-form-label-sm">캐릭터</label>
+            </div>
+            <div class="col-sm">
+                <select id="StateGroup_code" asp-items="@ViewBag.SelectAllStateGroups"></select>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" style="width: 90%; margin-left: auto; margin-right: auto; border: 0;">
+                <colgroup>
+                    <col style="width: 100px;" />
+                    <col style="width: 100px;" />
+                    <col style="width: 150px;" />
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>@SharedLocalizer["Id"]</th>
+                        <th>@SharedLocalizer["StateGroup_name"]</th>
+                        <th>@SharedLocalizer["Code"]</th>
+                        <th>@SharedLocalizer["Description"]</th>
+                        <th>@SharedLocalizer["Name"]</th>
+                        <th>@SharedLocalizer["Number"]</th>
+                        <th>@SharedLocalizer["Modify"]</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var item in ViewBag.StateList)
+                    {
+                        <tr>
+                            <td>
+                                @Html.Raw(@item.Id)
+                            </td>
+                            <td>
+                                @Html.Raw(@item.StateGroup_name)
+                            </td>
+                            <td>
+                                @Html.Raw(@item.Code)
+                            </td>
+                            <td>
+                                @Html.Raw(@item.Description)
+                            </td>
+                            <td>
+                                @Html.Raw(@item.Name)
+                            </td>
+                            <td>
+                                @Html.Raw(@item.Number)
+                            </td>
+                            <td>
+                                <a asp-action="Update" class="btn btn-primary" asp-route-id="@item.Id">수정</a>
+                                <a asp-action="UpdateName" class="btn btn-primary" asp-route-code="@item.Code">명칭 편집</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="row mb-3">
+            <a asp-action="Create" class="btn btn-primary" asp-route-stateGroup_code="@ViewBag.stateGroup_Code">추가</a>
+        </div>
+
+    </div>
+
+    @section Scripts {
+        @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+
+        <script>
+            $('#StateGroup_code').change(function () {
+                var url = '/Admin/State/Index';
+                var StateGroup_code = $('#StateGroup_code').val();
+                location.href = url + '?StateGroup_code=' + StateGroup_code;
+            });
+
+            $().ready(function () {
+                $('#StateGroup').focus();
+            });
+        </script>
+    }
+

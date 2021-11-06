@@ -1,0 +1,92 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <CopyRefAssembliesToPublishDirectory>false</CopyRefAssembliesToPublishDirectory>
+    <UserSecretsId>26d58323-7daa-44d2-aba1-46fb0402ab30</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>TRACE;N</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Areas\Admin\Views\Move\_EditForm.cshtml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="areas\Admin\Views\MoveCommand\Index - 복사.cshtml" />
+    <Content Remove="areas\Admin\Views\MoveCommand\Index2.cshtml" />
+    <Content Remove="areas\Admin\Views\MoveCommand\_EditForm - 복사.cshtml" />
+    <Content Remove="areas\Admin\Views\MoveSubType\Index2.cshtml" />
+    <Content Remove="areas\Admin\Views\MoveType\Index2.cshtml" />
+    <Content Remove="Areas\Admin\Views\Move\_Layout.cshtml" />
+    <Content Remove="areas\Admin\Views\State\Index2.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="areas\Admin\Controllers\MoveController.cs.bak_del" />
+    <None Remove="areas\Admin\Views\HitType\Create.cshtml_DEL" />
+    <None Remove="areas\Admin\Views\MoveData\CreateMoveData.cshtml_del" />
+    <None Remove="areas\Admin\Views\MoveSubType\UpdateName.cshtml_del" />
+    <None Remove="areas\Admin\Views\MoveText\_EditForm.cshtml_del" />
+    <None Remove="areas\Admin\Views\MoveType\_EditForm.cshtml_del" />
+    <None Remove="areas\Admin\Views\Move\del_EditForm.cshtml_del" />
+    <None Remove="areas\Admin\Views\Move\Index.cshtml_del" />
+    <None Remove="areas\Admin\Views\Move\Update.cshtml_del" />
+    <None Remove="areas\Admin\Views\StateGroup\_EditForm.cshtml_del" />
+    <None Remove="areas\Admin\Views\State\Update.cshtml_del" />
+    <None Remove="areas\Admin\Views\State\_EditForm.cshtml_del" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="areas\Admin\Views\StateGroup\_EditForm.cshtml_del" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BuildBundlerMinifier" Version="3.2.449" />
+    <PackageReference Include="Dapper" Version="2.0.78" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Localization" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Localization" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Localization" Version="5.0.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.1" />
+    <PackageReference Include="Moment.js" Version="2.29.1" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="areas\Admin\Data\" />
+    <Folder Include="areas\User\NewFolder\" />
+    <Folder Include="Models\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="areas\Admin\Views\Move\Create.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Shared\Error.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Shared\_Layout.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Shared\_SelectLanguagePartial.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Shared\_ValidationScriptsPartial.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" bundleconfig_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
+
+</Project>

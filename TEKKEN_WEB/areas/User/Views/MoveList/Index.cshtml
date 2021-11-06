@@ -1,0 +1,44 @@
+﻿@{
+    Layout = "~/Areas/User/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .table tbody tr:nth-child(4n-3) {
+        background: #e2e2e2;
+    }
+    .lever {
+        width: 20px;
+        height: 20px;
+    }
+</style>
+
+<div class="container">
+    <div id="command"></div>
+    @*@await Html.PartialAsync("_CharacterSelect")
+
+        @await Html.PartialAsync("_ListViewForm")*@
+</div>
+
+
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    <script src="~/js/displayCommand.js"></script>
+
+    <script>
+        /*
+        $('#Character').change(function () {
+            var url = '/Admin/Move/Index';
+            var character_code = $('#Character').val();
+            location.href = url + '?Character_code=' + character_code;
+        });
+
+        $().ready(function () {
+            var character_code = $('#Character').val();
+            $('#Create').attr('href', '/User/Move/Create?Character_code=' + character_code)
+            $('#Character').focus();
+        });*/
+
+
+    </script>
+}
+

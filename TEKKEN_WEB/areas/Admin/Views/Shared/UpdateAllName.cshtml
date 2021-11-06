@@ -1,0 +1,22 @@
+﻿@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2 style="text-align:center;">@ViewBag.TitleDescription</h2>
+
+<hr />
+
+<div>
+    <div class="col-md-offset-2 col-md-8 col-md-offset-2">
+        <form asp-action="UpdateAllName"
+              enctype="multipart/form-data" method="post">
+                @await Html.PartialAsync("_AllNameEditForm")
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    <script type="text/javascript" src="~/js/translateName.js"></script>
+}
+

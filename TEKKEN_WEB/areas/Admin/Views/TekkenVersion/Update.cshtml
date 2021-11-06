@@ -1,0 +1,39 @@
+﻿@model TekkenVersion
+
+<h2 style="text-align:center;">버전</h2>
+@ViewBag.TitleDescription
+<hr />
+
+<div class="row">
+    <div class="col-md-offset-2 col-md-8 col-md-offset-2">
+        <form asp-controller="TekkenVersion" asp-action="Update"
+              enctype="multipart/form-data" method="post">
+            @await Html.PartialAsync("_EditForm")
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}
+
+
+
+
+
+
+@*teset Ver
+    @Html.DisplayNameFor(model => model.Version)
+    <br />
+    @Html.DisplayFor(model => model.Version)
+
+
+    @Html.DisplayNameFor(model => model.Season)
+    <br />
+    @Html.DisplayFor(model => model.Season)
+
+
+    @Html.DisplayNameFor(model => model.UpdateDate)
+    <br />
+
+    @Html.DisplayFor(model => model.UpdateDate))*@

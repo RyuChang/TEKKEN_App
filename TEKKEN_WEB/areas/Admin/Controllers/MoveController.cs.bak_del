@@ -1,0 +1,166 @@
+﻿using Admin.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
+using System;
+using System.Threading.Tasks;
+using TEKKEN_WEB.COMMON.Command;
+using TEKKEN_WEB.Enums;
+using TEKKEN_WEB.Models;
+
+namespace TEKKEN_WEB.Areas.Admin.Controllers
+{
+    [Area("Admin")]
+    public class MoveController : Controller
+    {
+        private readonly IStringLocalizer<SharedResource> _sharedLocalizer;
+        private IMoveRepository _moveRepository;
+        private IMoveTypeRepository _moveTypeRepository;
+        private IMoveSubTypeRepository _moveSubTypeRepository;
+        private IStateRepository _stateRepository;
+        private IStateGroupRepository _stateGroupRepository;
+        private ICharacterRepository _characterRepository;
+        private ITekkenVersionRepository _tekkenVersionRepository;
+        private ITranslateNameRepository _translateNameRepository;
+
+        //private readonly ILogger<MoveController> _logger; // 기본 제공 로깅
+
+        public MoveController(IStringLocalizer<SharedResource> sharedLocalizer,
+                                IMoveRepository moveRepository,
+                                IMoveTypeRepository moveTypeRepository,
+                                IMoveSubTypeRepository moveSubTypeRepository,
+                                IStateRepository stateRepository,
+                                IStateGroupRepository stateGroupRepository,
+                                ICharacterRepository characterRepository,
+                                ITekkenVersionRepository tekkenVersionRepository,
+                                ITranslateNameRepository translateNameRepository)
+        {
+            _sharedLocalizer = sharedLocalizer;
+            _moveRepository = moveRepository;
+            _moveTypeRepository = moveTypeRepository;
+            _moveSubTypeRepository = moveSubTypeRepository;
+            _stateRepository = stateRepository;
+            _stateGroupRepository = stateGroupRepository;
+            _characterRepository = characterRepository;
+            _tekkenVersionRepository = tekkenVersionRepository;
+            _translateNameRepository = translateNameRepository;
+        }
+
+        /// <summary>
+        /// 기술목록 페이지
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult Index(int character_code = 1)
+        {
+            //var list = _translateNameRepository.GetAllTranslateNamesByCode(TableName.move_Command, 0);
+            ViewBag.tableName = TableName.move;
+            ViewBag.GetAllMoves = _moveRepository.GetAllMoves(character_code);
+            ViewBag.SelectAllCharacters = _characterRepository.GetAllCharactersSelectItems(character_code);
+            return View();
+        }
+
+        /// <summary>
+        /// 기술 상세 보기 페이지
+        /// </summary>
+        /// <param name="id">id</param>
+        /// <returns></returns> 
+        public async Task<IActionResult> Details(int id)
+        {
+            Move move = _moveRepository.GetMoveDetailById(id);
+            return View(move);
+        }
+
+        /// <summary>
+        /// 기술 수정 폼
+        /// <param name="id">id</param>
+        /// </summary>
+        [HttpGet]
+        public IActionResult Update(int id)
+        {
+            //ViewBag.FormType = FormType.Update;
+            ViewBag.TitleDescription = "기술 수정 - 아래 항목을 수정하세요.";
+            ViewBag.SaveButtonText = "수정";
+            Move move = _moveRepository.GetMoveDetailById(id);
+            ViewBag.SelectMoveType = _moveTypeRepository.GetAllMoveTypesSelectItems();
+            ViewBag.SelectAllMoveSubTypes = _moveSubTypeRepository.GetMoveSubTypesSelectItems(move.Character_code);
+            ViewBag.SelectAllVersions = _tekkenVersionRepository.GetAllVersionsSelectItems();
+            ViewBag.SelectAllCharacters = _characterRepository.GetAllCharactersSelectItems(move.Character_code);
+            ViewBag.SelectAllStateGroups = _stateGroupRepository.GetStateGroupsSelectItems(move.MoveType_code);
+
+            return View(move);
+        }
+
+
+        /// <summary>
+        /// 기술 하위 분류 저장
+        /// </summary>
+        [HttpPost]
+        public async Task<IActionResult> Update(Move move)
+        {
+            _moveRepository.Update(move); // 데이터 저장
+            return RedirectToAction("Index", move); // 저장 후 리스트 페이지로 이동
+
+        }
+
+        /// <summary>
+        /// 기술 추가 폼
+        /// </summary>
+        [HttpGet]
+        //[Authorize] // 스팸 글 때문에 추가
+        public IActionResult Create(int character_code)
+         {
+            Move move = _moveRepository.GetMove_RecentByCharacter_code(character_code);
+            // 로깅
+            //_logger.LogInformation("기술 추가 페이지 로딩");
+
+            // 글쓰기 폼은 입력, 수정, 답변에서 _BoardEditorForm.cshtml 공유함
+            ViewBag.FormType = FormType.Create;
+            ViewBag.TitleDescription = "기술 추가 - 다음 필드들을 채워주세요.";
+            ViewBag.SaveButtonText = "저장";
+            ViewBag.SelectMoveType = _moveTypeRepository.GetAllMoveTypesSelectItems();
+            //ViewBag.SelectAllCharacters = _characterRepository.GetAllCharactersSelectItems(move.Character_code);
+            ViewBag.SelectAllMoveSubTypes = _moveSubTypeRepository.GetMoveSubTypesSelectItems(character_code);
+            ViewBag.SelectAllVersions = _tekkenVersionRepository.GetAllVersionsSelectItems();
+            //ViewBag.SelectAllStates = _stateRepository.GetAllStateSelectItems();
+            ViewBag.SelectAllStateGroups = _stateGroupRepository.GetStateGroupsSelectItems(0);
+            //ViewBag.SelectAllStateGroups = _stateGroupRepository.GetStateGroupsSelectItems();
+
+            return View(move);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(Move model)
+        {
+            _moveRepository.Create(model); // 데이터 저장
+            //// 데이터 저장 후 리스트 페이지 이동시 toastr로 메시지 출력
+            //TempData["Message"] = "데이터가 저장되었습니다.";
+            return RedirectToAction("Index", model); // 저장 후 리스트 페이지로 이동
+        }
+
+        [HttpPost]
+        public String TransCommand(string command,string language_code)
+        {
+            return new TekkenCommand(command, language_code).GetResultcommand();
+        }
+
+        [HttpGet]
+        public IActionResult SelectMove(string stateType, int character_code)
+        {
+            ViewBag.stateType = stateType;
+            ViewBag.SelectMoves = _moveRepository.GetMovesByCharacterSelectItems(character_code);
+            return PartialView("_SelectMoveModalPartial");
+        }
+
+        [HttpGet]
+        public JsonResult GetKeyMap()
+        {
+            return Json(new TekkenCommand().GetKeyMaps());
+        }
+        [HttpGet]
+        public async Task<IActionResult> Delete(int code)
+        {
+            _moveRepository.Delete(code);
+            return RedirectToAction("Index"); // 저장 후 리스트 페이지로 이동
+        }
+
+    }
+}

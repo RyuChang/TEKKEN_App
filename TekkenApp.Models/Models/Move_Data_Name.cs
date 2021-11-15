@@ -28,6 +28,6 @@ namespace TekkenApp.Models
         [Column("checked")]
         public bool _checked { get; set; }
 
-        public virtual move_data Move_Data_CodeNavigation { get; set; }
+        public virtual Move_data Move_Data_CodeNavigation { get; set; }
     }
 }

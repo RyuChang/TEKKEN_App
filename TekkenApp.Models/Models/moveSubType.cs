@@ -11,12 +11,12 @@ namespace TekkenApp.Models
 {
     [Index(nameof(character_code), nameof(number), Name = "IX_moveSubType_character_code_number", IsUnique = true)]
     [Index(nameof(code), Name = "IX_moveSubType_code", IsUnique = true)]
-    public partial class moveSubType
+    public partial class MoveSubType
     {
-        public moveSubType()
+        public MoveSubType()
         {
-            moveSubType_name = new HashSet<moveSubType_name>();
-            move_data = new HashSet<move_data>();
+            moveSubType_name = new HashSet<MoveSubType_name>();
+            move_data = new HashSet<Move_data>();
         }
 
         [Key]
@@ -27,8 +27,8 @@ namespace TekkenApp.Models
         [Required]
         public string description { get; set; }
 
-        public virtual character character_codeNavigation { get; set; }
-        public virtual ICollection<moveSubType_name> moveSubType_name { get; set; }
-        public virtual ICollection<move_data> move_data { get; set; }
+        public virtual Character character_codeNavigation { get; set; }
+        public virtual ICollection<MoveSubType_name> moveSubType_name { get; set; }
+        public virtual ICollection<Move_data> move_data { get; set; }
     }
 }

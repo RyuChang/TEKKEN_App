@@ -9,9 +9,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace TekkenApp.Models
 {
-    public partial class tekkenVersion
+    public partial class TekkenVersion
     {
-        public tekkenVersion()
+        public TekkenVersion()
         {
             Move = new HashSet<Move>();
         }

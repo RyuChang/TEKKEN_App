@@ -10,9 +10,9 @@ using Microsoft.EntityFrameworkCore;
 namespace TekkenApp.Models
 {
     [Index(nameof(Move_Code), Name = "IX_move_data", IsUnique = true)]
-    public partial class move_data
+    public partial class Move_data
     {
-        public move_data()
+        public Move_data()
         {
             Move_Data_Name = new HashSet<Move_Data_Name>();
         }
@@ -51,12 +51,12 @@ namespace TekkenApp.Models
         public decimal? version { get; set; }
 
         public virtual Move Move_CodeNavigation { get; set; }
-        public virtual hitType counterType_codeNavigation { get; set; }
-        public virtual hitType guardType_codeNavigation { get; set; }
-        public virtual hitType hitType_codeNavigation { get; set; }
-        public virtual moveSubType moveSubType_codeNavigation { get; set; }
-        public virtual moveType moveType_codeNavigation { get; set; }
-        public virtual hitType startType_codeNavigation { get; set; }
+        public virtual HitType counterType_codeNavigation { get; set; }
+        public virtual HitType guardType_codeNavigation { get; set; }
+        public virtual HitType hitType_codeNavigation { get; set; }
+        public virtual MoveSubType moveSubType_codeNavigation { get; set; }
+        public virtual MoveType moveType_codeNavigation { get; set; }
+        public virtual HitType startType_codeNavigation { get; set; }
         public virtual ICollection<Move_Data_Name> Move_Data_Name { get; set; }
     }
 }

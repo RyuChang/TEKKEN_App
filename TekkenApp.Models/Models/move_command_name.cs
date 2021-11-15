@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 namespace TekkenApp.Models
 {
     [Index(nameof(language_code), nameof(Move_Command_code), Name = "IX_move_command", IsUnique = true)]
-    public partial class move_command_name
+    public partial class Move_command_name
     {
         [Key]
         public int id { get; set; }
@@ -24,6 +24,6 @@ namespace TekkenApp.Models
         public bool _checked { get; set; }
 
         public virtual Move Move_Command_codeNavigation { get; set; }
-        public virtual language language_codeNavigation { get; set; }
+        public virtual Language language_codeNavigation { get; set; }
     }
 }

@@ -23,6 +23,6 @@ namespace TekkenApp.Models
         public bool Checked { get; set; }
 
         public virtual StateGroup StateGroup_codeNavigation { get; set; }
-        public virtual language language_codeNavigation { get; set; }
+        public virtual Language language_codeNavigation { get; set; }
     }
 }

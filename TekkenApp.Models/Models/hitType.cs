@@ -9,30 +9,31 @@ using Microsoft.EntityFrameworkCore;
 
 namespace TekkenApp.Models
 {
-    [Index(nameof(code), Name = "IX_hitType", IsUnique = true)]
-    [Index(nameof(number), Name = "IX_hitType_1", IsUnique = true)]
-    public partial class hitType
+    [Index(nameof(Code), Name = "IX_hitType", IsUnique = true)]
+    [Index(nameof(Number), Name = "IX_hitType_1", IsUnique = true)]
+   
+    public partial class HitType
     {
-        public hitType()
+        public HitType()
         {
-            hitType_name = new HashSet<hitType_name>();
-            move_datacounterType_codeNavigation = new HashSet<move_data>();
-            move_dataguardType_codeNavigation = new HashSet<move_data>();
-            move_datahitType_codeNavigation = new HashSet<move_data>();
-            move_datastartType_codeNavigation = new HashSet<move_data>();
+            hitType_name = new HashSet<HitType_name>();
+            move_datacounterType_codeNavigation = new HashSet<Move_data>();
+            move_dataguardType_codeNavigation = new HashSet<Move_data>();
+            move_datahitType_codeNavigation = new HashSet<Move_data>();
+            move_datastartType_codeNavigation = new HashSet<Move_data>();
         }
 
         [Key]
-        public int id { get; set; }
-        public int code { get; set; }
+        public int Id { get; set; }
+        public int Code { get; set; }
         [Required]
-        public string description { get; set; }
-        public byte number { get; set; }
+        public string Description { get; set; }
+        public int Number { get; set; }
 
-        public virtual ICollection<hitType_name> hitType_name { get; set; }
-        public virtual ICollection<move_data> move_datacounterType_codeNavigation { get; set; }
-        public virtual ICollection<move_data> move_dataguardType_codeNavigation { get; set; }
-        public virtual ICollection<move_data> move_datahitType_codeNavigation { get; set; }
-        public virtual ICollection<move_data> move_datastartType_codeNavigation { get; set; }
+        public virtual ICollection<HitType_name> hitType_name { get; set; }
+        public virtual ICollection<Move_data> move_datacounterType_codeNavigation { get; set; }
+        public virtual ICollection<Move_data> move_dataguardType_codeNavigation { get; set; }
+        public virtual ICollection<Move_data> move_datahitType_codeNavigation { get; set; }
+        public virtual ICollection<Move_data> move_datastartType_codeNavigation { get; set; }
     }
 }

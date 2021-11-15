@@ -1,0 +1,44 @@
+﻿@page "/Components/NameEditComponent"
+
+<h3>NameEditComponent</h3>
+
+<form>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="form-group">
+                <label>ID: </label>
+                @baseTranslateName.Id
+            </div>
+
+            <div class="form-group">
+                <label>테이블명</label>
+                @baseTranslateName.GetTableName()
+            </div>
+
+            <div class="form-group">
+                <label>코드 </label>
+                @baseTranslateName.Base_code
+
+            </div>
+            <div class="form-group">
+                <label>입력 언어</label>
+                @baseTranslateName.Language_code
+            </div>
+
+
+            <div class="form-group">
+                @*<a href="/HitTypes/Edit/@hitType_baseTranslateNamename.Id">Edit</a>
+                <a href="/HitTypes/Delete/@baseTranslateName.Id">Delete</a>
+
+                <input type="button" value="Edit" id="btnEdit_Click" @onclick="btnEdit_Click" />
+                <input type="button" value="Cancel" id="btnCancel_click" @onclick="btnCancel_click" />*@
+                <a href="/HitTypes/">List</a>
+            </div>
+        </div>
+    </div>
+</form>
+
+@code {
+    
+
+}

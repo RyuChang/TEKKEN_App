@@ -15,8 +15,8 @@ namespace TekkenApp.Models
     {
         public Move()
         {
-            move_command_name = new HashSet<move_command_name>();
-            move_name = new HashSet<move_name>();
+            move_command_name = new HashSet<Move_command_name>();
+            move_name = new HashSet<Move_name>();
         }
 
         [Key]
@@ -29,13 +29,13 @@ namespace TekkenApp.Models
         [Column(TypeName = "decimal(4, 2)")]
         public decimal? version { get; set; }
 
-        public virtual character character_codeNavigation { get; set; }
+        public virtual Character character_codeNavigation { get; set; }
         [ForeignKey(nameof(version))]
-        [InverseProperty(nameof(tekkenVersion.Move))]
-        public virtual tekkenVersion versionNavigation { get; set; }
+        [InverseProperty(nameof(TekkenVersion.Move))]
+        public virtual TekkenVersion versionNavigation { get; set; }
         public virtual Move_command Move_command { get; set; }
-        public virtual move_data move_data { get; set; }
-        public virtual ICollection<move_command_name> move_command_name { get; set; }
-        public virtual ICollection<move_name> move_name { get; set; }
+        public virtual Move_data move_data { get; set; }
+        public virtual ICollection<Move_command_name> move_command_name { get; set; }
+        public virtual ICollection<Move_name> move_name { get; set; }
     }
 }

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 namespace TekkenApp.Models
 {
     [Index(nameof(code), Name = "IX_command", IsUnique = true)]
-    public partial class command
+    public partial class Command
     {
         [Key]
         public int id { get; set; }

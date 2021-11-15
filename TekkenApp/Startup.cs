@@ -15,7 +15,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TekkenApp.Areas.Identity;
 using TekkenApp.Data;
-using TekkenApp.Models;
 
 namespace TekkenApp
 {
@@ -35,9 +34,19 @@ namespace TekkenApp
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
+
             services.AddDbContext<TekkenDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("TekkenConnection")));
+                    Configuration.GetConnectionString("tekkenConnection"), b => b.MigrationsAssembly("TekkenApp")).EnableSensitiveDataLogging());
+
+        //    services.AddDbContextFactory<TekkenDbContext>(opt =>
+        //opt.UseSqlServer($"Data Source={nameof(TekkenDbContext.con)}.db").EnableSensitiveDataLogging());
+
+            //services.AddEntityFrameworkSqlServer().AddDbContext<TekkenDbContext>(options =>
+            //    options.UseSqlServer(
+            //        Configuration.GetConnectionString("TekkenConnection")));
+
+
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddRazorPages();
@@ -45,12 +54,8 @@ namespace TekkenApp
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
             services.AddDatabaseDeveloperPageExceptionFilter();
             services.AddSingleton<WeatherForecastService>();
-
-            services.AddDbContext<TekkenDbContext>();
-
-            //services.AddTransient<IMoveRepository, MoveRepository>();
-            //services.AddTransient<IMoveRepository, MoveRepository>();
-
+            services.AddScoped<HitTypeService>();
+            services.AddScoped<BaseService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

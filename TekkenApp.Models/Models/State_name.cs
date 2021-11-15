@@ -23,7 +23,7 @@ namespace TekkenApp.Models
         [Column("checked")]
         public bool _checked { get; set; }
 
-        public virtual language language_codeNavigation { get; set; }
+        public virtual Language language_codeNavigation { get; set; }
         public virtual State state_codeNavigation { get; set; }
     }
 }

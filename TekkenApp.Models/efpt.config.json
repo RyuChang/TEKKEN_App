@@ -1,6 +1,6 @@
 ﻿{
   "CodeGenerationMode": 0,
-  "ContextClassName": "TEKKENContext",
+  "ContextClassName": "TekkenDbContext",
   "ContextNamespace": null,
   "DefaultDacpacSchema": null,
   "FilterSchemas": false,
@@ -106,11 +106,15 @@
       "ObjectType": 0
     },
     {
+      "Name": "[dbo].[tableCode]",
+      "ObjectType": 0
+    },
+    {
       "Name": "[dbo].[tekkenVersion]",
       "ObjectType": 0
     }
   ],
-  "UiHint": "(localdb)\\MSSQLLocalDB.TEKKEN.dbo",
+  "UiHint": "rc-pc\\gmgg.TEKKEN.dbo",
   "UseBoolPropertiesWithoutDefaultSql": false,
   "UseDatabaseNames": true,
   "UseDbContextSplitting": false,

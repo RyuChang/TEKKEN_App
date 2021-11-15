@@ -5,19 +5,20 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
+
 #nullable disable
 
 namespace TekkenApp.Models
 {
     [Index(nameof(code), Name = "IX_character", IsUnique = true)]
     [Index(nameof(code_name), Name = "IX_character_code_Unique", IsUnique = true)]
-    public partial class character
+    public partial class Character
     {
-        public character()
+        public Character()
         {
             Move = new HashSet<Move>();
-            moveSubType = new HashSet<moveSubType>();
-            moveText = new HashSet<moveText>();
+            moveSubType = new HashSet<MoveSubType>();
+            moveText = new HashSet<MoveText>();
         }
 
         [Key]
@@ -31,7 +32,7 @@ namespace TekkenApp.Models
         public string description { get; set; }
 
         public virtual ICollection<Move> Move { get; set; }
-        public virtual ICollection<moveSubType> moveSubType { get; set; }
-        public virtual ICollection<moveText> moveText { get; set; }
+        public virtual ICollection<MoveSubType> moveSubType { get; set; }
+        public virtual ICollection<MoveText> moveText { get; set; }
     }
 }

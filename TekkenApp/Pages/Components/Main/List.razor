@@ -1,0 +1,89 @@
+﻿@page "/Components/Main/List"
+@typeparam TEntity
+@typeparam TNameEntity
+
+<h3>List</h3>
+
+<h1 class="text-center">HitTypes</h1>
+
+<div>
+    <a href="/HitTypes/Create" class="btn btn-primary">추가</a>
+</div>
+
+
+<style>
+    .table tbody tr:nth-child(4n-3) {
+        background: #e2e2e2;
+    }
+</style>
+
+<div class="container">
+    <div class="m-auto" id="Character-list">
+        <div class="table-responsive">
+            @if (baseEntities == null)
+            {
+                <p><em>Loading...</em></p>
+            }
+            else
+            {
+                <table class="table table-bordered border-primary" style="width: 100%; margin-left: auto; margin-right: auto; border: 0;">
+                    <colgroup>
+                        <col style="width: 100px;" />
+                        <col style="width: 100px;" />
+                        <col style="width: 150px;" />
+                    </colgroup>
+                    <thead class="table-dark">
+                        <tr>
+                            <th>CODE</th>
+                            <th>NUMBER</th>
+                            <th>DESCRIPTION</th>
+                            <th>MODIFY</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var baseEntities in baseEntities)
+                        {
+                            <tr id="@baseEntities.">
+                                <td>@baseEntities.Code</td>
+                                <td>@baseEntities.Number</td>
+                                <td>@baseEntities.Description</td>
+                                <td>
+                                    @*<a asp-action="/HitTypes/Details_name/" class="btn btn-primary" asp-route-id="@hitType.Id">수정</a>*@
+                                    <a href="/HitTypes/Edit/@baseEntities.Id">수정</a>
+                                    @*<a href="@hitType_name.Id">상세</a>*@
+                                    <!--<a asp-action="UpdateAllName" class="btn btn-primary" asp-route-id="@hitType.Id">명칭 편집</a>-->
+                                </td>
+                            </tr>
+
+                            foreach (var hitType_name in baseService.GetEntity_AllTranslateNamesByCodeAsync(baseEntities.Code).ToList())
+                            {
+                                <tr>
+                                    <td>@hitType_name.Language_code</td>
+                                    <td colspan="2">
+                                        @if (String.IsNullOrEmpty(hitType_name.Name))
+                                        {
+                                            @*<input type="button" class="btn btn-primary" value="추가" id="btnCreate_Click" @onclick="btnCreate_Click" />*@
+                                        }
+                                        else
+                                        {
+                                            @hitType_name.Name
+                                        }
+                                    </td>
+                                    <td>
+                                        <a href="@(baseEntities.preUrl)/Details_name/@hitType_name.Id">상세</a>
+                                        <a href="@(baseEntities.preUrl)/Edit_name/@hitType_name.Id">편집</a>
+                                        @*<a asp-action="UpdateName" class="btn btn-primary" asp-route-id="@hitType_name.Id">명칭 편집</a>*@
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+</div>
+@code {
+
+}

@@ -1,22 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
 using TekkenApp.Models;
 
 namespace TekkenApp.Data
 {
-    public class HitTypeService : BaseService
+    public class HitTypeService: BaseService<HitType, HitType_name>
     {
-        [Inject]
-        IDbContextFactory<TekkenDbContext> DbFactory { get; set; }
 
-        public HitTypeService(TekkenDbContext tekkenDbContext) : base(tekkenDbContext)
+        public HitTypeService(TekkenDbContext tekkenDbContext) : base(tekkenDbContext, tekkenDbContext.hitType_name)
         {
-         
+            mainTable = TableName.HitType.ToString();
+            nameTable = TableName.HitType_name.ToString();
         }
-
-
 
         public async Task<HitType> GetHitTypeByIdAsync(int id)
         {
@@ -33,23 +29,6 @@ namespace TekkenApp.Data
             return await _tekkenDBContext.hitType.ToListAsync();
         }
 
-
-        public async Task<HitType_name> UpdateHitTypeNameAsync(HitType_name hitType_name)
-        {
-            //DbContext context = DbFactory.CreateDbContext();
-
-            await UpdateTranslateNameAsync(_tekkenDBContext.hitType_name, hitType_name);
-            //HitType_name name = new HitType_name();
-            //name.Id = hitType_name.Id;
-            //hitType_name.Name = hitType_name.Name;
-            //hitType_name.Language_code = hitType_name.Language_code;
-            //hitType_name.Base_code = hitType_name.Base_code;
-
-            //_tekkenDBContext.Entry(hitType_name).State = EntityState.Modified;
-
-            //await _tekkenDBContext.SaveChangesAsync();
-            return hitType_name;
-        }
 
         public async Task<HitType> UpdateHitTypeAsync(HitType hitType)
         {
@@ -84,16 +63,11 @@ namespace TekkenApp.Data
             return true;
         }*/
         #endregion
-        public async Task<List<HitType_name>> GetHitType_AllTranslateNamesByCodeAsync(int code)
+        public override List<BaseTranslateName> GetEntity_AllTranslateNamesByCodeAsync(int code)
         {
-            HitType_name hitType_name = new HitType_name();
-            hitType_name.Base_code = code;
-
-            var result = base.GetAllTranslateNamesByCodeAsync(_tekkenDBContext.hitType_name, hitType_name);
+            var result = base.GetAllTranslateNamesByCodeAsync(nameDbSet, code);
             return result;
         }
-
-
     }
 }
 

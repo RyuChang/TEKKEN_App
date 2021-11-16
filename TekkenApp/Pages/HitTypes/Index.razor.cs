@@ -17,12 +17,23 @@ namespace TekkenApp.Pages.HitTypes
         [Inject]
         private HitTypeService hitTypeService { get; set; }
 
+        NavigationManager navigationManager;
+
         public IList<HitType> hitTypes { get; set; }
-        //public IList<HitType_name> hitType_names { get; set; }
+        //public IList<BaseEntity> baseEntities { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
             hitTypes = await hitTypeService.GetHitTypes();
+
+            //baseService = hitTypeService;
         }
+
+        protected void btnCreate_Click()
+        {
+            navigationManager.NavigateTo($"{HitType.PRE_URL}/Create_name");
+        }
+
+
     }
 }

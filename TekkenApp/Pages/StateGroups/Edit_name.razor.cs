@@ -1,22 +1,24 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
+using Microsoft.EntityFrameworkCore;
 using TekkenApp.Data;
 using TekkenApp.Models;
 
-namespace TekkenApp.Pages.HitTypes
+namespace TekkenApp.Pages.StateGroups
 {
-    public partial class Edit
+    public partial class Edit_name
     {
         [Parameter]
         public string Id { get; set; }
 
+        public StateGroup_name stateGroup_name = new StateGroup_name();
+
         [Inject]
-        private HitTypeService hitTypeService { get; set; }
+        private StateGroupService stateGroupService { get; set; }
 
         [Inject]
         NavigationManager navigationManager { get; set; }
 
-        public HitType hitType;
 
         protected override async Task OnInitializedAsync()
         {
@@ -24,14 +26,14 @@ namespace TekkenApp.Pages.HitTypes
             {
 
             }
-            hitType = await hitTypeService.GetHitTypeByIdAsync(id);
+            stateGroup_name = await stateGroupService.GetStateGroupNameByIdAsync(id);
         }
 
 
         protected async Task btnEdit_Click()
         {
-            await hitTypeService.UpdateHitTypeAsync(hitType);
-            navigationManager.NavigateTo($"/HitTypes/Details/{Id}");
+            //await stateGroupService.UpdateStateGroupNameAsync(stateGroup_name);
+            navigationManager.NavigateTo($"/StateGroup/Details_name/{Id}");
         }
 
         protected void btnCancel_click()

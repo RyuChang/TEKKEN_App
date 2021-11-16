@@ -23,6 +23,12 @@ namespace TekkenApp.Models
     }
 
 
+    public enum APP
+    {
+        StateGroup,
+        HitType,
+    }
+
     public enum TableName
     {
         NONE,
@@ -35,10 +41,10 @@ namespace TekkenApp.Models
         command,
         State,
         StateGroup,
+        StateGroup_name,
         MoveText,
         HitType,
         HitType_name
-
     }
 
 

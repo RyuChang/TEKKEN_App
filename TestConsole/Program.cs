@@ -17,11 +17,20 @@ namespace TestConsole
         static void Main(string[] args)
         {
             TekkenDbContext _tekkenDbContext = new TekkenDbContext();
-//tekkendbContext.GetAllEntityQueries()
+            new Test1();
+            Console.WriteLine(Test1.url);
+            Console.WriteLine(Test2.url);
+            Console.WriteLine(Base.url);
+
+
+            Console.WriteLine(Test1.GetType1());
+            Console.WriteLine(Test2.GetType1());
+            Console.WriteLine(Base.GetType1());
+            //tekkendbConLinetext.GetAllEntityQueries()
 
 
             //var someDbSet = tekkendbContext.Set(typeof(HitType_name));
-           // Console.WriteLine(someDbSet);
+            // Console.WriteLine(someDbSet);
 
             //tekkendbContext.Set(typeof(HitType_name)).Add(entity);
 
@@ -90,7 +99,7 @@ namespace TestConsole
                 ///r methods = dbSet.GetType().GetMethods();
 
 
-                
+
 
                 //object retVal = AddMethod.Invoke(dbSet, new object[] { transe });
                 //object retVal = AddMethod.Invoke(dbSet, transe);
@@ -98,36 +107,42 @@ namespace TestConsole
             }
         }
     }
-    public static class Tt
+    public class Test1 : Base
     {
-
-        public static IQueryable Set(this DbContext context, Type T)
+        public static string url = "test1";
+        public Test1()
         {
-            MethodInfo method = typeof(DbContext).GetMethods()
-                .Where(p => p.Name == "Set" && p.ContainsGenericParameters).FirstOrDefault();
-
-            // Build a method with the specific type argument you're interested in
-            method = method.MakeGenericMethod(T);
-
-            return method.Invoke(context, null) as IQueryable;
+            url = "t1";
         }
 
-        public static IQueryable GetEntityQuery(this DbContext context, Type entityType)
+    }
+    public class Test2 : Base
+    {
+         url = "test2";
+        public Test2()
         {
-            MethodInfo method = typeof(DbContext).GetMethod(nameof(DbContext.Set));
-            MethodInfo genericMethod = method.MakeGenericMethod(entityType);
-            var dbSet = genericMethod.Invoke(context, null);
-
-            return (IQueryable)dbSet;
-        }
-
-        public static IEnumerable<IQueryable> GetAllEntityQueries(this DbContext context)
-        {
-            foreach (var entityType in context.Model.GetEntityTypes())
-            {
-                yield return context.GetEntityQuery(entityType.ClrType);
-            }
+            url = "t2";
         }
     }
+    public class Base
+    {
+        public static string url = "base";
+        public static string url2 = "base";
+        public Base()
+        {
+            url = "b";
+        }
+
+        public static string GetType1()
+        {
+            return url;
+        }
+        public string GetType2()
+        {
+            return url2;
+        }
+    }
+
+
 }
 

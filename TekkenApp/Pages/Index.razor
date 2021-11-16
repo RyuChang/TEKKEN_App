@@ -2,7 +2,7 @@
 @using TekkenApp.Data
 
 @inject NavigationManager navagitionManager
-@inject BaseService baseService
+@*@inject BaseService baseService*@
 
 
 <h1>Hello, world!</h1>
@@ -24,13 +24,15 @@ Welcome to your new app.
 
     [Inject]
     private HitTypeService hitTypeService { get; set; }
+    //private DbSet<HitType_name> = base
+
     public int testNum { get; set; }
     public int NewNumber { get; set; }
     public String table { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        testNum = await baseService.GetCreateCode(TableName.HitType, 0, 0, 3);
+        //testNum = await baseService.GetCreateCode(TableName.HitType, 0, 0, 3);
         //NewNumber=await baseService.GetRecentBaseModel(TableName, 0);
         //baseService.GetRecentBaseModel("HitType", 0);
         //table = await baseService.GetTable("HitType");

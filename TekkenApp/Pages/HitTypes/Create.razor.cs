@@ -9,8 +9,8 @@ namespace TekkenApp.Pages.HitTypes
     {
         [Inject]
         private HitTypeService hitTypeService { get; set; }
-        [Inject]
-        private BaseService baseService { get; set; }
+        //[Inject]
+        //private BaseService baseService { get; set; }
         [Inject]
         NavigationManager navigationManager { get; set; }
 
@@ -18,7 +18,7 @@ namespace TekkenApp.Pages.HitTypes
 
         protected override async Task OnInitializedAsync()
         {
-            hitType.Number = await baseService.GetCreateNumber(TableName.HitType);
+            hitType.Number = await hitTypeService.GetCreateNumber(TableName.HitType);
         }
 
         protected async void btnSave_Click()

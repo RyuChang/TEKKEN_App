@@ -14,7 +14,8 @@ namespace TekkenApp.Data
             : base(options)
         {
         }
-        public virtual DbSet<BaseEntity> BaseEntity { get; set; }
+        public virtual DbSet<BaseUtil> BaseUtil { get; set; }
+        public virtual DbSet<BaseEntity> BaseEntities { get; set; }
         //public virtual DbSet<BaseTranslateName> BaseTranslateName { get; set; }
         public virtual DbSet<Move> Move { get; set; }
         public virtual DbSet<Move_Data_Name> Move_Data_Name { get; set; }
@@ -64,7 +65,7 @@ namespace TekkenApp.Data
 
             modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
 
-            modelBuilder.Entity<BaseEntity>(entity =>
+            modelBuilder.Entity<BaseUtil>(entity =>
             {
 
             });
@@ -143,7 +144,7 @@ namespace TekkenApp.Data
 
                 entity.HasOne(d => d.StateGroup_codeNavigation)
                     .WithMany(p => p.State)
-                    .HasPrincipalKey(p => p.code)
+                    .HasPrincipalKey(p => p.Code)
                     .HasForeignKey(d => d.StateGroup_code)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_State_StateGroup");
@@ -151,28 +152,28 @@ namespace TekkenApp.Data
 
             modelBuilder.Entity<StateGroup>(entity =>
             {
-                entity.Property(e => e.description).IsUnicode(false);
+                entity.Property(e => e.Description).IsUnicode(false);
             });
 
             modelBuilder.Entity<StateGroup_name>(entity =>
             {
-                entity.Property(e => e.language_code)
+                entity.Property(e => e.Language_code)
                     .IsUnicode(false)
                     .IsFixedLength(true);
 
-                entity.Property(e => e.name).IsUnicode(false);
+                entity.Property(e => e.Name).IsUnicode(false);
 
                 entity.HasOne(d => d.StateGroup_codeNavigation)
                     .WithMany(p => p.StateGroup_name)
-                    .HasPrincipalKey(p => p.code)
-                    .HasForeignKey(d => d.StateGroup_code)
+                    .HasPrincipalKey(p => p.Code)
+                    .HasForeignKey(d => d.Base_code)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_StateGroup_name_StateGroup");
 
                 entity.HasOne(d => d.language_codeNavigation)
                     .WithMany(p => p.StateGroup_name)
                     .HasPrincipalKey(p => p.code)
-                    .HasForeignKey(d => d.language_code)
+                    .HasForeignKey(d => d.Language_code)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_StateGroup_name_language");
             });
@@ -263,7 +264,7 @@ namespace TekkenApp.Data
 
             modelBuilder.Entity<HitType_name>(entity =>
             {
-                
+
                 entity.Property(e => e.Language_code)
                     .IsUnicode(false)
                     .IsFixedLength(true);

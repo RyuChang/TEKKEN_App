@@ -4,15 +4,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace TekkenApp.Models
 {
     [NotMapped]
-    public abstract class BaseTranslateName
+    public abstract class BaseTranslateName : BaseEntity
     {
-        protected TableName tableName { get; set; }
         
         public BaseTranslateName()
         {
 
         }
-         
+
         public BaseTranslateName(int id, int code, string language_code, string name, bool _checked)
         {
             this.Id = id;
@@ -23,12 +22,8 @@ namespace TekkenApp.Models
         }
 
 
-        [Key]
-        [Display(Name = "ID")]
-        //[Column(TypeName = "decimal(3, 0)")]
-        [Required(ErrorMessage = "ID를 입력해 주세요.")]
-        public int Id { get; set; }
 
+        
         [Display(Name = "코드")]
         [DataType(DataType.Text)]
         [Required(ErrorMessage = "코드를 입력해 주세요.")]

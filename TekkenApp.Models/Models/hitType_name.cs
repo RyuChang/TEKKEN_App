@@ -7,12 +7,14 @@ namespace TekkenApp.Models
 {
     public partial class HitType_name : BaseTranslateName
     {
-
-        //protected TableName tableName { get; set; }
+        [NotMapped]
+        public static APP APP_TYPE = APP.HitType;
+        [NotMapped]
+        public static string PRE_URL = APP_TYPE.ToString();
 
         public HitType_name()
         {
-            tableName = TableName.HitType_name;
+            SetApp(TableName.HitType_name);
         }
         
         //[Key]

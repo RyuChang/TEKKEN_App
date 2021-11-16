@@ -9,22 +9,27 @@ using Microsoft.EntityFrameworkCore;
 
 namespace TekkenApp.Models
 {
-    [Index(nameof(code), Name = "IX_StateGroup", IsUnique = true)]
-    [Index(nameof(number), Name = "IX_StateGroup_1", IsUnique = true)]
-    public partial class StateGroup
+    [Index(nameof(Code), Name = "IX_StateGroup", IsUnique = true)]
+    [Index(nameof(Number), Name = "IX_StateGroup_1", IsUnique = true)]
+
+    public partial class StateGroup : BaseEntity
     {
+        [NotMapped]
+        public string preUrl { get; set; }
+
         public StateGroup()
         {
+            preUrl = "/StateGroups";
             State = new HashSet<State>();
             StateGroup_name = new HashSet<StateGroup_name>();
         }
 
         [Key]
-        public int id { get; set; }
-        public int code { get; set; }
+        public int Id { get; set; }
+        public int Code { get; set; }
         [Required]
-        public string description { get; set; }
-        public byte number { get; set; }
+        public string Description { get; set; }
+        public byte Number { get; set; }
 
         public virtual ICollection<State> State { get; set; }
         public virtual ICollection<StateGroup_name> StateGroup_name { get; set; }

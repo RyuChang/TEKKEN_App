@@ -10,14 +10,15 @@ namespace TekkenApp.Pages.HitTypes
         [Parameter]
         public string Id { get; set; }
 
-        public HitType_name hitType_name = new HitType_name();
-
         [Inject]
         private HitTypeService hitTypeService { get; set; }
 
+        public int id { get; set; }
+        
+        //public HitType_name hitType_name = new HitType_name();
+
         [Inject]
         NavigationManager navigationManager { get; set; }
-
 
         protected override async Task OnInitializedAsync()
         {
@@ -25,9 +26,9 @@ namespace TekkenApp.Pages.HitTypes
             {
 
             }
-            hitType_name = await hitTypeService.GetHitTypeNameByIdAsync(id);
+            //hitTypes = await hitTypeService.GetHitTypes();
+            //baseService = hitTypeService;
         }
-
 
         protected async Task btnEdit_Click()
         {
@@ -35,9 +36,5 @@ namespace TekkenApp.Pages.HitTypes
             //navigationManager.NavigateTo($"/HitTypes/Details_name/{Id}");
         }
 
-        protected void btnCancel_click()
-        {
-            navigationManager.NavigateTo("/Videos");
-        }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
-using Microsoft.EntityFrameworkCore;
 using TekkenApp.Data;
 using TekkenApp.Models;
 
@@ -26,7 +25,7 @@ namespace TekkenApp.Pages.HitTypes
             {
 
             }
-            hitType_name = await hitTypeService.GetHitTypeNameByIdAsync(id);
+            hitType_name = await hitTypeService.GetNameEntityByIdAsync(id);
         }
 
 

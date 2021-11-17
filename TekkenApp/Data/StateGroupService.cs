@@ -8,7 +8,7 @@ namespace TekkenApp.Data
 {
     public class StateGroupService : BaseService<StateGroup, StateGroup_name>
     {
-        public StateGroupService(TekkenDbContext tekkenDbContext) : base(tekkenDbContext, tekkenDbContext.StateGroup_name)
+        public StateGroupService(TekkenDbContext tekkenDbContext) : base(tekkenDbContext, tekkenDbContext.StateGroup, tekkenDbContext.StateGroup_name)
         {
             mainTable = TableName.StateGroup.ToString();
             nameTable = TableName.StateGroup.ToString();
@@ -85,12 +85,12 @@ namespace TekkenApp.Data
         }*/
 
 
-        public override List<BaseTranslateName> GetEntity_AllTranslateNamesByCodeAsync(int code)
-        {
+        //public override List<StateGroup_name> GetEntity_AllTranslateNamesByCodeAsync(int code)
+        //{
 
-            var result = base.GetAllTranslateNamesByCodeAsync(nameDbSet, code);
-            return result;
-        }
+        //    var result = base.GetAllTranslateNamesByCodeAsync(code);
+        //    return result;
+        //}
 
     }
 }

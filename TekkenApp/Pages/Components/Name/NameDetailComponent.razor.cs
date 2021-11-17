@@ -5,17 +5,30 @@ using TekkenApp.Models;
 
 namespace TekkenApp.Pages.Components.Name
 {
-    public partial class NameDetailComponent
+    public partial class NameDetailComponent<TEntity, TNameEntity>
+                                            where TEntity : BaseEntity
+                                            where TNameEntity : BaseTranslateName
     {
         [Parameter]
-        public BaseTranslateName baseTranslateName { get; set; }
+        public BaseService<TEntity, TNameEntity> baseService { get; set; }
 
-        [Inject]
+        [Parameter]
+        public int Id { get; set; }
+
+        public TNameEntity nameEntity { get; set; }
+
+
         NavigationManager navigationManager { get; set; }
+
+
+        protected override async Task OnInitializedAsync()
+        {
+            nameEntity = await baseService.GetNameEntityByIdAsync(Id);
+        }
 
         protected void btnList_Click()
         {
-            navigationManager.NavigateTo($"{baseTranslateName.preUrl}");
+            //navigationManager.NavigateTo($"{baseTranslateName.preUrl}");
         }
     }
 }

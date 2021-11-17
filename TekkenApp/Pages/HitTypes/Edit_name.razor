@@ -1,9 +1,6 @@
 ﻿@page "/HitTypes/Edit_name/{Id}"
 
 <h3>Details</h3>
-<TekkenApp.Pages.Components.NameEditComponent baseTranslateName="@hitType_name" baseService="@hitTypeService">
-</TekkenApp.Pages.Components.NameEditComponent>
-
-
-
+<TekkenApp.Pages.Components.Name.NameEditComponent TEntity="HitType" TNameEntity="HitType_name" baseService="@hitTypeService">
+</TekkenApp.Pages.Components.Name.NameEditComponent>
 

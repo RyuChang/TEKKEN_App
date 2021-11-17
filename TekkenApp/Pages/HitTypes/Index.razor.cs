@@ -19,12 +19,12 @@ namespace TekkenApp.Pages.HitTypes
 
         NavigationManager navigationManager;
 
-        public IList<HitType> hitTypes { get; set; }
+        //public IList<HitType> hitTypes { get; set; }
         //public IList<BaseEntity> baseEntities { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
-            hitTypes = await hitTypeService.GetHitTypes();
+            //hitTypes = await hitTypeService.GetHitTypes();
 
             //baseService = hitTypeService;
         }

@@ -4,26 +4,19 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace TekkenApp.Models
 {
     [NotMapped]
-    public abstract class BaseTranslateName : BaseEntity
+    public abstract class BaseTranslateName //: BaseEntity
     {
-        
-        public BaseTranslateName()
-        {
+        [NotMapped]
+        public string preUrl { get; set; }
 
-        }
+        protected TableName tableName { get; set; }
 
-        public BaseTranslateName(int id, int code, string language_code, string name, bool _checked)
-        {
-            this.Id = id;
-            this.Base_code = code;
-            this.Language_code = language_code;
-            this.Name = name;
-            this.Checked = _checked;
-        }
+        [Key]
+        [Display(Name = "ID")]
+        [Required(ErrorMessage = "ID를 입력해 주세요.")]
+        public int Id { get; set; }
 
 
-
-        
         [Display(Name = "코드")]
         [DataType(DataType.Text)]
         [Required(ErrorMessage = "코드를 입력해 주세요.")]
@@ -45,6 +38,12 @@ namespace TekkenApp.Models
         public string GetTableName()
         {
             return tableName.ToString();
+        }
+        protected void SetApp(TableName tableName)
+        {
+            this.tableName = tableName;
+            preUrl = $"/{tableName.ToString().Replace("_name", "") + "s"}";
+
         }
     }
 }

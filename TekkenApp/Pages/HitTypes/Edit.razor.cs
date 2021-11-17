@@ -24,7 +24,7 @@ namespace TekkenApp.Pages.HitTypes
             {
 
             }
-            hitType = await hitTypeService.GetHitTypeByIdAsync(id);
+            hitType = await hitTypeService.GetEntityByIdAsync(id);
         }
 
 

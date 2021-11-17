@@ -13,21 +13,34 @@ namespace TekkenApp.Data
         where TNameEntity : BaseTranslateName
     {
         protected TekkenDbContext _tekkenDBContext;
+        protected DbSet<TEntity> _dataDbSet;
+        protected DbSet<TNameEntity> _nameDbSet;
+
         protected string mainTable { get; set; }
         protected string nameTable { get; set; }
-        protected DbSet<TEntity> dataDbSet;
-        protected DbSet<TNameEntity> nameDbSet;
 
-        public BaseService(TekkenDbContext tekkenDbContext, DbSet<TNameEntity> dbset)
+        public BaseService(TekkenDbContext tekkenDbContext, DbSet<TEntity> dbset, DbSet<TNameEntity> nameDbSet)
         {
-
             _tekkenDBContext = tekkenDbContext;
+            _dataDbSet = dbset;
+            _nameDbSet = nameDbSet;
+
+        }
+
+        public async Task<TEntity> GetEntityByIdAsync(int id)
+        {
+            return await _dataDbSet.FindAsync(id);
+        }
+
+        public async Task<TNameEntity> GetNameEntityByIdAsync(int id)
+        {
+            return await _nameDbSet.FindAsync(id);
         }
 
 
         public async Task<List<TEntity>> GetEntities()
         {
-            return await dataDbSet.ToListAsync();
+            return await _dataDbSet.ToListAsync();
         }
 
         #region GetRecentBaseModel
@@ -86,17 +99,18 @@ namespace TekkenApp.Data
             return true;
         }
 
-        public abstract List<BaseTranslateName> GetEntity_AllTranslateNamesByCodeAsync(int code);
+        //public abstract List<TNameEntity> GetEntity_AllTranslateNamesByCodeAsync(int code);
 
-        protected List<BaseTranslateName> GetAllTranslateNamesByCodeAsync<TEntity>(DbSet<TEntity> databaseSet, int code) where TEntity : BaseTranslateName
+        public List<TNameEntity> GetAllTranslateNamesByCodeAsync(int code)
         {
-
+            /*
             string sql = $"EXECUTE dbo.[TranslateName_GetTranslateNameByCode] " +
                 $"@tableName={nameTable}, " +
                 $"@base_code={code}";
 
-            List<BaseTranslateName> baseTranslateName = databaseSet.FromSqlRaw(sql).ToList<BaseTranslateName>();
-
+            List<TNameEntity> baseTranslateName = _nameDbSet.FromSqlRaw(sql).ToList<TNameEntity>();
+            */
+            List<TNameEntity> baseTranslateName = _nameDbSet.Where(p => p.Base_code == code).ToList();
             return baseTranslateName;
         }
 

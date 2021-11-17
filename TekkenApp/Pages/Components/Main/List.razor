@@ -56,7 +56,7 @@
                                 </td>
                             </tr>
 
-                            foreach (var hitType_name in baseService.GetEntity_AllTranslateNamesByCodeAsync(baseEntities.Code).ToList())
+                            foreach (var hitType_name in baseService.GetAllTranslateNamesByCodeAsync(baseEntities.Code).ToList())
                             {
                                 <tr>
                                     <td>@hitType_name.Language_code</td>

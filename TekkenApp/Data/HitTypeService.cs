@@ -5,30 +5,14 @@ using TekkenApp.Models;
 
 namespace TekkenApp.Data
 {
-    public class HitTypeService: BaseService<HitType, HitType_name>
+    public class HitTypeService : BaseService<HitType, HitType_name>
     {
 
-        public HitTypeService(TekkenDbContext tekkenDbContext) : base(tekkenDbContext, tekkenDbContext.hitType_name)
+        public HitTypeService(TekkenDbContext tekkenDbContext) : base(tekkenDbContext, tekkenDbContext.hitType, tekkenDbContext.hitType_name)
         {
             mainTable = TableName.HitType.ToString();
             nameTable = TableName.HitType_name.ToString();
         }
-
-        public async Task<HitType> GetHitTypeByIdAsync(int id)
-        {
-            return await _tekkenDBContext.hitType.FindAsync(id);
-        }
-
-        public async Task<HitType_name> GetHitTypeNameByIdAsync(int id)
-        {
-            return await _tekkenDBContext.hitType_name.FindAsync(id);
-        }
-
-        public async Task<List<HitType>> GetHitTypes()
-        {
-            return await _tekkenDBContext.hitType.ToListAsync();
-        }
-
 
         public async Task<HitType> UpdateHitTypeAsync(HitType hitType)
         {
@@ -63,11 +47,7 @@ namespace TekkenApp.Data
             return true;
         }*/
         #endregion
-        public override List<BaseTranslateName> GetEntity_AllTranslateNamesByCodeAsync(int code)
-        {
-            var result = base.GetAllTranslateNamesByCodeAsync(nameDbSet, code);
-            return result;
-        }
+
     }
 }
 

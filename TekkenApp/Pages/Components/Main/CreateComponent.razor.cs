@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
-using Microsoft.EntityFrameworkCore;
 using TekkenApp.Data;
 using TekkenApp.Models;
 
@@ -18,9 +16,7 @@ namespace TekkenApp.Pages.Components.Main
         [Inject]
         NavigationManager navigationManager { get; set; }
 
-
         public TEntity BaseEntity { get; set; }
-
 
         protected override async Task OnInitializedAsync()
         {
@@ -34,8 +30,5 @@ namespace TekkenApp.Pages.Components.Main
             await BaseService.CreateEntityAsync(BaseEntity);
             navigationManager.NavigateTo($"{BaseService.preUrl}/Details_name/{BaseEntity.Id}");
         }
-
-        
-
     }
 }

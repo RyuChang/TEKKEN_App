@@ -5,42 +5,45 @@
 <h3>Edit</h3>
 
 <form method="post">
-    <div class="row">
-        <div class="col-md-8">
-            <div class="form-group">
-                <label for="@BaseEntity.Id" class="control-label">순번</label>
-                <input type="text" @bind="@BaseEntity.Id" class="form-control" />
-            </div>
-
-
-            <div class="form-group">
-                <label for="@BaseEntity.Number" class="control-label">순번</label>
-                <input type="text" @bind="@BaseEntity.Number" class="form-control" />
-            </div>
-
-            <div class="form-group">
-                <label for="@BaseEntity.Code" class="control-label">코드</label>
-                <input type="text" @bind="@BaseEntity.Code" class="form-control" />
-            </div>
-
-
-            <div class="form-group">
-                <label for="@BaseEntity.Description" class="control-label">설명</label>
-                <input type="text" @bind="@BaseEntity.Description" class="form-control" />
-            </div>
+    <div class="form-group row">
+        <label for="@BaseEntity.Id" class="col-sm-1 col-form-label">ID</label>
+        <div class="col-sm-10">
+            <input type="text" readonly class="form-control" @bind-value="@BaseEntity.Id" />
         </div>
-
-
     </div>
+
+    <div class="form-group row">
+        <label for="@BaseEntity.Number" class="col-sm-1 col-form-label">순번</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" @bind-value="BaseEntity.Number" @onkeyup="number_Changed" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="@BaseEntity.Code" class="col-sm-1 col-form-label">코드</label>
+        <div class="col-sm-10">
+            <input type="text" readonly class="form-control" @bind-value="@BaseEntity.Code" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="@BaseEntity.Description" class="col-sm-1 col-form-label">설명</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" @bind-value="@BaseEntity.Description" />
+        </div>
+    </div>
+
 
     <div class="row">
         <div class="col-md-4">
-            <input type="button" id="btnSave" value="Save" @onclick="btnSave_Click" class="btn btn-primary" />
+            <input type="button" class="btn btn-primary" value="저장" id="btnSave" @onclick="btnSave_Click" />
+            <input type="button" class="btn btn-primary" value="취소" id="btnCancel" @onclick="btnCancel_Click" />
+            <input type="button" class="btn btn-primary" value="리스트" id="btnList" @onclick="btnList_Click" />
         </div>
     </div>
     <div class="form-group">
         @*<input type="button" value="Edit" id="btnEdit_Click" @onclick="btnEdit_Click" />
-        <input type="button" value="Cancel" id="btnCancel_click" @onclick="btnCancel_click" />*@
+            <input type="button" value="Cancel" id="btnCancel_click" @onclick="btnCancel_click" />*@
         <a href="/HitTypes/">List</a>
     </div>
 </form>

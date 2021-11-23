@@ -153,10 +153,15 @@ namespace TekkenApp.Data
 
         #endregion
 
+        public async Task<BaseEntity> UpdateDataAsync(BaseEntity baseEntity)
+        {
+            _tekkenDBContext.Entry(baseEntity).State = EntityState.Modified;
+            await _tekkenDBContext.SaveChangesAsync();
+            return baseEntity;
+        }
 
         public async Task<BaseTranslateName> UpdateTranslateNameAsync(BaseTranslateName translateName)
         {
-
             _tekkenDBContext.Entry(translateName).State = EntityState.Modified;
             await _tekkenDBContext.SaveChangesAsync();
             return translateName;

@@ -6,7 +6,7 @@ using TekkenApp.Models;
 namespace TekkenApp.Pages.Components.Name
 {
     public partial class NameEditComponent<TEntity, TNameEntity> where TEntity : BaseEntity
-        where TNameEntity : BaseTranslateName
+        where TNameEntity : BaseTranslateName, new()
     {
         [Parameter]
         public BaseTranslateName baseTranslateName { get; set; }

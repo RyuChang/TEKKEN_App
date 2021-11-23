@@ -8,7 +8,7 @@ namespace TekkenApp.Pages.HitTypes
     public partial class Edit_name
     {
         [Parameter]
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         public HitType_name hitType_name = new HitType_name();
 
@@ -21,11 +21,7 @@ namespace TekkenApp.Pages.HitTypes
         
         protected override async Task OnInitializedAsync()
         {
-            if (int.TryParse(Id, out int id))
-            {
-
-            }
-            hitType_name = await hitTypeService.GetNameEntityByIdAsync(id);
+            hitType_name = await hitTypeService.GetNameEntityByIdAsync(Id);
         }
 
 

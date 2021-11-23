@@ -18,7 +18,7 @@ namespace TekkenApp.Models
 
         public int? ID { get; set; }
         [Key]
-        [Column(TypeName = "decimal(4, 2)")]
+        //[Column(TypeName = "decimal(4, 2)")]
         public decimal version { get; set; }
         public byte season { get; set; }
         [Column(TypeName = "date")]

@@ -50,7 +50,7 @@
                                 <td>@baseEntities.Description</td>
                                 <td>
                                     @*<a asp-action="/HitTypes/Details_name/" class="btn btn-primary" asp-route-id="@hitType.Id">수정</a>*@
-                                    <a href="/HitTypes/Edit/@baseEntities.Id">수정</a>
+                                    <input type="button" class="btn btn-primary" id="btnEdit" value="상세" @onclick="()=>(btnEdit_Click(baseEntities.Id))" />
                                     @*<a href="@hitType_name.Id">상세</a>*@
                                     <!--<a asp-action="UpdateAllName" class="btn btn-primary" asp-route-id="@hitType.Id">명칭 편집</a>-->
                                 </td>
@@ -71,9 +71,8 @@
                                         }
                                     </td>
                                     <td>
-                                        <a href="@(baseEntities.preUrl)/Details_name/@hitType_name.Id">상세</a>
-                                        <a href="@(baseEntities.preUrl)/Edit_name/@hitType_name.Id">편집</a>
-                                        @*<a asp-action="UpdateName" class="btn btn-primary" asp-route-id="@hitType_name.Id">명칭 편집</a>*@
+                                        <input type="button" class="btn btn-primary" id="btnDetailsNames" value="상세" @onclick="()=>(btnDetailsNames_Click(hitType_name.Id))" />
+                                        @*<input type=" button" class="btn btn-primary" id="btnEditNames" @onclick="btnEditNames_Click" @bind="hitType_name.Id">편집</input>*@
                                     </td>
                                 </tr>
                             }

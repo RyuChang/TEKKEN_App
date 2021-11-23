@@ -17,7 +17,7 @@ namespace TekkenApp.Models
         [NotMapped]
         public static APP APP_TYPE = APP.HitType;
         [NotMapped]
-        public static string PRE_URL = APP_TYPE.ToString();
+        public static string preUrl = APP_TYPE.ToString();
 
         public HitType()
         {

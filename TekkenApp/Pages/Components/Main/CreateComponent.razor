@@ -1,0 +1,35 @@
+﻿@page "/Components/Main/CreateComponent"
+@typeparam TEntity
+@typeparam TNameEntity
+
+<h3>Create</h3>
+
+<form method="post">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="form-group">
+                <label for="@BaseEntity.Number" class="control-label">순번</label>
+                <input type="text" @bind="@BaseEntity.Number" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label for="@BaseEntity.Code" class="control-label">코드</label>
+                <input type="text" @bind="@BaseEntity.Code" class="form-control" />
+            </div>
+
+
+            <div class="form-group">
+                <label for="@BaseEntity.Description" class="control-label">설명</label>
+                <input type="text" @bind="@BaseEntity.Description" class="form-control" />
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <input type="button" id="btnSave" value="Save" @onclick="btnSave_Click" class="btn btn-primary" />
+        </div>
+    </div>
+</form>

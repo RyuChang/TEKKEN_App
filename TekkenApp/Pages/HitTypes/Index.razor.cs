@@ -31,7 +31,7 @@ namespace TekkenApp.Pages.HitTypes
 
         protected void btnCreate_Click()
         {
-            navigationManager.NavigateTo($"{HitType.PRE_URL}/Create_name");
+            navigationManager.NavigateTo($"{HitType.preUrl}/Create_name");
         }
 
 

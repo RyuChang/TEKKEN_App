@@ -8,7 +8,7 @@ namespace TekkenApp.Pages.HitTypes
     public partial class Edit
     {
         [Parameter]
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         [Inject]
         private HitTypeService hitTypeService { get; set; }
@@ -20,11 +20,8 @@ namespace TekkenApp.Pages.HitTypes
 
         protected override async Task OnInitializedAsync()
         {
-            if (int.TryParse(Id, out int id))
-            {
-
-            }
-            hitType = await hitTypeService.GetEntityByIdAsync(id);
+            
+            hitType = await hitTypeService.GetEntityByIdAsync(Id);
         }
 
 

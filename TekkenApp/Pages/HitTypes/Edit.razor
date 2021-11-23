@@ -1,38 +1,9 @@
 ﻿@page "/HitTypes/Edit/{Id}"
 
-<h3>Details</h3>
-<form>
-    <div class="row">
-        <div class="col-md-8">
-            <div class="form-group">
-                <label>ID: </label>
-                @hitType.Id
-            </div>
-
-            <div class="form-group">
-                <label>코드 </label>
-                @hitType.Code
-
-            </div>
-            <div class="form-group">
-                <label>순번</label>
-                <input type="text" name="name" @bind="@hitType.Number" />
-            </div>
-
-            <div class="form-group">
-                <label>설명</label>
-                <input type="text" name="name" @bind="@hitType.Description" />
-            </div>
-
-            <div class="form-group">
-                <input type="button" value="Edit" id="btnEdit_Click" @onclick="btnEdit_Click" />
-                <input type="button" value="Cancel" id="btnCancel_click" @onclick="btnCancel_click" />
-                <a href="/HitTypes/">List</a>
-            </div>
-        </div>
-    </div>
-</form>
+<h3>Edit</h3>
 
 
+<TekkenApp.Pages.Components.Main.EditComponent TEntity="HitType" TNameEntity="HitType_name" baseService="@hitTypeService"></TekkenApp.Pages.Components.Main.EditComponent>
 
 
+6

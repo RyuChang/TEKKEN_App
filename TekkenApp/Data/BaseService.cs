@@ -2,19 +2,24 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Reflection.Metadata;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using TekkenApp.Models;
 
 namespace TekkenApp.Data
 {
     public abstract class BaseService<TEntity, TNameEntity>
         where TEntity : BaseEntity
-        where TNameEntity : BaseTranslateName
+        where TNameEntity : BaseTranslateName, new()
     {
         protected TekkenDbContext _tekkenDBContext;
         protected DbSet<TEntity> _dataDbSet;
         protected DbSet<TNameEntity> _nameDbSet;
+        public string preUrl { get; set; }
 
         protected string mainTable { get; set; }
         protected string nameTable { get; set; }
@@ -24,7 +29,6 @@ namespace TekkenApp.Data
             _tekkenDBContext = tekkenDbContext;
             _dataDbSet = dbset;
             _nameDbSet = nameDbSet;
-
         }
 
         public async Task<TEntity> GetEntityByIdAsync(int id)
@@ -37,39 +41,51 @@ namespace TekkenApp.Data
             return await _nameDbSet.FindAsync(id);
         }
 
+        private bool BaseEntityExists(int id)
+        {
+            return _dataDbSet.Any(e => e.Id == id);
+        }
 
         public async Task<List<TEntity>> GetEntities()
         {
             return await _dataDbSet.ToListAsync();
         }
 
-        #region GetRecentBaseModel
-        public async Task<BaseUtil> GetRecentBaseModel(TableName tableName, int character_code = 0)
-        {
-            string sql = $"SELECT ISNULL(MAX(number), 0) + 1 AS Number " +
-                       $"FROM [TEKKEN].[dbo].[{tableName}] where 1 = 1";
-            BaseUtil result = await _tekkenDBContext.BaseUtil.FromSqlRaw<BaseUtil>(sql).FirstOrDefaultAsync();
-            return result;
-        }
-        #endregion
-
         #region GetCreateNumber
-        public async Task<int> GetCreateNumber(TableName tableName)
+        public async Task<int> GetCreateNumber()
         {
-            BaseUtil result = await GetRecentBaseModel(tableName);
-            return result.Number;
+            return await _dataDbSet.MaxAsync(p => (int?)p.Number + 1) ?? 1;
         }
         #endregion
 
         #region GetCreateCode
-        public async Task<int> GetCreateCode(TableName tableName, int number, int character_code, int stateGroup_code)
+        public async Task<int> GetCreateCode(int number, int character_code = 0, int stateGroup_code = 0)
         {
             TableCode tableCode = await
-            _tekkenDBContext.tableCode.Where(x => x.tableName == tableName.ToString()).SingleOrDefaultAsync();
+            _tekkenDBContext.tableCode.Where(x => x.tableName == this.mainTable).SingleOrDefaultAsync();
             int stateGroupNumber = (stateGroup_code > 0) ? (stateGroup_code - 80000000) * 1000 : 0;
 
             return tableCode.code + (character_code * 1000) + stateGroupNumber + number;
         }
+        public async Task<bool> CreateEntityAsync(TEntity entity)
+        {
+
+            await _dataDbSet.AddAsync(entity);
+            await _tekkenDBContext.SaveChangesAsync();
+
+
+            HitType_name hitType_name = new HitType_name();
+            hitType_name.Base_code = entity.Code;
+            hitType_name.Name = entity.Description;
+
+
+            //var result = await base.CreateTranslateNameAsync(hitType_name);
+
+
+            //await _tekkenDBContext.SaveChangesAsync();
+            return true;
+        }
+
         #endregion
 
         #region CreateTranslateName
@@ -110,8 +126,28 @@ namespace TekkenApp.Data
 
             List<TNameEntity> baseTranslateName = _nameDbSet.FromSqlRaw(sql).ToList<TNameEntity>();
             */
-            List<TNameEntity> baseTranslateName = _nameDbSet.Where(p => p.Base_code == code).ToList();
-            return baseTranslateName;
+            var baseTranslateName = from language in _tekkenDBContext.Set<Language>() //_tekkenDBContext.language
+                                    join name in _tekkenDBContext.Set<TNameEntity>().Where(n => n.Base_code == code)
+                                        on language.code equals name.Language_code into grouping
+                                    from name in grouping.DefaultIfEmpty()
+                                    select (new TNameEntity { Id = (name.Id != null) ? name.Id : 0, Base_code = name.Base_code, Language_code = name.Language_code, Name = name.Name });
+
+            ////List<TNameEntity> baseTranslateName = _nameDbSet.Where(p => p.Base_code == code).ToList();
+            //var baseTranslateName = from language in _tekkenDBContext.language
+            //                        join name in _nameDbSet.Where(n => n.Base_code == code)
+            //                        on language.code equals name.Language_code into grouping
+            //                        Select(name => language.code + "=>" + name.Language_code).DefaultIfEmpty()
+            //                         select(new TNameEntity
+            //                         {
+
+            //                             Base_code = name.Base_code,
+            //                             Language_code = name.Language_code,
+            //                             Name = name.Name
+            //                         });
+
+
+
+            return baseTranslateName.ToList();
         }
 
 
@@ -125,5 +161,7 @@ namespace TekkenApp.Data
             await _tekkenDBContext.SaveChangesAsync();
             return translateName;
         }
+
+
     }
 }

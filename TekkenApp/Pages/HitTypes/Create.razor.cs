@@ -18,7 +18,7 @@ namespace TekkenApp.Pages.HitTypes
 
         protected override async Task OnInitializedAsync()
         {
-            hitType.Number = await hitTypeService.GetCreateNumber(TableName.HitType);
+            hitType.Number = await hitTypeService.GetCreateNumber();
         }
 
         protected async void btnSave_Click()

@@ -16,7 +16,6 @@ namespace TekkenApp.Pages.Components.Main
 
         [Parameter]
         public string Id { get; set; }
-        public int id;
 
         [Inject]
         NavigationManager navigationManager { get; set; }
@@ -27,13 +26,6 @@ namespace TekkenApp.Pages.Components.Main
 
         protected override async Task OnInitializedAsync()
         {
-
-            int.TryParse(Id, out int id){
-
-                id = 1;
-
-                //retun;
-            }
             BaseEntity = await BaseService.GetEntityByIdAsync(Id);
         }
 

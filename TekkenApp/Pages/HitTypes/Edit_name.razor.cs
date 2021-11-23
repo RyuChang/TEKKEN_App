@@ -8,7 +8,7 @@ namespace TekkenApp.Pages.HitTypes
     public partial class Edit_name
     {
         [Parameter]
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         public HitType_name hitType_name = new HitType_name();
 

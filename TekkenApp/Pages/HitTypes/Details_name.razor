@@ -1,9 +1,9 @@
 ﻿@page "/HitTypes/Details_name/{Id}"
 
 <h3>Details</h3>
-@if (Id == 0) { }
+@if (Id == "0") { }
 else
 {
-    <TekkenApp.Pages.Components.Name.NameDetailComponent TEntity="@HitType" TNameEntity="@HitType_name" baseService="@hitTypeService" Id="@Id">
+    <TekkenApp.Pages.Components.Name.NameDetailComponent TEntity="@HitType" TNameEntity="@HitType_name" Id="@Id" baseService="@hitTypeService">
     </TekkenApp.Pages.Components.Name.NameDetailComponent>
 }

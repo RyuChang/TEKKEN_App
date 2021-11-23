@@ -14,18 +14,18 @@ namespace TekkenApp.Pages.HitTypes
         [Inject]
         NavigationManager navigationManager { get; set; }
 
-        public HitType hitType = new HitType();
+        //public HitType hitType = new HitType();
 
-        protected override async Task OnInitializedAsync()
-        {
-            hitType.Number = await hitTypeService.GetCreateNumber();
-        }
+        //protected override async Task OnInitializedAsync()
+        //{
+        //    //hitType.Number = await hitTypeService.GetCreateNumber();
+        //}
 
-        protected async void btnSave_Click()
-        {
-            //await hitTypeService.CreateHitTypeAsync(hitType);
-            navigationManager.NavigateTo("/HitTypes/");
-        }
+        //protected async void btnSave_Click()
+        //{
+        //    //await hitTypeService.CreateHitTypeAsync(hitType);
+        //    navigationManager.NavigateTo("/HitTypes/");
+        //}
     }
 }
 

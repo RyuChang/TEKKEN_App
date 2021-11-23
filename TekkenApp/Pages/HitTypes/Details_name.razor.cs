@@ -7,7 +7,7 @@ namespace TekkenApp.Pages.HitTypes
     public partial class Details_name
     {
         [Parameter]
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         [Inject]
         private HitTypeService hitTypeService { get; set; }

@@ -13,7 +13,7 @@ namespace TekkenApp.Pages.Components.Name
         public BaseService<TEntity, TNameEntity> BaseService { get; set; }
 
         [Parameter]
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         public TNameEntity nameEntity { get; set; }
         

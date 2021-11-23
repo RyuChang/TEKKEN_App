@@ -31,14 +31,14 @@ namespace TekkenApp.Data
             _nameDbSet = nameDbSet;
         }
 
-        public async Task<TEntity> GetEntityByIdAsync(int id)
+        public async Task<TEntity> GetEntityByIdAsync(string id)
         {
-            return await _dataDbSet.FindAsync(id);
+            return await _dataDbSet.FindAsync(int.Parse(id));
         }
 
-        public async Task<TNameEntity> GetNameEntityByIdAsync(int id)
+        public async Task<TNameEntity> GetNameEntityByIdAsync(string id)
         {
-            return await _nameDbSet.FindAsync(id);
+            return await _nameDbSet.FindAsync(int.Parse(id));
         }
 
         private bool BaseEntityExists(int id)

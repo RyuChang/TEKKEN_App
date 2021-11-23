@@ -38,12 +38,15 @@ namespace TekkenApp.Pages.Components.Main
         {
 
         }
+
         protected async Task btnEdit_Click(int id)
         {
             navigationManager.NavigateTo($"/HitTypes/Edit/{id}");
         }
-        protected async Task btnDetail_Click()
+
+        protected async Task btnDetail_Click(int id)
         {
+            navigationManager.NavigateTo($"/HitTypes/Detail/{id}");
         }
     }
 }

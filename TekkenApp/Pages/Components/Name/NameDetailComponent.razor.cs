@@ -16,7 +16,7 @@ namespace TekkenApp.Pages.Components.Name
         public string Id { get; set; }
 
         public TNameEntity nameEntity { get; set; }
-        
+
         [Inject]
         NavigationManager navigationManager { get; set; }
 
@@ -29,6 +29,19 @@ namespace TekkenApp.Pages.Components.Name
         protected void btnList_Click()
         {
             //navigationManager.NavigateTo($"{baseTranslateName.preUrl}");
+        }
+
+
+
+        protected async Task btnDelete_Click()
+        {
+            //await hitTypeService.UpdateHitTypeNameAsync(hitType_name);
+            //navigationManager.NavigateTo($"/HitTypes/Details_name/{Id}");
+        }
+        protected async Task btnEdit_Click()
+        {
+            //await hitTypeService.UpdateHitTypeNameAsync(hitType_name);
+            //navigationManager.NavigateTo($"/HitTypes/Details_name/{Id}");
         }
     }
 }

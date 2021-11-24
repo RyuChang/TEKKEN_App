@@ -28,7 +28,7 @@ namespace TekkenApp.Pages.Components.Main
         protected async Task btnSave_Click()
         {
             await BaseService.CreateEntityAsync(BaseEntity);
-            navigationManager.NavigateTo($"{BaseService.preUrl}/Details_name/{BaseEntity.Id}");
+            navigationManager.NavigateTo($"{BaseService.preUrl}/Detail_name/{BaseEntity.Id}");
         }
     }
 }

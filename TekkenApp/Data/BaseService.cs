@@ -41,9 +41,19 @@ namespace TekkenApp.Data
             return await _nameDbSet.FindAsync(int.Parse(id));
         }
 
-        private bool BaseEntityExists(int id)
+        private bool BaseEntityExistsById(int id)
         {
             return _dataDbSet.Any(e => e.Id == id);
+        }
+
+        private bool BaseEntityExistsByCode(int code)
+        {
+            return _dataDbSet.Any(e => e.Code  == code);
+        }
+
+        private bool BaseEntityExistsByCode(string code)
+        {
+            return BaseEntityExistsByCode(int.Parse(code));
         }
 
         public async Task<List<TEntity>> GetEntities()

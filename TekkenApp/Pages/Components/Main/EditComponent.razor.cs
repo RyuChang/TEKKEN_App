@@ -1,7 +1,9 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Logging;
 using TekkenApp.Data;
 using TekkenApp.Models;
+
 
 namespace TekkenApp.Pages.Components.Main
 {
@@ -17,6 +19,12 @@ namespace TekkenApp.Pages.Components.Main
 
         [Inject]
         NavigationManager navigationManager { get; set; }
+
+        [Inject]
+        ILogger<EditComponent<TEntity, TNameEntity>> Logger { get; set; }
+
+
+
 
         public TEntity BaseEntity { get; set; }
 
@@ -35,15 +43,27 @@ namespace TekkenApp.Pages.Components.Main
         {
             navigationManager.NavigateTo($"{BaseService.preUrl}");
         }
+
         protected void btnList_Click()
         {
             navigationManager.NavigateTo($"{BaseService.preUrl}");
         }
-        private async Task number_Changed()
-        {
-            //BaseEntity.Number = await BaseService.GetCreateNumber();
-            BaseEntity.Code = await BaseService.GetCreateCode(BaseEntity.Number);
-        }
 
+        private async Task number_Changed(string value)
+        {
+            int number;
+            if (int.TryParse(value,out number)) {
+                BaseEntity.Number = number;
+                BaseEntity.Code = await BaseService.GetCreateCode(number);
+            }
+            
+        }
+        private void HandleValidSubmit()
+        {
+
+            Logger.LogInformation("HandleValidSubmit called");
+
+
+        }
     }
 }

@@ -271,11 +271,13 @@ namespace TekkenApp.Data
 
                 entity.Property(e => e.Name).IsUnicode(false);
 
+
                 entity.HasOne(d => d.hitType_codeNavigation)
                     .WithMany(p => p.hitType_name)
                     .HasPrincipalKey(p => p.Code)
                     .HasForeignKey(d => d.Base_code)
-                    .HasConstraintName("FK_hitType_name_hitType");
+                    .HasConstraintName("FK_hitType_name_hitType")
+                    .OnDelete(DeleteBehavior.Cascade);
             });
 
             modelBuilder.Entity<Language>(entity =>

@@ -2,9 +2,12 @@
 @typeparam TEntity
 @typeparam TNameEntity
 
+
 <h3>Edit</h3>
 
-<form method="post">
+<EditForm Model="@BaseEntity" OnValidSubmit="@HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
     <div class="form-group row">
         <label for="@BaseEntity.Id" class="col-sm-1 col-form-label">ID</label>
         <div class="col-sm-10">
@@ -15,7 +18,7 @@
     <div class="form-group row">
         <label for="@BaseEntity.Number" class="col-sm-1 col-form-label">순번</label>
         <div class="col-sm-10">
-            <input type="text" class="form-control" @bind-value="BaseEntity.Number" @onkeyup="number_Changed" />
+            <input type="text" class="form-control" value="@BaseEntity.Number" @oninput="@(e=>number_Changed((string)e.Value))" />
         </div>
     </div>
 
@@ -37,7 +40,7 @@
     <div class="row">
         <div class="col-md-4">
             <input type="button" class="btn btn-primary" value="저장" id="btnSave" @onclick="btnSave_Click" />
-            <input type="button" class="btn btn-primary" value="취소" id="btnCancel" @onclick="btnCancel_Click" />
+            <input type="button" class="btn btn-primary" value="취소" id="btnC12ancel" @onclick="btnCancel_Click" />
             <input type="button" class="btn btn-primary" value="리스트" id="btnList" @onclick="btnList_Click" />
         </div>
     </div>
@@ -46,4 +49,4 @@
             <input type="button" value="Cancel" id="btnCancel_click" @onclick="btnCancel_click" />*@
         <a href="/HitTypes/">List</a>
     </div>
-</form>
+</EditForm>

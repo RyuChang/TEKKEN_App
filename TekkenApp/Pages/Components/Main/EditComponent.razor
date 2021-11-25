@@ -18,7 +18,7 @@
     <div class="form-group row">
         <label for="@BaseEntity.Number" class="col-sm-1 col-form-label">순번</label>
         <div class="col-sm-10">
-            <input type="text" class="form-control" value="@BaseEntity.Number" @oninput="@(e=>number_Changed((string)e.Value))" />
+            <input type="text" readonly class="form-control" value="@BaseEntity.Number" @oninput="@(e=>number_Changed((string)e.Value))" />
         </div>
     </div>
 

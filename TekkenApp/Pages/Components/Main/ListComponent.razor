@@ -1,4 +1,4 @@
-﻿@page "/Components/Main/List"
+﻿@page "/Components/Main/ListComponent"
 @typeparam TEntity
 @typeparam TNameEntity
 
@@ -56,23 +56,26 @@
                                 </td>
                             </tr>
 
-                            foreach (var hitType_name in baseService.GetAllTranslateNamesByCodeAsync(baseEntities.Code).ToList())
+                            foreach (var base_name in baseService.GetAllTranslateNamesByCodeAsync(baseEntities.Code).ToList())
                             {
                                 <tr>
-                                    <td>@hitType_name.Language_code</td>
+                                    <td>@base_name.Language_code</td>
                                     <td colspan="2">
-                                        @if (String.IsNullOrEmpty(hitType_name.Name))
+                                        @if (String.IsNullOrEmpty(base_name.Name))
                                         {
                                             @*<input type="button" class="btn btn-primary" value="추가" id="btnCreate_Click" @onclick="btnCreate_Click" />*@
                                         }
                                         else
                                         {
-                                            @hitType_name.Name
+                                            @base_name.Name
                                         }
                                     </td>
                                     <td>
-                                        <input type="button" class="btn btn-primary" id="btnDetailsNames" value="상세" @onclick="()=>(btnDetailsNames_Click(hitType_name.Id))" />
-                                        @*<input type="button" class="btn btn-primary" id="btnEditNames" @onclick="btnEditNames_Click" @bind="hitType_name.Id">편집</input>*@
+                                        <input type="button" class="btn btn-primary" id="btnDetailName" value="상세" @onclick="()=>(btnDetailName_Click(base_name.Id))" />
+                                        <input type="button" class="btn btn-primary" id="btnCreateName" value="추가" @onclick="()=>(btnCreateName_Click(baseEntities.Code,base_name.Language_code))" />
+                                        <input type="button" class="btn btn-primary" id="btnEditName" value="수정" @onclick="()=>(btnEditName_Click(base_name.Id))" />
+                                        <input type="button" class="btn btn-primary" id="btnDeleteName" value="삭제" @onclick="()=>(btnDeleteName_Click(base_name.Id))" />
+
                                     </td>
                                 </tr>
                             }

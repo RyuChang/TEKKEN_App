@@ -48,7 +48,7 @@ namespace TekkenApp.Data
 
         private bool BaseEntityExistsByCode(int code)
         {
-            return _dataDbSet.Any(e => e.Code  == code);
+            return _dataDbSet.Any(e => e.Code == code);
         }
 
         private bool BaseEntityExistsByCode(string code)
@@ -79,27 +79,15 @@ namespace TekkenApp.Data
         }
         public async Task<bool> CreateEntityAsync(TEntity entity)
         {
-
             await _dataDbSet.AddAsync(entity);
             await _tekkenDBContext.SaveChangesAsync();
-
-
-            HitType_name hitType_name = new HitType_name();
-            hitType_name.Base_code = entity.Code;
-            hitType_name.Name = entity.Description;
-
-
-            //var result = await base.CreateTranslateNameAsync(hitType_name);
-
-
-            //await _tekkenDBContext.SaveChangesAsync();
             return true;
         }
 
         #endregion
 
         #region CreateTranslateName
-        public async Task<bool> CreateTranslateNameAllAsync<T>(T translateName) where T : BaseTranslateName
+        public async Task<bool> CreateTranslateNameAllAsync(TNameEntity translateName)
         {
             bool result = false;
             List<Language> languageList = await _tekkenDBContext.language.ToListAsync();
@@ -112,51 +100,31 @@ namespace TekkenApp.Data
             return result;
         }
 
-        public async Task<bool> CreateTranslateNameAsync<T>(T translateName) where T : BaseTranslateName
+        public async Task<bool> CreateTranslateNameAsync(TNameEntity translateName) 
         {
-            string sql = $"EXECUTE dbo.[TranslateName_GetTranslateNameByCode] " +
-                $"@tableName={translateName.GetTableName()}, " +
-                $"@base_code={translateName.Base_code}, " +
-                $"@name={translateName.Name}, " +
-                $"@language_code={translateName.Language_code}";
 
-            var result = await _tekkenDBContext.Database.ExecuteSqlRawAsync(sql);
-
+            await _nameDbSet.AddAsync(translateName);
+            await _tekkenDBContext.SaveChangesAsync();
             return true;
+            //string sql = $"EXECUTE dbo.[TranslateName_GetTranslateNameByCode] " +
+            //    $"@tableName={translateName.GetTableName()}, " +
+            //    $"@base_code={translateName.Base_code}, " +
+            //    $"@name={translateName.Name}, " +
+            //    $"@language_code={translateName.Language_code}";
+
+            //var result = await _tekkenDBContext.Database.ExecuteSqlRawAsync(sql);
+
         }
 
         //public abstract List<TNameEntity> GetEntity_AllTranslateNamesByCodeAsync(int code);
 
         public List<TNameEntity> GetAllTranslateNamesByCodeAsync(int code)
         {
-            /*
-            string sql = $"EXECUTE dbo.[TranslateName_GetTranslateNameByCode] " +
-                $"@tableName={nameTable}, " +
-                $"@base_code={code}";
-
-            List<TNameEntity> baseTranslateName = _nameDbSet.FromSqlRaw(sql).ToList<TNameEntity>();
-            */
             var baseTranslateName = from language in _tekkenDBContext.Set<Language>() //_tekkenDBContext.language
                                     join name in _tekkenDBContext.Set<TNameEntity>().Where(n => n.Base_code == code)
                                         on language.code equals name.Language_code into grouping
                                     from name in grouping.DefaultIfEmpty()
-                                    select (new TNameEntity { Id = (name.Id != null) ? name.Id : 0, Base_code = name.Base_code, Language_code = name.Language_code, Name = name.Name });
-
-            ////List<TNameEntity> baseTranslateName = _nameDbSet.Where(p => p.Base_code == code).ToList();
-            //var baseTranslateName = from language in _tekkenDBContext.language
-            //                        join name in _nameDbSet.Where(n => n.Base_code == code)
-            //                        on language.code equals name.Language_code into grouping
-            //                        Select(name => language.code + "=>" + name.Language_code).DefaultIfEmpty()
-            //                         select(new TNameEntity
-            //                         {
-
-            //                             Base_code = name.Base_code,
-            //                             Language_code = name.Language_code,
-            //                             Name = name.Name
-            //                         });
-
-
-
+                                    select (new TNameEntity { Id = (name.Id != null) ? name.Id : 0, Base_code = (name.Id != null) ? name.Base_code : 0, Language_code = language.code, Name = name.Name });
             return baseTranslateName.ToList();
         }
 

@@ -6,7 +6,7 @@ using TekkenApp.Models;
 
 namespace TekkenApp.Pages.Components.Main
 {
-    public partial class List<TEntity, TNameEntity>
+    public partial class ListComponent<TEntity, TNameEntity>
                             where TEntity : BaseEntity
                             where TNameEntity : BaseTranslateName, new()
     {
@@ -23,15 +23,25 @@ namespace TekkenApp.Pages.Components.Main
             baseEntities = await baseService.GetEntities();
         }
 
-        protected async Task btnDetailsNames_Click(int Id)
+        protected async Task btnDetailName_Click(int Id)
         {
-            navigationManager.NavigateTo($"{baseService.preUrl}/Details_name/{Id}");
+            navigationManager.NavigateTo($"{baseService.preUrl}/Detail_name/{Id}");
         }
+
+        protected async Task btnCreateName_Click(int Code, string Language_code)
+        {
+            navigationManager.NavigateTo($"{baseService.preUrl}/Create_name/{Code}?Language={Language_code}");
+        }
+        protected async Task btnEditName_Click(int Id)
+        { }
+        protected async Task btnDeleteName_Click(int Id)
+        { }
+
 
         protected async Task btnEditNames_Click()
         {
             //await hitTypeService.UpdateHitTypeNameAsync(hitType_name);
-            //navigationManager.NavigateTo($"/HitTypes/Details_name/{Id}");
+            //navigationManager.NavigateTo($"/HitTypes/Detail_name/{Id}");
         }
 
         protected async Task btnCreate_Click()

@@ -17,10 +17,10 @@ namespace TekkenApp.Pages.Components.Name
         [Inject]
         NavigationManager navigationManager { get; set; }
 
-        protected async Task btnEdit_Click()
+        protected async Task btnSave_Click()
         {
             await baseService.UpdateTranslateNameAsync(baseTranslateName);
-            navigationManager.NavigateTo($"{baseTranslateName.preUrl}/Details_name/{baseTranslateName.Id}");
+            navigationManager.NavigateTo($"{baseTranslateName.preUrl}/Detail_name/{baseTranslateName.Id}");
         }
 
         protected void btnList_Click()

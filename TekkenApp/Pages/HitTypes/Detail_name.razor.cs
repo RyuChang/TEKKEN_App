@@ -4,7 +4,7 @@ using TekkenApp.Data;
 
 namespace TekkenApp.Pages.HitTypes
 {
-    public partial class Details_name
+    public partial class Detail_name
     {
         [Parameter]
         public string Id { get; set; }

@@ -33,7 +33,7 @@ namespace TekkenApp.Models
         [Display(Name = "코드")]
         [DataType(DataType.Text)]
         [Required(ErrorMessage = "코드를 입력해 주세요.")]
-        public int? Base_code { get; set; }
+        public int Base_code { get; set; }
 
         [Display(Name = "입력 언어")]
         [DataType(DataType.Text)]

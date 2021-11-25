@@ -28,7 +28,7 @@ namespace TekkenApp.Pages.HitTypes
         //protected async Task btnEdit_Click()
         //{
         //    await hitTypeService.UpdateHitTypeNameAsync(hitType_name);
-        //    navigationManager.NavigateTo($"/HitTypes/Details_name/{Id}");
+        //    navigationManager.NavigateTo($"/HitTypes/Detail_name/{Id}");
         //}
 
         protected void btnCancel_click()

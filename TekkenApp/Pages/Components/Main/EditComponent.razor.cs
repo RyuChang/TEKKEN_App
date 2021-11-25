@@ -33,11 +33,7 @@ namespace TekkenApp.Pages.Components.Main
             BaseEntity = await BaseService.GetEntityByIdAsync(Id);
         }
 
-        protected async Task btnSave_Click()
-        {
-            await BaseService.UpdateDataAsync(BaseEntity);
-            navigationManager.NavigateTo($"{BaseService.preUrl}/Detail/{BaseEntity.Id}");
-        }
+
 
         protected void btnCancel_Click()
         {
@@ -49,6 +45,11 @@ namespace TekkenApp.Pages.Components.Main
             navigationManager.NavigateTo($"{BaseService.preUrl}");
         }
 
+        protected async Task btnSave_Click()
+        {
+            await BaseService.UpdateDataAsync(BaseEntity);
+            navigationManager.NavigateTo($"{BaseService.preUrl}/Detail/{BaseEntity.Id}");
+        }
         private async Task number_Changed(string value)
         {
             int number;
@@ -62,8 +63,6 @@ namespace TekkenApp.Pages.Components.Main
         {
 
             Logger.LogInformation("HandleValidSubmit called");
-
-
         }
     }
 }

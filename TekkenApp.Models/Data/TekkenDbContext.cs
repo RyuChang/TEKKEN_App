@@ -15,7 +15,7 @@ namespace TekkenApp.Data
         {
         }
         public virtual DbSet<BaseUtil> BaseUtil { get; set; }
-        public virtual DbSet<BaseEntity> BaseEntities { get; set; }
+        public virtual DbSet<BaseDataEntity> BaseEntities { get; set; }
         //public virtual DbSet<BaseTranslateName> BaseTranslateName { get; set; }
         public virtual DbSet<Move> Move { get; set; }
         public virtual DbSet<Move_Data_Name> Move_Data_Name { get; set; }

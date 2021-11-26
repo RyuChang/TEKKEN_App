@@ -85,7 +85,7 @@ namespace TekkenApp.Data
         }*/
 
 
-        //public override List<StateGroup_name> GetEntity_AllTranslateNamesByCodeAsync(int code)
+        //public override List<StateGroup_name> GeTDataEntity_AllTranslateNamesByCodeAsync(int code)
         //{
 
         //    var result = base.GetAllTranslateNamesByCodeAsync(code);

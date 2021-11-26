@@ -4,7 +4,7 @@
 
 namespace TekkenApp.Models
 {
-    public partial class HitType_name : BaseTranslateName
+    public partial class HitType_name : BaseNameEntity
     {
         [NotMapped]
         public static APP APP_TYPE = APP.HitType;

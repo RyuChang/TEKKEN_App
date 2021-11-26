@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 namespace TekkenApp.Models
 {
     //[Index(nameof(Base_code), nameof(language_code), Name = "IX_StateGroup_name", IsUnique = true)]
-    public partial class StateGroup_name : BaseTranslateName
+    public partial class StateGroup_name : BaseNameEntity
     {
         public StateGroup_name()
         {

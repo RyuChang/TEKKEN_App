@@ -3,14 +3,14 @@ using Microsoft.AspNetCore.Components;
 using TekkenApp.Data;
 using TekkenApp.Models;
 
-namespace TekkenApp.Pages.Components.Main
+namespace TekkenApp.Pages.Components.Base.Data
 {
-    public partial class DetailComponent<TEntity, TNameEntity>
-                            where TEntity : BaseEntity
-                            where TNameEntity : BaseTranslateName, new()
+    public partial class DeleteComponent<TDataEntity, TNameEntity>
+                            where TDataEntity : BaseDataEntity
+                            where TNameEntity : BaseNameEntity, new()
     {
         [Parameter]
-        public BaseService<TEntity, TNameEntity> BaseService { get; set; }
+        public BaseService<TDataEntity, TNameEntity> BaseService { get; set; }
 
         [Parameter]
         public string Id { get; set; }
@@ -19,12 +19,12 @@ namespace TekkenApp.Pages.Components.Main
         NavigationManager navigationManager { get; set; }
 
 
-        public TEntity BaseEntity { get; set; }
+        public TDataEntity BaseEntity { get; set; }
 
 
         protected override async Task OnInitializedAsync()
         {
-            BaseEntity = await BaseService.GetEntityByIdAsync(Id);
+            BaseEntity = await BaseService.GeTDataEntityByIdAsync(Id);
         }
 
         protected async Task btnEdit_Click()

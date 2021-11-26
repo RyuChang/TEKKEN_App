@@ -3,22 +3,19 @@ using Microsoft.AspNetCore.Components;
 using TekkenApp.Data;
 using TekkenApp.Models;
 
-namespace TekkenApp.Pages.Components.Name
+namespace TekkenApp.Pages.Components.Base.Name
 {
-    public partial class NameCreateComponent<TEntity, TNameEntity>
-                                            where TEntity : BaseEntity
-                                            where TNameEntity : BaseTranslateName, new()
+    public partial class DetailNameComponent<TDataEntity, TNameEntity>
+                                            where TDataEntity : BaseDataEntity
+                                            where TNameEntity : BaseNameEntity, new()
     {
         [Parameter]
-        public BaseService<TEntity, TNameEntity> BaseService { get; set; }
+        public BaseService<TDataEntity, TNameEntity> BaseService { get; set; }
 
         [Parameter]
-        public int Code { get; set; }
+        public string Id { get; set; }
 
-        [Parameter]
-        public string Language { get; set; }
-
-        public TNameEntity nameEntity = new();
+        public TNameEntity nameEntity { get; set; }
 
         [Inject]
         NavigationManager navigationManager { get; set; }
@@ -26,8 +23,7 @@ namespace TekkenApp.Pages.Components.Name
 
         protected override async Task OnInitializedAsync()
         {
-            nameEntity.Base_code = Code;
-            nameEntity.Language_code = Language;
+            nameEntity = await BaseService.GetNameEntityByIdAsync(Id);
         }
 
         protected void btnCancel_Click()
@@ -45,10 +41,11 @@ namespace TekkenApp.Pages.Components.Name
             //await hitTypeService.UpdateHitTypeNameAsync(hitType_name);
             //navigationManager.NavigateTo($"/HitTypes/Detail_name/{Id}");
         }
-        protected async Task btnSave_Click()
+        protected async Task btnEdit_Click(int id)
         {
-            await BaseService.CreateTranslateNameAsync(nameEntity);
-            navigationManager.NavigateTo($"{BaseService.preUrl}/Detail_name/{nameEntity.Base_code}");
+            navigationManager.NavigateTo($"{BaseService.preUrl}/Edit_name/{Id}");
+            //await hitTypeService.UpdateHitTypeNameAsync(hitType_name);
+            //navigationManager.NavigateTo($"/HitTypes/Detail_name/{Id}");
         }
     }
 }

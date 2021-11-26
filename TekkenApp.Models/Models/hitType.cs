@@ -12,7 +12,7 @@ namespace TekkenApp.Models
     [Index(nameof(Code), Name = "IX_hitType", IsUnique = true)]
     [Index(nameof(Number), Name = "IX_hitType_1", IsUnique = true)]
 
-    public partial class HitType : BaseEntity
+    public partial class HitType : BaseDataEntity
     {
         [NotMapped]
         public static APP APP_TYPE = APP.HitType;

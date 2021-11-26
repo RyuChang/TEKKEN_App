@@ -3,19 +3,22 @@ using Microsoft.AspNetCore.Components;
 using TekkenApp.Data;
 using TekkenApp.Models;
 
-namespace TekkenApp.Pages.Components.Name
+namespace TekkenApp.Pages.Components.Base.Name
 {
-    public partial class NameDetailComponent<TEntity, TNameEntity>
-                                            where TEntity : BaseEntity
-                                            where TNameEntity : BaseTranslateName, new()
+    public partial class CreateNameComponent<TDataEntity, TNameEntity>
+                                            where TDataEntity : BaseDataEntity
+                                            where TNameEntity : BaseNameEntity, new()
     {
         [Parameter]
-        public BaseService<TEntity, TNameEntity> BaseService { get; set; }
+        public BaseService<TDataEntity, TNameEntity> BaseService { get; set; }
 
         [Parameter]
-        public string Id { get; set; }
+        public int Code { get; set; }
 
-        public TNameEntity nameEntity { get; set; }
+        [Parameter]
+        public string Language { get; set; }
+
+        public TNameEntity nameEntity = new();
 
         [Inject]
         NavigationManager navigationManager { get; set; }
@@ -23,7 +26,8 @@ namespace TekkenApp.Pages.Components.Name
 
         protected override async Task OnInitializedAsync()
         {
-            nameEntity = await BaseService.GetNameEntityByIdAsync(Id);
+            nameEntity.Base_code = Code;
+            nameEntity.Language_code = Language;
         }
 
         protected void btnCancel_Click()
@@ -41,10 +45,10 @@ namespace TekkenApp.Pages.Components.Name
             //await hitTypeService.UpdateHitTypeNameAsync(hitType_name);
             //navigationManager.NavigateTo($"/HitTypes/Detail_name/{Id}");
         }
-        protected async Task btnEdit_Click()
+        protected async Task btnSave_Click()
         {
-            //await hitTypeService.UpdateHitTypeNameAsync(hitType_name);
-            //navigationManager.NavigateTo($"/HitTypes/Detail_name/{Id}");
+            await BaseService.CreateTranslateNameAsync(nameEntity);
+            navigationManager.NavigateTo($"{BaseService.preUrl}/Detail_name/{nameEntity.Base_code}");
         }
     }
 }

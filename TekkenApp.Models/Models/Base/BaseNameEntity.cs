@@ -4,18 +4,18 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace TekkenApp.Models
 {
     [NotMapped]
-    public class BaseTranslateName //: BaseEntity
+    public class BaseNameEntity //: BaseEntity
     {
         [NotMapped]
         public string preUrl { get; set; }
 
         protected TableName tableName { get; set; }
-        public BaseTranslateName()
+        public BaseNameEntity()
         {
 
 
         }
-        public BaseTranslateName(int id, int base_code, string language_code, string name)
+        public BaseNameEntity(int id, int base_code, string language_code, string name)
 
         {
             this.Id = Id;

@@ -21,7 +21,7 @@ namespace TekkenApp.Pages.HitTypes
         
         protected override async Task OnInitializedAsync()
         {
-            hitType_name = await hitTypeService.GetNameEntityByIdAsync(Id);
+            //hitType_name = await hitTypeService.GetNameEntityByIdAsync(Id);
         }
 
 

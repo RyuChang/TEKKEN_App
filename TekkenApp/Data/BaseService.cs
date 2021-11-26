@@ -12,26 +12,26 @@ using TekkenApp.Models;
 
 namespace TekkenApp.Data
 {
-    public abstract class BaseService<TEntity, TNameEntity>
-        where TEntity : BaseEntity
-        where TNameEntity : BaseTranslateName, new()
+    public abstract class BaseService<TDataEntity, TNameEntity>
+        where TDataEntity : BaseDataEntity
+        where TNameEntity : BaseNameEntity, new()
     {
         protected TekkenDbContext _tekkenDBContext;
-        protected DbSet<TEntity> _dataDbSet;
+        protected DbSet<TDataEntity> _dataDbSet;
         protected DbSet<TNameEntity> _nameDbSet;
         public string preUrl { get; set; }
 
         protected string mainTable { get; set; }
         protected string nameTable { get; set; }
 
-        public BaseService(TekkenDbContext tekkenDbContext, DbSet<TEntity> dbset, DbSet<TNameEntity> nameDbSet)
+        public BaseService(TekkenDbContext tekkenDbContext, DbSet<TDataEntity> dbset, DbSet<TNameEntity> nameDbSet)
         {
             _tekkenDBContext = tekkenDbContext;
             _dataDbSet = dbset;
             _nameDbSet = nameDbSet;
         }
 
-        public async Task<TEntity> GetEntityByIdAsync(string id)
+        public async Task<TDataEntity> GeTDataEntityByIdAsync(string id)
         {
             return await _dataDbSet.FindAsync(int.Parse(id));
         }
@@ -56,7 +56,7 @@ namespace TekkenApp.Data
             return BaseEntityExistsByCode(int.Parse(code));
         }
 
-        public async Task<List<TEntity>> GetEntities()
+        public async Task<List<TDataEntity>> GetEntities()
         {
             return await _dataDbSet.ToListAsync();
         }
@@ -77,7 +77,7 @@ namespace TekkenApp.Data
 
             return tableCode.code + (character_code * 1000) + stateGroupNumber + number;
         }
-        public async Task<bool> CreateEntityAsync(TEntity entity)
+        public async Task<bool> CreateEntityAsync(TDataEntity entity)
         {
             await _dataDbSet.AddAsync(entity);
             await _tekkenDBContext.SaveChangesAsync();
@@ -116,7 +116,7 @@ namespace TekkenApp.Data
 
         }
 
-        //public abstract List<TNameEntity> GetEntity_AllTranslateNamesByCodeAsync(int code);
+        //public abstract List<TNameEntity> GeTDataEntity_AllTranslateNamesByCodeAsync(int code);
 
         public List<TNameEntity> GetAllTranslateNamesByCodeAsync(int code)
         {
@@ -131,14 +131,14 @@ namespace TekkenApp.Data
 
         #endregion
 
-        public async Task<BaseEntity> UpdateDataAsync(BaseEntity baseEntity)
+        public async Task<BaseDataEntity> UpdateDataAsync(BaseDataEntity baseEntity)
         {
             _tekkenDBContext.Entry(baseEntity).State = EntityState.Modified;
             await _tekkenDBContext.SaveChangesAsync();
             return baseEntity;
         }
 
-        public async Task<BaseTranslateName> UpdateTranslateNameAsync(BaseTranslateName translateName)
+        public async Task<BaseNameEntity> UpdateTranslateNameAsync(BaseNameEntity translateName)
         {
             _tekkenDBContext.Entry(translateName).State = EntityState.Modified;
             await _tekkenDBContext.SaveChangesAsync();

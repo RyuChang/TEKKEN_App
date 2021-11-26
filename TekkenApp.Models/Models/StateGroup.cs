@@ -12,7 +12,7 @@ namespace TekkenApp.Models
     [Index(nameof(Code), Name = "IX_StateGroup", IsUnique = true)]
     [Index(nameof(Number), Name = "IX_StateGroup_1", IsUnique = true)]
 
-    public partial class StateGroup : BaseEntity
+    public partial class StateGroup : BaseDataEntity
     {
         [NotMapped]
         public string preUrl { get; set; }

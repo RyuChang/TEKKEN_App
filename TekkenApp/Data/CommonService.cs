@@ -16,7 +16,7 @@ namespace TekkenApp.Data
 
     //    }
 
-    //    public override List<BaseTranslateName> GetEntity_AllTranslateNamesByCodeAsync(int code)
+    //    public override List<BaseTranslateName> GeTDataEntity_AllTranslateNamesByCodeAsync(int code)
     //    {
     //        throw new NotImplementedException();
     //    }

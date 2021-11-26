@@ -1,5 +1,5 @@
-﻿@page "/Components/Main/ListComponent"
-@typeparam TEntity
+﻿@page "/Components/Base/Data/ListComponent"
+@typeparam TDataEntity
 @typeparam TNameEntity
 
 <h3>List</h3>
@@ -9,7 +9,6 @@
 <div>
     <a href="/HitTypes/Create" class="btn btn-primary">추가</a>
 </div>
-
 
 <style>
     .table tbody tr:nth-child(4n-3) {
@@ -49,10 +48,9 @@
                                 <td>@baseEntities.Number</td>
                                 <td>@baseEntities.Description</td>
                                 <td>
-                                    <input type="button" class="btn btn-primary" id="btnEdit" value="수정" @onclick="()=>(btnEdit_Click(baseEntities.Id))" />
-                                    <input type="button" class="btn btn-primary" id="btnDetail" value="상세" @onclick="()=>(btnDetail_Click(baseEntities.Id))" />
-                                    @*<a href="@hitType_name.Id">상세</a>*@
-                                    <!--<a asp-action="UpdateAllName" class="btn btn-primary" asp-route-id="@hitType.Id">명칭 편집</a>-->
+                                    <input type="button" class="btn btn-primary" id="btnDetail" value="상세" @onclick="()=>btnDetail_Click(baseEntities.Id)" />
+                                    <input type="button" class="btn btn-primary" id="btnEdit" value="수정" @onclick="()=>btnEdit_Click(baseEntities.Id)" />
+                                    <input type="button" class="btn btn-primary" id="btnDelete" value="삭제" @onclick="()=>btnDelete_Click(baseEntities.Id)" />
                                 </td>
                             </tr>
 
@@ -61,21 +59,19 @@
                                 <tr>
                                     <td>@base_name.Language_code</td>
                                     <td colspan="2">
+                                        @base_name.Name
+                                    </td>
+                                    <td>
                                         @if (String.IsNullOrEmpty(base_name.Name))
                                         {
-                                            @*<input type="button" class="btn btn-primary" value="추가" id="btnCreate_Click" @onclick="btnCreate_Click" />*@
+                                            <input type="button" class="btn btn-primary" id="btnCreateName" value="추가" @onclick="() => btnCreateName_Click(baseEntities.Code, base_name.Language_code)" />
                                         }
                                         else
                                         {
-                                            @base_name.Name
+                                            <input type="button" class="btn btn-primary" id="btnDetailName" value="상세" @onclick="() => btnDetailName_Click(base_name.Id)" />
+                                            <input type="button" class="btn btn-primary" id="btnEditName" value="수정" @onclick="() => btnEditName_Click(base_name.Id)" />
+                                            <input type="button" class="btn btn-primary" id="btnDeleteName" value="삭제" @onclick="() => btnDeleteName_Click(base_name.Id)" />
                                         }
-                                    </td>
-                                    <td>
-                                        <input type="button" class="btn btn-primary" id="btnDetailName" value="상세" @onclick="()=>(btnDetailName_Click(base_name.Id))" />
-                                        <input type="button" class="btn btn-primary" id="btnCreateName" value="추가" @onclick="()=>(btnCreateName_Click(baseEntities.Code,base_name.Language_code))" />
-                                        <input type="button" class="btn btn-primary" id="btnEditName" value="수정" @onclick="()=>(btnEditName_Click(base_name.Id))" />
-                                        <input type="button" class="btn btn-primary" id="btnDeleteName" value="삭제" @onclick="()=>(btnDeleteName_Click(base_name.Id))" />
-
                                     </td>
                                 </tr>
                             }

@@ -4,23 +4,23 @@ using Microsoft.AspNetCore.Components;
 using TekkenApp.Data;
 using TekkenApp.Models;
 
-namespace TekkenApp.Pages.Components.Main
+namespace TekkenApp.Pages.Components.Base.Data
 {
-    public partial class CreateComponent<TEntity, TNameEntity>
-                            where TEntity : BaseEntity
-                            where TNameEntity : BaseTranslateName, new()
+    public partial class CreateComponent<TDataEntity, TNameEntity>
+                            where TDataEntity : BaseDataEntity
+                            where TNameEntity : BaseNameEntity, new()
     {
         [Parameter]
-        public BaseService<TEntity, TNameEntity> BaseService { get; set; }
+        public BaseService<TDataEntity, TNameEntity> BaseService { get; set; }
 
         [Inject]
         NavigationManager navigationManager { get; set; }
 
-        public TEntity BaseEntity { get; set; }
+        public TDataEntity BaseEntity { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
-            BaseEntity = Activator.CreateInstance(typeof(TEntity)) as TEntity;
+            BaseEntity = Activator.CreateInstance(typeof(TDataEntity)) as TDataEntity;
             BaseEntity.Number = await BaseService.GetCreateNumber();
             BaseEntity.Code = await BaseService.GetCreateCode(BaseEntity.Number);
         }

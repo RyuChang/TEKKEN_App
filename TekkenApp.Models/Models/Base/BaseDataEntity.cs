@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace TekkenApp.Models
 {
     [NotMapped]
-    public class BaseEntity
+    public class BaseDataEntity
     {
         [NotMapped]
         public static string preUrl { get; set; }

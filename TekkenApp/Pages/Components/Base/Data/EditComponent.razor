@@ -5,34 +5,34 @@
 
 <h3>Edit</h3>
 
-<EditForm Model="@BaseEntity" OnValidSubmit="@HandleValidSubmit">
+<EditForm Model="@BaseDataEntity" OnValidSubmit="@HandleValidSubmit">
     <DataAnnotationsValidator />
     <ValidationSummary />
     <div class="form-group row">
-        <label for="@BaseEntity.Id" class="col-sm-1 col-form-label">ID</label>
+        <label for="@BaseDataEntity.Id" class="col-sm-1 col-form-label">ID</label>
         <div class="col-sm-10">
-            <input type="text" readonly class="form-control" @bind-value="@BaseEntity.Id" />
+            <input type="text" readonly class="form-control" @bind-value="@BaseDataEntity.Id" />
         </div>
     </div>
 
     <div class="form-group row">
-        <label for="@BaseEntity.Number" class="col-sm-1 col-form-label">순번</label>
+        <label for="@BaseDataEntity.Number" class="col-sm-1 col-form-label">순번</label>
         <div class="col-sm-10">
-            <input type="text" readonly class="form-control" value="@BaseEntity.Number" @oninput="@(e=>number_Changed((string)e.Value))" />
+            <input type="text" readonly class="form-control" value="@BaseDataEntity.Number" @oninput="@(e=>number_Changed((string)e.Value))" />
         </div>
     </div>
 
     <div class="form-group row">
-        <label for="@BaseEntity.Code" class="col-sm-1 col-form-label">코드</label>
+        <label for="@BaseDataEntity.Code" class="col-sm-1 col-form-label">코드</label>
         <div class="col-sm-10">
-            <input type="text" readonly class="form-control" @bind-value="@BaseEntity.Code" />
+            <input type="text" readonly class="form-control" @bind-value="@BaseDataEntity.Code" />
         </div>
     </div>
 
     <div class="form-group row">
-        <label for="@BaseEntity.Description" class="col-sm-1 col-form-label">설명</label>
+        <label for="@BaseDataEntity.Description" class="col-sm-1 col-form-label">설명</label>
         <div class="col-sm-10">
-            <input type="text" class="form-control" @bind-value="@BaseEntity.Description" />
+            <input type="text" class="form-control" @bind-value="@BaseDataEntity.Description" />
         </div>
     </div>
 

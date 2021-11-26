@@ -24,11 +24,11 @@ namespace TekkenApp.Pages.Components.Base.Data
         ILogger<EditComponent<TDataEntity, TNameEntity>> Logger { get; set; }
 
 
-        public TDataEntity BaseEntity { get; set; }
+        public TDataEntity BaseDataEntity { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
-            BaseEntity = await baseService.GeTDataEntityByIdAsync(Id);
+            BaseDataEntity = await baseService.GeTDataEntityByIdAsync(Id);
         }
 
         protected void btnCancel_Click()
@@ -43,16 +43,16 @@ namespace TekkenApp.Pages.Components.Base.Data
 
         protected async Task btnSave_Click()
         {
-            await baseService.UpdateDataAsync(BaseEntity);
-            navigationManager.NavigateTo($"{baseService.preUrl}/Detail/{BaseEntity.Id}");
+            await baseService.UpdateDataAsync(BaseDataEntity);
+            navigationManager.NavigateTo($"{baseService.preUrl}/Detail/{BaseDataEntity.Id}");
         }
         private async Task number_Changed(string value)
         {
             int number;
             if (int.TryParse(value, out number))
             {
-                BaseEntity.Number = number;
-                BaseEntity.Code = await baseService.GetCreateCode(number);
+                BaseDataEntity.Number = number;
+                BaseDataEntity.Code = await baseService.GetCreateCode(number);
             }
 
         }

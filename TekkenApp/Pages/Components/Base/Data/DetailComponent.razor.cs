@@ -19,12 +19,12 @@ namespace TekkenApp.Pages.Components.Base.Data
         NavigationManager navigationManager { get; set; }
 
 
-        public TDataEntity BaseEntity { get; set; }
+        public TDataEntity BaseDataEntity { get; set; }
 
 
         protected override async Task OnInitializedAsync()
         {
-            BaseEntity = await BaseService.GeTDataEntityByIdAsync(Id);
+            BaseDataEntity = await BaseService.GeTDataEntityByIdAsync(Id);
         }
 
         protected async Task btnEdit_Click()

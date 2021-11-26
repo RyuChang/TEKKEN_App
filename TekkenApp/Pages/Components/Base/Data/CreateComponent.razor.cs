@@ -16,19 +16,19 @@ namespace TekkenApp.Pages.Components.Base.Data
         [Inject]
         NavigationManager navigationManager { get; set; }
 
-        public TDataEntity BaseEntity { get; set; }
+        public TDataEntity BaseDataEntity { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
-            BaseEntity = Activator.CreateInstance(typeof(TDataEntity)) as TDataEntity;
-            BaseEntity.Number = await BaseService.GetCreateNumber();
-            BaseEntity.Code = await BaseService.GetCreateCode(BaseEntity.Number);
+            BaseDataEntity = Activator.CreateInstance(typeof(TDataEntity)) as TDataEntity;
+            BaseDataEntity.Number = await BaseService.GetCreateNumber();
+            BaseDataEntity.Code = await BaseService.GetCreateCode(BaseDataEntity.Number);
         }
 
         protected async Task btnSave_Click()
         {
-            await BaseService.CreateEntityAsync(BaseEntity);
-            navigationManager.NavigateTo($"{BaseService.preUrl}/Detail/{BaseEntity.Id}");
+            await BaseService.CreateEntityAsync(BaseDataEntity);
+            navigationManager.NavigateTo($"{BaseService.preUrl}/Detail/{BaseDataEntity.Id}");
         }
     }
 }

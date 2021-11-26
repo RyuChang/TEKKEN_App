@@ -41,19 +41,19 @@ namespace TekkenApp.Data
             return await _nameDbSet.FindAsync(int.Parse(id));
         }
 
-        private bool BaseEntityExistsById(int id)
+        private bool BaseDataEntityExistsById(int id)
         {
             return _dataDbSet.Any(e => e.Id == id);
         }
 
-        private bool BaseEntityExistsByCode(int code)
+        private bool BaseDataEntityExistsByCode(int code)
         {
             return _dataDbSet.Any(e => e.Code == code);
         }
 
-        private bool BaseEntityExistsByCode(string code)
+        private bool BaseDataEntityExistsByCode(string code)
         {
-            return BaseEntityExistsByCode(int.Parse(code));
+            return BaseDataEntityExistsByCode(int.Parse(code));
         }
 
         public async Task<List<TDataEntity>> GetEntities()
@@ -131,11 +131,11 @@ namespace TekkenApp.Data
 
         #endregion
 
-        public async Task<BaseDataEntity> UpdateDataAsync(BaseDataEntity baseEntity)
+        public async Task<BaseDataEntity> UpdateDataAsync(BaseDataEntity BaseDataEntity)
         {
-            _tekkenDBContext.Entry(baseEntity).State = EntityState.Modified;
+            _tekkenDBContext.Entry(BaseDataEntity).State = EntityState.Modified;
             await _tekkenDBContext.SaveChangesAsync();
-            return baseEntity;
+            return BaseDataEntity;
         }
 
         public async Task<BaseNameEntity> UpdateTranslateNameAsync(BaseNameEntity translateName)

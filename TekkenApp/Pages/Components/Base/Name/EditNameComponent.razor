@@ -3,7 +3,7 @@
 @typeparam TNameEntity
 
 <h3>EditNameComponent</h3>
-@if (nameEntity == null)
+@if (BaseNameEntity == null)
 {
     <p><em>Loading...</em></p>
 }
@@ -14,26 +14,26 @@ else
             <div class="col-md-8">
                 <div class="form-group">
                     <label>ID </label>
-                    @nameEntity.Id
+                    @BaseNameEntity.Id
                 </div>
 
                 <div class="form-group">
                     <label>테이블명</label>
-                    @nameEntity.GetTableName()
+                    @BaseNameEntity.GetTableName()
                 </div>
 
                 <div class="form-group">
                     <label>코드 </label>
-                    @nameEntity.Base_code
+                    @BaseNameEntity.Base_code
 
                 </div>
                 <div class="form-group">
                     <label>입력 언어</label>
-                    @nameEntity.Language_code
+                    @BaseNameEntity.Language_code
                 </div>
                 <div class="form-group">
                     <label>명칭</label>
-                    <input type="text" name="name" @bind="@nameEntity.Name" />
+                    <input type="text" name="name" @bind="@BaseNameEntity.Name" />
                 </div>
 
                 btnEdit_Click

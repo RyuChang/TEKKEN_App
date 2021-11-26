@@ -18,7 +18,7 @@ namespace TekkenApp.Pages.Components.Base.Name
         [Parameter]
         public string Language { get; set; }
 
-        public TNameEntity nameEntity = new();
+        public TNameEntity BaseNameEntity = new();
 
         [Inject]
         NavigationManager navigationManager { get; set; }
@@ -26,8 +26,8 @@ namespace TekkenApp.Pages.Components.Base.Name
 
         protected override async Task OnInitializedAsync()
         {
-            nameEntity.Base_code = Code;
-            nameEntity.Language_code = Language;
+            BaseNameEntity.Base_code = Code;
+            BaseNameEntity.Language_code = Language;
         }
 
         protected void btnCancel_Click()
@@ -47,8 +47,8 @@ namespace TekkenApp.Pages.Components.Base.Name
         }
         protected async Task btnSave_Click()
         {
-            await BaseService.CreateTranslateNameAsync(nameEntity);
-            navigationManager.NavigateTo($"{BaseService.preUrl}/Detail_name/{nameEntity.Base_code}");
+            await BaseService.CreateTranslateNameAsync(BaseNameEntity);
+            navigationManager.NavigateTo($"{BaseService.preUrl}/Detail_name/{BaseNameEntity.Base_code}");
         }
     }
 }

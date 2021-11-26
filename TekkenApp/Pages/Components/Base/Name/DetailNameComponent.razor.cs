@@ -15,7 +15,7 @@ namespace TekkenApp.Pages.Components.Base.Name
         [Parameter]
         public string Id { get; set; }
 
-        public TNameEntity nameEntity { get; set; }
+        public TNameEntity BaseNameEntity { get; set; }
 
         [Inject]
         NavigationManager navigationManager { get; set; }
@@ -23,7 +23,7 @@ namespace TekkenApp.Pages.Components.Base.Name
 
         protected override async Task OnInitializedAsync()
         {
-            nameEntity = await BaseService.GetNameEntityByIdAsync(Id);
+            BaseNameEntity = await BaseService.GetNameEntityByIdAsync(Id);
         }
 
         protected void btnCancel_Click()

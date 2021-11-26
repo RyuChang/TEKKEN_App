@@ -14,7 +14,7 @@ namespace TekkenApp.Pages.Components.Base.Name
         [Parameter]
         public string Id { get; set; }
 
-        public TNameEntity nameEntity { get; set; }
+        public TNameEntity BaseNameEntity { get; set; }
 
         [Inject]
         NavigationManager navigationManager { get; set; }
@@ -23,12 +23,12 @@ namespace TekkenApp.Pages.Components.Base.Name
 
         protected override async Task OnInitializedAsync()
         {
-            nameEntity = await BaseService.GetNameEntityByIdAsync(Id);
+            BaseNameEntity = await BaseService.GetNameEntityByIdAsync(Id);
         }
         protected async Task btnSave_Click()
         {
-            await BaseService.UpdateTranslateNameAsync(nameEntity);
-            navigationManager.NavigateTo($"{BaseService.preUrl}/Detail_name/{nameEntity.Id}");
+            await BaseService.UpdateTranslateNameAsync(BaseNameEntity);
+            navigationManager.NavigateTo($"{BaseService.preUrl}/Detail_name/{BaseNameEntity.Id}");
         }
 
         protected void btnList_Click()

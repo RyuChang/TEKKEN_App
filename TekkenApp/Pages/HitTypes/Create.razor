@@ -1,5 +1,6 @@
 ﻿@page "/HitTypes/Create"
-
+@inherits BaseDataComponent
 <h3>Create</h3>
 
-<TekkenApp.Pages.Components.Base.Data.CreateComponent TDataEntity="HitType" TNameEntity="HitType_name" baseService="@hitTypeService"></TekkenApp.Pages.Components.Base.Data.CreateComponent>
+<TekkenApp.Pages.Components.Base.Data.CreateComponent APP="@AppType.HitTypes" TDataEntity="HitType" TNameEntity="HitType_name" baseService="@hitTypeService">
+</TekkenApp.Pages.Components.Base.Data.CreateComponent>

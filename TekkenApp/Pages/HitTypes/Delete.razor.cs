@@ -1,14 +1,6 @@
-﻿using Microsoft.AspNetCore.Components;
-using TekkenApp.Data;
-
-namespace TekkenApp.Pages.HitTypes
+﻿namespace TekkenApp.Pages.HitTypes
 {
-    public partial class Delete
+    public partial class Delete : BaseDataComponent
     {
-        [Parameter]
-        public string Id { get; set; }
-
-        [Inject]
-        private HitTypeService hitTypeService { get; set; }
     }
 }

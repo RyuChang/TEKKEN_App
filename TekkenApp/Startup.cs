@@ -15,6 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TekkenApp.Areas.Identity;
 using TekkenApp.Data;
+using TekkenApp.Utilities;
 
 namespace TekkenApp
 {
@@ -57,6 +58,7 @@ namespace TekkenApp
             //services.AddScoped<BaseService>();
             services.AddScoped<HitTypeService>();
             services.AddScoped<StateGroupService>();
+            services.AddScoped<NavigationUtil>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

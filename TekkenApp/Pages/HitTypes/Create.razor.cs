@@ -3,13 +3,9 @@ using TekkenApp.Data;
 
 namespace TekkenApp.Pages.HitTypes
 {
-    public partial class Create
+    public partial class Create : BaseDataComponent
     {
-        [Inject]
-        private HitTypeService hitTypeService { get; set; }
-
-        [Inject]
-        NavigationManager navigationManager { get; set; }
+     
     }
 }
 

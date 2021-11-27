@@ -1,4 +1,4 @@
 ﻿@page "/HitTypes"
 @page "/HitTypes/Index"
-
-<TekkenApp.Pages.Components.Base.Data.ListComponent TDataEntity="HitType" TNameEntity="HitType_name"  baseService="@hitTypeService"></TekkenApp.Pages.Components.Base.Data.ListComponent>
+@inherits BaseDataComponent
+<TekkenApp.Pages.Components.Base.Data.ListComponent APP="@AppType.HitTypes" TDataEntity="HitType" TNameEntity="HitType_name" baseService="@hitTypeService"></TekkenApp.Pages.Components.Base.Data.ListComponent>

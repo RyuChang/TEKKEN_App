@@ -3,12 +3,8 @@ using TekkenApp.Data;
 
 namespace TekkenApp.Pages.HitTypes
 {
-    public partial class Detail
+    public partial class Detail : BaseDataComponent
     {
-        [Parameter]
-        public string Id { get; set; }
-
-        [Inject]
-        private HitTypeService hitTypeService { get; set; }
+        
     }
 }

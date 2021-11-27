@@ -23,10 +23,23 @@ namespace TekkenApp.Models
     }
 
 
-    public enum APP
+    public enum AppType
     {
-        StateGroup,
-        HitType,
+        StateGroups,
+        HitTypes,
+    }
+
+    public enum ActionType
+    {
+        List,
+        Create,
+        Detail,
+        Edit,
+        Delete,
+        Create_name,
+        Detail_name,
+        Edit_name,
+        Delete_name,
     }
 
     public enum TableName

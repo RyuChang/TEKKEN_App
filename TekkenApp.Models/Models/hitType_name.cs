@@ -7,7 +7,7 @@ namespace TekkenApp.Models
     public partial class HitType_name : BaseNameEntity
     {
         [NotMapped]
-        public static APP APP_TYPE = APP.HitType;
+        public static AppType APP_TYPE = AppType.HitTypes;
         [NotMapped]
         public static string PRE_URL = APP_TYPE.ToString();
 

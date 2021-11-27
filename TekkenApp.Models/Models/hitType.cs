@@ -14,10 +14,10 @@ namespace TekkenApp.Models
 
     public partial class HitType : BaseDataEntity
     {
-        [NotMapped]
-        public static APP APP_TYPE = APP.HitType;
-        [NotMapped]
-        public static string preUrl = APP_TYPE.ToString();
+        //[NotMapped]
+        //public static AppType APP_TYPE = AppType.HitType;
+        //[NotMapped]
+        //public static string preUrl = APP_TYPE.ToString();
 
         public HitType()
         {

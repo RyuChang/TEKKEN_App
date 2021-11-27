@@ -1,5 +1,5 @@
-﻿@page "/HitTypes/Detail/{Id}"
+﻿@page "/HitTypes/Detail/{Id:int}"
+@inherits BaseDataComponent
 
-<TekkenApp.Pages.Components.Base.Data.DetailComponent TDataEntity="HitType" TNameEntity="HitType_name" baseService="@hitTypeService" Id="@Id" >
-
+<TekkenApp.Pages.Components.Base.Data.DetailComponent APP="@AppType.HitTypes" TDataEntity="HitType" TNameEntity="HitType_name" baseService="@hitTypeService" Id="@Id">
 </TekkenApp.Pages.Components.Base.Data.DetailComponent>

@@ -6,7 +6,7 @@ using TekkenApp.Models;
 
 namespace TekkenApp.Data
 {
-    public class StateGroupService : BaseService<StateGroup, StateGroup_name>
+    public class StateGroupService : baseService<StateGroup, StateGroup_name>
     {
         public StateGroupService(TekkenDbContext tekkenDbContext) : base(tekkenDbContext, tekkenDbContext.StateGroup, tekkenDbContext.StateGroup_name)
         {

@@ -1,40 +1,28 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using TekkenApp.Data;
 using TekkenApp.Models;
 
 namespace TekkenApp.Pages.Components.Base.Name
 {
-    public partial class EditNameComponent<TDataEntity, TNameEntity> where TDataEntity : BaseDataEntity
-        where TNameEntity : BaseNameEntity, new()
+    public partial class EditNameComponent<TDataEntity, TNameEntity> :
+        BaseComponent<TDataEntity, TNameEntity>
+                            where TDataEntity : BaseDataEntity
+                            where TNameEntity : BaseNameEntity, new()
     {
-        [Parameter]
-        public BaseService<TDataEntity, TNameEntity> BaseService { get; set; }
-
-        [Parameter]
-        public string Id { get; set; }
-
-        public TNameEntity BaseNameEntity { get; set; }
-
-        [Inject]
-        NavigationManager navigationManager { get; set; }
-
-        
-
         protected override async Task OnInitializedAsync()
         {
-            BaseNameEntity = await BaseService.GetNameEntityByIdAsync(Id);
+            BaseNameEntity = await baseService.GetNameEntityByIdAsync(Id);
         }
-        protected async Task btnSave_Click()
+        protected async Task SaveEditName()
         {
-            await BaseService.UpdateTranslateNameAsync(BaseNameEntity);
-            navigationManager.NavigateTo($"{BaseService.preUrl}/Detail_name/{BaseNameEntity.Id}");
+            if (!await JSRuntime.InvokeAsync<bool>("confirm", "저장 하겠습니까"))
+            {
+                return;
+            }
+            await baseService.UpdateNameEntityAsync(BaseNameEntity);
+            MoveToDetailName(BaseNameEntity.Id);
         }
-
-        protected void btnList_Click()
-        {
-            navigationManager.NavigateTo($"{BaseService.preUrl}");
-        }
-
     }
 }

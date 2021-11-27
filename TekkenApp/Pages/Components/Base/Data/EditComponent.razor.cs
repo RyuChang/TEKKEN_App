@@ -1,51 +1,33 @@
 ﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
-using TekkenApp.Data;
+using Microsoft.JSInterop;
 using TekkenApp.Models;
-
 
 namespace TekkenApp.Pages.Components.Base.Data
 {
-    public partial class EditComponent<TDataEntity, TNameEntity>
+    public partial class EditComponent<TDataEntity, TNameEntity> :
+        BaseComponent<TDataEntity, TNameEntity>
                             where TDataEntity : BaseDataEntity
                             where TNameEntity : BaseNameEntity, new()
     {
-        [Parameter]
-        public BaseService<TDataEntity, TNameEntity> baseService { get; set; }
 
-        [Parameter]
-        public string Id { get; set; }
-
-        [Inject]
-        NavigationManager navigationManager { get; set; }
-
-        [Inject]
-        ILogger<EditComponent<TDataEntity, TNameEntity>> Logger { get; set; }
-
-
-        public TDataEntity BaseDataEntity { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
-            BaseDataEntity = await baseService.GeTDataEntityByIdAsync(Id);
+            BaseDataEntity = await baseService.GetDataEntityByIdAsync(Id);
         }
 
-        protected void btnCancel_Click()
+        protected async Task SaveEdit()
         {
-            navigationManager.NavigateTo($"{baseService.preUrl}");
-        }
 
-        protected void btnList_Click()
-        {
-            navigationManager.NavigateTo($"{baseService.preUrl}");
-        }
-
-        protected async Task btnSave_Click()
-        {
+            if (!await JSRuntime.InvokeAsync<bool>("confirm", "저장 하겠습니까"))
+            {
+                return;
+            }
             await baseService.UpdateDataAsync(BaseDataEntity);
-            navigationManager.NavigateTo($"{baseService.preUrl}/Detail/{BaseDataEntity.Id}");
+            MoveToDetail(Id);
         }
+
         private async Task number_Changed(string value)
         {
             int number;
@@ -58,7 +40,6 @@ namespace TekkenApp.Pages.Components.Base.Data
         }
         private void HandleValidSubmit()
         {
-
             Logger.LogInformation("HandleValidSubmit called");
         }
     }

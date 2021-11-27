@@ -12,7 +12,7 @@ using TekkenApp.Models;
 
 namespace TekkenApp.Data
 {
-    public abstract class BaseService<TDataEntity, TNameEntity>
+    public abstract class baseService<TDataEntity, TNameEntity>
         where TDataEntity : BaseDataEntity
         where TNameEntity : BaseNameEntity, new()
     {
@@ -21,24 +21,22 @@ namespace TekkenApp.Data
         protected DbSet<TNameEntity> _nameDbSet;
         public string preUrl { get; set; }
 
+        public AppType App { get; protected set; }
         protected string mainTable { get; set; }
         protected string nameTable { get; set; }
 
-        public BaseService(TekkenDbContext tekkenDbContext, DbSet<TDataEntity> dbset, DbSet<TNameEntity> nameDbSet)
+        public baseService(TekkenDbContext tekkenDbContext, DbSet<TDataEntity> dbset, DbSet<TNameEntity> nameDbSet)
         {
             _tekkenDBContext = tekkenDbContext;
             _dataDbSet = dbset;
             _nameDbSet = nameDbSet;
         }
 
-        public async Task<TDataEntity> GeTDataEntityByIdAsync(string id)
-        {
-            return await _dataDbSet.FindAsync(int.Parse(id));
-        }
+        #region 메인 데이터
 
-        public async Task<TNameEntity> GetNameEntityByIdAsync(string id)
+        public async Task<TDataEntity> GetDataEntityByIdAsync(int id)
         {
-            return await _nameDbSet.FindAsync(int.Parse(id));
+            return await _dataDbSet.FindAsync(id);
         }
 
         private bool BaseDataEntityExistsById(int id)
@@ -55,6 +53,73 @@ namespace TekkenApp.Data
         {
             return BaseDataEntityExistsByCode(int.Parse(code));
         }
+        #region 메인 데이터 삭제
+        public async Task<TDataEntity> DeleteDataEntityByIdAsync(TDataEntity dataEntity)
+        {
+
+            if (dataEntity != null)
+            {
+
+                _dataDbSet.Remove(dataEntity);
+                await _tekkenDBContext.SaveChangesAsync();
+            }
+            //GetDataEntityByIdAsync
+            //_dataDbSet.Remove(id);
+            //return await _dataDbSet.FindAsync(id);
+            return dataEntity;
+        }
+
+        #endregion
+
+        #endregion
+
+        #region 명칭 데이터
+        public async Task<TNameEntity> GetNameEntityByIdAsync(int id)
+        {
+            return await _nameDbSet.FindAsync(id);
+        }
+
+
+        #region CreateTranslateName
+        public async Task<bool> CreateTranslateNameAllAsync(TNameEntity translateName)
+        {
+            bool result = false;
+            List<Language> languageList = await _tekkenDBContext.language.ToListAsync();
+
+            foreach (Language language in languageList)
+            {
+                translateName.Language_code = language.code;
+                result = await CreateNameEntityAsync(translateName);
+            }
+            return result;
+        }
+
+        public async Task<bool> CreateNameEntityAsync(TNameEntity translateName)
+        {
+
+            await _nameDbSet.AddAsync(translateName);
+            await _tekkenDBContext.SaveChangesAsync();
+            return true;
+        }
+        #endregion
+
+        public List<TNameEntity> GetAllTranslateNamesByCodeAsync(int code)
+        {
+            var baseTranslateName = from language in _tekkenDBContext.Set<Language>() //_tekkenDBContext.language
+                                    join name in _tekkenDBContext.Set<TNameEntity>().Where(n => n.Base_code == code)
+                                        on language.code equals name.Language_code into grouping
+                                    from name in grouping.DefaultIfEmpty()
+                                    select (new TNameEntity { Id = (name.Id != null) ? name.Id : 0, Base_code = (name.Id != null) ? name.Base_code : 0, Language_code = language.code, Name = name.Name });
+            return baseTranslateName.ToList();
+        }
+
+        public async Task<BaseNameEntity> UpdateNameEntityAsync(BaseNameEntity nameEntity)
+        {
+            _tekkenDBContext.Entry(nameEntity).State = EntityState.Modified;
+            await _tekkenDBContext.SaveChangesAsync();
+            return nameEntity;
+        }
+        #endregion
 
         public async Task<List<TDataEntity>> GetEntities()
         {
@@ -86,63 +151,12 @@ namespace TekkenApp.Data
 
         #endregion
 
-        #region CreateTranslateName
-        public async Task<bool> CreateTranslateNameAllAsync(TNameEntity translateName)
-        {
-            bool result = false;
-            List<Language> languageList = await _tekkenDBContext.language.ToListAsync();
-
-            foreach (Language language in languageList)
-            {
-                translateName.Language_code = language.code;
-                result = await CreateTranslateNameAsync(translateName);
-            }
-            return result;
-        }
-
-        public async Task<bool> CreateTranslateNameAsync(TNameEntity translateName) 
-        {
-
-            await _nameDbSet.AddAsync(translateName);
-            await _tekkenDBContext.SaveChangesAsync();
-            return true;
-            //string sql = $"EXECUTE dbo.[TranslateName_GetTranslateNameByCode] " +
-            //    $"@tableName={translateName.GetTableName()}, " +
-            //    $"@base_code={translateName.Base_code}, " +
-            //    $"@name={translateName.Name}, " +
-            //    $"@language_code={translateName.Language_code}";
-
-            //var result = await _tekkenDBContext.Database.ExecuteSqlRawAsync(sql);
-
-        }
-
-        //public abstract List<TNameEntity> GeTDataEntity_AllTranslateNamesByCodeAsync(int code);
-
-        public List<TNameEntity> GetAllTranslateNamesByCodeAsync(int code)
-        {
-            var baseTranslateName = from language in _tekkenDBContext.Set<Language>() //_tekkenDBContext.language
-                                    join name in _tekkenDBContext.Set<TNameEntity>().Where(n => n.Base_code == code)
-                                        on language.code equals name.Language_code into grouping
-                                    from name in grouping.DefaultIfEmpty()
-                                    select (new TNameEntity { Id = (name.Id != null) ? name.Id : 0, Base_code = (name.Id != null) ? name.Base_code : 0, Language_code = language.code, Name = name.Name });
-            return baseTranslateName.ToList();
-        }
-
-
-        #endregion
 
         public async Task<BaseDataEntity> UpdateDataAsync(BaseDataEntity BaseDataEntity)
         {
             _tekkenDBContext.Entry(BaseDataEntity).State = EntityState.Modified;
             await _tekkenDBContext.SaveChangesAsync();
             return BaseDataEntity;
-        }
-
-        public async Task<BaseNameEntity> UpdateTranslateNameAsync(BaseNameEntity translateName)
-        {
-            _tekkenDBContext.Entry(translateName).State = EntityState.Modified;
-            await _tekkenDBContext.SaveChangesAsync();
-            return translateName;
         }
 
 

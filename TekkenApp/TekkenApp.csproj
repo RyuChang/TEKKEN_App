@@ -6,10 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Pages\StateGroups\**" />
+    <Compile Remove="Pages\Components\test\**" />
+    <Content Remove="Pages\Components\test\**" />
     <Content Remove="Pages\StateGroups\**" />
-    <EmbeddedResource Remove="Pages\StateGroups\**" />
-    <None Remove="Pages\StateGroups\**" />
+    <EmbeddedResource Remove="Pages\Components\test\**" />
+    <None Remove="Pages\Components\test\**" />
+    
   </ItemGroup>
 
   <ItemGroup>
@@ -22,7 +24,6 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
-    <Folder Include="Utilities\" />
   </ItemGroup>
 
   <ItemGroup>

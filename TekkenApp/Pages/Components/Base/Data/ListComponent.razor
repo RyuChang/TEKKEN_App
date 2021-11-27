@@ -1,4 +1,5 @@
 ﻿@page "/Components/Base/Data/ListComponent"
+@inherits BaseComponent<TDataEntity, TNameEntity>
 @typeparam TDataEntity
 @typeparam TNameEntity
 
@@ -48,9 +49,9 @@
                                 <td>@baseEntities.Number</td>
                                 <td>@baseEntities.Description</td>
                                 <td>
-                                    <input type="button" class="btn btn-primary" id="btnDetail" value="상세" @onclick="()=>btnDetail_Click(baseEntities.Id)" />
-                                    <input type="button" class="btn btn-primary" id="btnEdit" value="수정" @onclick="()=>btnEdit_Click(baseEntities.Id)" />
-                                    <input type="button" class="btn btn-primary" id="btnDelete" value="삭제" @onclick="()=>btnDelete_Click(baseEntities.Id)" />
+                                    <input type="button" class="btn btn-primary" id="btnDetail" value="상세" @onclick="()=>MoveToDetail(baseEntities.Id)" />
+                                    <input type="button" class="btn btn-primary" id="btnEdit" value="수정" @onclick="()=>MoveToEdit(baseEntities.Id)" />
+                                    <input type="button" class="btn btn-primary" id="btnDelete" value="삭제" @onclick="()=>MoveToDelete(baseEntities.Id)" />
                                 </td>
                             </tr>
 
@@ -64,13 +65,13 @@
                                     <td>
                                         @if (String.IsNullOrEmpty(base_name.Name))
                                         {
-                                            <input type="button" class="btn btn-primary" id="btnCreateName" value="추가" @onclick="() => btnCreateName_Click(baseEntities.Code, base_name.Language_code)" />
+                                            <input type="button" class="btn btn-primary" id="CreateName" value="추가" @onclick="() => MoveToCreateName(baseEntities.Code, base_name.Language_code)" />
                                         }
                                         else
                                         {
-                                            <input type="button" class="btn btn-primary" id="btnDetailName" value="상세" @onclick="() => btnDetailName_Click(base_name.Id)" />
-                                            <input type="button" class="btn btn-primary" id="btnEditName" value="수정" @onclick="() => btnEditName_Click(base_name.Id)" />
-                                            <input type="button" class="btn btn-primary" id="btnDeleteName" value="삭제" @onclick="() => btnDeleteName_Click(base_name.Id)" />
+                                            <input type="button" class="btn btn-primary" id="DetailName" value="상세" @onclick="() => MoveToDetailName(base_name.Id)" />
+                                            <input type="button" class="btn btn-primary" id="EditName" value="수정" @onclick="() => MoveToEditName(base_name.Id)" />
+                                            <input type="button" class="btn btn-primary" id="DeleteName" value="삭제" @onclick="() => MoveToDeleteName(base_name.Id)" />
                                         }
                                     </td>
                                 </tr>
@@ -82,6 +83,3 @@
         </div>
     </div>
 </div>
-@code {
-
-}

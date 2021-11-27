@@ -6,29 +6,23 @@ using TekkenApp.Models;
 
 namespace TekkenApp.Pages.Components.Base.Data
 {
-    public partial class CreateComponent<TDataEntity, TNameEntity>
+    public partial class CreateComponent<TDataEntity, TNameEntity> :
+        BaseComponent<TDataEntity, TNameEntity>
                             where TDataEntity : BaseDataEntity
                             where TNameEntity : BaseNameEntity, new()
     {
-        [Parameter]
-        public BaseService<TDataEntity, TNameEntity> BaseService { get; set; }
-
-        [Inject]
-        NavigationManager navigationManager { get; set; }
-
-        public TDataEntity BaseDataEntity { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
             BaseDataEntity = Activator.CreateInstance(typeof(TDataEntity)) as TDataEntity;
-            BaseDataEntity.Number = await BaseService.GetCreateNumber();
-            BaseDataEntity.Code = await BaseService.GetCreateCode(BaseDataEntity.Number);
+            BaseDataEntity.Number = await baseService.GetCreateNumber();
+            BaseDataEntity.Code = await baseService.GetCreateCode(BaseDataEntity.Number);
         }
 
-        protected async Task btnSave_Click()
+        protected async Task SaveCreate()
         {
-            await BaseService.CreateEntityAsync(BaseDataEntity);
-            navigationManager.NavigateTo($"{BaseService.preUrl}/Detail/{BaseDataEntity.Id}");
+            await baseService.CreateEntityAsync(BaseDataEntity);
+            MoveToDetail(BaseDataEntity.Id);
         }
     }
 }

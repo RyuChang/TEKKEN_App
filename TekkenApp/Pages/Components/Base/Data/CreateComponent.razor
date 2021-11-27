@@ -1,4 +1,5 @@
 ﻿@page "/Components/Base/Data/CreateComponent"
+@inherits BaseComponent<TDataEntity, TNameEntity>
 @typeparam TDataEntity
 @typeparam TNameEntity
 
@@ -29,7 +30,7 @@
 
     <div class="row">
         <div class="col-md-4">
-            <input type="button" id="btnSave" value="Save" @onclick="btnSave_Click" class="btn btn-primary" />
+            <input type="button" id="btnSave" value="Save" @onclick="SaveCreate" class="btn btn-primary" />
         </div>
     </div>
 </form>

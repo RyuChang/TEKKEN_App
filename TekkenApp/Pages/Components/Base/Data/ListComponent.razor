@@ -5,10 +5,10 @@
 
 <h3>List</h3>
 
-<h1 class="text-center">HitTypes</h1>
+<h1 class="text-center">------</h1>
 
 <div>
-    <a href="/HitTypes/Create" class="btn btn-primary">추가</a>
+    <input type="button" class="btn btn-primary" id="DetailName" value="추가" @onclick="() => MovetoCreate()" />
 </div>
 
 <style>
@@ -26,7 +26,7 @@
             }
             else
             {
-                <table class="table table-bordered border-primary" style="width: 100%; margin-left: auto; margin-right: auto; border: 0;">
+                <table class="table table-bordered" style="width: 100%; margin-left: auto; margin-right: auto; border: 0;">
                     <colgroup>
                         <col style="width: 100px;" />
                         <col style="width: 100px;" />

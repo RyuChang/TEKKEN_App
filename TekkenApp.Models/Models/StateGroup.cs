@@ -14,22 +14,12 @@ namespace TekkenApp.Models
 
     public partial class StateGroup : BaseDataEntity
     {
-        [NotMapped]
-        public string preUrl { get; set; }
-
         public StateGroup()
         {
-            preUrl = "/StateGroups";
+            SetApp(TableName.StateGroup);
             State = new HashSet<State>();
             StateGroup_name = new HashSet<StateGroup_name>();
         }
-
-        [Key]
-        public int Id { get; set; }
-        public int Code { get; set; }
-        [Required]
-        public string Description { get; set; }
-        public byte Number { get; set; }
 
         public virtual ICollection<State> State { get; set; }
         public virtual ICollection<StateGroup_name> StateGroup_name { get; set; }

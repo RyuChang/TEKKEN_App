@@ -7,18 +7,13 @@ using Microsoft.EntityFrameworkCore;
 
 #nullable disable
 
-namespace TekkenApp.Models 
+namespace TekkenApp.Models
 {
     [Index(nameof(Code), Name = "IX_hitType", IsUnique = true)]
     [Index(nameof(Number), Name = "IX_hitType_1", IsUnique = true)]
 
     public partial class HitType : BaseDataEntity
     {
-        //[NotMapped]
-        //public static AppType APP_TYPE = AppType.HitType;
-        //[NotMapped]
-        //public static string preUrl = APP_TYPE.ToString();
-
         public HitType()
         {
             SetApp(TableName.HitType);
@@ -28,9 +23,6 @@ namespace TekkenApp.Models
             move_datahitType_codeNavigation = new HashSet<Move_data>();
             move_datastartType_codeNavigation = new HashSet<Move_data>();
         }
-
-        
-        
 
         public virtual ICollection<HitType_name> hitType_name { get; set; }
         public virtual ICollection<Move_data> move_datacounterType_codeNavigation { get; set; }

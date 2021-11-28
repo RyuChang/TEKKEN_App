@@ -3,16 +3,17 @@ using TekkenApp.Data;
 using TekkenApp.Models;
 using TekkenApp.Utilities;
 
-namespace TekkenApp.Pages.HitTypes
+namespace TekkenApp.Pages.StateGroups
 {
     public partial class BaseDataComponent
     {
-        protected AppType appType = AppType.HitTypes;
+        protected AppType appType = AppType.StateGroups;
+        
         [Parameter]
         public int Id { get; set; }
 
         [Inject]
-        protected HitTypeService commonService { get; set; }
+        protected StateGroupService commonService { get; set; }
 
         [Inject]
         protected NavigationUtil navigationUtil { get; set; }

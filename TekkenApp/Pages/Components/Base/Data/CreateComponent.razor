@@ -5,32 +5,25 @@
 
 <h3>Create</h3>
 
-<form method="post">
-    <div class="row">
-        <div class="col-md-8">
-            <div class="form-group">
-                <label for="@BaseDataEntity.Number" class="control-label">순번</label>
-                <input type="text" @bind="@BaseDataEntity.Number" class="form-control" />
-            </div>
+<form class="row g-3" method="post">
 
-            <div class="form-group">
-                <label for="@BaseDataEntity.Code" class="control-label">코드</label>
-                <input type="text" @bind="@BaseDataEntity.Code" class="form-control" />
-            </div>
-
-
-            <div class="form-group">
-                <label for="@BaseDataEntity.Description" class="control-label">설명</label>
-                <input type="text" @bind="@BaseDataEntity.Description" class="form-control" />
-            </div>
+    <div class="col-md-12">
+        <div class="col-auto">
+            <label for="@BaseDataEntity.Number" class="control-label">순번</label>
+            <input type="text" @bind="@BaseDataEntity.Number" class="form-control" />
+        </div>
+        <div class="col-md-4">
+            <label for="@BaseDataEntity.Code" class="control-label">코드</label>
+            <input type="text" @bind="@BaseDataEntity.Code" class="form-control" />
         </div>
 
 
+
+        <label for="@BaseDataEntity.Description" class="control-label">설명</label>
+        <input type="text" @bind="@BaseDataEntity.Description" class="form-control" />
     </div>
 
-    <div class="row">
-        <div class="col-md-4">
-            <input type="button" id="btnSave" value="Save" @onclick="SaveCreate" class="btn btn-primary" />
-        </div>
+    <div class="col-md-12">
+        <input type="button" id="btnSave" value="Save" @onclick="SaveCreate" class="btn btn-primary" />
     </div>
 </form>

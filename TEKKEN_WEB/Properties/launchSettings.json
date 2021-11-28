@@ -27,7 +27,7 @@
       },
       "sqlDebugging": true,
       "dotnetRunMessages": "true",
-      "applicationUrl": "https://localhost:5000"
+      "applicationUrl": "https://localhost:5005"
     },
     "Docker": {
       "commandName": "Docker",

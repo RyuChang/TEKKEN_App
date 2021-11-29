@@ -89,5 +89,17 @@ namespace TekkenApp.Pages.Components.Base
 
         #endregion
         #endregion
+
+
+        protected async Task number_Changed(string value)
+        {
+            int number;
+            if (int.TryParse(value, out number))
+            {
+                BaseDataEntity.Number = number;
+                BaseDataEntity.Code = await baseService.GetCreateCode(number);
+            }
+
+        }
     }
 }

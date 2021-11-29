@@ -3,9 +3,7 @@
 @typeparam TDataEntity
 @typeparam TNameEntity
 
-<h3>List</h3>
-
-<h1 class="text-center">------</h1>
+<h3 class="mt-3 mb-3">List</h3>
 
 <div>
     <input type="button" class="btn btn-primary" id="DetailName" value="추가" @onclick="() => MovetoCreate()" />
@@ -55,7 +53,7 @@
                                 </td>
                             </tr>
 
-                            foreach (var base_name in baseService.GetAllTranslateNamesByCodeAsync(baseEntities.Code).ToList())
+                            foreach (var base_name in baseService.GetAllNameEntitiesByCodeAsync(baseEntities.Code).ToList())
                             {
                                 <tr>
                                     <td>@base_name.Language_code</td>

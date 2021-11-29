@@ -17,5 +17,10 @@ namespace TekkenApp.Pages.StateGroups
 
         [Inject]
         protected NavigationUtil navigationUtil { get; set; }
+        
+        public string GetAppTitle()
+        {
+            return appType.ToString();
+        }
     }
 }

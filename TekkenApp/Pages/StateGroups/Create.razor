@@ -1,6 +1,7 @@
 ﻿@page "/StateGroups/Create"
 @inherits BaseDataComponent
-<h3>Create</h3>
+
+<h3>@GetAppTitle()</h3>
 
 <TekkenApp.Pages.Components.Base.Data.CreateComponent APP="@appType" TDataEntity="StateGroup" TNameEntity="StateGroup_name" baseService="@commonService">
 </TekkenApp.Pages.Components.Base.Data.CreateComponent>

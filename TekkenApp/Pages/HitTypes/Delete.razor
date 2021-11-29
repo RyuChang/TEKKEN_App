@@ -1,4 +1,5 @@
 ﻿@page "/HitTypes/Delete/{Id:int}"
 @inherits BaseDataComponent
+<h3>@GetAppTitle()</h3>
 <TekkenApp.Pages.Components.Base.Data.DeleteComponent APP="@appType" TDataEntity="HitType" TNameEntity="HitType_name" baseService="@commonService" Id="@Id">
 </TekkenApp.Pages.Components.Base.Data.DeleteComponent>

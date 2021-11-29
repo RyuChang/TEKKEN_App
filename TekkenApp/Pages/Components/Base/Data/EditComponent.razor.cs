@@ -28,16 +28,6 @@ namespace TekkenApp.Pages.Components.Base.Data
             MoveToDetail(Id);
         }
 
-        private async Task number_Changed(string value)
-        {
-            int number;
-            if (int.TryParse(value, out number))
-            {
-                BaseDataEntity.Number = number;
-                BaseDataEntity.Code = await baseService.GetCreateCode(number);
-            }
-
-        }
         private void HandleValidSubmit()
         {
             Logger.LogInformation("HandleValidSubmit called");

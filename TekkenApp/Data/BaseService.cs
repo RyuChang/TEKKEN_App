@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Reflection.Metadata;
-using System.Security.Cryptography;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting;
 using TekkenApp.Models;
 
 namespace TekkenApp.Data
@@ -81,29 +76,33 @@ namespace TekkenApp.Data
 
 
         #region CreateTranslateName
-        public async Task<bool> CreateTranslateNameAllAsync(TNameEntity translateName)
+        public async Task<bool> CreateAllNameEntitiesAsync(TDataEntity dataEntity)
         {
             bool result = false;
             List<Language> languageList = await _tekkenDBContext.language.ToListAsync();
 
             foreach (Language language in languageList)
             {
-                translateName.Language_code = language.code;
-                result = await CreateNameEntityAsync(translateName);
+                TNameEntity newNameEntity = new TNameEntity();
+                newNameEntity.Base_code = dataEntity.Code;
+                newNameEntity.Language_code = language.code;
+                newNameEntity.Name = dataEntity.Description;
+
+                result = await CreateNameEntityAsync(newNameEntity);
             }
             return result;
         }
 
-        public async Task<bool> CreateNameEntityAsync(TNameEntity translateName)
+        public async Task<bool> CreateNameEntityAsync(TNameEntity nameEntity)
         {
 
-            await _nameDbSet.AddAsync(translateName);
+            await _nameDbSet.AddAsync(nameEntity);
             await _tekkenDBContext.SaveChangesAsync();
             return true;
         }
         #endregion
 
-        public List<TNameEntity> GetAllTranslateNamesByCodeAsync(int code)
+        public List<TNameEntity> GetAllNameEntitiesByCodeAsync(int code)
         {
             var baseTranslateName = from language in _tekkenDBContext.Set<Language>() //_tekkenDBContext.language
                                     join name in _tekkenDBContext.Set<TNameEntity>().Where(n => n.Base_code == code)

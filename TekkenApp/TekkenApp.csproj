@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <Compile Remove="Pages\HitTypes\Edit.cshtml.cs" />
+    <Compile Remove="Pages\HitTypes\Test.razor.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -35,6 +36,7 @@
     <Content Remove="C:\Users\zbkof\.nuget\packages\bootstrap\5.1.2\contentFiles\any\any\wwwroot\css\bootstrap.rtl.css.map" />
     <Content Remove="C:\Users\zbkof\.nuget\packages\bootstrap\5.1.2\contentFiles\any\any\wwwroot\css\bootstrap.rtl.min.css" />
     <Content Remove="C:\Users\zbkof\.nuget\packages\bootstrap\5.1.2\contentFiles\any\any\wwwroot\css\bootstrap.rtl.min.css.map" />
+    <Content Remove="Pages\HitTypes\Test.razor" />
   </ItemGroup>
 
   <ItemGroup>

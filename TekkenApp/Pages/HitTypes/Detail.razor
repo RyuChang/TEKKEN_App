@@ -1,5 +1,5 @@
 ﻿@page "/HitTypes/Detail/{Id:int}"
 @inherits BaseDataComponent
-
+<h3>@GetAppTitle()</h3>
 <TekkenApp.Pages.Components.Base.Data.DetailComponent APP="@appType" TDataEntity="HitType" TNameEntity="HitType_name" baseService="@commonService" Id="@Id">
 </TekkenApp.Pages.Components.Base.Data.DetailComponent>

@@ -8,6 +8,7 @@ namespace TekkenApp.Pages.HitTypes
     public partial class BaseDataComponent
     {
         protected AppType appType = AppType.HitTypes;
+
         [Parameter]
         public int Id { get; set; }
 
@@ -16,5 +17,10 @@ namespace TekkenApp.Pages.HitTypes
 
         [Inject]
         protected NavigationUtil navigationUtil { get; set; }
+
+        public string GetAppTitle()
+        {
+            return appType.ToString();
+        }
     }
 }

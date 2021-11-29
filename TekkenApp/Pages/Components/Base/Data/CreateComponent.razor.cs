@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Components;
-using TekkenApp.Data;
 using TekkenApp.Models;
 
 namespace TekkenApp.Pages.Components.Base.Data
@@ -22,6 +20,8 @@ namespace TekkenApp.Pages.Components.Base.Data
         protected async Task SaveCreate()
         {
             await baseService.CreateEntityAsync(BaseDataEntity);
+            TNameEntity nameEntity = new TNameEntity();
+            await baseService.CreateAllNameEntitiesAsync(BaseDataEntity);
             MoveToDetail(BaseDataEntity.Id);
         }
     }

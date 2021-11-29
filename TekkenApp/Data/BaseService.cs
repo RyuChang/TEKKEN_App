@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,11 +8,12 @@ using TekkenApp.Models;
 
 namespace TekkenApp.Data
 {
-    public abstract class baseService<TDataEntity, TNameEntity>
+    public abstract class BaseService<TDataEntity, TNameEntity>
         where TDataEntity : BaseDataEntity
         where TNameEntity : BaseNameEntity, new()
     {
         protected TekkenDbContext _tekkenDBContext;
+
         protected DbSet<TDataEntity> _dataDbSet;
         protected DbSet<TNameEntity> _nameDbSet;
         public string preUrl { get; set; }
@@ -20,7 +22,7 @@ namespace TekkenApp.Data
         protected string mainTable { get; set; }
         protected string nameTable { get; set; }
 
-        public baseService(TekkenDbContext tekkenDbContext, DbSet<TDataEntity> dbset, DbSet<TNameEntity> nameDbSet)
+        public BaseService(TekkenDbContext tekkenDbContext, DbSet<TDataEntity> dbset, DbSet<TNameEntity> nameDbSet)
         {
             _tekkenDBContext = tekkenDbContext;
             _dataDbSet = dbset;
@@ -159,5 +161,9 @@ namespace TekkenApp.Data
         }
 
 
+    }
+
+    internal class injectAttribute : Attribute
+    {
     }
 }

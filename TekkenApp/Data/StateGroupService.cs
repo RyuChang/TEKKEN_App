@@ -6,7 +6,7 @@ using TekkenApp.Models;
 
 namespace TekkenApp.Data
 {
-    public class StateGroupService : baseService<StateGroup, StateGroup_name>
+    public class StateGroupService<TDataEntity, TNameEntity> :  BaseService<StateGroup, StateGroup_name>
     {
         public StateGroupService(TekkenDbContext tekkenDbContext) : base(tekkenDbContext, tekkenDbContext.StateGroup, tekkenDbContext.StateGroup_name)
         {
@@ -26,7 +26,9 @@ namespace TekkenApp.Data
 
         public async Task<List<StateGroup>> GetStateGroups()
         {
-            return await _tekkenDBContext.StateGroup.ToListAsync();
+            //_dataDbSet.sta`
+            
+            return await _dataDbSet.ToListAsync();
         }
 
 

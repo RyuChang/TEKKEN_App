@@ -1,6 +1,8 @@
-﻿namespace TekkenApp.Pages.StateGroups
+﻿using TekkenApp.Pages.Components.Base;
+
+namespace TekkenApp.Pages.StateGroups
 {
-    public partial class Create : BaseDataComponent
+    public partial class Create : BasePageComponent
     {
      
     }

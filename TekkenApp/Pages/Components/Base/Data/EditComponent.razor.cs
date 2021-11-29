@@ -14,7 +14,7 @@ namespace TekkenApp.Pages.Components.Base.Data
 
         protected override async Task OnInitializedAsync()
         {
-            BaseDataEntity = await baseService.GetDataEntityByIdAsync(Id);
+            baseData = await baseService.GetDataEntityByIdAsync(Id);
         }
 
         protected async Task SaveEdit()
@@ -24,7 +24,7 @@ namespace TekkenApp.Pages.Components.Base.Data
             {
                 return;
             }
-            await baseService.UpdateDataAsync(BaseDataEntity);
+            await baseService.UpdateDataAsync(baseData);
             MoveToDetail(Id);
         }
 

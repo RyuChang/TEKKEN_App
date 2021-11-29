@@ -1,6 +1,6 @@
 ﻿namespace TekkenApp.Pages.StateGroups
 {
-    public partial class Detail_name : BaseDataComponent
+    public partial class Detail_name : BasePageComponent
     {
     }
 }

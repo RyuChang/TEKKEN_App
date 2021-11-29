@@ -2,10 +2,7 @@
 
 namespace TekkenApp.Pages.StateGroups
 {
-    public partial class Edit_name : BaseDataComponent
+    public partial class Edit_name : BasePageComponent
     {
-        protected override async Task OnInitializedAsync()
-        {
-        }
     }
 }

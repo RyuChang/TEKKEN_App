@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace TekkenApp.Pages.HitTypes
 {
-    public partial class Create_name : BaseDataComponent
+    public partial class Create_name : BasePageComponent
     {
         [Parameter]
         public int Code { get; set; }

@@ -1,6 +1,6 @@
 ﻿namespace TekkenApp.Pages.HitTypes
 {
-    public partial class Delete : BaseDataComponent
+    public partial class Delete : BasePageComponent
     {
     }
 }

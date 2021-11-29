@@ -3,7 +3,7 @@ using TekkenApp.Data;
 
 namespace TekkenApp.Pages.HitTypes
 {
-    public partial class Detail : BaseDataComponent
+    public partial class Detail : BasePageComponent
     {
         
     }

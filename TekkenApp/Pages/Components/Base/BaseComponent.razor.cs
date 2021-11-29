@@ -18,7 +18,7 @@ namespace TekkenApp.Pages.Components.Base
         public AppType App { get; set; }
 
         [Parameter]
-        public baseService<TDataEntity, TNameEntity> baseService { get; set; }
+        public BaseService<TDataEntity, TNameEntity> baseService { get; set; }
 
         [Inject]
         protected ILogger<EditComponent<TDataEntity, TNameEntity>> Logger { get; set; }
@@ -33,8 +33,8 @@ namespace TekkenApp.Pages.Components.Base
         public IJSRuntime JSRuntime { get; set; }
 
 
-        public TDataEntity BaseDataEntity { get; set; }
-        public TNameEntity BaseNameEntity { get; set; }
+        public TDataEntity baseData{ get; set; }
+        public TNameEntity baseName{ get; set; }
 
         protected override async Task OnInitializedAsync()
         {
@@ -96,8 +96,8 @@ namespace TekkenApp.Pages.Components.Base
             int number;
             if (int.TryParse(value, out number))
             {
-                BaseDataEntity.Number = number;
-                BaseDataEntity.Code = await baseService.GetCreateCode(number);
+                baseData.Number = number;
+                baseData.Code = await baseService.GetCreateCode(number);
             }
 
         }

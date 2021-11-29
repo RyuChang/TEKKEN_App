@@ -8,23 +8,23 @@
 <form class="row g-3">
 
     <div class="mb-3 row">
-        <label for="@BaseDataEntity.Number" class="col-1 col-form-label">순번</label>
+        <label for="@baseData.Number" class="col-1 col-form-label">순번</label>
         <div class="col-auto">
-            <input type="text" @bind="@BaseDataEntity.Number" class="form-control" @oninput="@(e=>number_Changed((string)e.Value))" />
+            <input type="text" @bind="@baseData.Number" class="form-control" @oninput="@(e=>number_Changed((string)e.Value))" />
         </div>
     </div>
 
     <div class="mb-3 row">
-        <label for="@BaseDataEntity.Code" class="col-1 col-form-label">코드</label>
+        <label for="@baseData.Code" class="col-1 col-form-label">코드</label>
         <div class="col-auto">
-            <input type="text" readonly @bind="@BaseDataEntity.Code" class="form-control" />
+            <input type="text" readonly @bind="@baseData.Code" class="form-control" />
         </div>
     </div>
 
     <div class="mb-3 row">
-        <label for="@BaseDataEntity.Description" class="col-1 col-form-label">설명</label>
+        <label for="@baseData.Description" class="col-1 col-form-label">설명</label>
         <div class="col-auto">
-            <input type="text" @bind="@BaseDataEntity.Description" class="form-control" />
+            <input type="text" @bind="@baseData.Description" class="form-control" />
         </div>
     </div>
 

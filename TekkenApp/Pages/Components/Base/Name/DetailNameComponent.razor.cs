@@ -12,7 +12,7 @@ namespace TekkenApp.Pages.Components.Base.Name
 
         protected override async Task OnInitializedAsync()
         {
-            BaseNameEntity = await baseService.GetNameEntityByIdAsync(Id);
+            baseName = await baseService.GetNameEntityByIdAsync(Id);
         }
     }
 }

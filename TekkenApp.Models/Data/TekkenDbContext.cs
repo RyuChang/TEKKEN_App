@@ -142,12 +142,12 @@ namespace TekkenApp.Data
             {
                 entity.Property(e => e.description).IsUnicode(false);
 
-                entity.HasOne(d => d.StateGroup_codeNavigation)
-                    .WithMany(p => p.State)
-                    .HasPrincipalKey(p => p.Code)
-                    .HasForeignKey(d => d.StateGroup_code)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_State_StateGroup");
+                //entity.HasOne(d => d.StateGroup_codeNavigation)
+                //    .WithMany(p => p.State)
+                //    .HasPrincipalKey(p => p.Code)
+                //    .HasForeignKey(d => d.StateGroup_code)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("FK_State_StateGroup");
             });
 
             modelBuilder.Entity<StateGroup>(entity =>
@@ -163,19 +163,19 @@ namespace TekkenApp.Data
 
                 entity.Property(e => e.Name).IsUnicode(false);
 
-                entity.HasOne(d => d.StateGroup_codeNavigation)
-                    .WithMany(p => p.StateGroup_name)
-                    .HasPrincipalKey(p => p.Code)
-                    .HasForeignKey(d => d.Base_code)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_StateGroup_name_StateGroup");
+                //entity.HasOne(d => d.StateGroup_codeNavigation)
+                //    .WithMany(p => p.StateGroup_name)
+                //    .HasPrincipalKey(p => p.Code)
+                //    .HasForeignKey(d => d.Base_code)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("FK_StateGroup_name_StateGroup");
 
-                entity.HasOne(d => d.language_codeNavigation)
-                    .WithMany(p => p.StateGroup_name)
-                    .HasPrincipalKey(p => p.code)
-                    .HasForeignKey(d => d.Language_code)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_StateGroup_name_language");
+                //entity.HasOne(d => d.language_codeNavigation)
+                //    .WithMany(p => p.StateGroup_name)
+                //    .HasPrincipalKey(p => p.code)
+                //    .HasForeignKey(d => d.Language_code)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("FK_StateGroup_name_language");
             });
 
             modelBuilder.Entity<State_name>(entity =>

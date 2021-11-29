@@ -1,6 +1,6 @@
 ﻿namespace TekkenApp.Pages.HitTypes
 {
-    public partial class Create : BaseDataComponent
+    public partial class Create : BasePageComponent
     {
      
     }

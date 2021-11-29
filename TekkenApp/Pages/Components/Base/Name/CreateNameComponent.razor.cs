@@ -15,18 +15,18 @@ namespace TekkenApp.Pages.Components.Base.Name
 
         [Parameter]
         public string Language { get; set; }
-         
+
         protected override async Task OnInitializedAsync()
         {
-            BaseNameEntity = new();
-            BaseNameEntity.Base_code = Code;
-            BaseNameEntity.Language_code = Language;
+            baseName = new();
+            baseName.Base_code = Code;
+            baseName.Language_code = Language;
         }
 
         protected async Task SaveCreate()
         {
-            await baseService.CreateNameEntityAsync(BaseNameEntity);
-            MoveToDetailName(BaseNameEntity.Id);
+            await baseService.CreateNameEntityAsync(baseName);
+            MoveToDetailName(baseName.Id);
         }
     }
 }

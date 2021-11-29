@@ -26,7 +26,7 @@ namespace TekkenApp.Models
         [Required]
         public string description { get; set; }
 
-        public virtual StateGroup StateGroup_codeNavigation { get; set; }
+        //public virtual StateGroup StateGroup_codeNavigation { get; set; }
         public virtual ICollection<State_name> State_name { get; set; }
     }
 }

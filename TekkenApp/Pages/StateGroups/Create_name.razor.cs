@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace TekkenApp.Pages.StateGroups
 {
-    public partial class Create_name : BaseDataComponent
+    public partial class Create_name : BasePageComponent
     {
         [Parameter]
         public int Code { get; set; }
@@ -13,7 +13,7 @@ namespace TekkenApp.Pages.StateGroups
 
         protected override Task OnInitializedAsync()
         {
-            
+
             var queryStrings = navigationUtil.GetQueryStrings();
             if (queryStrings.TryGetValue("Language", out var _language))
             {

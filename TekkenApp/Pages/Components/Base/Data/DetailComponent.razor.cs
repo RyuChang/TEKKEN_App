@@ -11,7 +11,7 @@ namespace TekkenApp.Pages.Components.Base.Data
 
         protected override async Task OnInitializedAsync()
         {
-            BaseDataEntity = await baseService.GetDataEntityByIdAsync(Id);
+            baseData = await baseService.GetDataEntityByIdAsync(Id);
         }
     }
 }

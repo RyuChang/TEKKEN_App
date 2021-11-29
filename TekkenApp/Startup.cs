@@ -15,6 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TekkenApp.Areas.Identity;
 using TekkenApp.Data;
+using TekkenApp.Models;
 using TekkenApp.Utilities;
 
 namespace TekkenApp
@@ -38,10 +39,10 @@ namespace TekkenApp
 
             services.AddDbContext<TekkenDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("tekkenConnection"), b => b.MigrationsAssembly("TekkenApp")).EnableSensitiveDataLogging());
+                    Configuration.GetConnectionString("tekkenConnection"), b => b.MigrationsAssembly("TekkenApp")).EnableSensitiveDataLogging(),ServiceLifetime.Transient);
 
-        //    services.AddDbContextFactory<TekkenDbContext>(opt =>
-        //opt.UseSqlServer($"Data Source={nameof(TekkenDbContext.con)}.db").EnableSensitiveDataLogging());
+            //    services.AddDbContextFactory<TekkenDbContext>(opt =>
+            //opt.UseSqlServer($"Data Source={nameof(TekkenDbContext.con)}.db").EnableSensitiveDataLogging());
 
             //services.AddEntityFrameworkSqlServer().AddDbContext<TekkenDbContext>(options =>
             //    options.UseSqlServer(
@@ -54,11 +55,13 @@ namespace TekkenApp
             services.AddServerSideBlazor();
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
             services.AddDatabaseDeveloperPageExceptionFilter();
-            services.AddSingleton<WeatherForecastService>();
+            
+            
+            //services.AddSingleton<WeatherForecastService>();
             //services.AddScoped<BaseService>();
-            services.AddScoped<HitTypeService>();
-            services.AddScoped<StateGroupService>();
-            services.AddScoped<NavigationUtil>();
+            services.AddTransient<HitTypeService<HitType, HitType_name>>();
+            services.AddTransient<StateGroupService<StateGroup, StateGroup_name>>();
+            services.AddTransient<NavigationUtil>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

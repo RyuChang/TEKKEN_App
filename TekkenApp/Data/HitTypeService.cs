@@ -4,7 +4,9 @@ using TekkenApp.Models;
 
 namespace TekkenApp.Data
 {
-    public class HitTypeService : baseService<HitType, HitType_name>
+    //public class HitTypeService<TDataEntity, TNameEntity> : BaseService<TDataEntity, TNameEntity>
+    public class HitTypeService<TDataEntity, TNameEntity> : BaseService<HitType, HitType_name>
+
     {
 
         public HitTypeService(TekkenDbContext tekkenDbContext) : base(tekkenDbContext, tekkenDbContext.hitType, tekkenDbContext.hitType_name)

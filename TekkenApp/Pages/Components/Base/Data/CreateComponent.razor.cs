@@ -12,17 +12,17 @@ namespace TekkenApp.Pages.Components.Base.Data
 
         protected override async Task OnInitializedAsync()
         {
-            BaseDataEntity = Activator.CreateInstance(typeof(TDataEntity)) as TDataEntity;
-            BaseDataEntity.Number = await baseService.GetCreateNumber();
-            BaseDataEntity.Code = await baseService.GetCreateCode(BaseDataEntity.Number);
+            baseData = Activator.CreateInstance(typeof(TDataEntity)) as TDataEntity;
+            baseData.Number = await baseService.GetCreateNumber();
+            baseData.Code = await baseService.GetCreateCode(baseData.Number);
         }
 
         protected async Task SaveCreate()
         {
-            await baseService.CreateEntityAsync(BaseDataEntity);
+            await baseService.CreateEntityAsync(baseData);
             TNameEntity nameEntity = new TNameEntity();
-            await baseService.CreateAllNameEntitiesAsync(BaseDataEntity);
-            MoveToDetail(BaseDataEntity.Id);
+            await baseService.CreateAllNameEntitiesAsync(baseData);
+            MoveToDetail(baseData.Id);
         }
     }
 }

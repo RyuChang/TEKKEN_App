@@ -13,7 +13,7 @@ namespace TekkenApp.Pages.Components.Base.Name
     {
         protected override async Task OnInitializedAsync()
         {
-            BaseNameEntity = await baseService.GetNameEntityByIdAsync(Id);
+            baseName = await baseService.GetNameEntityByIdAsync(Id);
         }
         protected async Task SaveEditName()
         {
@@ -21,8 +21,8 @@ namespace TekkenApp.Pages.Components.Base.Name
             {
                 return;
             }
-            await baseService.UpdateNameEntityAsync(BaseNameEntity);
-            MoveToDetailName(BaseNameEntity.Id);
+            await baseService.UpdateNameEntityAsync(baseName);
+            MoveToDetailName(baseName.Id);
         }
     }
 }

@@ -7,38 +7,38 @@
 
 <form method="post">
     <div class="mb-3 row">
-        <label for="@BaseDataEntity.Id" class="col-1 col-form-label">ID</label>
+        <label for="@baseData.Id" class="col-1 col-form-label">ID</label>
         <div class="col-auto">
-            <input type="text" readonly class="form-control" @bind="@BaseDataEntity.Id" />
+            <input type="text" readonly class="form-control" @bind="@baseData.Id" />
         </div>
     </div>
 
     <div class="mb-3 row">
-        <label for="@BaseDataEntity.Number" class="col-1 col-form-label">순번</label>
+        <label for="@baseData.Number" class="col-1 col-form-label">순번</label>
         <div class="col-auto">
-            <input type="text" readonly class="form-control" @bind="@BaseDataEntity.Number"/>
+            <input type="text" readonly class="form-control" @bind="@baseData.Number"/>
         </div>
     </div>
 
     <div class="mb-3 row">
-        <label for="@BaseDataEntity.Code" class="col-1 col-form-label">코드</label>
+        <label for="@baseData.Code" class="col-1 col-form-label">코드</label>
         <div class="col-auto">
-            <input type="text" readonly class="form-control" @bind="@BaseDataEntity.Code" />
+            <input type="text" readonly class="form-control" @bind="@baseData.Code" />
         </div>
     </div>
 
     <div class="mb-3 row">
-        <label for="@BaseDataEntity.Description" class="col-1 col-form-label">설명</label>
+        <label for="@baseData.Description" class="col-1 col-form-label">설명</label>
         <div class="col-auto">
-            <input type="text" readonly class="form-control" @bind="@BaseDataEntity.Description" />
+            <input type="text" readonly class="form-control" @bind="@baseData.Description" />
         </div>
     </div>
 
     <div class="mb-3 row">
         <div class="col-md-4">
             <div class="form-group">
-                <input type="button" class="btn btn-primary btn-lg" value="수정" id="btnEdit" @onclick="()=>MoveToEdit(BaseDataEntity.Id)" />
-                <input type="button" class="btn btn-primary btn-lg" value="삭제" id="btnDelete" @onclick="()=>MoveToDelete(BaseDataEntity.Id)" />
+                <input type="button" class="btn btn-primary btn-lg" value="수정" id="btnEdit" @onclick="()=>MoveToEdit(baseData.Id)" />
+                <input type="button" class="btn btn-primary btn-lg" value="삭제" id="btnDelete" @onclick="()=>MoveToDelete(baseData.Id)" />
                 <input type="button" class="btn btn-primary btn-lg" value="리스트" id="btnList" @onclick="()=>MoveToList()" />
             </div>
         </div>

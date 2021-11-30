@@ -163,12 +163,13 @@ namespace TekkenApp.Data
 
                 entity.Property(e => e.Name).IsUnicode(false);
 
-                //entity.HasOne(d => d.StateGroup_codeNavigation)
-                //    .WithMany(p => p.StateGroup_name)
-                //    .HasPrincipalKey(p => p.Code)
-                //    .HasForeignKey(d => d.Base_code)
-                //    .OnDelete(DeleteBehavior.ClientSetNull)
-                //    .HasConstraintName("FK_StateGroup_name_StateGroup");
+                
+                entity.HasOne(d => d.StateGroup_codeNavigation)
+                    .WithMany(p => p.StateGroup_name)
+                    .HasPrincipalKey(p => p.Code)
+                    .HasForeignKey(d => d.Base_code)
+                    .HasConstraintName("FK_StateGroup_name_StateGroup").
+                OnDelete(DeleteBehavior.Cascade);
 
                 //entity.HasOne(d => d.language_codeNavigation)
                 //    .WithMany(p => p.StateGroup_name)

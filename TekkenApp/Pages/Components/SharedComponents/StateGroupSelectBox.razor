@@ -2,9 +2,15 @@
 
 <div>
     =====
-    
-    @groupList.Count
-    
+    @if (entity == null)
+    {
+        <div>null</div> }
+    else
+    {
+
+        <div>@entity.Code </div>
+    }
+
     =====
 
 </div>

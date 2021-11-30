@@ -14,7 +14,8 @@ namespace TekkenApp.Models
     {
         public Language()
         {
-            StateGroup_name = new HashSet<StateGroup_name>();
+            
+            //StateGroup_name = new HashSet<StateGroup_name>();
             State_name = new HashSet<State_name>();
             character_name = new HashSet<Character_name>();
             command_name = new HashSet<Command_name>();
@@ -34,7 +35,7 @@ namespace TekkenApp.Models
         public string name { get; set; }
         public byte number { get; set; }
 
-        public virtual ICollection<StateGroup_name> StateGroup_name { get; set; }
+        //public virtual ICollection<StateGroup_name> StateGroup_name { get; set; }
         public virtual ICollection<State_name> State_name { get; set; }
         public virtual ICollection<Character_name> character_name { get; set; }
         public virtual ICollection<Command_name> command_name { get; set; }

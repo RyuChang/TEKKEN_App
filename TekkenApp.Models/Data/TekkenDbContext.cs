@@ -140,7 +140,7 @@ namespace TekkenApp.Data
 
             modelBuilder.Entity<State>(entity =>
             {
-                entity.Property(e => e.description).IsUnicode(false);
+                entity.Property(e => e.Description).IsUnicode(false);
 
                 //entity.HasOne(d => d.StateGroup_codeNavigation)
                 //    .WithMany(p => p.State)
@@ -163,7 +163,7 @@ namespace TekkenApp.Data
 
                 entity.Property(e => e.Name).IsUnicode(false);
 
-                
+
                 entity.HasOne(d => d.StateGroup_codeNavigation)
                     .WithMany(p => p.StateGroup_name)
                     .HasPrincipalKey(p => p.Code)
@@ -181,23 +181,23 @@ namespace TekkenApp.Data
 
             modelBuilder.Entity<State_name>(entity =>
             {
-                entity.Property(e => e.language_code)
+                entity.Property(e => e.Language_code)
                     .IsUnicode(false)
                     .IsFixedLength(true);
 
-                entity.Property(e => e.name).IsUnicode(false);
+                entity.Property(e => e.Name).IsUnicode(false);
 
                 entity.HasOne(d => d.language_codeNavigation)
                     .WithMany(p => p.State_name)
                     .HasPrincipalKey(p => p.code)
-                    .HasForeignKey(d => d.language_code)
+                    .HasForeignKey(d => d.Language_code)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_State_name_language");
 
                 entity.HasOne(d => d.state_codeNavigation)
                     .WithMany(p => p.State_name)
-                    .HasPrincipalKey(p => p.code)
-                    .HasForeignKey(d => d.state_code)
+                    .HasPrincipalKey(p => p.Code)
+                    .HasForeignKey(d => d.Base_code)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_State_name_State");
             });

@@ -25,7 +25,7 @@ namespace TekkenApp.Pages.Components.SharedComponents
         {
             //SetApp();
             //groupList = await stateGroupService.GetStateGroups();
-            stateGroupList = await stateGroupService.GetEntities();
+            stateGroupList = await stateGroupService.GetEntitiesWithName();
 
         }
     }

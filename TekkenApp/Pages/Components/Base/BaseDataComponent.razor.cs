@@ -13,7 +13,8 @@ namespace TekkenApp.Pages.Components.Base
 
         [Parameter]
         public int Id { get; set; }
-        
+
+
         [Inject]
         protected NavigationUtil navigationUtil { get; set; }
 

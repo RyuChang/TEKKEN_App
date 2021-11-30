@@ -14,7 +14,13 @@ else
             <option value="">-- Select Country --</option>
             @foreach (StateGroup stateGroup in stateGroupList)
             {
-                <option value="@stateGroup.Code">@stateGroup.StateGroup_name.Where(p=>p.Language_code=="ko").FirstOrDefault()</option>
+                var stateGroupName = stateGroup.StateGroup_name.Where(p => p.Language_code == "en").FirstOrDefault();
+                if (stateGroupName != null)
+                { 
+
+        <option value="@stateGroup.Code">@stateGroupName.Name</option>
+                }
+                
 
             }
         </select>

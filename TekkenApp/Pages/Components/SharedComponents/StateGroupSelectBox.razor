@@ -1,19 +1,26 @@
 ﻿@page "/Components/SharedComponents/StateGroupSelectBox"
 
-<div>
-    =====
-    @if (entity == null)
-    {
-        <div>null</div> }
-    else
-    {
 
-        <div>@entity.Code </div>
-    }
+@if (stateGroupList == null)
+{
 
-    =====
 
-</div>
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div>
+        <select class="form-select">
+            <option value="">-- Select Country --</option>
+            @foreach (StateGroup stateGroup in stateGroupList)
+            {
+                <option value="@stateGroup.Code">@stateGroup.StateGroup_name.Where(p=>p.Language_code=="ko").FirstOrDefault()</option>
+
+            }
+        </select>
+    </div>
+}
+
 
 @code {
 

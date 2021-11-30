@@ -127,6 +127,12 @@ namespace TekkenApp.Data
             return await _dataDbSet.ToListAsync();
         }
 
+
+        public async Task<List<TDataEntity>> GetEntitiesWithName()
+        {
+            //return await _dataDbSet.Include(d=>d.b).ToListAsync();
+        }
+
         #region GetCreateNumber
         public async Task<int> GetCreateNumber()
         {

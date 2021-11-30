@@ -18,14 +18,14 @@ namespace TekkenApp.Pages.Components.SharedComponents
         protected StateGroupService<StateGroup, StateGroup_name> stateGroupService { get; set; }
 
 
-        //public List<StateGroup> groupList { get; set; }
-        public StateGroup entity { get; set; }
+        public List<StateGroup> stateGroupList { get; set; }
+        //public StateGroup entity { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
             //SetApp();
             //groupList = await stateGroupService.GetStateGroups();
-            entity = await stateGroupService.GetDataEntityByIdAsync(80000001);
+            stateGroupList = await stateGroupService.GetEntities();
 
         }
     }

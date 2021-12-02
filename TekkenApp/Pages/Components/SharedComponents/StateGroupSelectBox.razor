@@ -1,34 +1,18 @@
 ﻿@page "/Components/SharedComponents/StateGroupSelectBox"
 
-
-@if (stateGroupList == null)
+@if (selectListItems == null)
 {
-
-
     <p><em>Loading...</em></p>
 }
 else
 {
     <div>
-        <select class="form-select">
-            <option value="">-- Select Country --</option>
-            @foreach (StateGroup stateGroup in stateGroupList)
+        <select id="Countries" class="form-control" @onchange="@OnStateGroupChanged">
+            @foreach (var selectItem in selectListItems)
             {
-                var stateGroupName = stateGroup.StateGroup_name.Where(p => p.Language_code == "en").FirstOrDefault();
-                if (stateGroupName != null)
-                { 
-
-        <option value="@stateGroup.Code">@stateGroupName.Name</option>
-                }
-                
-
+                <option value="@selectItem.Value">@selectItem.Text</option>
             }
         </select>
+        @stateGroup
     </div>
-}
-
-
-@code {
-
-
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TekkenApp.Models;
 
@@ -131,6 +132,22 @@ namespace TekkenApp.Data
         public async Task<List<TDataEntity>> GetEntitiesWithName()
         {
             return await _dataDbSet.Include("StateGroup_name").ToListAsync();
+        }
+
+        public async Task<List<SelectListItem>> GetSelectItems()
+        {
+
+            List<SelectListItem> selectListItems = await (from data in _dataDbSet
+                                                          join name in _nameDbSet
+                                                              on data.Code equals name.Base_code
+                                                          select new SelectListItem { Value = data.Code.ToString(), Text = name.Name.ToString() }).ToListAsync<SelectListItem>();
+
+            selectListItems.Insert(0, new SelectListItem()
+            {
+                Value = "",
+                Text = "---Select---"
+            });
+            return selectListItems;
         }
 
         #region GetCreateNumber

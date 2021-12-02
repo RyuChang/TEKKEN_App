@@ -1,14 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.CodeAnalysis.Options;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.JSInterop;
-using Newtonsoft.Json.Linq;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using TekkenApp.Data;
 using TekkenApp.Models;
-using TekkenApp.Pages.Components.Base;
 
 namespace TekkenApp.Pages.Components.SharedComponents
 {
@@ -17,16 +12,25 @@ namespace TekkenApp.Pages.Components.SharedComponents
         [Inject]
         protected StateGroupService<StateGroup, StateGroup_name> stateGroupService { get; set; }
 
+        public List<SelectListItem> selectListItems { get; set; }
 
-        public List<StateGroup> stateGroupList { get; set; }
-        //public StateGroup entity { get; set; }
+        [Parameter]
+        public EventCallback<string> OnClickCallback { get; set; }
 
+        public string stateGroup { get; set; }
         protected override async Task OnInitializedAsync()
         {
             //SetApp();
             //groupList = await stateGroupService.GetStateGroups();
-            stateGroupList = await stateGroupService.GetEntitiesWithName();
+            selectListItems = await stateGroupService.GetSelectItems();
 
+        }
+
+        private void OnStateGroupChanged(ChangeEventArgs e)
+        {
+            stateGroup = e.Value.ToString();
+            //stateGroup = SelectedString;
+            OnClickCallback.InvokeAsync();
         }
     }
 }

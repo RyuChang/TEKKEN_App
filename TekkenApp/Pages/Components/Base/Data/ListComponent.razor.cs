@@ -16,5 +16,7 @@ namespace TekkenApp.Pages.Components.Base.Data
             base.OnInitializedAsync();
             baseEntities = await baseService.GetEntities();
         }
+
+
     }
 }

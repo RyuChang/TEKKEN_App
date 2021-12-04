@@ -1,0 +1,9 @@
+﻿@page "/States"
+@page "/States/Index"
+@inherits BasePageComponent
+<h3>@GetAppTitle()</h3>
+
+<NewTekkenApp.Pages.Components.SharedComponents.StateGroupSelectBox></NewTekkenApp.Pages.Components.SharedComponents.StateGroupSelectBox>
+
+<NewTekkenApp.Pages.Components.Base.Data.ListComponent APP="@appType" TDataEntity="State" TNameEntity="State_name" baseService="@commonService">
+</NewTekkenApp.Pages.Components.Base.Data.ListComponent>

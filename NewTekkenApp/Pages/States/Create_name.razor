@@ -1,0 +1,5 @@
+﻿@page "/States/Create_name/{Code:int}"
+@inherits BasePageComponent
+<h3>@GetAppTitle()</h3>
+<NewTekkenApp.Pages.Components.Base.Name.CreateNameComponent APP="@appType" TDataEntity="State" TNameEntity="State_name" Code="@Code" Language="@Language" baseService="@commonService">
+</NewTekkenApp.Pages.Components.Base.Name.CreateNameComponent>

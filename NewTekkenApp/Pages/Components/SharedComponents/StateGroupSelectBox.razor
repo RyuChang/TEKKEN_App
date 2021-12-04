@@ -1,0 +1,18 @@
+﻿@page "/Components/SharedComponents/StateGroupSelectBox"
+
+@if (selectListItems == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div>
+        <select id="Countries" class="form-control" @onchange="@OnStateGroupChanged">
+            @foreach (var selectItem in selectListItems)
+            {
+                <option value="@selectItem.Value">@selectItem.Text</option>
+            }
+        </select>
+        @stateGroup
+    </div>
+}

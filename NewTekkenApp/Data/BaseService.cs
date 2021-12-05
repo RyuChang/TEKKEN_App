@@ -120,11 +120,16 @@ namespace NewTekkenApp.Data
         }
         #endregion
 
-        public async Task<List<TDataEntity>> GetEntities()
+        public virtual async Task<List<TDataEntity>> GetEntities()
         {
             return await _dataDbSet.ToListAsync();
         }
 
+        public new async Task<List<TDataEntity>> GetEntitiesWithStateGroup(int? stateGroupCode)
+        {
+
+            return await _dataDbSet.Where(p => p.StateGroup_code == stateGroupCode).ToListAsync();
+        }
 
         public async Task<List<TDataEntity>> GetEntitiesWithName()
         {

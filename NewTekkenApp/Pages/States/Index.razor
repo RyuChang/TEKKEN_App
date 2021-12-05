@@ -3,7 +3,9 @@
 @inherits BasePageComponent
 <h3>@GetAppTitle()</h3>
 
-<NewTekkenApp.Pages.Components.SharedComponents.StateGroupSelectBox></NewTekkenApp.Pages.Components.SharedComponents.StateGroupSelectBox>
-
-<NewTekkenApp.Pages.Components.Base.Data.ListComponent APP="@appType" TDataEntity="State" TNameEntity="State_name" baseService="@commonService">
-</NewTekkenApp.Pages.Components.Base.Data.ListComponent>
+<CascadingValue Value="StateGroupId">
+    <StateGroupSelectBox>
+    </StateGroupSelectBox>
+    <NewTekkenApp.Pages.Components.Base.Data.ListComponent APP="@appType" TDataEntity="State" TNameEntity="State_name" baseService="@commonService">
+    </NewTekkenApp.Pages.Components.Base.Data.ListComponent>
+</CascadingValue>

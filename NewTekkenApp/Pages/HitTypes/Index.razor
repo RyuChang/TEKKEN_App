@@ -1,12 +1,15 @@
 ﻿@page "/HitTypes"
 @page "/HitTypes/Index"
+
 @inherits BasePageComponent
+
 <h3>@GetAppTitle()</h3>
+<p>
+    @StateGroupId
+</p>
+<input ID="firstname3" @bind="@testValue">자식 컴포넌트 반복 호출
 
-<input ID="firstname3"  @bind="@testValue">자식 컴포넌트 반복 호출
-
-<NewTekkenApp.Pages.Components.SharedComponents.StateGroupSelectBox OnClickCallback ="@Test">
-</NewTekkenApp.Pages.Components.SharedComponents.StateGroupSelectBox>
-    <NewTekkenApp.Pages.Components.Base.Data.ListComponent APP="@appType" TDataEntity="HitType" TNameEntity="HitType_name" baseService="@commonService">
-    </NewTekkenApp.Pages.Components.Base.Data.ListComponent>
-
+    <StateGroupSelectBox>
+    </StateGroupSelectBox>
+    <ListComponent APP="@appType" TDataEntity="HitType" TNameEntity="HitType_name" baseService="@commonService">
+    </ListComponent>

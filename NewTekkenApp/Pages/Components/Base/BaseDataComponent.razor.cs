@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
-using NewTekkenApp.Data;
-using TekkenApp.Models;
 using NewTekkenApp.Utilities;
+using TekkenApp.Models;
 
 namespace NewTekkenApp.Pages.Components.Base
 {
@@ -15,8 +14,12 @@ namespace NewTekkenApp.Pages.Components.Base
         public int Id { get; set; }
 
 
+
         [Inject]
         protected NavigationUtil navigationUtil { get; set; }
+
+
+        public int? StateGroupId { get; set; }
 
         public string GetAppTitle()
         {

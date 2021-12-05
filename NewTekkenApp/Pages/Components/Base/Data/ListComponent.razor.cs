@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Components;
 using TekkenApp.Models;
 
 namespace NewTekkenApp.Pages.Components.Base.Data
@@ -14,9 +13,19 @@ namespace NewTekkenApp.Pages.Components.Base.Data
         protected override async Task OnInitializedAsync()
         {
             base.OnInitializedAsync();
-            baseEntities = await baseService.GetEntities();
+            
+            if (StateGroupId == 0 || StateGroupId==null)
+            {
+                baseEntities = await baseService.GetEntities();
+            }
+            else {
+                baseEntities = await baseService.GetEntitiesWithStateGroup(StateGroupId);
+            }
         }
 
+        [CascadingParameter]
+        public int? StateGroupId { get; set; }
 
     }
 }
+

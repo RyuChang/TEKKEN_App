@@ -10,6 +10,9 @@ namespace TekkenApp.Models
         public static string preUrl { get; set; }
         protected TableName tableName { get; set; }
 
+        [NotMapped]
+        public int StateGroup_code { get; set; }
+
         [Key]
         [Display(Name = "ID")]
         [Required(ErrorMessage = "ID를 입력해 주세요.")]
@@ -21,6 +24,8 @@ namespace TekkenApp.Models
         public string Description { get; set; }
 
         public int Number { get; set; }
+
+        
 
         protected void SetApp(TableName tableName)
         {

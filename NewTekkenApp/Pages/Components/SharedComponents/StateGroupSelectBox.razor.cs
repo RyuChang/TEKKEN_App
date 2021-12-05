@@ -17,6 +17,9 @@ namespace NewTekkenApp.Pages.Components.SharedComponents
         [Parameter]
         public EventCallback<string> OnClickCallback { get; set; }
 
+        [CascadingParameter]
+        public int StateGroupId { get; set; }
+
         public string stateGroup { get; set; }
         protected override async Task OnInitializedAsync()
         {
@@ -29,9 +32,12 @@ namespace NewTekkenApp.Pages.Components.SharedComponents
         private void OnStateGroupChanged(ChangeEventArgs e)
         {
             stateGroup = e.Value.ToString();
+            StateGroupId = int.Parse(e.Value.ToString());
             //stateGroup = SelectedString;
             OnClickCallback.InvokeAsync();
         }
+
+
     }
 }
 

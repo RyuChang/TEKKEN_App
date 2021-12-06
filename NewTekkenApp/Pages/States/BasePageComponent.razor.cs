@@ -9,11 +9,11 @@ namespace NewTekkenApp.Pages.States
     {
         [Inject]
         protected StateService<State, State_name> commonService { get; set; }
-        
+
 
         public BasePageComponent()
         {
-            SetAppType(AppType.StateGroups);
+            SetAppType(AppType.States);
         }
 
     }

@@ -4,8 +4,9 @@
 <h3>@GetAppTitle()</h3>
 
 <CascadingValue Value="StateGroupId">
-    <StateGroupSelectBox>
+    @StateGroupId
+    <StateGroupSelectBox OnStateGroupChanged="OnStateGroupChanged">
     </StateGroupSelectBox>
-    <NewTekkenApp.Pages.Components.Base.Data.ListComponent APP="@appType" TDataEntity="State" TNameEntity="State_name" baseService="@commonService">
-    </NewTekkenApp.Pages.Components.Base.Data.ListComponent>
+    <ListComponent @ref="childList" APP="@appType" TDataEntity="State" TNameEntity="State_name" baseService="@commonService">
+    </ListComponent>
 </CascadingValue>

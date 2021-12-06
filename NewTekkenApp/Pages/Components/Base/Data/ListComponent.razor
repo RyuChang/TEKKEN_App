@@ -53,7 +53,7 @@
                                 </td>
                             </tr>
 
-                            foreach (var base_name in baseService.GetAllNameEntitiesByCodeAsync(baseEntities.Code).ToList())
+                            foreach (var base_name in baseService.GetAllNameEntitiesByCodeAsync(baseEntities.Code))
                             {
                                 <tr>
                                     <td>@base_name.Language_code</td>

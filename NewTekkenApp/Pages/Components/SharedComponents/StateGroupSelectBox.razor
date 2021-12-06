@@ -7,12 +7,12 @@
 else
 {
     <div>
-        <select id="Countries" class="form-control" @onchange="@OnStateGroupChanged">
+        <select id="Countries" class="form-control" @onchange="@(e =>  OnStateGroupChanged.Invoke((string)e.Value))">
             @foreach (var selectItem in selectListItems)
             {
                 <option value="@selectItem.Value">@selectItem.Text</option>
             }
         </select>
-        @stateGroup
+
     </div>
 }

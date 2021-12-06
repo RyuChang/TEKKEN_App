@@ -13,19 +13,17 @@ namespace NewTekkenApp.Pages.Components.Base.Data
         protected override async Task OnInitializedAsync()
         {
             base.OnInitializedAsync();
-            
-            if (StateGroupId == 0 || StateGroupId==null)
-            {
-                baseEntities = await baseService.GetEntities();
-            }
-            else {
-                baseEntities = await baseService.GetEntitiesWithStateGroup(StateGroupId);
-            }
+
+            baseEntities = await baseService.GetEntities();
         }
 
         [CascadingParameter]
         public int? StateGroupId { get; set; }
 
+        public async void GetEntitiesByStateGroup(int stateGroupCode)
+        {
+            baseEntities = await baseService.GetEntitiesWithStateGroup(stateGroupCode);
+        }
     }
 }
 

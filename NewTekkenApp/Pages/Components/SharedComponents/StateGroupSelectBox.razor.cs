@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using NewTekkenApp.Data;
 using TekkenApp.Models;
@@ -17,26 +15,13 @@ namespace NewTekkenApp.Pages.Components.SharedComponents
         [Parameter]
         public EventCallback<string> OnClickCallback { get; set; }
 
-        [CascadingParameter]
-        public int StateGroupId { get; set; }
-
-        public string stateGroup { get; set; }
         protected override async Task OnInitializedAsync()
         {
-            //SetApp();
-            //groupList = await stateGroupService.GetStateGroups();
             selectListItems = await stateGroupService.GetSelectItems();
-
         }
 
-        private void OnStateGroupChanged(ChangeEventArgs e)
-        {
-            stateGroup = e.Value.ToString();
-            StateGroupId = int.Parse(e.Value.ToString());
-            //stateGroup = SelectedString;
-            OnClickCallback.InvokeAsync();
-        }
-
+        [Parameter]
+        public Action<String>? OnStateGroupChanged { get; set; }
 
     }
 }

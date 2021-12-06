@@ -25,6 +25,7 @@ namespace TekkenApp.Models
 
     public enum AppType
     {
+        States,
         StateGroups,
         HitTypes,
     }
@@ -53,6 +54,7 @@ namespace TekkenApp.Models
         character,
         command,
         State,
+        State_name,
         StateGroup,
         StateGroup_name,
         MoveText,

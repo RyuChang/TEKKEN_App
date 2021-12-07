@@ -15,6 +15,7 @@
     }
 </style>
 
+
 <div class="container">
     <div class="m-auto" id="Character-list">
         <div class="table-responsive">
@@ -40,6 +41,7 @@
                     </thead>
 
                     <tbody>
+                        {
                         @foreach (var baseEntities in baseEntities)
                         {
                             <tr id="@baseEntities.">
@@ -53,7 +55,12 @@
                                 </td>
                             </tr>
 
-                            foreach (var base_name in baseService.GetAllNameEntitiesByCodeAsync(baseEntities.Code))
+
+
+                            List<TNameEntity> list = Task.Run(
+                            () => baseService.GetAllNameEntitiesByCodeAsync(baseEntities.Code)).GetAwaiter().GetResult();
+
+                            @foreach (var base_name in list)
                             {
                                 <tr>
                                     <td>@base_name.Language_code</td>
@@ -74,6 +81,8 @@
                                     </td>
                                 </tr>
                             }
+
+                        }
                         }
                     </tbody>
                 </table>

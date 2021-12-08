@@ -15,7 +15,7 @@ namespace TekkenApp.Data
         {
         }
         public virtual DbSet<BaseUtil> BaseUtil { get; set; }
-        public virtual DbSet<BaseDataEntity> BaseEntities { get; set; }
+        public virtual DbSet<BaseDataEntity<BaseNameEntity>> BaseEntities { get; set; }
         //public virtual DbSet<BaseTranslateName> BaseTranslateName { get; set; }
         public virtual DbSet<Move> Move { get; set; }
         public virtual DbSet<Move_Data_Name> Move_Data_Name { get; set; }
@@ -274,7 +274,7 @@ namespace TekkenApp.Data
 
 
                 entity.HasOne(d => d.hitType_codeNavigation)
-                    .WithMany(p => p.hitType_name)
+                    .WithMany(p => p.NameSet)
                     .HasPrincipalKey(p => p.Code)
                     .HasForeignKey(d => d.Base_code)
                     .HasConstraintName("FK_hitType_name_hitType")

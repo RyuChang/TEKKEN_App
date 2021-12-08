@@ -12,19 +12,19 @@ namespace TekkenApp.Models
     [Index(nameof(Code), Name = "IX_hitType", IsUnique = true)]
     [Index(nameof(Number), Name = "IX_hitType_1", IsUnique = true)]
 
-    public partial class HitType : BaseDataEntity
+    public partial class HitType : BaseDataEntity<HitType_name>
     {
         public HitType()
         {
             SetApp(TableName.HitType);
-            hitType_name = new HashSet<HitType_name>();
+            NameSet = new HashSet<HitType_name>();
             move_datacounterType_codeNavigation = new HashSet<Move_data>();
             move_dataguardType_codeNavigation = new HashSet<Move_data>();
             move_datahitType_codeNavigation = new HashSet<Move_data>();
             move_datastartType_codeNavigation = new HashSet<Move_data>();
         }
 
-        public virtual ICollection<HitType_name> hitType_name { get; set; }
+        //public virtual ICollection<HitType_name> hitType_name { get; set; }
         public virtual ICollection<Move_data> move_datacounterType_codeNavigation { get; set; }
         public virtual ICollection<Move_data> move_dataguardType_codeNavigation { get; set; }
         public virtual ICollection<Move_data> move_datahitType_codeNavigation { get; set; }

@@ -16,6 +16,6 @@ namespace TekkenApp.Models
             SetApp(TableName.HitType_name);
         }
 
-        public virtual HitType hitType_codeNavigation { get; set; }
+        public virtual HitType HitType { get; set; }
     }
 }

@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace TekkenApp.Models
 {
     [NotMapped]
-    public class BaseDataEntity<TName> where TName : BaseNameEntity
+    public class BaseDataEntity<TNameEntity> where TNameEntity : BaseNameEntity
     {
         [NotMapped]
         public static string preUrl { get; set; }
@@ -27,7 +27,7 @@ namespace TekkenApp.Models
         public int Number { get; set; }
 
 
-        public virtual ICollection<TName> NameSet { get; set; }
+        public virtual ICollection<TNameEntity> NameSet { get; set; }
 
         protected void SetApp(TableName tableName)
         {

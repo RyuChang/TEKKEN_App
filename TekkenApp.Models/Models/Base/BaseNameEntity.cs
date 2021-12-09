@@ -10,8 +10,6 @@ namespace TekkenApp.Models
         public string preUrl { get; set; }
 
         protected TableName tableName { get; set; }
-
-        public BaseDataEntity<BaseNameEntity> BaseDataEntity { get; set; }
         public BaseNameEntity()
         {
 

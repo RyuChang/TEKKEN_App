@@ -102,18 +102,6 @@ namespace NewTekkenApp.Data
         }
         #endregion
 
-        public async Task<List<TNameEntity>> GetAllNameEntitiesListAsync()
-        {
-            var baseTranslateName = from language in _tekkenDBContext.Set<Language>() //_tekkenDBContext.language
-                                    join name in _tekkenDBContext.Set<TNameEntity>()
-                                        on language.code equals name.Language_code into grouping
-                                    from name in grouping.DefaultIfEmpty()
-                                    select (new TNameEntity { Id = (name.Id != null) ? name.Id : 0, Base_code = (name.Id != null) ? name.Base_code : 0, Language_code = language.code, Name = name.Name });
-
-            return await baseTranslateName.ToListAsync();
-        }
-
-
         public async Task<List<TNameEntity>> GetAllNameEntitiesByCodeAsync(int code)
         {
             var baseTranslateName = from language in _tekkenDBContext.Set<Language>() //_tekkenDBContext.language
@@ -146,7 +134,8 @@ namespace NewTekkenApp.Data
 
         public List<TDataEntity> GetEntitiesWithName()
         {
-            return _dataDbSet.Include(p=>p.NameSet).ToList();
+            return _dataDbSet.Include("NameSet").ToList();
+            //return  _dataDbSet.ToList();
         }
 
         public List<TDataEntity> GetEntitiesWithName(string tname)

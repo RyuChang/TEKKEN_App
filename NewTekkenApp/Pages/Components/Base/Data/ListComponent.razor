@@ -41,27 +41,27 @@
                     </thead>
 
                     <tbody>
-
-                        @{
-                            List<TDataEntity> baseEntities = baseService.GetEntitiesWithName();
-                        }
-                        @foreach (var baseEntity in baseEntities)
                         {
-                            <tr id="@baseEntity.Id">
-                                <td>@baseEntity.Code</td>
-                                <td>@baseEntity.Number</td>
-                                <td>@baseEntity.Description</td>
+                        @foreach (var baseEntities in baseEntities)
+                        {
+                            <tr id="@baseEntities.">
+                                <td>@baseEntities.Code</td>
+                                <td>@baseEntities.Number</td>
+                                <td>@baseEntities.Description</td>
                                 <td>
-                                    <input type="button" class="btn btn-primary" id="btnDetail" value="상세" @onclick="()=>MoveToDetail(baseEntity.Id)" />
-                                    <input type="button" class="btn btn-primary" id="btnEdit" value="수정" @onclick="()=>MoveToEdit(baseEntity.Id)" />
-                                    <input type="button" class="btn btn-primary" id="btnDelete" value="삭제" @onclick="()=>MoveToDelete(baseEntity.Id)" />
+                                    <input type="button" class="btn btn-primary" id="btnDetail" value="상세" @onclick="()=>MoveToDetail(baseEntities.Id)" />
+                                    <input type="button" class="btn btn-primary" id="btnEdit" value="수정" @onclick="()=>MoveToEdit(baseEntities.Id)" />
+                                    <input type="button" class="btn btn-primary" id="btnDelete" value="삭제" @onclick="()=>MoveToDelete(baseEntities.Id)" />
                                 </td>
                             </tr>
 
 
-
-
-                            @foreach (var base_name in baseEntity.NameSet)
+                            List<TDataEntity> list = baseService.GetEntitiesWithName();
+                            var a = 0;
+                            @*List<TNameEntity> list = Task.Run(
+                            () => baseService.GetAllNameEntitiesByCodeAsync(baseEntities.Code)).GetAwaiter().GetResult();
+*@
+                            @*@foreach (var base_name in list)
                             {
                                 <tr>
                                     <td>@base_name.Language_code</td>
@@ -71,7 +71,7 @@
                                     <td>
                                         @if (String.IsNullOrEmpty(base_name.Name))
                                         {
-                                            <input type="button" class="btn btn-primary" id="CreateName" value="추가" @onclick="() => MoveToCreateName(baseEntity.Code, base_name.Language_code)" />
+                                            <input type="button" class="btn btn-primary" id="CreateName" value="추가" @onclick="() => MoveToCreateName(baseEntities.Code, base_name.Language_code)" />
                                         }
                                         else
                                         {
@@ -81,10 +81,10 @@
                                         }
                                     </td>
                                 </tr>
-                            }
+                            }*@
 
                         }
-
+                        }
                     </tbody>
                 </table>
             }

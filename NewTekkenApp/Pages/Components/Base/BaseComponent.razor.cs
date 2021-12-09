@@ -11,7 +11,7 @@ using NewTekkenApp.Utilities;
 namespace NewTekkenApp.Pages.Components.Base
 {
     public partial class BaseComponent<TDataEntity, TNameEntity> : ComponentBase
-        where TDataEntity : BaseDataEntity<TNameEntity>
+        where TDataEntity : BaseDataEntity
         where TNameEntity : BaseNameEntity, new()
     {
         [Parameter]
@@ -20,8 +20,8 @@ namespace NewTekkenApp.Pages.Components.Base
         [Parameter]
         public BaseService<TDataEntity, TNameEntity> baseService { get; set; }
 
-        //[Inject]
-        //protected ILogger<EditComponent<TDataEntity, TNameEntity>> Logger { get; set; }
+        [Inject]
+        protected ILogger<EditComponent<TDataEntity, TNameEntity>> Logger { get; set; }
 
         [Inject]
         protected NavigationUtil navigationUtil { get; set; }

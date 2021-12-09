@@ -7,7 +7,7 @@ namespace NewTekkenApp.Pages.Components.Base.Data
 {
     public partial class EditComponent<TDataEntity, TNameEntity> :
         BaseComponent<TDataEntity, TNameEntity>
-                            where TDataEntity : BaseDataEntity<TNameEntity>
+                            where TDataEntity : BaseDataEntity
                             where TNameEntity : BaseNameEntity, new()
     {
 
@@ -30,7 +30,7 @@ namespace NewTekkenApp.Pages.Components.Base.Data
 
         private void HandleValidSubmit()
         {
-            //Logger.LogInformation("HandleValidSubmit called");
+            Logger.LogInformation("HandleValidSubmit called");
         }
     }
 }

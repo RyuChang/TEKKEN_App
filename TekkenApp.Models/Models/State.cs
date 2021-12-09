@@ -11,7 +11,7 @@ namespace TekkenApp.Models
 {
     [Index(nameof(Code), Name = "IX_State", IsUnique = true)]
     //[Index(nameof(StateGroup_code), nameof(number), Name = "IX_State_1", IsUnique = true)]
-    public partial class State: BaseDataEntity<State_name>
+    public partial class State: BaseDataEntity
     {
         public State()
         {

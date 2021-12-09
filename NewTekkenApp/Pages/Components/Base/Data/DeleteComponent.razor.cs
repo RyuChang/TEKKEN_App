@@ -7,7 +7,7 @@ namespace NewTekkenApp.Pages.Components.Base.Data
 {
     public partial class DeleteComponent<TDataEntity, TNameEntity> :
         BaseComponent<TDataEntity, TNameEntity>
-                            where TDataEntity : BaseDataEntity<TNameEntity>
+                            where TDataEntity : BaseDataEntity
                             where TNameEntity : BaseNameEntity, new()
     {
 

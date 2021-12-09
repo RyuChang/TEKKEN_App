@@ -56,12 +56,11 @@
                             </tr>
 
 
-                            List<TDataEntity> list = baseService.GetEntitiesWithName();
-                            var a = 0;
-                            @*List<TNameEntity> list = Task.Run(
+
+                            List<TNameEntity> list = Task.Run(
                             () => baseService.GetAllNameEntitiesByCodeAsync(baseEntities.Code)).GetAwaiter().GetResult();
-*@
-                            @*@foreach (var base_name in list)
+
+                            @foreach (var base_name in list)
                             {
                                 <tr>
                                     <td>@base_name.Language_code</td>
@@ -81,7 +80,7 @@
                                         }
                                     </td>
                                 </tr>
-                            }*@
+                            }
 
                         }
                         }

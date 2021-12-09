@@ -7,7 +7,7 @@ using TekkenApp.Models;
 namespace NewTekkenApp.Data
 {
     public abstract class BaseService<TDataEntity, TNameEntity>
-        where TDataEntity : BaseDataEntity<TNameEntity>
+        where TDataEntity : BaseDataEntity
         where TNameEntity : BaseNameEntity, new()
     {
         protected TekkenDbContext _tekkenDBContext;
@@ -110,7 +110,7 @@ namespace NewTekkenApp.Data
                                     from name in grouping.DefaultIfEmpty()
                                     select (new TNameEntity { Id = (name.Id != null) ? name.Id : 0, Base_code = (name.Id != null) ? name.Base_code : 0, Language_code = language.code, Name = name.Name });
 
-            return await baseTranslateName.ToListAsync();
+            return await  baseTranslateName.ToListAsync();
         }
 
         public async Task<BaseNameEntity> UpdateNameEntityAsync(BaseNameEntity nameEntity)
@@ -132,15 +132,9 @@ namespace NewTekkenApp.Data
             return await _dataDbSet.Where(p => p.StateGroup_code == stateGroupCode).ToListAsync();
         }
 
-        public List<TDataEntity> GetEntitiesWithName()
+        public async Task<List<TDataEntity>> GetEntitiesWithName()
         {
-            return _dataDbSet.Include("NameSet").ToList();
-            //return  _dataDbSet.ToList();
-        }
-
-        public List<TDataEntity> GetEntitiesWithName(string tname)
-        {
-            return _dataDbSet.Include(tname).ToList();
+            return await _dataDbSet.Include("StateGroup_name").ToListAsync();
         }
 
         public async Task<List<SelectListItem>> GetSelectItems()
@@ -185,7 +179,7 @@ namespace NewTekkenApp.Data
         #endregion
 
 
-        public async Task<BaseDataEntity<TNameEntity>> UpdateDataAsync(BaseDataEntity<TNameEntity> BaseDataEntity)
+        public async Task<BaseDataEntity> UpdateDataAsync(BaseDataEntity BaseDataEntity)
         {
             _tekkenDBContext.Entry(BaseDataEntity).State = EntityState.Modified;
             await _tekkenDBContext.SaveChangesAsync();

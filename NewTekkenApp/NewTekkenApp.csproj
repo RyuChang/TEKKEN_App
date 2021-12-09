@@ -8,17 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Pages\StateGroups\**" />
-    <Compile Remove="Pages\States\**" />
-    <Content Remove="Pages\StateGroups\**" />
-    <Content Remove="Pages\States\**" />
-    <EmbeddedResource Remove="Pages\StateGroups\**" />
-    <EmbeddedResource Remove="Pages\States\**" />
-    <None Remove="Pages\StateGroups\**" />
-    <None Remove="Pages\States\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="bootstrap" Version="5.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.0" />

@@ -7,7 +7,7 @@ namespace NewTekkenApp.Pages.Components.Base.Name
 {
     public partial class CreateNameComponent<TDataEntity, TNameEntity> :
         BaseComponent<TDataEntity, TNameEntity>
-                            where TDataEntity : BaseDataEntity
+                            where TDataEntity : BaseDataEntity<TNameEntity>
                             where TNameEntity : BaseNameEntity, new()
     {
         [Parameter]

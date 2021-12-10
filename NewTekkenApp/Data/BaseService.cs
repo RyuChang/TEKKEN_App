@@ -126,15 +126,14 @@ namespace NewTekkenApp.Data
             return await _dataDbSet.ToListAsync();
         }
 
-        public new async Task<List<TDataEntity>> GetEntitiesWithStateGroup(int? stateGroupCode)
+        public  async Task<List<TDataEntity>> GetEntitiesWithStateGroup(int? stateGroupCode)
         {
-
             return await _dataDbSet.Where(p => p.StateGroup_code == stateGroupCode).ToListAsync();
         }
 
-        public List<TDataEntity> GetEntitiesWithName()
+        public async Task<List<TDataEntity>> GetEntitiesWithName()
         {
-            return _dataDbSet.Include("NameSet").ToList();
+            return await _dataDbSet.Include("NameSet").ToListAsync();
             //return  _dataDbSet.ToList();
         }
 

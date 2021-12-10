@@ -14,7 +14,9 @@ namespace NewTekkenApp.Pages.Components.Base.Data
         {
             base.OnInitializedAsync();
 
-            baseEntities = await baseService.GetEntities();
+            //baseEntities = await baseService.GetEntities();
+            //
+            baseEntities = await baseService.GetEntitiesWithName();
         }
 
         [CascadingParameter]
@@ -22,7 +24,7 @@ namespace NewTekkenApp.Pages.Components.Base.Data
 
         public async void GetEntitiesByStateGroup(int stateGroupCode)
         {
-            baseEntities = await baseService.GetEntitiesWithStateGroup(stateGroupCode);
+                baseEntities = await baseService.GetEntitiesWithStateGroup(stateGroupCode);
         }
     }
 }

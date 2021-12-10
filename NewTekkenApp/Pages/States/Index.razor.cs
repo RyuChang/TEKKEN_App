@@ -14,9 +14,16 @@ namespace NewTekkenApp.Pages.States
 
         void OnStateGroupChanged(string stateGroupCode)
         {
-            StateGroupId = int.Parse(stateGroupCode);
-            childList.GetEntitiesByStateGroup(int.Parse(stateGroupCode));
-            StateHasChanged();
+            if (string.IsNullOrEmpty(stateGroupCode))
+            {
+                StateGroupId = int.Parse(stateGroupCode);
+                childList.GetEntitiesByStateGroup(int.Parse(stateGroupCode));
+                StateHasChanged();
+            }
+            else
+            {
+                
+            }
         }
     }
 }

@@ -165,7 +165,7 @@ namespace TekkenApp.Data
 
 
                 entity.HasOne(d => d.StateGroup_codeNavigation)
-                    .WithMany(p => p.StateGroup_name)
+                    .WithMany(p => p.NameSet)
                     .HasPrincipalKey(p => p.Code)
                     .HasForeignKey(d => d.Base_code)
                     .HasConstraintName("FK_StateGroup_name_StateGroup").
@@ -195,7 +195,7 @@ namespace TekkenApp.Data
                     .HasConstraintName("FK_State_name_language");
 
                 entity.HasOne(d => d.state_codeNavigation)
-                    .WithMany(p => p.State_name)
+                    .WithMany(p => p.NameSet)
                     .HasPrincipalKey(p => p.Code)
                     .HasForeignKey(d => d.Base_code)
                     .OnDelete(DeleteBehavior.ClientSetNull)

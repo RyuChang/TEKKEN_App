@@ -55,6 +55,7 @@ namespace NewTekkenApp.Utilities
             {
                 AppType.HitTypes => "HitTypes",
                 AppType.StateGroups => "StateGroups",
+                AppType.MoveText => "MoveText",
                 _ => ""
             };
         private string GetActionUrl(ActionType actionType) =>
@@ -76,3 +77,4 @@ namespace NewTekkenApp.Utilities
 
     }
 }
+

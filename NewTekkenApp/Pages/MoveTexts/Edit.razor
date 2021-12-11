@@ -1,0 +1,6 @@
+﻿@page "/MoveTexts/Edit/{Id:int}"
+@inherits BasePageComponent
+<h3>@GetAppTitle()</h3>
+<NewTekkenApp.Pages.Components.Base.Data.EditComponent APP="@appType" TDataEntity="MoveText" TNameEntity="MoveText_name" baseService=@commonService Id="@Id">
+</NewTekkenApp.Pages.Components.Base.Data.EditComponent>
+

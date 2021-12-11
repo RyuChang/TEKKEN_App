@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace TekkenApp.Models
 {
     [NotMapped]
-    public class BaseNameEntity //: BaseEntity
+    public class BaseNameEntity
     {
         [NotMapped]
         public string preUrl { get; set; }
@@ -12,7 +12,6 @@ namespace TekkenApp.Models
         protected TableName tableName { get; set; }
         public BaseNameEntity()
         {
-
 
         }
         public BaseNameEntity(int id, int base_code, string language_code, string name)

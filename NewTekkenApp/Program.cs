@@ -1,4 +1,3 @@
-using System.Configuration;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -28,6 +27,8 @@ builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuth
 builder.Services.AddSingleton<WeatherForecastService>();
 
 builder.Services.AddTransient<HitTypeService<HitType, HitType_name>>();
+builder.Services.AddTransient<MoveTextService<MoveText, MoveText_name>>();
+builder.Services.AddTransient<CharacterService<Character, Character_name>>();
 builder.Services.AddTransient<StateService<State, State_name>>();
 builder.Services.AddTransient<StateGroupService<StateGroup, StateGroup_name>>();
 builder.Services.AddTransient<NavigationUtil>();

@@ -14,6 +14,9 @@ namespace TekkenApp.Models
         [NotMapped]
         public int StateGroup_code { get; set; }
 
+        [NotMapped]
+        public int character_code { get; set; }
+
         [Key]
         [Display(Name = "ID")]
         [Required(ErrorMessage = "ID를 입력해 주세요.")]

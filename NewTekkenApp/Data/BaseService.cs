@@ -1,6 +1,6 @@
-﻿using System.Data;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 using TekkenApp.Data;
 using TekkenApp.Models;
 
@@ -126,7 +126,12 @@ namespace NewTekkenApp.Data
             return await _dataDbSet.ToListAsync();
         }
 
-        public  async Task<List<TDataEntity>> GetEntitiesWithStateGroup(int? stateGroupCode)
+        public async Task<List<TDataEntity>> GetEntitiesWithCharacterCode(int characterCode)
+        {
+            return await _dataDbSet.Where(p => p.character_code == characterCode).ToListAsync();
+        }
+
+        public async Task<List<TDataEntity>> GetEntitiesWithStateGroup(int stateGroupCode)
         {
             return await _dataDbSet.Where(p => p.StateGroup_code == stateGroupCode).ToListAsync();
         }

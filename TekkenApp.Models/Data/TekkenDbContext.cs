@@ -16,7 +16,6 @@ namespace TekkenApp.Data
         }
         public virtual DbSet<BaseUtil> BaseUtil { get; set; }
         public virtual DbSet<BaseDataEntity<BaseNameEntity>> BaseEntities { get; set; }
-        //public virtual DbSet<BaseTranslateName> BaseTranslateName { get; set; }
         public virtual DbSet<Move> Move { get; set; }
         public virtual DbSet<Move_Data_Name> Move_Data_Name { get; set; }
         public virtual DbSet<Move_command> Move_command { get; set; }
@@ -69,75 +68,56 @@ namespace TekkenApp.Data
             {
 
             });
+            modelBuilder.Entity<Language>(entity =>
+            {
+                entity.Property(e => e.code)
+                    .IsUnicode(false)
+                    .IsFixedLength(true);
 
+                entity.Property(e => e.name).IsUnicode(false);
+            });
 
-            //modelBuilder.Entity<BaseTranslateName>(entity =>
-            //{
-
-            //    entity.ToView("BaseTranslateName")
-            //    .HasDiscriminator<int>("discriminator")
-            //.HasValue<HitType_name>(1)
-            //    //.HasNoKey()
-            //    //
-            //    //.HasKey(e => e.Id)
-
-            //    //.HasValue<Appointment>(2);
-            //    //.HasDiscriminator<int>("Type")
-            //    ;
-            //    //.HasDiscriminator<string>("discriminator")
-            //    //.HasValue("e"); // "e" is the value of discriminator for Event type. 
-            //});
-
-            //modelBuilder.Entity<BaseTranslateName>().HasNoKey();
-            //modelBuilder.SharedTypeEntity<Dictionary<string, object>>("BaseTranslateName", b =>
-            //{
-            //    b.IndexerProperty<int>("Id");
-            //    b.IndexerProperty<string>("Base_code").IsRequired();
-            //    b.IndexerProperty<string>("Language_code");
-            //    b.IndexerProperty<string>("Name");
-            //    b.IndexerProperty<bool>("Checked");
-            //});
+            #region Move
             modelBuilder.Entity<Move>(entity =>
         {
             entity.Property(e => e.description).IsUnicode(false);
 
-            entity.HasOne(d => d.character_codeNavigation)
-                .WithMany(p => p.Move)
-                .HasPrincipalKey(p => p.code)
-                .HasForeignKey(d => d.character_code)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Move_character");
+            //entity.HasOne(d => d.character_codeNavigation)
+            //    .WithMany(p => p.Move)
+            //    .HasPrincipalKey(p => p.code)
+            //    .HasForeignKey(d => d.character_code)
+            //    .OnDelete(DeleteBehavior.ClientSetNull)
+            //    .HasConstraintName("FK_Move_character");
 
             entity.HasOne(d => d.versionNavigation)
                 .WithMany(p => p.Move)
                 .HasForeignKey(d => d.version)
                 .HasConstraintName("FK_Move_version");
         });
-
-            modelBuilder.Entity<Move_Data_Name>(entity =>
+            modelBuilder.Entity<Move_name>(entity =>
             {
                 entity.Property(e => e.language_code)
                     .IsUnicode(false)
                     .IsFixedLength(true);
 
-                entity.HasOne(d => d.Move_Data_CodeNavigation)
-                    .WithMany(p => p.Move_Data_Name)
-                    .HasPrincipalKey(p => p.Move_Code)
-                    .HasForeignKey(d => d.Move_Data_Code)
-                    .HasConstraintName("FK_Move_Data_Name_move_data");
-            });
+                entity.Property(e => e.name).IsUnicode(false);
 
-            modelBuilder.Entity<Move_command>(entity =>
-            {
-                entity.Property(e => e.command).IsUnicode(false);
+                //entity.HasOne(d => d.language_codeNavigation)
+                //    .WithMany(p => p.move_name)
+                //    .HasPrincipalKey(p => p.code)
+                //    .HasForeignKey(d => d.language_code)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("FK_move_name_language");
 
                 entity.HasOne(d => d.move_codeNavigation)
-                    .WithOne(p => p.Move_command)
-                    .HasPrincipalKey<Move>(p => p.code)
-                    .HasForeignKey<Move_command>(d => d.move_code)
-                    .HasConstraintName("FK_Move_command_Move1");
+                    .WithMany(p => p.move_name)
+                    .HasPrincipalKey(p => p.code)
+                    .HasForeignKey(d => d.move_code)
+                    .HasConstraintName("FK_move_name_Move");
             });
+            #endregion Move
 
+            #region State
             modelBuilder.Entity<State>(entity =>
             {
                 entity.Property(e => e.Description).IsUnicode(false);
@@ -149,12 +129,35 @@ namespace TekkenApp.Data
                 //    .OnDelete(DeleteBehavior.ClientSetNull)
                 //    .HasConstraintName("FK_State_StateGroup");
             });
+            modelBuilder.Entity<State_name>(entity =>
+            {
+                entity.Property(e => e.Language_code)
+                    .IsUnicode(false)
+                    .IsFixedLength(true);
 
+                entity.Property(e => e.Name).IsUnicode(false);
+
+                //entity.HasOne(d => d.language_codeNavigation)
+                //    .WithMany(p => p.State_name)
+                //    .HasPrincipalKey(p => p.code)
+                //    .HasForeignKey(d => d.Language_code)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("FK_State_name_language");
+
+                entity.HasOne(d => d.state_codeNavigation)
+                    .WithMany(p => p.NameSet)
+                    .HasPrincipalKey(p => p.Code)
+                    .HasForeignKey(d => d.Base_code)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_State_name_State");
+            });
+            #endregion State
+
+            #region StateGroup
             modelBuilder.Entity<StateGroup>(entity =>
             {
                 entity.Property(e => e.Description).IsUnicode(false);
             });
-
             modelBuilder.Entity<StateGroup_name>(entity =>
             {
                 entity.Property(e => e.Language_code)
@@ -178,55 +181,41 @@ namespace TekkenApp.Data
                 //    .OnDelete(DeleteBehavior.ClientSetNull)
                 //    .HasConstraintName("FK_StateGroup_name_language");
             });
+            #endregion StateGroup
 
-            modelBuilder.Entity<State_name>(entity =>
-            {
-                entity.Property(e => e.Language_code)
-                    .IsUnicode(false)
-                    .IsFixedLength(true);
-
-                entity.Property(e => e.Name).IsUnicode(false);
-
-                entity.HasOne(d => d.language_codeNavigation)
-                    .WithMany(p => p.State_name)
-                    .HasPrincipalKey(p => p.code)
-                    .HasForeignKey(d => d.Language_code)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_State_name_language");
-
-                entity.HasOne(d => d.state_codeNavigation)
-                    .WithMany(p => p.NameSet)
-                    .HasPrincipalKey(p => p.Code)
-                    .HasForeignKey(d => d.Base_code)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_State_name_State");
-            });
-
+            #region Character
             modelBuilder.Entity<Character>(entity =>
             {
-                entity.Property(e => e.code_name)
-                    .IsUnicode(false)
-                    .IsFixedLength(true);
+                entity.Property(e => e.Code).IsUnicode(false).IsFixedLength(true);
+                entity.Property(e => e.Description).IsUnicode(false);
 
-                entity.Property(e => e.description).IsUnicode(false);
+                entity.HasMany(d => d.NameSet)
+                    .WithOne()
+                    .HasPrincipalKey(p => p.Code)
+                    .HasForeignKey(d => d.Base_code)
+                    .HasConstraintName("FK_character_name_character")
+                    .OnDelete(DeleteBehavior.Cascade);
+
             });
 
             modelBuilder.Entity<Character_name>(entity =>
             {
                 entity.Property(e => e.fullName).IsUnicode(false);
 
-                entity.Property(e => e.language_code)
+                entity.Property(e => e.Language_code)
                     .IsUnicode(false)
                     .IsFixedLength(true);
 
-                entity.HasOne(d => d.language_codeNavigation)
-                    .WithMany(p => p.character_name)
-                    .HasPrincipalKey(p => p.code)
-                    .HasForeignKey(d => d.language_code)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_character_name_language");
+                //entity.HasOne(d => d.language_codeNavigation)
+                //    .WithMany(p => p.character_name)
+                //    .HasPrincipalKey(p => p.code)
+                //    .HasForeignKey(d => d.language_code)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("FK_character_name_language");
             });
+            #endregion Character
 
+            #region Command
             modelBuilder.Entity<Command>(entity =>
             {
                 entity.Property(e => e.code)
@@ -237,7 +226,6 @@ namespace TekkenApp.Data
 
                 entity.Property(e => e.key).IsUnicode(false);
             });
-
             modelBuilder.Entity<Command_name>(entity =>
             {
                 entity.Property(e => e.command_code)
@@ -250,17 +238,26 @@ namespace TekkenApp.Data
 
                 entity.Property(e => e.name).IsUnicode(false);
 
-                entity.HasOne(d => d.language_codeNavigation)
-                    .WithMany(p => p.command_name)
-                    .HasPrincipalKey(p => p.code)
-                    .HasForeignKey(d => d.language_code)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_command_name_language");
+                //entity.HasOne(d => d.language_codeNavigation)
+                //    .WithMany(p => p.command_name)
+                //    .HasPrincipalKey(p => p.code)
+                //    .HasForeignKey(d => d.language_code)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("FK_command_name_language");
             });
+            #endregion Command
 
+            #region HitType
             modelBuilder.Entity<HitType>(entity =>
             {
                 entity.Property(e => e.Description).IsUnicode(false);
+
+                entity.HasMany(d => d.NameSet)
+                    .WithOne()
+                    .HasPrincipalKey(p => p.Code)
+                    .HasForeignKey(d => d.Base_code)
+                    .HasConstraintName("FK_hitType_name_hitType")
+                    .OnDelete(DeleteBehavior.Cascade);
             });
 
             modelBuilder.Entity<HitType_name>(entity =>
@@ -273,23 +270,17 @@ namespace TekkenApp.Data
                 entity.Property(e => e.Name).IsUnicode(false);
 
 
-                entity.HasOne(d => d.hitType_codeNavigation)
-                    .WithMany(p => p.NameSet)
-                    .HasPrincipalKey(p => p.Code)
-                    .HasForeignKey(d => d.Base_code)
-                    .HasConstraintName("FK_hitType_name_hitType")
-                    .OnDelete(DeleteBehavior.Cascade);
+                //entity.HasOne(d => d.hitType_codeNavigation)
+                //    .WithMany(p => p.NameSet)
+                //    .HasPrincipalKey(p => p.Code)
+                //    .HasForeignKey(d => d.Base_code)
+                //    .HasConstraintName("FK_hitType_name_hitType")
+                //    .OnDelete(DeleteBehavior.Cascade);
             });
+            #endregion HitType
 
-            modelBuilder.Entity<Language>(entity =>
-            {
-                entity.Property(e => e.code)
-                    .IsUnicode(false)
-                    .IsFixedLength(true);
 
-                entity.Property(e => e.name).IsUnicode(false);
-            });
-
+            #region MoveSubType
             modelBuilder.Entity<MoveSubType>(entity =>
             {
                 entity.HasKey(e => e.id)
@@ -302,14 +293,13 @@ namespace TekkenApp.Data
 
                 entity.Property(e => e.description).IsUnicode(false);
 
-                entity.HasOne(d => d.character_codeNavigation)
-                    .WithMany(p => p.moveSubType)
-                    .HasPrincipalKey(p => p.code)
-                    .HasForeignKey(d => d.character_code)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_moveSubType_moveSubType");
+                //entity.HasOne(d => d.character_codeNavigation)
+                //    .WithMany(p => p.moveSubType)
+                //    .HasPrincipalKey(p => p.code)
+                //    .HasForeignKey(d => d.character_code)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("FK_moveSubType_moveSubType");
             });
-
             modelBuilder.Entity<MoveSubType_name>(entity =>
             {
                 entity.Property(e => e.language_code)
@@ -318,12 +308,12 @@ namespace TekkenApp.Data
 
                 entity.Property(e => e.name).IsUnicode(false);
 
-                entity.HasOne(d => d.language_codeNavigation)
-                    .WithMany(p => p.moveSubType_name)
-                    .HasPrincipalKey(p => p.code)
-                    .HasForeignKey(d => d.language_code)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_moveSubType_name_language");
+                //entity.HasOne(d => d.language_codeNavigation)
+                //    .WithMany(p => p.moveSubType_name)
+                //    .HasPrincipalKey(p => p.code)
+                //    .HasForeignKey(d => d.language_code)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("FK_moveSubType_name_language");
 
                 //entity.HasOne(d => d.moveSubType_codeNavigation)
                 //.WithMany(p => p.moveSubType_name)
@@ -332,47 +322,51 @@ namespace TekkenApp.Data
                 //.OnDelete(DeleteBehavior.ClientSetNull)
                 //.HasConstraintName("FK_moveSubType_name_moveSubType_name");
             });
+            #endregion MoveSubType
 
+
+            #region MoveText
             modelBuilder.Entity<MoveText>(entity =>
             {
-                entity.Property(e => e.description).IsUnicode(false);
+                entity.Property(e => e.Description).IsUnicode(false);
 
-                entity.HasOne(d => d.character_codeNavigation)
-                    .WithMany(p => p.moveText)
-                    .HasPrincipalKey(p => p.code)
-                    .HasForeignKey(d => d.character_code)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_moveText_character");
+                entity.HasMany(d => d.NameSet)
+                    .WithOne()
+                    .HasPrincipalKey(p => p.Code)
+                    .HasForeignKey(d => d.Base_code)
+                    .HasConstraintName("FK_moveText_name_moveText")
+                    .OnDelete(DeleteBehavior.Cascade);
             });
-
             modelBuilder.Entity<MoveText_name>(entity =>
             {
-                entity.Property(e => e.language_code)
+                entity.Property(e => e.Language_code)
                     .IsUnicode(false)
                     .IsFixedLength(true);
 
-                entity.Property(e => e.name).IsUnicode(false);
+                entity.Property(e => e.Name).IsUnicode(false);
 
-                entity.HasOne(d => d.language_codeNavigation)
-                    .WithMany(p => p.moveText_name)
-                    .HasPrincipalKey(p => p.code)
-                    .HasForeignKey(d => d.language_code)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_moveText_name_language1");
+                //entity.HasOne(d => d.Base_code)
+                //    .WithMany(p => p.)
+                //    .HasPrincipalKey(p => p.Code)
+                //    .HasForeignKey(d => d.Base_code)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("FK_moveText_name_moveText")
+                //    .OnDelete(DeleteBehavior.Cascade);
 
-                entity.HasOne(d => d.moveText_codeNavigation)
-                    .WithMany(p => p.moveText_name)
-                    .HasPrincipalKey(p => p.code)
-                    .HasForeignKey(d => d.moveText_code)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_moveText_name_moveText");
+                //entity.HasOne(d => d.moveText_codeNavigation)
+                //    .WithMany(p => p.moveText_name)
+                //    .HasPrincipalKey(p => p.code)
+                //    .HasForeignKey(d => d.moveText_code)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("FK_moveText_name_moveText");
             });
+            #endregion MoveText
 
+            #region MoveType
             modelBuilder.Entity<MoveType>(entity =>
             {
                 entity.Property(e => e.description).IsUnicode(false);
             });
-
             modelBuilder.Entity<MoveType_name>(entity =>
             {
                 entity.Property(e => e.language_code)
@@ -381,12 +375,12 @@ namespace TekkenApp.Data
 
                 entity.Property(e => e.name).IsUnicode(false);
 
-                entity.HasOne(d => d.language_codeNavigation)
-                    .WithMany(p => p.moveType_name)
-                    .HasPrincipalKey(p => p.code)
-                    .HasForeignKey(d => d.language_code)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_moveType_name_language");
+                //entity.HasOne(d => d.language_codeNavigation)
+                //    .WithMany(p => p.moveType_name)
+                //    .HasPrincipalKey(p => p.code)
+                //    .HasForeignKey(d => d.language_code)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("FK_moveType_name_language");
 
                 entity.HasOne(d => d.moveType_codeNavigation)
                     .WithMany(p => p.moveType_name)
@@ -395,7 +389,19 @@ namespace TekkenApp.Data
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_moveType_name_moveType");
             });
+            #endregion MoveType
 
+            #region MoveCommand
+            modelBuilder.Entity<Move_command>(entity =>
+            {
+                entity.Property(e => e.command).IsUnicode(false);
+
+                entity.HasOne(d => d.move_codeNavigation)
+                    .WithOne(p => p.Move_command)
+                    .HasPrincipalKey<Move>(p => p.code)
+                    .HasForeignKey<Move_command>(d => d.move_code)
+                    .HasConstraintName("FK_Move_command_Move1");
+            });
             modelBuilder.Entity<Move_command_name>(entity =>
             {
                 entity.Property(e => e.language_code)
@@ -410,14 +416,16 @@ namespace TekkenApp.Data
                     .HasForeignKey(d => d.Move_Command_code)
                     .HasConstraintName("FK_move_command_Move");
 
-                entity.HasOne(d => d.language_codeNavigation)
-                    .WithMany(p => p.move_command_name)
-                    .HasPrincipalKey(p => p.code)
-                    .HasForeignKey(d => d.language_code)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_move_command_language");
+                //entity.HasOne(d => d.language_codeNavigation)
+                //    .WithMany(p => p.move_command_name)
+                //    .HasPrincipalKey(p => p.code)
+                //    .HasForeignKey(d => d.language_code)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("FK_move_command_language");
             });
+            #endregion MoveCommand
 
+            #region Move_data
             modelBuilder.Entity<Move_data>(entity =>
             {
                 entity.Property(e => e.afterBreak).IsUnicode(false);
@@ -442,26 +450,26 @@ namespace TekkenApp.Data
                     .HasForeignKey<Move_data>(d => d.Move_Code)
                     .HasConstraintName("FK_move_data_Move");
 
-                entity.HasOne(d => d.counterType_codeNavigation)
-                    .WithMany(p => p.move_datacounterType_codeNavigation)
-                    .HasPrincipalKey(p => p.Code)
-                    .HasForeignKey(d => d.counterType_code)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_move_data_hitType3");
+                //entity.HasOne(d => d.counterType_codeNavigation)
+                //    .WithMany(p => p.move_datacounterType_codeNavigation)
+                //    .HasPrincipalKey(p => p.Code)
+                //    .HasForeignKey(d => d.counterType_code)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("FK_move_data_hitType3");
 
-                entity.HasOne(d => d.guardType_codeNavigation)
-                    .WithMany(p => p.move_dataguardType_codeNavigation)
-                    .HasPrincipalKey(p => p.Code)
-                    .HasForeignKey(d => d.guardType_code)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_move_data_hitType");
+                //entity.HasOne(d => d.guardType_codeNavigation)
+                //    .WithMany(p => p.move_dataguardType_codeNavigation)
+                //    .HasPrincipalKey(p => p.Code)
+                //    .HasForeignKey(d => d.guardType_code)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("FK_move_data_hitType");
 
-                entity.HasOne(d => d.hitType_codeNavigation)
-                    .WithMany(p => p.move_datahitType_codeNavigation)
-                    .HasPrincipalKey(p => p.Code)
-                    .HasForeignKey(d => d.hitType_code)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_move_data_hitType2");
+                //entity.HasOne(d => d.hitType_codeNavigation)
+                //    .WithMany(p => p.move_datahitType_codeNavigation)
+                //    .HasPrincipalKey(p => p.Code)
+                //    .HasForeignKey(d => d.hitType_code)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("FK_move_data_hitType2");
 
                 entity.HasOne(d => d.moveSubType_codeNavigation)
                     .WithMany(p => p.move_data)
@@ -475,34 +483,26 @@ namespace TekkenApp.Data
                     .HasForeignKey(d => d.moveType_code)
                     .HasConstraintName("FK_move_data_moveType");
 
-                entity.HasOne(d => d.startType_codeNavigation)
-                    .WithMany(p => p.move_datastartType_codeNavigation)
-                    .HasPrincipalKey(p => p.Code)
-                    .HasForeignKey(d => d.startType_code)
-                    .HasConstraintName("FK_move_data_hitType1");
+                //entity.HasOne(d => d.startType_codeNavigation)
+                //    .WithMany(p => p.move_datastartType_codeNavigation)
+                //    .HasPrincipalKey(p => p.Code)
+                //    .HasForeignKey(d => d.startType_code)
+                //    .HasConstraintName("FK_move_data_hitType1");
             });
-
-            modelBuilder.Entity<Move_name>(entity =>
+            modelBuilder.Entity<Move_Data_Name>(entity =>
             {
                 entity.Property(e => e.language_code)
                     .IsUnicode(false)
                     .IsFixedLength(true);
 
-                entity.Property(e => e.name).IsUnicode(false);
-
-                entity.HasOne(d => d.language_codeNavigation)
-                    .WithMany(p => p.move_name)
-                    .HasPrincipalKey(p => p.code)
-                    .HasForeignKey(d => d.language_code)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_move_name_language");
-
-                entity.HasOne(d => d.move_codeNavigation)
-                    .WithMany(p => p.move_name)
-                    .HasPrincipalKey(p => p.code)
-                    .HasForeignKey(d => d.move_code)
-                    .HasConstraintName("FK_move_name_Move");
+                entity.HasOne(d => d.Move_Data_CodeNavigation)
+                    .WithMany(p => p.Move_Data_Name)
+                    .HasPrincipalKey(p => p.Move_Code)
+                    .HasForeignKey(d => d.Move_Data_Code)
+                    .HasConstraintName("FK_Move_Data_Name_move_data");
             });
+
+            #endregion Move_data
 
             modelBuilder.Entity<TableCode>(entity =>
             {

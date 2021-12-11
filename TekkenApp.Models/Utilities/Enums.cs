@@ -28,6 +28,7 @@ namespace TekkenApp.Models
         States,
         StateGroups,
         HitTypes,
+        MoveText,
     }
 
     public enum ActionType
@@ -46,18 +47,20 @@ namespace TekkenApp.Models
     public enum TableName
     {
         NONE,
-        move,
-        moveSubType,
-        moveType,
-        move_Command,
-        move_Data,
-        character,
-        command,
+        Move,
+        MoveSubType,
+        MoveType,
+        Move_Command,
+        Move_Data,
+        Character,
+        Character_name,
+        Command,
         State,
         State_name,
         StateGroup,
         StateGroup_name,
         MoveText,
+        MoveText_name,
         HitType,
         HitType_name
     }

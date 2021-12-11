@@ -20,6 +20,7 @@ namespace NewTekkenApp.Pages.Components.Base
 
 
         public int? StateGroupId { get; set; }
+        public int? CharacterId { get; set; }
 
         public string GetAppTitle()
         {

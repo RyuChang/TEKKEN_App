@@ -10,29 +10,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace TekkenApp.Models
 {
-    [Index(nameof(code), Name = "IX_character", IsUnique = true)]
-    [Index(nameof(code_name), Name = "IX_character_code_Unique", IsUnique = true)]
-    public partial class Character
+    //[Index(nameof(code), Name = "IX_character", IsUnique = true)]
+    //[Index(nameof(code_name), Name = "IX_character_code_Unique", IsUnique = true)]
+    public partial class Character : BaseDataEntity<Character_name>
     {
         public Character()
         {
-            Move = new HashSet<Move>();
-            moveSubType = new HashSet<MoveSubType>();
-            moveText = new HashSet<MoveText>();
+            SetApp(TableName.Character);
+            NameSet = new HashSet<Character_name>();
+
         }
-
-        [Key]
-        public int id { get; set; }
-        public byte code { get; set; }
-        [Required]
-        [StringLength(3)]
-        public string code_name { get; set; }
-        public byte season { get; set; }
-        [Required]
-        public string description { get; set; }
-
-        public virtual ICollection<Move> Move { get; set; }
-        public virtual ICollection<MoveSubType> moveSubType { get; set; }
-        public virtual ICollection<MoveText> moveText { get; set; }
     }
 }

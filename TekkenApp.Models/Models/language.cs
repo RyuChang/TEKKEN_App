@@ -16,14 +16,14 @@ namespace TekkenApp.Models
         {
             
             //StateGroup_name = new HashSet<StateGroup_name>();
-            State_name = new HashSet<State_name>();
-            character_name = new HashSet<Character_name>();
-            command_name = new HashSet<Command_name>();
-            moveSubType_name = new HashSet<MoveSubType_name>();
-            moveText_name = new HashSet<MoveText_name>();
-            moveType_name = new HashSet<MoveType_name>();
-            move_command_name = new HashSet<Move_command_name>();
-            move_name = new HashSet<Move_name>();
+            //State_name = new HashSet<State_name>();
+            //character_name = new HashSet<Character_name>();
+            //command_name = new HashSet<Command_name>();
+            //moveSubType_name = new HashSet<MoveSubType_name>();
+            //moveText_name = new HashSet<MoveText_name>();
+            //moveType_name = new HashSet<MoveType_name>();
+            //move_command_name = new HashSet<Move_command_name>();
+            //move_name = new HashSet<Move_name>();
         }
 
         [Key]
@@ -36,13 +36,13 @@ namespace TekkenApp.Models
         public byte number { get; set; }
 
         //public virtual ICollection<StateGroup_name> StateGroup_name { get; set; }
-        public virtual ICollection<State_name> State_name { get; set; }
-        public virtual ICollection<Character_name> character_name { get; set; }
-        public virtual ICollection<Command_name> command_name { get; set; }
-        public virtual ICollection<MoveSubType_name> moveSubType_name { get; set; }
-        public virtual ICollection<MoveText_name> moveText_name { get; set; }
-        public virtual ICollection<MoveType_name> moveType_name { get; set; }
-        public virtual ICollection<Move_command_name> move_command_name { get; set; }
-        public virtual ICollection<Move_name> move_name { get; set; }
+        //public virtual ICollection<State_name> State_name { get; set; }
+        //public virtual ICollection<Character_name> character_name { get; set; }
+        //public virtual ICollection<Command_name> command_name { get; set; }
+        //public virtual ICollection<MoveSubType_name> moveSubType_name { get; set; }
+        //public virtual ICollection<MoveText_name> moveText_name { get; set; }
+        //public virtual ICollection<MoveType_name> moveType_name { get; set; }
+        //public virtual ICollection<Move_command_name> move_command_name { get; set; }
+        //public virtual ICollection<Move_name> move_name { get; set; }
     }
 }

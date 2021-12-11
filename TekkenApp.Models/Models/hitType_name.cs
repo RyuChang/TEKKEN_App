@@ -1,5 +1,4 @@
-﻿#nullable disable
-
+﻿
 namespace TekkenApp.Models
 {
     public partial class HitType_name : BaseNameEntity
@@ -8,7 +7,5 @@ namespace TekkenApp.Models
         {
             SetApp(TableName.HitType_name);
         }
-
-        public virtual HitType hitType_codeNavigation { get; set; }
     }
 }

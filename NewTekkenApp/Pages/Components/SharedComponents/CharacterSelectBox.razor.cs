@@ -5,10 +5,10 @@ using TekkenApp.Models;
 
 namespace NewTekkenApp.Pages.Components.SharedComponents
 {
-    public partial class StateGroupSelectBox
+    public partial class CharacterSelectBox
     {
         [Inject]
-        protected StateGroupService<StateGroup, StateGroup_name> stateGroupService { get; set; }
+        protected CharacterService<Character, Character_name> characterService { get; set; }
 
         public List<SelectListItem> selectListItems { get; set; }
 
@@ -17,10 +17,11 @@ namespace NewTekkenApp.Pages.Components.SharedComponents
 
         protected override async Task OnInitializedAsync()
         {
-            selectListItems = await stateGroupService.GetSelectItems();
+            selectListItems = await characterService.GetSelectItems();
         }
 
         [Parameter]
-        public Action<String>? OnStateGroupChanged { get; set; }
+        public Action<String>? OnCharacterChanged { get; set; }
     }
 }
+

@@ -16,10 +16,8 @@ namespace NewTekkenApp.Pages.Components.Base
 
         [Inject]
         protected NavigationUtil navigationUtil { get; set; }
-
-        public int? StateGroupId { get; set; }
-        public int? CharacterId { get; set; }
-
+                
+        
         public string GetAppTitle()
         {
             return appType.ToString();

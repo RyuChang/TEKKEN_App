@@ -29,12 +29,15 @@ namespace NewTekkenApp.Pages.Components.Base
         [Parameter]
         public int Id { get; set; }
 
+        [Parameter]
+        public int? StateGroupCode { get; set; }
+
         [Inject]
         public IJSRuntime JSRuntime { get; set; }
 
 
-        public TDataEntity baseData{ get; set; }
-        public TNameEntity baseName{ get; set; }
+        public TDataEntity baseData { get; set; }
+        public TNameEntity baseName { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
@@ -50,6 +53,11 @@ namespace NewTekkenApp.Pages.Components.Base
         protected void MovetoCreate()
         {
             navigationUtil.MoveTo(App, ActionType.Create);
+        }
+        protected void MovetoCreateWithStateGroup(int stateGroupCode)
+        {
+            Dictionary<string, string> param;
+            navigationUtil.MoveTo(App, ActionType.Create, stateGroupCode);
         }
         protected void MoveToDetail(int id)
         {
@@ -74,7 +82,7 @@ namespace NewTekkenApp.Pages.Components.Base
         }
         protected void MoveToCreateName(int Code, string Language_code)
         {
-            var query = new Dictionary<string, string> { { "Code", Code.ToString() },{ "Language", Language_code } };
+            var query = new Dictionary<string, string> { { "Code", Code.ToString() }, { "Language", Language_code } };
             navigationUtil.MoveTo(App, ActionType.Create_name, Code, query);
         }
         protected void MoveToEditName(int Id)

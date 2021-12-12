@@ -1,6 +1,6 @@
 ﻿@page "/States/Edit/{Id:int}"
 @inherits BasePageComponent
 <h3>@GetAppTitle()</h3>
-<NewTekkenApp.Pages.Components.Base.Data.EditComponent APP="@appType" TDataEntity="State" TNameEntity="State_name" baseService=@commonService Id="@Id">
-</NewTekkenApp.Pages.Components.Base.Data.EditComponent>
+<EditComponent APP="@appType" TDataEntity="State" TNameEntity="State_name" baseService=@commonService Id="@Id">
+</EditComponent>
 

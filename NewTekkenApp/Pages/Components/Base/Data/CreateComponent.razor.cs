@@ -15,6 +15,10 @@ namespace NewTekkenApp.Pages.Components.Base.Data
             baseData = Activator.CreateInstance(typeof(TDataEntity)) as TDataEntity;
             baseData.Number = await baseService.GetCreateNumber();
             baseData.Code = await baseService.GetCreateCode(baseData.Number);
+            if (StateGroupCode is not null)
+            {
+                baseData.StateGroup_code = StateGroupCode.Value;
+            }
         }
 
         protected async Task SaveCreate()

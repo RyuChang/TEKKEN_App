@@ -13,18 +13,44 @@ else
     <form class="row g-3">
 
         <div class="mb-3 row">
+            <label for="@baseData.Code" class="col-1 col-form-label">코드</label>
+            <div class="col-auto">
+                <input type="text" @bind="@baseData.Code" class="form-control" />
+            </div>
+        </div>
+
+        <div class="mb-3 row">
             <label for="@baseData.Number" class="col-1 col-form-label">순번</label>
             <div class="col-auto">
                 <input type="text" @bind="@baseData.Number" class="form-control" @oninput="@(e => number_Changed((string)e.Value))" />
             </div>
         </div>
 
-        <div class="mb-3 row">
-            <label for="@baseData.Code" class="col-1 col-form-label">코드</label>
-            <div class="col-auto">
-                <input type="text" readonly @bind="@baseData.Code" class="form-control" />
+
+        @if (StateGroupCode is not null)
+        {
+            <div class="mb-3 row">
+                <label for="@baseData.StateGroup_code" class="col-1 col-form-label">StateGroup Code</label>
+                <div class="col-auto">
+                    <input type="text" placeholder="StateGroup Code" readonly @bind="@baseData.StateGroup_code" />
+                </div>
             </div>
-        </div>
+        }
+
+        @*
+
+            @if (ViewBag.baseType == BaseType.Character_Code)
+            {
+
+            <div class="row mb-3">
+            <div class="col-sm-2">
+            <label asp-for="Character_code" class="col-form-label col-form-label-sm"></label>
+            </div>
+            <div class="col-sm">
+            <input asp-for="Character_code" class="col-form-label col-form-label-sm" readonly="readonly">
+            </div>
+            </div>
+            }*@
 
         <div class="mb-3 row">
             <label for="@baseData.Description" class="col-1 col-form-label">설명</label>

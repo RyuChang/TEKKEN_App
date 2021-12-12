@@ -21,6 +21,14 @@ namespace NewTekkenApp.Utilities
             MoveTo(appType);
         }
 
+        public void MoveTo(AppType appType, ActionType actionType, string paramName, string paramValue)
+        {
+            Dictionary<string, string> param = new();
+            param.Add(paramName, paramValue);
+            MoveTo(appType, actionType, 0, param);
+        }
+
+
         public void MoveTo(AppType appType, ActionType actionType = ActionType.List, int id = 0, Dictionary<string, string> param = null)
         {
             //string action = (actionType == ActionType.List) ? "" : $"/{GetAction(actionType)}";
@@ -54,7 +62,7 @@ namespace NewTekkenApp.Utilities
             appType switch
             {
                 AppType.HitTypes => "HitTypes",
-                AppType.States=> "States",
+                AppType.States => "States",
                 AppType.StateGroups => "StateGroups",
                 AppType.MoveTexts => "MoveText",
                 _ => ""

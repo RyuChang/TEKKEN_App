@@ -1,11 +1,13 @@
 ﻿@page "/States"
 @page "/States/Index"
+
 @inherits BasePageComponent
+
 <h3>@GetAppTitle()</h3>
 
-<CascadingValue Value="StateGroupId">
-    <StateGroupSelectBox OnStateGroupChanged="OnStateGroupChanged">
-    </StateGroupSelectBox>
-    <ListComponent @ref="childList" APP="@appType" TDataEntity="State" TNameEntity="State_name" baseService="@commonService">
-    </ListComponent>
-</CascadingValue>
+<StateGroupSelectBox OnStateGroupChanged="OnStateGroupChanged">
+</StateGroupSelectBox>
+<ListComponent @ref="childList" APP="@appType" TDataEntity="State" TNameEntity="State_name" baseService="@commonService">
+</ListComponent>
+@*<CascadingValue Value="StateGroupCode">
+    </CascadingValue>*@

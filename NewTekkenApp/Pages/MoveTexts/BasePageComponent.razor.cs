@@ -7,6 +7,8 @@ namespace NewTekkenApp.Pages.MoveTexts
 {
     public partial class BasePageComponent : BaseDataComponent<MoveText, MoveText_name>
     {
+        public int? CharacterId { get; set; }
+
         [Inject]
         protected MoveTextService<MoveText, MoveText_name> commonService { get; set; }
 
@@ -14,6 +16,5 @@ namespace NewTekkenApp.Pages.MoveTexts
         {
             SetAppType(AppType.MoveTexts);
         }
-
     }
 }

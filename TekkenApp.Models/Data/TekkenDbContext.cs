@@ -121,6 +121,13 @@ namespace TekkenApp.Data
             modelBuilder.Entity<State>(entity =>
             {
                 entity.Property(e => e.Description).IsUnicode(false);
+                entity.HasMany(d => d.NameSet)
+                    .WithOne()
+                    .HasPrincipalKey(p => p.Code)
+                    .HasForeignKey(d => d.Base_code)
+                    .HasConstraintName("FK_state_name_State")
+                    .OnDelete(DeleteBehavior.Cascade);
+
 
                 //entity.HasOne(d => d.StateGroup_codeNavigation)
                 //    .WithMany(p => p.State)
@@ -144,12 +151,12 @@ namespace TekkenApp.Data
                 //    .OnDelete(DeleteBehavior.ClientSetNull)
                 //    .HasConstraintName("FK_State_name_language");
 
-                entity.HasOne(d => d.state_codeNavigation)
-                    .WithMany(p => p.NameSet)
-                    .HasPrincipalKey(p => p.Code)
-                    .HasForeignKey(d => d.Base_code)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_State_name_State");
+                //entity.HasOne(d => d.state_codeNavigation)
+                //    .WithMany(p => p.NameSet)
+                //    .HasPrincipalKey(p => p.Code)
+                //    .HasForeignKey(d => d.Base_code)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("FK_State_name_State");
             });
             #endregion State
 

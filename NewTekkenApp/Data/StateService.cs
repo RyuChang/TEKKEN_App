@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Microsoft.EntityFrameworkCore;
 using TekkenApp.Data;
 using TekkenApp.Models;
 
@@ -12,12 +11,9 @@ namespace NewTekkenApp.Data
 
         public StateService(TekkenDbContext tekkenDbContext) : base(tekkenDbContext, tekkenDbContext.State, tekkenDbContext.State_name)
         {
-            {
-
-            }
+            mainTable = TableName.State.ToString();
+            nameTable = TableName.State.ToString();
         }
-
-
 
     }
 }

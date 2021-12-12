@@ -10,7 +10,8 @@ namespace NewTekkenApp.Pages.HitTypes
         [Inject]
         protected HitTypeService<HitType, HitType_name> commonService { get; set; }
 
-        
+       
+
         public BasePageComponent()
         {
             SetAppType(AppType.HitTypes);

@@ -4,7 +4,6 @@
 <h3>@GetAppTitle()</h3>
 
 <CascadingValue Value="StateGroupId">
-    @StateGroupId
     <StateGroupSelectBox OnStateGroupChanged="OnStateGroupChanged">
     </StateGroupSelectBox>
     <ListComponent @ref="childList" APP="@appType" TDataEntity="State" TNameEntity="State_name" baseService="@commonService">

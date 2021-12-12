@@ -10,14 +10,12 @@ namespace NewTekkenApp.Pages.Components.Base
     {
         protected AppType appType;
 
+
         [Parameter]
         public int Id { get; set; }
 
-
-
         [Inject]
         protected NavigationUtil navigationUtil { get; set; }
-
 
         public int? StateGroupId { get; set; }
         public int? CharacterId { get; set; }
@@ -31,5 +29,6 @@ namespace NewTekkenApp.Pages.Components.Base
         {
             this.appType = appType;
         }
+
     }
 }

@@ -12,7 +12,7 @@ namespace NewTekkenApp.Pages.MoveTexts
 
         public BasePageComponent()
         {
-            SetAppType(AppType.MoveText);
+            SetAppType(AppType.MoveTexts);
         }
 
     }

@@ -1,11 +1,16 @@
 ﻿//using 
 
+using Microsoft.AspNetCore.Components;
+
 namespace NewTekkenApp.Pages.StateGroups
 {
     public partial class Index : BasePageComponent
     {
-        //private string title;
-        //public string Title1 { get; set; } = "서비스";
 
+        protected override Task OnInitializedAsync()
+        {
+            
+            return base.OnInitializedAsync();
+        }
     }
 }

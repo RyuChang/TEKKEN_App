@@ -50,12 +50,13 @@ namespace NewTekkenApp.Utilities
         //        _ => ""
         //    };
 
-        private string GetUrl(AppType appType) =>
+        public string GetUrl(AppType appType) =>
             appType switch
             {
                 AppType.HitTypes => "HitTypes",
+                AppType.States=> "States",
                 AppType.StateGroups => "StateGroups",
-                AppType.MoveText => "MoveText",
+                AppType.MoveTexts => "MoveText",
                 _ => ""
             };
         private string GetActionUrl(ActionType actionType) =>

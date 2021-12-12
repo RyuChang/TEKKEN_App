@@ -12,7 +12,7 @@ namespace TekkenApp.Models
     //[Index(nameof(state_code), nameof(language_code), Name = "IX_State_name", IsUnique = true)]
     public partial class State_name : BaseNameEntity
     {
-        public virtual Language language_codeNavigation { get; set; }
-        public virtual State state_codeNavigation { get; set; }
+        //public virtual Language language_codeNavigation { get; set; }
+        //public virtual State state_codeNavigation { get; set; }
     }
 }

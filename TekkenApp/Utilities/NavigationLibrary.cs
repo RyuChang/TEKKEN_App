@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.Extensions.Primitives;
-using TekkenApp.Models;
-
-namespace TekkenApp.Utilities
+﻿namespace TekkenApp.Utilities
 {
     public class NavigationUtil : ComponentBase
     {

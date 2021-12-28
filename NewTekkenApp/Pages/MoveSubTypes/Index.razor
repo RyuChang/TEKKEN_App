@@ -1,0 +1,13 @@
+﻿@page "/MoveSubTypes"
+@page "/MoveSubTypes/Index"
+
+@inherits BasePageComponent
+
+<h3>@GetAppTitle()</h3>
+
+<CascadingValue Value="CharacterId">
+    <CharacterSelectBox OnCharacterChanged="OnCharacterChanged">
+    </CharacterSelectBox>
+    <ListComponent @ref="childList" APP="@appType" TDataEntity="MoveSubType" TNameEntity="MoveSubType_name" baseService="@commonService">
+    </ListComponent>
+</CascadingValue>

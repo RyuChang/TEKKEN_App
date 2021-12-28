@@ -31,6 +31,7 @@ builder.Services.AddTransient<MoveTextService<MoveText, MoveText_name>>();
 builder.Services.AddTransient<CharacterService<Character, Character_name>>();
 builder.Services.AddTransient<StateService<State, State_name>>();
 builder.Services.AddTransient<StateGroupService<StateGroup, StateGroup_name>>();
+builder.Services.AddTransient<MoveSubTypeService<MoveSubType, MoveSubType_name>>();
 builder.Services.AddTransient<NavigationUtil>();
 
 

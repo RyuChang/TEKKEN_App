@@ -29,6 +29,7 @@ namespace TekkenApp.Models
         StateGroups,
         HitTypes,
         MoveTexts,
+        MoveSubTypes,
     }
 
     public enum ActionType

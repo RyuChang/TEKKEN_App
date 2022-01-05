@@ -1,10 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Reflection;
-using TekkenApp.Data;
-using System;
-using System.Linq;
-using Microsoft.EntityFrameworkCore.Internal;
+﻿using TekkenApp.Data;
 
 namespace TekkenApp.Models
 {
@@ -30,6 +24,9 @@ namespace TekkenApp.Models
         HitTypes,
         MoveTexts,
         MoveSubTypes,
+        Moves,
+        MoveTypes,
+        MoveDatas,
     }
 
     public enum ActionType
@@ -51,8 +48,10 @@ namespace TekkenApp.Models
         Move,
         MoveSubType,
         MoveType,
+        MoveType_name,
         Move_Command,
-        Move_Data,
+        MoveData,
+        MoveData_name,
         Character,
         Character_name,
         Command,

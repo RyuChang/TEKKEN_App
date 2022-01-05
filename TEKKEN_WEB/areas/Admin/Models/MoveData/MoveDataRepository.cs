@@ -1,14 +1,11 @@
 ﻿using Dapper;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Localization;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Web.Http;
 using TEKKEN_WEB.Enums;
 using TEKKEN_WEB.Models;
 

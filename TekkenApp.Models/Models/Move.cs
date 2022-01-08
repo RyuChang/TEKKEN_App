@@ -9,33 +9,31 @@ using Microsoft.EntityFrameworkCore;
 
 namespace TekkenApp.Models
 {
-    [Index(nameof(character_code), nameof(number), Name = "IX_Move", IsUnique = true)]
-    [Index(nameof(code), Name = "IX_Move_1", IsUnique = true)]
-    public partial class Move
+    //[Index(nameof(character_code), nameof(number), Name = "IX_Move", IsUnique = true)]
+    //[Index(nameof(code), Name = "IX_Move_1", IsUnique = true)]
+    public partial class Move : BaseDataEntity<Move_name>
     {
         public Move()
         {
-            move_command_name = new HashSet<Move_command_name>();
-            move_name = new HashSet<Move_name>();
+            SetApp(TableName.Move);
+            NameSet = new HashSet<Move_name>();
         }
+        public int Number { get; set; }
 
-        [Key]
-        public int id { get; set; }
-        public int code { get; set; }
-        public byte character_code { get; set; }
-        public short number { get; set; }
+        public new int character_code { get; set; }
+
         [Required]
         public string description { get; set; }
-        [Column(TypeName = "decimal(4, 2)")]
-        public decimal? version { get; set; }
+        //[Column(TypeName = "decimal(4, 2)")]
+        public double? version { get; set; }
 
-        public virtual Character character_codeNavigation { get; set; }
-        [ForeignKey(nameof(version))]
-        [InverseProperty(nameof(TekkenVersion.Move))]
-        public virtual TekkenVersion versionNavigation { get; set; }
-        public virtual Move_command Move_command { get; set; }
-        public virtual Move_data move_data { get; set; }
-        public virtual ICollection<Move_command_name> move_command_name { get; set; }
-        public virtual ICollection<Move_name> move_name { get; set; }
+        //public virtual Character character_codeNavigation { get; set; }
+        //[ForeignKey(nameof(version))]
+        //[InverseProperty(nameof(TekkenVersion.Move))]
+        //public virtual TekkenVersion versionNavigation { get; set; }
+        //public virtual Move_command Move_command { get; set; }
+        //public virtual MoveData move_data { get; set; }
+        //public virtual ICollection<Move_command_name> move_command_name { get; set; }
+        //public virtual ICollection<Move_name> move_name { get; set; }
     }
 }

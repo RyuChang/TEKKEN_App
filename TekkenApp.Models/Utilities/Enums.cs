@@ -46,6 +46,7 @@ namespace TekkenApp.Models
     {
         NONE,
         Move,
+        Move_name,
         MoveSubType,
         MoveType,
         MoveType_name,

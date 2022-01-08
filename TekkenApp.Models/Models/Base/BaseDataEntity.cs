@@ -15,7 +15,7 @@ namespace TekkenApp.Models
         public int StateGroup_code { get; set; }
 
         [NotMapped]
-        public int character_code { get; set; }
+        public int Character_code { get; set; }
 
         [Key]
         [Display(Name = "ID")]
@@ -24,10 +24,11 @@ namespace TekkenApp.Models
 
         public int Code { get; set; }
 
+        [NotMapped]
+        public int Number { get; set; }
+
         [Required]
         public string Description { get; set; }
-
-        public int Number { get; set; }
 
 
         public virtual ICollection<TName> NameSet { get; set; }

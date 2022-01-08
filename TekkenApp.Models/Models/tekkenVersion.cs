@@ -20,11 +20,11 @@ namespace TekkenApp.Models
         [Key]
         //[Column(TypeName = "decimal(4, 2)")]
         public decimal version { get; set; }
-        public byte season { get; set; }
+        public int season { get; set; }
         [Column(TypeName = "date")]
         public DateTime updateDate { get; set; }
 
-        [InverseProperty("versionNavigation")]
+        //[InverseProperty("versionNavigation")]
         public virtual ICollection<Move> Move { get; set; }
     }
 }

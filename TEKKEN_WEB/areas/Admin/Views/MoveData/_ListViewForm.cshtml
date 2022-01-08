@@ -123,12 +123,15 @@
                             <td rowspan="3">
                                 Language
                             </td>
-                            @{int i = 0;}
+                            @{
+                                int i = 0;
+                            }
                             @foreach (var item2 in moveDataRepository.GetAllTranslateNamesByCode(@item.Code))
                             {
                                 if (i > 0)
                                 {
-                                    @Html.Raw("<tr>");
+                                    @Html.Raw("<tr>")
+                                    ;
                                 }
 
                                 <td>
@@ -147,7 +150,8 @@
                                     @Html.Raw(item2.CounterType_name)
                                 </td>
 
-                                @Html.Raw("</tr>");
+                                @Html.Raw("</tr>")
+                                ;
                                 i++;
                             }
                         </tr>

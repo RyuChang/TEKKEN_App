@@ -128,7 +128,7 @@ namespace NewTekkenApp.Data
 
         public async Task<List<TDataEntity>> GetEntitiesWithCharacterCode(int characterCode)
         {
-            return await _dataDbSet.Where(p => p.character_code == characterCode).ToListAsync();
+            return await _dataDbSet.Where(p => p.Character_code == characterCode).ToListAsync();
         }
 
         public async Task<List<TDataEntity>> GetEntitiesWithStateGroup(int stateGroupCode)

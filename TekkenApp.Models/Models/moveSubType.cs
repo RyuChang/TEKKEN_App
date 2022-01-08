@@ -12,7 +12,7 @@ namespace TekkenApp.Models
             SetApp(TableName.MoveSubType);
             NameSet = new HashSet<MoveSubType_name>();
         }
-
+        public int Number { get; set; }
         public new int character_code { get; set; }
 
         //[Key]

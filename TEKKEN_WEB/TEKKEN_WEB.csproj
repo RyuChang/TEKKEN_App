@@ -12,6 +12,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="areas\Admin\Data\**" />
+    <Compile Remove="areas\User\NewFolder\**" />
+    <Content Remove="areas\Admin\Data\**" />
+    <Content Remove="areas\User\NewFolder\**" />
+    <EmbeddedResource Remove="areas\Admin\Data\**" />
+    <EmbeddedResource Remove="areas\User\NewFolder\**" />
+    <None Remove="areas\Admin\Data\**" />
+    <None Remove="areas\User\NewFolder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Areas\Admin\Views\Move\_EditForm.cshtml.cs" />
   </ItemGroup>
 
@@ -47,7 +58,6 @@
   <ItemGroup>
     <PackageReference Include="BuildBundlerMinifier" Version="3.2.449" />
     <PackageReference Include="Dapper" Version="2.0.78" />
-    <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.7" />
     <PackageReference Include="Microsoft.AspNetCore.Localization" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Localization" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.1" />
@@ -59,8 +69,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="areas\Admin\Data\" />
-    <Folder Include="areas\User\NewFolder\" />
     <Folder Include="Models\" />
   </ItemGroup>
 

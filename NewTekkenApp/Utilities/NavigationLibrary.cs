@@ -64,7 +64,11 @@ namespace NewTekkenApp.Utilities
                 AppType.HitTypes => "HitTypes",
                 AppType.States => "States",
                 AppType.StateGroups => "StateGroups",
-                AppType.MoveTexts => "MoveText",
+                AppType.MoveTexts => "MoveTexts",
+                AppType.MoveTypes => "MoveTypes",
+                AppType.MoveSubTypes => "MoveSubTypes",
+                AppType.MoveDatas => "MoveDatas",
+                AppType.Moves => "Moves",
                 _ => ""
             };
         private string GetActionUrl(ActionType actionType) =>

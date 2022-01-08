@@ -13,6 +13,7 @@ namespace NewTekkenApp.Pages.Components.Base.Data
         protected override async Task OnInitializedAsync()
         {
             baseData = Activator.CreateInstance(typeof(TDataEntity)) as TDataEntity;
+            if (baseData == null) return;
             baseData.Number = await baseService.GetCreateNumber();
             baseData.Code = await baseService.GetCreateCode(baseData.Number);
             if (StateGroupCode is not null)

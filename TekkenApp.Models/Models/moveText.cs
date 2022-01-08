@@ -11,6 +11,7 @@ namespace TekkenApp.Models
             SetApp(TableName.MoveText);
             NameSet = new HashSet<MoveText_name>();
         }
+        public int Number { get; set; }
 
         public new int character_code { get; set; }
 

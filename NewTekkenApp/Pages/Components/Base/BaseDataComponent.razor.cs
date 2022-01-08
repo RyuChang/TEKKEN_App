@@ -8,7 +8,7 @@ namespace NewTekkenApp.Pages.Components.Base
         where TDataEntity : BaseDataEntity<TNameEntity>
         where TNameEntity : BaseNameEntity, new()
     {
-        protected AppType appType;
+        protected AppType App;
 
 
         [Parameter]
@@ -20,12 +20,12 @@ namespace NewTekkenApp.Pages.Components.Base
         
         public string GetAppTitle()
         {
-            return appType.ToString();
+            return App.ToString();
         }
 
         public void SetAppType(AppType appType)
         {
-            this.appType = appType;
+            this.App = appType;
         }
 
     }

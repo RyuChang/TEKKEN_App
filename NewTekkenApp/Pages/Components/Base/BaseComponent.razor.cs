@@ -1,16 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Components;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using NewTekkenApp.Data;
-using TekkenApp.Models;
-using NewTekkenApp.Pages.Components.Base.Data;
 using NewTekkenApp.Utilities;
+using TekkenApp.Models;
 
 namespace NewTekkenApp.Pages.Components.Base
 {
-    public partial class BaseComponent<TDataEntity, TNameEntity> : ComponentBase
+    public abstract partial class BaseComponent<TDataEntity, TNameEntity> : ComponentBase
         where TDataEntity : BaseDataEntity<TNameEntity>
         where TNameEntity : BaseNameEntity, new()
     {
@@ -19,6 +15,7 @@ namespace NewTekkenApp.Pages.Components.Base
 
         [Parameter]
         public BaseService<TDataEntity, TNameEntity> baseService { get; set; }
+
 
         //[Inject]
         //protected ILogger<EditComponent<TDataEntity, TNameEntity>> Logger { get; set; }
@@ -93,12 +90,9 @@ namespace NewTekkenApp.Pages.Components.Base
         {
             navigationUtil.MoveTo(App, ActionType.Delete_name, Id);
         }
-
-
-        #endregion
         #endregion
 
-
+        #endregion
         protected async Task number_Changed(string value)
         {
             int number;
@@ -109,5 +103,16 @@ namespace NewTekkenApp.Pages.Components.Base
             }
 
         }
+
+        public string GetAppTitle()
+        {
+            return App.ToString();
+        }
+
+        public void SetAppType(AppType appType)
+        {
+            this.App = appType;
+        }
+
     }
 }

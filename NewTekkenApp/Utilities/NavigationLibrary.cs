@@ -69,6 +69,7 @@ namespace NewTekkenApp.Utilities
                 AppType.MoveSubTypes => "MoveSubTypes",
                 AppType.MoveDatas => "MoveDatas",
                 AppType.Moves => "Moves",
+                AppType.MoveCommands => "MoveCommands",
                 _ => ""
             };
         private string GetActionUrl(ActionType actionType) =>

@@ -14,7 +14,7 @@ namespace NewTekkenApp.Pages.Components.Base.Name
         public int Code { get; set; }
 
         [Parameter]
-        public string Language { get; set; }
+        public string? Language { get; set; }
 
         protected override async Task OnInitializedAsync()
         {

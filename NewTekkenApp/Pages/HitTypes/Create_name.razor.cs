@@ -9,7 +9,7 @@ namespace NewTekkenApp.Pages.HitTypes
         public int Code { get; set; }
 
         [Parameter]
-        public string Language { get; set; }
+        public string? Language { get; set; }
 
         protected override Task OnInitializedAsync()
         {

@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 
 namespace NewTekkenApp.Pages.MoveCommands
 {
@@ -9,7 +8,7 @@ namespace NewTekkenApp.Pages.MoveCommands
         public int Code { get; set; }
 
         [Parameter]
-        public string Language { get; set; }
+        public string? Language { get; set; }
 
         protected override Task OnInitializedAsync()
         {

@@ -13,7 +13,7 @@ namespace TekkenApp.Models
         }
         public int Number { get; set; }
 
-        public new int character_code { get; set; }
+        public new int Character_code { get; set; }
 
         //public virtual Character character_codeNavigation { get; set; }
         //public virtual ICollection<MoveText_name> moveText_name { get; set; }

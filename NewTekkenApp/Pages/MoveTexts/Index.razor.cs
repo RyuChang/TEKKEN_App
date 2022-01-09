@@ -1,4 +1,5 @@
-﻿using NewTekkenApp.Pages.Components.Base.Data;
+﻿using Microsoft.AspNetCore.Components;
+using NewTekkenApp.Pages.Components.Base.Data;
 using TekkenApp.Models;
 
 namespace NewTekkenApp.Pages.MoveTexts
@@ -13,7 +14,7 @@ namespace NewTekkenApp.Pages.MoveTexts
             {
                 CharacterId = int.Parse(characterCode);
                 childList.GetEntitiesByCharacterCode(int.Parse(characterCode));
-                StateHasChanged();
+                
             }
             else
             {

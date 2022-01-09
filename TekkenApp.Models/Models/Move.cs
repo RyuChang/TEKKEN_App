@@ -20,7 +20,7 @@ namespace TekkenApp.Models
         }
         public int Number { get; set; }
 
-        public new int character_code { get; set; }
+        public new int Character_code { get; set; }
 
         [Required]
         public string description { get; set; }

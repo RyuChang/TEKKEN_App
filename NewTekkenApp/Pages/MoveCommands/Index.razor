@@ -1,0 +1,13 @@
+﻿@page "/MoveCommands"
+@page "/MoveCommands/Index"
+
+@inherits BasePageComponent
+
+<h3>@GetAppTitle()</h3>
+
+<CascadingValue Value="CharacterId">
+    <CharacterSelectBox OnCharacterChanged="OnCharacterChanged">
+    </CharacterSelectBox>
+    <ListComponent @ref="childList" APP="@App" TDataEntity="MoveCommand" TNameEntity="MoveCommand_name" baseService="@commonService">
+    </ListComponent>
+</CascadingValue>

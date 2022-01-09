@@ -27,6 +27,7 @@ namespace TekkenApp.Models
         Moves,
         MoveTypes,
         MoveDatas,
+        MoveCommands,
     }
 
     public enum ActionType
@@ -50,7 +51,7 @@ namespace TekkenApp.Models
         MoveSubType,
         MoveType,
         MoveType_name,
-        Move_Command,
+        MoveCommand,
         MoveData,
         MoveData_name,
         Character,

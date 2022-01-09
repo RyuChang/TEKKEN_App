@@ -17,13 +17,15 @@ namespace TekkenApp.Data
         public virtual DbSet<BaseUtil> BaseUtil { get; set; }
         public virtual DbSet<BaseDataEntity<BaseNameEntity>> BaseEntities { get; set; }
         public virtual DbSet<Move> Move { get; set; }
+        public virtual DbSet<Move_name> Move_name { get; set; }
         public virtual DbSet<MoveData> MoveData { get; set; }
         public virtual DbSet<MoveData_name> MoveData_Name { get; set; }
-        public virtual DbSet<Move_command> Move_command { get; set; }
+        public virtual DbSet<MoveCommand> MoveCommand { get; set; }
+        public virtual DbSet<MoveCommand_name> MoveCommand_name { get; set; }
         public virtual DbSet<State> State { get; set; }
+        public virtual DbSet<State_name> State_name { get; set; }
         public virtual DbSet<StateGroup> StateGroup { get; set; }
         public virtual DbSet<StateGroup_name> StateGroup_name { get; set; }
-        public virtual DbSet<State_name> State_name { get; set; }
         public virtual DbSet<Character> character { get; set; }
         public virtual DbSet<Character_name> character_name { get; set; }
         public virtual DbSet<Command> command { get; set; }
@@ -37,9 +39,7 @@ namespace TekkenApp.Data
         public virtual DbSet<MoveText_name> moveText_name { get; set; }
         public virtual DbSet<MoveType> moveType { get; set; }
         public virtual DbSet<MoveType_name> moveType_name { get; set; }
-        public virtual DbSet<Move_command_name> move_command_name { get; set; }
 
-        public virtual DbSet<Move_name> Move_name { get; set; }
         public virtual DbSet<TableCode> tableCode { get; set; }
         //public virtual DbSet<TekkenVersion> tekkenVersion { get; set; }
         public DbSet<Dictionary<string, object>> Products => Set<Dictionary<string, object>>("Product");
@@ -407,9 +407,34 @@ namespace TekkenApp.Data
             #endregion MoveType
 
             #region MoveCommand
-            modelBuilder.Entity<Move_command>(entity =>
+            modelBuilder.Entity<MoveCommand>(entity =>
             {
-                entity.Property(e => e.command).IsUnicode(false);
+                entity.Property(e => e.Command).IsUnicode(false);
+                
+               // entity.HasMany(d => d.NameSet)
+               //.WithOne()
+               //.HasPrincipalKey(p => p.Code)
+               //.HasForeignKey(d => d.Base_code)
+               //.HasConstraintName("FK_moveCommand_name_moveCommand")
+               //.OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(d => d.Move)
+               .WithOne()
+               .HasPrincipalKey<MoveCommand>(p => p.Base_Code)
+               .HasForeignKey<Move>(d => d.Code)
+               //.HasConstraintName("FK_moveCommand_move")
+               .OnDelete(DeleteBehavior.Cascade);
+
+
+                entity.HasMany(d => d.NameSet)
+               .WithOne()
+               .HasPrincipalKey(p => p.Code)
+               .HasForeignKey(d => d.Base_code)
+               .HasConstraintName("FK_moveCommand_Move")
+               .OnDelete(DeleteBehavior.Cascade);
+
+
+
 
                 //entity.HasOne(d => d.move_codeNavigation)
                 //    .WithOne(p => p.Move_command)
@@ -417,13 +442,13 @@ namespace TekkenApp.Data
                 //    .HasForeignKey<Move_command>(d => d.move_code)
                 //    .HasConstraintName("FK_Move_command_Move1");
             });
-            modelBuilder.Entity<Move_command_name>(entity =>
+            modelBuilder.Entity<MoveCommand_name>(entity =>
             {
-                entity.Property(e => e.language_code)
+                entity.Property(e => e.Language_code)
                     .IsUnicode(false)
                     .IsFixedLength(true);
 
-                entity.Property(e => e.name).IsUnicode(false);
+                entity.Property(e => e.Name).IsUnicode(false);
 
                 //entity.HasOne(d => d.Move_Command_codeNavigation)
                 //    .WithMany(p => p.move_command_name)

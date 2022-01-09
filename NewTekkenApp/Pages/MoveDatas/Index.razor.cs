@@ -12,7 +12,7 @@ namespace NewTekkenApp.Pages.MoveDatas
 
             //baseEntities = await baseService.GetEntities();
 
-            moveDataEntities = await commonService.GetEntitiesWithMoves();
+            moveDataEntities = await CommonService.GetEntitiesWithMoves();
         }
     }
 }

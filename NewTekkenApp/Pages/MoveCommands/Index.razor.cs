@@ -22,7 +22,7 @@ namespace NewTekkenApp.Pages.MoveCommands
             if (childList != null && !string.IsNullOrEmpty(characterCode))
             {
                 CharacterId = int.Parse(characterCode);
-                childList.baseEntities = await commonService.GetEntitiesWithMoveByCharacterCode(int.Parse(characterCode));
+                childList.baseEntities = await CommonService.GetEntitiesWithMoveByCharacterCode(int.Parse(characterCode));
                 StateHasChanged();
             }
         }

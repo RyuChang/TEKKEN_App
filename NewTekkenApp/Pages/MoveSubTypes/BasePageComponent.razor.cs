@@ -10,7 +10,7 @@ namespace NewTekkenApp.Pages.MoveSubTypes
         public int? CharacterId { get; set; }
 
         [Inject]
-        protected MoveSubTypeService<MoveSubType, MoveSubType_name> commonService { get; set; }
+        protected MoveSubTypeService<MoveSubType, MoveSubType_name>? CommonService { get; set; }
 
         public BasePageComponent()
         {

@@ -8,7 +8,7 @@ namespace NewTekkenApp.Pages.HitTypes
     public partial class BasePageComponent : BaseDataComponent<HitType, HitType_name>
     {
         [Inject]
-        protected HitTypeService<HitType, HitType_name> commonService { get; set; }
+        protected HitTypeService<HitType, HitType_name0>? CommonService { get; set; }
 
        
 

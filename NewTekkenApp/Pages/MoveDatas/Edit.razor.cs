@@ -22,7 +22,7 @@ namespace NewTekkenApp.Pages.MoveDatas
         {
             await base.OnInitializedAsync();
 
-            moveDataEntity = await commonService.GetEntityWithMovesByIdAsync(Id);
+            moveDataEntity = await CommonService.GetEntityWithMovesByIdAsync(Id);
 
             MoveTypeSelectListItems = await moveTypeService.GetSelectItems();
 
@@ -47,7 +47,7 @@ namespace NewTekkenApp.Pages.MoveDatas
             {
                 return;
             }
-            await commonService.UpdateDataAsync(moveDataEntity);
+            await CommonService.UpdateDataAsync(moveDataEntity);
             MoveToDetail(Id);
         }
 

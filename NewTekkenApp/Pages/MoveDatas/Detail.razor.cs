@@ -25,7 +25,7 @@ namespace NewTekkenApp.Pages.MoveDatas
 
             //baseEntities = await baseService.GetEntities();
 
-            moveDataEntity = await commonService.GetEntityWithMovesByIdAsync(Id);
+            moveDataEntity = await CommonService.GetEntityWithMovesByIdAsync(Id);
 
             MoveTypeSelectListItems = await moveTypeService.GetSelectItems();
 

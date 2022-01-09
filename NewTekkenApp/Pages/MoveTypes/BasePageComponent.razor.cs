@@ -8,8 +8,7 @@ namespace NewTekkenApp.Pages.MoveTypes
     public partial class BasePageComponent : BaseDataComponent<MoveType, MoveType_name>
     {
         [Inject]
-        protected MoveTypeService<MoveType, MoveType_name> commonService { get; set; }
-
+        protected MoveTypeService<MoveType, MoveType_name>? CommonService { get; set; }
 
 
         public BasePageComponent()

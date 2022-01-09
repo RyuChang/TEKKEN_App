@@ -7,7 +7,7 @@
 else
 {
     <div>
-        <select id="Character" class="form-control" @onchange="@(e =>  OnCharacterChanged.Invoke((string)e.Value))">
+        <select id="Character" class="form-control" @onchange="(e =>  OnCharacterChanged.Invoke(e.Value as string))">
             @foreach (var selectItem in selectListItems)
             {
                 <option value="@selectItem.Value">@selectItem.Text</option>

@@ -10,7 +10,7 @@ namespace NewTekkenApp.Pages.MoveTexts
         public int? CharacterId { get; set; }
 
         [Inject]
-        protected MoveTextService<MoveText, MoveText_name> commonService { get; set; }
+        protected MoveTextService<MoveText, MoveText_name>? CommonService { get; set; }
 
         public BasePageComponent()
         {

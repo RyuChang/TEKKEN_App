@@ -5,8 +5,8 @@ namespace NewTekkenApp.Pages.MoveCommands
 {
     public partial class Index : BasePageComponent
     {
-        ListComponent<MoveCommand, MoveCommand_name> childList;
-        
+        ListComponent<MoveCommand, MoveCommand_name>? childList;
+
         //public IList<TDataEntity> baseEntities { get; set; }
         //protected override async Task OnInitializedAsync()
         //{
@@ -19,15 +19,11 @@ namespace NewTekkenApp.Pages.MoveCommands
 
         async void OnCharacterChanged(string characterCode)
         {
-            if (!string.IsNullOrEmpty(characterCode))
+            if (childList != null && !string.IsNullOrEmpty(characterCode))
             {
                 CharacterId = int.Parse(characterCode);
-                childList.baseEntities= await commonService.GetEntitiesWithMoveByCharacterCode(int.Parse(characterCode));
+                childList.baseEntities = await commonService.GetEntitiesWithMoveByCharacterCode(int.Parse(characterCode));
                 StateHasChanged();
-            }
-            else
-            {
-
             }
         }
     }

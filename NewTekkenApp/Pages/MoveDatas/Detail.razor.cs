@@ -21,7 +21,7 @@ namespace NewTekkenApp.Pages.MoveDatas
 
         protected override async Task OnInitializedAsync()
         {
-            base.OnInitializedAsync();
+            await base.OnInitializedAsync();
 
             //baseEntities = await baseService.GetEntities();
 

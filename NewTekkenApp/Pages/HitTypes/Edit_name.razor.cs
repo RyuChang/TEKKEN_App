@@ -5,8 +5,5 @@ namespace NewTekkenApp.Pages.HitTypes
 {
     public partial class Edit_name : BasePageComponent
     {
-        protected override async Task OnInitializedAsync()
-        {
-        }
     }
 }

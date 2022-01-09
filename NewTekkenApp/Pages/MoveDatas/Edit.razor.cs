@@ -20,7 +20,7 @@ namespace NewTekkenApp.Pages.MoveDatas
         public List<SelectListItem> CounterTypeSelectListItems { get; set; }
         protected override async Task OnInitializedAsync()
         {
-            base.OnInitializedAsync();
+            await base.OnInitializedAsync();
 
             moveDataEntity = await commonService.GetEntityWithMovesByIdAsync(Id);
 

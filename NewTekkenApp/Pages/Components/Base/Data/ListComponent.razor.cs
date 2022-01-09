@@ -12,7 +12,7 @@ namespace NewTekkenApp.Pages.Components.Base.Data
 
         protected override async Task OnInitializedAsync()
         {
-            base.OnInitializedAsync();
+            await base.OnInitializedAsync();
 
             baseEntities = await baseService.GetEntitiesWithName();
         }

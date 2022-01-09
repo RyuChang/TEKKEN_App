@@ -36,10 +36,6 @@ namespace NewTekkenApp.Pages.Components.Base
         public TDataEntity baseData { get; set; }
         public TNameEntity baseName { get; set; }
 
-        protected override async Task OnInitializedAsync()
-        {
-
-        }
         #region 기본 버튼
 
         protected void MoveToList()

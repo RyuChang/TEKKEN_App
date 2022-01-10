@@ -5,25 +5,18 @@ namespace NewTekkenApp.Pages.MoveDatas
 {
     public partial class Detail : BasePageComponent
     {
+        public MoveData? moveDataEntity { get; set; } = default;
 
-
-        public MoveData moveDataEntity { get; set; }
-
-        public List<SelectListItem> MoveTypeSelectListItems { get; set; }
-        public List<SelectListItem> MoveSubTypeSelectListItems { get; set; }
-
-        public List<SelectListItem> StartTypeSelectListItems { get; set; }
-        public List<SelectListItem> HitTypeSelectListItems { get; set; }
-
-        public List<SelectListItem> GuardTypeSelectListItems { get; set; }
-
-        public List<SelectListItem> CounterTypeSelectListItems { get; set; }
+        public List<SelectListItem> MoveTypeSelectListItems { get; set; } = default!;
+        public List<SelectListItem> MoveSubTypeSelectListItems { get; set; } = default!;
+        public List<SelectListItem> StartTypeSelectListItems { get; set; } = default!;
+        public List<SelectListItem> HitTypeSelectListItems { get; set; } = default!;
+        public List<SelectListItem> GuardTypeSelectListItems { get; set; } = default!;
+        public List<SelectListItem> CounterTypeSelectListItems { get; set; } = default!;
 
         protected override async Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
-
-            //baseEntities = await baseService.GetEntities();
 
             moveDataEntity = await CommonService.GetEntityWithMovesByIdAsync(Id);
 
@@ -38,11 +31,6 @@ namespace NewTekkenApp.Pages.MoveDatas
             GuardTypeSelectListItems = await hitTypeService.GetSelectItems();
 
             CounterTypeSelectListItems = await hitTypeService.GetSelectItems();
-
-
         }
-
-
-
     }
 }

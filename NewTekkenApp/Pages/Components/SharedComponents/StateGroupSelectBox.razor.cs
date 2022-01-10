@@ -8,16 +8,16 @@ namespace NewTekkenApp.Pages.Components.SharedComponents
     public partial class StateGroupSelectBox
     {
         [Inject]
-        protected StateGroupService<StateGroup, StateGroup_name> stateGroupService { get; set; }
+        protected StateGroupService<StateGroup, StateGroup_name> StateGroupService { get; set; } = default!;
 
-        public List<SelectListItem> selectListItems { get; set; }
+        public List<SelectListItem> selectListItems { get; set; } = default!;
 
         [Parameter]
         public EventCallback<string> OnClickCallback { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
-            selectListItems = await stateGroupService.GetSelectItems();
+               selectListItems = await StateGroupService.GetSelectItems();
         }
 
         [Parameter]

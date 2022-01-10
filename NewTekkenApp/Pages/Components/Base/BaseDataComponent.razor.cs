@@ -15,9 +15,9 @@ namespace NewTekkenApp.Pages.Components.Base
         public int Id { get; set; }
 
         [Inject]
-        protected NavigationUtil navigationUtil { get; set; }
-                
-        
+        protected NavigationUtil navigationUtil { get; set; } = default!;
+
+
         public string GetAppTitle()
         {
             return App.ToString();

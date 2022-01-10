@@ -14,14 +14,14 @@ namespace NewTekkenApp.Pages.Components.Base
         public AppType App { get; set; }
 
         [Parameter]
-        public BaseService<TDataEntity, TNameEntity> baseService { get; set; }
+        public BaseService<TDataEntity, TNameEntity> baseService { get; set; } = default!;
 
 
         //[Inject]
         //protected ILogger<EditComponent<TDataEntity, TNameEntity>> Logger { get; set; }
 
         [Inject]
-        protected NavigationUtil navigationUtil { get; set; }
+        protected NavigationUtil navigationUtil { get; set; } = default!;
 
         [Parameter]
         public int Id { get; set; }
@@ -30,11 +30,10 @@ namespace NewTekkenApp.Pages.Components.Base
         public int? StateGroupCode { get; set; }
 
         [Inject]
-        public IJSRuntime JSRuntime { get; set; }
+        public IJSRuntime JSRuntime { get; set; } = default!;
 
-
-        public TDataEntity baseData { get; set; }
-        public TNameEntity baseName { get; set; }
+        public TDataEntity baseData { get; set; } = default!;
+        public TNameEntity baseName { get; set; } = default!;
 
         #region 기본 버튼
 
@@ -97,7 +96,6 @@ namespace NewTekkenApp.Pages.Components.Base
                 baseData.Number = number;
                 baseData.Code = await baseService.GetCreateCode(number);
             }
-
         }
 
         public string GetAppTitle()
@@ -109,6 +107,5 @@ namespace NewTekkenApp.Pages.Components.Base
         {
             this.App = appType;
         }
-
     }
 }

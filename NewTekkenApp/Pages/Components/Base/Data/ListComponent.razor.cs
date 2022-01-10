@@ -8,7 +8,7 @@ namespace NewTekkenApp.Pages.Components.Base.Data
                             where TDataEntity : BaseDataEntity<TNameEntity>
                             where TNameEntity : BaseNameEntity, new()
     {
-        public IList<TDataEntity> baseEntities { get; set; }
+        public IList<TDataEntity> baseEntities { get; set; } = default!;
 
         protected override async Task OnInitializedAsync()
         {

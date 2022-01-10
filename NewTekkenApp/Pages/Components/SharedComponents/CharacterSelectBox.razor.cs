@@ -8,9 +8,9 @@ namespace NewTekkenApp.Pages.Components.SharedComponents
     public partial class CharacterSelectBox
     {
         [Inject]
-        protected CharacterService<Character, Character_name> characterService { get; set; }
+        protected CharacterService<Character, Character_name> characterService { get; set; } = default!;
 
-        public List<SelectListItem> selectListItems { get; set; }
+        public List<SelectListItem> selectListItems { get; set; } = default!;
 
         [Parameter]
         public EventCallback<string> OnClickCallback { get; set; }

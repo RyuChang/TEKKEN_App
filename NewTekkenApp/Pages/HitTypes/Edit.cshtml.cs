@@ -16,7 +16,7 @@ namespace NewTekkenApp.Pages.HitTypes
         }
 
         [BindProperty]
-        public HitType hitType { get; set; }
+        public HitType hitType { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {

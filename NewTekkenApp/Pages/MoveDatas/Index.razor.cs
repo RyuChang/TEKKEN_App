@@ -4,7 +4,7 @@ namespace NewTekkenApp.Pages.MoveDatas
 {
     public partial class Index : BasePageComponent
     {
-        public IList<MoveData> moveDataEntities { get; set; }
+        public IList<MoveData> moveDataEntities { get; set; } = default!;
 
         protected override async Task OnInitializedAsync()
         {

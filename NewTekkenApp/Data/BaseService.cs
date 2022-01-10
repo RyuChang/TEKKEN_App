@@ -14,11 +14,11 @@ namespace NewTekkenApp.Data
 
         protected DbSet<TDataEntity> _dataDbSet;
         protected DbSet<TNameEntity> _nameDbSet;
-        public string preUrl { get; set; }
+        public string preUrl { get; set; } = default!;
 
         public AppType App { get; protected set; }
-        protected string mainTable { get; set; }
-        protected string nameTable { get; set; }
+        protected string mainTable { get; set; } = default!;
+        protected string nameTable { get; set; } = default!;
 
         public BaseService(TekkenDbContext tekkenDbContext, DbSet<TDataEntity> dbset, DbSet<TNameEntity> nameDbSet)
         {
@@ -108,7 +108,7 @@ namespace NewTekkenApp.Data
                                     join name in _tekkenDBContext.Set<TNameEntity>().Where(n => n.Base_code == code)
                                         on language.code equals name.Language_code into grouping
                                     from name in grouping.DefaultIfEmpty()
-                                    select (new TNameEntity { Id = (name.Id != null) ? name.Id : 0, Base_code = (name.Id != null) ? name.Base_code : 0, Language_code = language.code, Name = name.Name });
+                                    select (new TNameEntity { Id = (name.Id!=null) ? name.Id : 0, Base_code = (name.Id != null) ? name.Base_code : 0, Language_code = language.code, Name = name.Name });
 
             return await baseTranslateName.ToListAsync();
         }

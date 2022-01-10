@@ -11,8 +11,8 @@ namespace NewTekkenApp.Data
 
         public MoveService(TekkenDbContext tekkenDbContext) : base(tekkenDbContext, tekkenDbContext.Move, tekkenDbContext.Move_name)
         {
-            mainTable = TableName.Move.ToString();
-            nameTable = TableName.Move_name.ToString();
+            MainTable = TableName.Move.ToString();
+            NameTable = TableName.Move_name.ToString();
         }
 
 

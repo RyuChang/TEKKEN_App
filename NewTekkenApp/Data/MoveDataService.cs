@@ -10,8 +10,8 @@ namespace NewTekkenApp.Data
 
         public MoveDataService(TekkenDbContext tekkenDbContext) : base(tekkenDbContext, tekkenDbContext.MoveData, tekkenDbContext.MoveData_Name)
         {
-            mainTable = TableName.MoveData.ToString();
-            nameTable = TableName.MoveData_name.ToString();
+            MainTable = TableName.MoveData.ToString();
+            NameTable = TableName.MoveData_name.ToString();
             //App = AppType.HitType;
         }
 

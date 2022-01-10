@@ -11,8 +11,8 @@ namespace NewTekkenApp.Data
     {
         public StateGroupService(TekkenDbContext tekkenDbContext) : base(tekkenDbContext, tekkenDbContext.StateGroup, tekkenDbContext.StateGroup_name)
         {
-            mainTable = TableName.StateGroup.ToString();
-            nameTable = TableName.StateGroup.ToString();
+            MainTable = TableName.StateGroup.ToString();
+            NameTable = TableName.StateGroup.ToString();
         }
 
         public async Task<StateGroup> GetStateGroupByIdAsync(int id)

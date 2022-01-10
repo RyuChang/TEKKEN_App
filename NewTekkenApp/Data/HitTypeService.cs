@@ -10,8 +10,8 @@ namespace NewTekkenApp.Data
 
         public HitTypeService(TekkenDbContext tekkenDbContext) : base(tekkenDbContext, tekkenDbContext.hitType, tekkenDbContext.hitType_name)
         {
-            mainTable = TableName.HitType.ToString();
-            nameTable = TableName.HitType_name.ToString();
+            MainTable = TableName.HitType.ToString();
+            NameTable = TableName.HitType_name.ToString();
             //App = AppType.HitType;
         }
 

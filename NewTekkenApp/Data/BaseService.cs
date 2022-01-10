@@ -14,11 +14,11 @@ namespace NewTekkenApp.Data
 
         protected DbSet<TDataEntity> _dataDbSet;
         protected DbSet<TNameEntity> _nameDbSet;
-        public string preUrl { get; set; } = default!;
+        public string PreUrl { get; set; } = default!;
 
         public AppType App { get; protected set; }
-        protected string mainTable { get; set; } = default!;
-        protected string nameTable { get; set; } = default!;
+        protected string MainTable { get; set; } = default!;
+        protected string NameTable { get; set; } = default!;
 
         public BaseService(TekkenDbContext tekkenDbContext, DbSet<TDataEntity> dbset, DbSet<TNameEntity> nameDbSet)
         {
@@ -174,7 +174,7 @@ namespace NewTekkenApp.Data
         public async Task<int> GetCreateCode(int number, int character_code = 0, int stateGroup_code = 0)
         {
             TableCode tableCode = await
-            _tekkenDBContext.tableCode.Where(x => x.tableName == this.mainTable).SingleOrDefaultAsync();
+            _tekkenDBContext.tableCode.Where(x => x.tableName == this.MainTable).SingleOrDefaultAsync();
             int stateGroupNumber = (stateGroup_code > 0) ? (stateGroup_code - 80000000) * 1000 : 0;
 
             return tableCode.code + (character_code * 1000) + stateGroupNumber + number;
@@ -199,7 +199,4 @@ namespace NewTekkenApp.Data
 
     }
 
-    internal class injectAttribute : Attribute
-    {
-    }
 }

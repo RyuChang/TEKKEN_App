@@ -16,7 +16,7 @@ namespace NewTekkenApp.Pages.HitTypes
         }
 
         [BindProperty]
-        public HitType hitType { get; set; } = default!;
+        public HitType HitType { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -25,9 +25,9 @@ namespace NewTekkenApp.Pages.HitTypes
                 return NotFound();
             }
 
-            hitType = await _context.hitType.FirstOrDefaultAsync(m => m.Id == id);
+            HitType = await _context.hitType.FirstOrDefaultAsync(m => m.Id == id);
 
-            if (hitType == null)
+            if (HitType == null)
             {
                 return NotFound();
             }
@@ -43,7 +43,7 @@ namespace NewTekkenApp.Pages.HitTypes
                 return Page();
             }
 
-            _context.Attach(hitType).State = EntityState.Modified;
+            _context.Attach(HitType).State = EntityState.Modified;
 
             try
             {
@@ -51,7 +51,7 @@ namespace NewTekkenApp.Pages.HitTypes
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!hitTypeExists(hitType.Id))
+                if (!HitTypeExists(HitType.Id))
                 {
                     return NotFound();
                 }
@@ -64,7 +64,7 @@ namespace NewTekkenApp.Pages.HitTypes
             return RedirectToPage("./Index");
         }
 
-        private bool hitTypeExists(int id)
+        private bool HitTypeExists(int id)
         {
             return _context.hitType.Any(e => e.Id == id);
         }

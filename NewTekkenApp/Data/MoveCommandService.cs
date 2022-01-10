@@ -11,8 +11,8 @@ namespace NewTekkenApp.Data
 
         public MoveCommandService(TekkenDbContext tekkenDbContext) : base(tekkenDbContext, tekkenDbContext.MoveCommand, tekkenDbContext.MoveCommand_name)
         {
-            mainTable = TableName.MoveData.ToString();
-            nameTable = TableName.MoveData_name.ToString();
+            MainTable = TableName.MoveData.ToString();
+            NameTable = TableName.MoveData_name.ToString();
             //App = AppType.HitType;
         }
 

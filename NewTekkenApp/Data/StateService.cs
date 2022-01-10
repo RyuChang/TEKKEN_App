@@ -11,8 +11,8 @@ namespace NewTekkenApp.Data
 
         public StateService(TekkenDbContext tekkenDbContext) : base(tekkenDbContext, tekkenDbContext.State, tekkenDbContext.State_name)
         {
-            mainTable = TableName.State.ToString();
-            nameTable = TableName.State.ToString();
+            MainTable = TableName.State.ToString();
+            NameTable = TableName.State.ToString();
         }
 
     }

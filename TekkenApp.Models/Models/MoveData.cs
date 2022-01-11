@@ -49,7 +49,7 @@ namespace TekkenApp.Models
 
 
         [NotMapped]
-        public string Description { get; set; }
+        public new string Description { get; set; }
         public virtual Move Moves { get; set; }
         
         //public new virtual ICollection<MoveData_name> NameSet { get; set; }

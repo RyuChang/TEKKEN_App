@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Primitives;
 using TekkenApp.Models;
@@ -29,20 +27,20 @@ namespace NewTekkenApp.Utilities
         }
 
 
-        public void MoveTo(AppType appType, ActionType actionType = ActionType.List, int id = 0, Dictionary<string, string> param = null)
+        public void MoveTo(AppType appType, ActionType actionType = ActionType.List, int id = 0, Dictionary<string, string> param = default!)
         {
             //string action = (actionType == ActionType.List) ? "" : $"/{GetAction(actionType)}";
 
             string idUri = (id > 0) ? $"/{id}" : "";
             string url = $"{GetUrl(appType)}{GetActionUrl(actionType)}{idUri}";
 
-            if (param == null)
+            if (param != null)
             {
-                navigationManager.NavigateTo(url);
+                navigationManager.NavigateTo(QueryHelpers.AddQueryString(url, param));
             }
             else
             {
-                navigationManager.NavigateTo(QueryHelpers.AddQueryString(url, param));
+                navigationManager.NavigateTo(url);
             }
         }
 

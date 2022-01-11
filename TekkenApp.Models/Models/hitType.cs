@@ -18,7 +18,7 @@ namespace TekkenApp.Models
             //move_datahitType_codeNavigation = new HashSet<Move_data>();
             //move_datastartType_codeNavigation = new HashSet<Move_data>();
         }
-        public int Number { get; set; }
+        public new int Number { get; set; }
 
         //public virtual ICollection<Move_data> move_datacounterType_codeNavigation { get; set; }
         //public virtual ICollection<Move_data> move_dataguardType_codeNavigation { get; set; }

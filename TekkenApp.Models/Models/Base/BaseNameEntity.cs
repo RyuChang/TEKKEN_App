@@ -38,11 +38,11 @@ namespace TekkenApp.Models
         [DataType(DataType.Text)]
         [Required(ErrorMessage = "입력 언어를 입력해 주세요.")]
         [StringLength(2)]
-        public string? Language_code { get; set; }
+        public string Language_code { get; set; }
 
         [Display(Name = "번역명")]
         [DataType(DataType.Text)]
-        public string? Name { get; set; }
+        public string Name { get; set; }
 
         [Column("checked")]
         public bool Checked { get; set; }

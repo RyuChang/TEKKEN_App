@@ -33,7 +33,7 @@ namespace NewTekkenApp.Pages.Components.Base
         public IJSRuntime JSRuntime { get; set; } = default!;
 
         public TDataEntity baseData { get; set; } = default!;
-        public TNameEntity baseName { get; set; } = default!;
+        public TNameEntity? baseName { get; set; } = default!;
 
         #region 기본 버튼
 
@@ -48,7 +48,6 @@ namespace NewTekkenApp.Pages.Components.Base
         }
         protected void MovetoCreateWithStateGroup(int stateGroupCode)
         {
-            Dictionary<string, string> param;
             navigationUtil.MoveTo(App, ActionType.Create, stateGroupCode);
         }
         protected void MoveToDetail(int id)

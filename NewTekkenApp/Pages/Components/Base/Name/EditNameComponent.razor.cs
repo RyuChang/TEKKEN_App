@@ -21,8 +21,12 @@ namespace NewTekkenApp.Pages.Components.Base.Name
             {
                 return;
             }
-            await baseService.UpdateNameEntityAsync(baseName);
-            MoveToDetailName(baseName.Id);
+
+            if (baseName is not null)
+            {
+                await baseService.UpdateNameEntityAsync(baseName);
+                MoveToDetailName(baseName.Id);
+            }
         }
     }
 }

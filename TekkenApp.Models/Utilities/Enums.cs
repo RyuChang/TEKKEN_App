@@ -2,21 +2,6 @@
 
 namespace TekkenApp.Models
 {
-    public static class tableUtil
-    {
-        static TekkenDbContext tekkenDbContext;
-
-        //public static Dictionary<string, DbSet<T>>
-        //    tableSets = new Dictionary<string, DbSet<T>>()
-        //    {
-
-        //        { "HitType",  tekkenDbContext.hitType}
-
-        //    };
-
-    }
-
-
     public enum AppType
     {
         States,

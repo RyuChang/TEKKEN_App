@@ -29,7 +29,7 @@ namespace NewTekkenApp.Data
 
         #region 메인 데이터
 
-        public async Task<TDataEntity> GetDataEntityByIdAsync(int id)
+        public async Task<TDataEntity?> GetDataEntityByIdAsync(int id)
         {
             return await _dataDbSet.FindAsync(id);
         }
@@ -49,7 +49,7 @@ namespace NewTekkenApp.Data
             return BaseDataEntityExistsByCode(int.Parse(code));
         }
         #region 메인 데이터 삭제
-        public async Task<TDataEntity> DeleteDataEntityByIdAsync(TDataEntity dataEntity)
+        public async Task<TDataEntity?> DeleteDataEntityByIdAsync(TDataEntity dataEntity)
         {
 
             if (dataEntity != null)
@@ -69,9 +69,10 @@ namespace NewTekkenApp.Data
         #endregion
 
         #region 명칭 데이터
-        public async Task<TNameEntity> GetNameEntityByIdAsync(int id)
+        public async Task<TNameEntity?> GetNameEntityByIdAsync(int id)
         {
-            return await _nameDbSet.FindAsync(id);
+            TNameEntity? nameEntity = await _nameDbSet.FindAsync(id);
+            return nameEntity;
         }
 
 
@@ -173,11 +174,12 @@ namespace NewTekkenApp.Data
         #region GetCreateCode
         public async Task<int> GetCreateCode(int number, int character_code = 0, int stateGroup_code = 0)
         {
-            TableCode tableCode = await
+            TableCode? tableCode = await
             _tekkenDBContext.tableCode.Where(x => x.tableName == this.MainTable).SingleOrDefaultAsync();
             int stateGroupNumber = (stateGroup_code > 0) ? (stateGroup_code - 80000000) * 1000 : 0;
 
-            return tableCode.code + (character_code * 1000) + stateGroupNumber + number;
+            int code = tableCode is not null ? tableCode.code + (character_code * 1000) + stateGroupNumber + number : 0;
+            return code;
         }
         public async Task<bool> CreateEntityAsync(TDataEntity entity)
         {

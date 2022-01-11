@@ -19,7 +19,7 @@ namespace TekkenApp.Models
             NameSet = new HashSet<StateGroup_name>();
         }
 
-        public int Number { get; set; }
+        public new int Number { get; set; }
         //public virtual ICollection<State> State { get; set; }
         //public virtual ICollection<StateGroup_name> StateGroup_name { get; set; }
     }

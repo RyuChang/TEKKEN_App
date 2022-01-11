@@ -16,7 +16,8 @@ namespace NewTekkenApp.Pages.Components.Base.Name
         [Parameter]
         public string? Language { get; set; }
 
-        protected override async Task OnInitializedAsync()
+        //protected override async Task OnInitializedAsync()
+        protected override void OnInitialized()
         {
             baseName = new();
             baseName.Base_code = Code;

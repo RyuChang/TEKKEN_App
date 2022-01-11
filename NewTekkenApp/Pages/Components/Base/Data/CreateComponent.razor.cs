@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using TekkenApp.Models;
+﻿using TekkenApp.Models;
 
 namespace NewTekkenApp.Pages.Components.Base.Data
 {
@@ -13,6 +11,7 @@ namespace NewTekkenApp.Pages.Components.Base.Data
         protected override async Task OnInitializedAsync()
         {
             baseData = Activator.CreateInstance(typeof(TDataEntity)) as TDataEntity;
+            
             if (baseData == null) return;
             baseData.Number = await baseService.GetCreateNumber();
             baseData.Code = await baseService.GetCreateCode(baseData.Number);
@@ -24,6 +23,8 @@ namespace NewTekkenApp.Pages.Components.Base.Data
 
         protected async Task SaveCreate()
         {
+            if (baseData == null) return;
+
             await baseService.CreateEntityAsync(baseData);
             TNameEntity nameEntity = new TNameEntity();
             await baseService.CreateAllNameEntitiesAsync(baseData);

@@ -10,7 +10,7 @@ namespace TekkenApp.Models
     public partial class MoveData_name : BaseNameEntity
     {
         [NotMapped]
-        public string Name { get; set; }
+        public new string Name { get; set; }
         public string StartType_name { get; set; }
         public string Guardtype_name { get; set; }
         public string HitType_name { get; set; }

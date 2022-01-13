@@ -15,6 +15,9 @@ namespace TekkenApp.Models
             SetApp(TableName.MoveData);
             NameSet = new HashSet<MoveData_name>();
         }
+        
+        [NotMapped]
+        public new int Number { get; set; }
 
         public int Base_Code { get; set; }
         public int? MoveType_code { get; set; }
@@ -50,7 +53,7 @@ namespace TekkenApp.Models
 
         [NotMapped]
         public new string Description { get; set; }
-        public virtual Move Moves { get; set; }
+        public virtual Move Move { get; set; }
         
         //public new virtual ICollection<MoveData_name> NameSet { get; set; }
         //public virtual HitType counterType_codeNavigation { get; set; }

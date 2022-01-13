@@ -18,8 +18,7 @@ namespace TekkenApp.Models
             SetApp(TableName.Move);
             NameSet = new HashSet<Move_name>();
         }
-        public new int Number { get; set; }
-
+  
         public new int Character_code { get; set; }
 
         [Required]

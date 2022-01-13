@@ -24,8 +24,7 @@ namespace TekkenApp.Models
 
         public int Code { get; set; }
 
-        [NotMapped]
-        public int Number { get; set; }
+       public int Number { get; set; }
 
         [Required]
         public string Description { get; set; }

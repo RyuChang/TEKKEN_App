@@ -17,6 +17,9 @@ namespace TekkenApp.Models
             SetApp(TableName.MoveCommand);
             NameSet = new HashSet<MoveCommand_name>();
         }
+        
+        [NotMapped]
+        public new int Number { get; set; }
         public int Base_Code { get; set; }
 
         [Required]

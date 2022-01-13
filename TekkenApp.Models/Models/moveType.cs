@@ -14,6 +14,5 @@ namespace TekkenApp.Models
             NameSet = new HashSet<MoveType_name>();
 
         }
-        public new int Number { get; set; }
     }
 }

@@ -33,8 +33,7 @@ namespace TekkenApp.Models
         public string code { get; set; }
         [Required]
         public string name { get; set; }
-        public byte number { get; set; }
-
+ 
         //public virtual ICollection<StateGroup_name> StateGroup_name { get; set; }
         //public virtual ICollection<State_name> State_name { get; set; }
         //public virtual ICollection<Character_name> character_name { get; set; }

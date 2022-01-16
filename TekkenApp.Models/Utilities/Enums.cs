@@ -13,6 +13,7 @@ namespace TekkenApp.Models
         MoveTypes,
         MoveDatas,
         MoveCommands,
+        Commands,
     }
 
     public enum ActionType
@@ -37,11 +38,13 @@ namespace TekkenApp.Models
         MoveType,
         MoveType_name,
         MoveCommand,
+        MoveCommand_name,
         MoveData,
         MoveData_name,
         Character,
         Character_name,
         Command,
+        Command_name,
         State,
         State_name,
         StateGroup,

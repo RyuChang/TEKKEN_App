@@ -26,7 +26,7 @@ namespace TekkenApp.Models
         [Required]
         public string HitLevel { get; set; }
         public int Damage { get; set; }
-        public decimal StartFrame { get; set; }
+        public int StartFrame { get; set; }
         public string StartFrame_Display { get; set; }
         public int? StartType_code { get; set; }
         public int GuardFrame { get; set; }

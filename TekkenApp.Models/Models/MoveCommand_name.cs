@@ -7,6 +7,10 @@ namespace TekkenApp.Models
     //[Index(nameof(language_code), nameof(Move_Command_code), Name = "IX_move_command", IsUnique = true)]
     public partial class MoveCommand_name : BaseNameEntity
     {
+        public MoveCommand_name()
+        {
+            SetApp(TableName.MoveCommand_name);
+        }
         //public int Move_Command_code { get; set; }
 
         //public virtual Move Move_Command_codeNavigation { get; set; }

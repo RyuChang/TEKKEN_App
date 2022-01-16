@@ -24,7 +24,7 @@ namespace TekkenApp.Models
 
         public int Code { get; set; }
 
-       public int Number { get; set; }
+        public int Number { get; set; }
 
         [Required]
         public string Description { get; set; }
@@ -36,7 +36,6 @@ namespace TekkenApp.Models
         {
             this.tableName = tableName;
             preUrl = $"/{tableName.ToString().Replace("_name", "") + "s"}";
-
         }
 
         public static string GetPreUrl()

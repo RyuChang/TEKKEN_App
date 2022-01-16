@@ -20,6 +20,7 @@ command.addEventListener("keyup", function (event) {
         AddCommand(event.key);
     }
 });
+
 function AddKey(key) {
     if (clickedKey.indexOf(key) < 0) {
         clickedKey.push(key);
@@ -140,7 +141,7 @@ function SetKeyMap() {
         });
     });
 }
-
+/*
 $(function () {
     $("#TransCommand").click(function () {
         TransCommand();
@@ -236,3 +237,4 @@ $(".commandName").on('change', function (e) {
     document.getElementById(changeId).checked = true;
 
 });
+*/

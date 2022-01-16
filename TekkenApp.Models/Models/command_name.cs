@@ -9,20 +9,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace TekkenApp.Models
 {
-    [Index(nameof(command_code), nameof(language_code), Name = "IX_command_name", IsUnique = true)]
-    public partial class Command_name
+    //[Index(nameof(command_code), nameof(language_code), Name = "IX_command_name", IsUnique = true)]
+    public partial class Command_name : BaseNameEntity
     {
-        [Key]
-        public int id { get; set; }
-        [Required]
-        [StringLength(3)]
-        public string command_code { get; set; }
-        [Required]
-        [StringLength(2)]
-        public string language_code { get; set; }
-        [Required]
-        public string name { get; set; }
+        public Command_name()
+        {
+            SetApp(TableName.HitType_name);
+        }
 
-        public virtual Language language_codeNavigation { get; set; }
+       
+        [NotMapped]
+        public new int Base_code { get; set; }
+        
+        public string CommandCode { get; set; }
+
     }
 }

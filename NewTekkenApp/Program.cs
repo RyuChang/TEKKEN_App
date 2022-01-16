@@ -30,6 +30,7 @@ builder.Services.AddTransient<HitTypeService<HitType, HitType_name>>();
 builder.Services.AddTransient<MoveService<Move, Move_name>>();
 builder.Services.AddTransient<MoveDataService<MoveData, MoveData_name>>();
 builder.Services.AddTransient<MoveCommandService<MoveCommand, MoveCommand_name>>();
+builder.Services.AddTransient<CommandService<Command, Command_name>>();
 builder.Services.AddTransient<MoveTextService<MoveText, MoveText_name>>();
 builder.Services.AddTransient<CharacterService<Character, Character_name>>();
 builder.Services.AddTransient<StateService<State, State_name>>();

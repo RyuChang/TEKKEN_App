@@ -10,13 +10,15 @@ using Microsoft.EntityFrameworkCore;
 namespace TekkenApp.Models
 {
     //[Index(nameof(move_code), Name = "IX_Move_command_1", IsUnique = true)]
-    public partial class MoveCommand : BaseDataEntity<MoveCommand_name>
+    public partial class MoveCommand : BaseDataEntity
     {
         public MoveCommand ()
         {
             SetApp(TableName.MoveCommand);
             NameSet = new HashSet<MoveCommand_name>();
         }
+
+        public new ICollection<MoveCommand_name> NameSet { get; set; }
         
         [NotMapped]
         public new int Number { get; set; }

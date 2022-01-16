@@ -7,7 +7,7 @@ using TekkenApp.Models;
 namespace NewTekkenApp.Data
 {
     public abstract class BaseService<TDataEntity, TNameEntity>
-        where TDataEntity : BaseDataEntity<TNameEntity>
+        where TDataEntity : BaseDataEntity
         where TNameEntity : BaseNameEntity, new()
     {
         protected TekkenDbContext _tekkenDBContext;
@@ -191,7 +191,7 @@ namespace NewTekkenApp.Data
         #endregion
 
 
-        public async Task<BaseDataEntity<TNameEntity>> UpdateDataAsync(BaseDataEntity<TNameEntity> BaseDataEntity)
+        public async Task<BaseDataEntity> UpdateDataAsync(BaseDataEntity BaseDataEntity)
         {
             _tekkenDBContext.Entry(BaseDataEntity).State = EntityState.Modified;
             await _tekkenDBContext.SaveChangesAsync();

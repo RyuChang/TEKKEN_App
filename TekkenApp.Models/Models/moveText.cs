@@ -4,14 +4,14 @@ namespace TekkenApp.Models
 {
     //    [Index(nameof(character_code), nameof(number), Name = "IX_moveText_character_code_number", IsUnique = true)]
     //   [Index(nameof(code), Name = "IX_moveText_code", IsUnique = true)]
-    public partial class MoveText : BaseDataEntity<MoveText_name>
+    public partial class MoveText : BaseDataEntity
     {
         public MoveText()
         {
             SetApp(TableName.MoveText);
             NameSet = new HashSet<MoveText_name>();
         }
-
+        public new ICollection<MoveText_name> NameSet { get; set; }
         public new int Character_code { get; set; }
 
         //public virtual Character character_codeNavigation { get; set; }

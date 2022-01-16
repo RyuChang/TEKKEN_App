@@ -8,13 +8,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace TekkenApp.Models
 {
     //[Index(nameof(code), Name = "IX_command", IsUnique = true)]
-    public partial class Command : BaseDataEntity<Command_name>
+    public partial class Command : BaseDataEntity
     {
         public Command()
         {
             SetApp(TableName.Command);
             NameSet = new HashSet<Command_name>();
         }
+        public new ICollection<Command_name> NameSet { get; set; }
 
         [NotMapped]
         public new int Number { get; set; }

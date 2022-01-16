@@ -12,7 +12,7 @@ namespace TekkenApp.Models
 {
     //[Index(nameof(code), Name = "IX_character", IsUnique = true)]
     //[Index(nameof(code_name), Name = "IX_character_code_Unique", IsUnique = true)]
-    public partial class Character : BaseDataEntity<Character_name>
+    public partial class Character : BaseDataEntity
     {
         public Character()
         {
@@ -20,5 +20,6 @@ namespace TekkenApp.Models
             NameSet = new HashSet<Character_name>();
 
         }
+        public new ICollection<Character_name> NameSet { get; set; }
     }
 }

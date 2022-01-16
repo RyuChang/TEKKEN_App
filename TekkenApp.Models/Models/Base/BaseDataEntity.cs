@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TekkenApp.Models
 {
     [NotMapped]
-    public class BaseDataEntity<TName> where TName : BaseNameEntity
+    public class BaseDataEntity
     {
         [NotMapped]
         public static string preUrl { get; set; }
@@ -29,8 +30,8 @@ namespace TekkenApp.Models
         [Required]
         public string Description { get; set; }
 
-
-        public virtual ICollection<TName> NameSet { get; set; }
+        [NotMapped]
+        public virtual ICollection<BaseNameEntity> NameSet { get; set; }
 
         protected void SetApp(TableName tableName)
         {

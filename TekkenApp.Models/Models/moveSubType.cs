@@ -5,13 +5,14 @@ namespace TekkenApp.Models
 {
     //[Index(nameof(character_code), nameof(number), Name = "IX_moveSubType_character_code_number", IsUnique = true)]
     //[Index(nameof(code), Name = "IX_moveSubType_code", IsUnique = true)]
-    public partial class MoveSubType : BaseDataEntity<MoveSubType_name>
+    public partial class MoveSubType : BaseDataEntity
     {
         public MoveSubType()
         {
             SetApp(TableName.MoveSubType);
             NameSet = new HashSet<MoveSubType_name>();
         }
+        public new ICollection<MoveSubType_name> NameSet { get; set; }
         public new int Character_code { get; set; }
 
         //[Key]

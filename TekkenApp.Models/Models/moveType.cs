@@ -6,7 +6,7 @@ namespace TekkenApp.Models
 {
     //[Index(nameof(code), nameof(number), Name = "IX_moveType_1", IsUnique = true)]
     //[Index(nameof(code), Name = "IX_moveType_code_unique", IsUnique = true)]
-    public partial class MoveType : BaseDataEntity<MoveType_name>
+    public partial class MoveType : BaseDataEntity
     {
         public MoveType()
         {
@@ -14,5 +14,6 @@ namespace TekkenApp.Models
             NameSet = new HashSet<MoveType_name>();
 
         }
+        public new ICollection<MoveType_name> NameSet { get; set; }
     }
 }

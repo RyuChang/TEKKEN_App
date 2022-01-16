@@ -10,7 +10,7 @@ namespace TekkenApp.Models
     [Index(nameof(Code), Name = "IX_StateGroup", IsUnique = true)]
     [Index(nameof(Number), Name = "IX_StateGroup_1", IsUnique = true)]
 
-    public partial class StateGroup : BaseDataEntity<StateGroup_name>
+    public partial class StateGroup : BaseDataEntity
     {
         public StateGroup()
         {
@@ -18,7 +18,8 @@ namespace TekkenApp.Models
             //State = new HashSet<State>();
             NameSet = new HashSet<StateGroup_name>();
         }
-
+        public new ICollection<StateGroup_name> NameSet { get; set; }
+        
         //public virtual ICollection<State> State { get; set; }
         //public virtual ICollection<StateGroup_name> StateGroup_name { get; set; }
     }

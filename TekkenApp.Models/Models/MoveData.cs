@@ -8,14 +8,15 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace TekkenApp.Models
 {
     ///[Index(nameof(Move_Code), Name = "IX_move_data", IsUnique = true)]
-    public partial class MoveData : BaseDataEntity<MoveData_name>
+    public partial class MoveData : BaseDataEntity
     {
         public MoveData()
         {
             SetApp(TableName.MoveData);
             NameSet = new HashSet<MoveData_name>();
         }
-        
+        public new ICollection<MoveData_name> NameSet { get; set; }
+
         [NotMapped]
         public new int Number { get; set; }
 
@@ -54,7 +55,7 @@ namespace TekkenApp.Models
         [NotMapped]
         public new string Description { get; set; }
         public virtual Move Move { get; set; }
-        
+
         //public new virtual ICollection<MoveData_name> NameSet { get; set; }
         //public virtual HitType counterType_codeNavigation { get; set; }
         //public virtual HitType guardType_codeNavigation { get; set; }

@@ -15,7 +15,7 @@ namespace TekkenApp.Data
         {
         }
         public virtual DbSet<BaseUtil> BaseUtil { get; set; }
-        public virtual DbSet<BaseDataEntity<BaseNameEntity>> BaseEntities { get; set; }
+        public virtual DbSet<BaseDataEntity> BaseEntities { get; set; }
         public virtual DbSet<Move> Move { get; set; }
         public virtual DbSet<Move_name> Move_name { get; set; }
         public virtual DbSet<MoveData> MoveData { get; set; }
@@ -469,7 +469,7 @@ namespace TekkenApp.Data
                     .WithOne()
                     .HasPrincipalKey(p => p.Code)
                     .HasForeignKey(d => d.Base_code)
-                    .HasConstraintName("FK_moveText_name_moveText")
+                    //.HasConstraintName("FK_moveText_name_moveText")
                     .OnDelete(DeleteBehavior.Cascade);
             });
             modelBuilder.Entity<MoveSubType_name>(entity =>

@@ -24,13 +24,18 @@ namespace NewTekkenApp.Data
 
         public async Task<List<MoveData>> GetEntitiesWithMoves()
         {
-            return await _dataDbSet.Include("Moves").Include("NameSet").ToListAsync();
+            return await _dataDbSet.Include("Move").Include("NameSet").ToListAsync();
             //return  _dataDbSet.ToList();
         }
 
         public async Task<MoveData> GetEntityWithMovesByIdAsync(int id)
         {
-            return await _dataDbSet.Include("Moves").Where(m => m.Id == id).FirstOrDefaultAsync();
+            return await _dataDbSet.Include("Move").Where(m => m.Id == id).FirstOrDefaultAsync();
+        }
+
+        public async Task<List<MoveData>> GetEntitiesWithMoveByCharacterCode(int characterCode)
+        {
+            return await _dataDbSet.Include("Move").Where(m => m.Move.Character_code == characterCode).ToListAsync();
         }
 
     }

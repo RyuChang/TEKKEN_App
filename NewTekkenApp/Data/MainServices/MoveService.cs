@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.EntityFrameworkCore;
 using TekkenApp.Data;
 using TekkenApp.Models;
 
@@ -15,6 +16,12 @@ namespace NewTekkenApp.Data
             NameTable = TableName.Move_name.ToString();
         }
 
+        public async Task<Move> GetEntityWithCommandsByIdAsync(int id)
+        {
+            //
+            return await _dataDbSet.Where(m => m.Id == id).Include(m => m.MoveCommand).ThenInclude(c => c.NameSet).FirstOrDefaultAsync();
+
+        }
 
 
     }

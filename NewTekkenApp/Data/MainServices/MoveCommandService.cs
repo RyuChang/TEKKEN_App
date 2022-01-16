@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using NewTekkenApp.Pages.Components.Base.Data;
 using TekkenApp.Data;
 using TekkenApp.Models;
 
@@ -29,10 +28,10 @@ namespace NewTekkenApp.Data
             //return  _dataDbSet.ToList();
         }
 
-        //public async Task<MoveCommand> GetEntityWithMovesByIdAsync(int id)
-        //{
-        //    return await _dataDbSet.Include("Moves").Where(m => m.Id == id).FirstOrDefaultAsync();
-        //}
+        public async Task<MoveCommand> GetEntityWithMovesByIdAsync(int id)
+        {
+            return await _dataDbSet.Include("Move").Where(m => m.Id == id).FirstOrDefaultAsync();
+        }
 
         public async Task<List<MoveCommand>> GetEntitiesWithMoveByCharacterCode(int characterCode)
         {

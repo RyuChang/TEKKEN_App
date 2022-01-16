@@ -14,5 +14,15 @@ namespace NewTekkenApp.Pages.MoveDatas
 
             moveDataEntities = await CommonService.GetEntitiesWithMoves();
         }
+
+        async void OnCharacterChanged(string characterCode)
+        {
+            if (!string.IsNullOrEmpty(characterCode))
+            {
+                CharacterId = int.Parse(characterCode);
+                moveDataEntities = await CommonService.GetEntitiesWithMoveByCharacterCode(int.Parse(characterCode));
+                StateHasChanged();
+            }
+        }
     }
 }

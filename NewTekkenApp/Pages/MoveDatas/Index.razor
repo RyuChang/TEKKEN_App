@@ -14,6 +14,10 @@
 
 
 <div class="container">
+    <CascadingValue Value="CharacterId">
+    <CharacterSelectBox OnCharacterChanged="OnCharacterChanged">
+    </CharacterSelectBox>
+
     <div class="m-auto" id="Character-list">
         <div class="table-responsive">
             @if (moveDataEntities == null)
@@ -44,8 +48,8 @@
                             <tr>
                                 <td>@entity.Id</td>
                                 <td>@entity.Code</td>
-                                <td>@entity.Number</td>
-                                <td>@entity.Moves.Description</td>
+                                <td>@entity.Move.Number</td>
+                                <td>@entity.Move.Description</td>
                                 <td>
                                     <input type="button" class="btn btn-primary" id="btnDetail" value="상세" @onclick="()=>MoveToDetail(entity.Id)" />
                                     <input type="button" class="btn btn-primary" id="btnEdit" value="수정" @onclick="()=>MoveToEdit(entity.Id)" />
@@ -137,4 +141,6 @@
             }
         </div>
     </div>
+
+    </CascadingValue>
 </div>

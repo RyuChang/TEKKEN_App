@@ -1,28 +1,26 @@
-﻿using NewTekkenApp.Pages.Components.Base.Data;
-using TekkenApp.Models;
+﻿using TekkenApp.Models;
 
 namespace NewTekkenApp.Pages.MoveCommands
 {
     public partial class Index : BasePageComponent
     {
-        ListComponent<MoveCommand, MoveCommand_name>? childList;
+        public IList<MoveCommand> MoveCommandEntities { get; set; } = default!;
 
-        //public IList<TDataEntity> baseEntities { get; set; }
-        //protected override async Task OnInitializedAsync()
-        //{
-        //    base.OnInitializedAsync();
+        protected override async Task OnInitializedAsync()
+        {
+            await base.OnInitializedAsync();
 
-        //    //baseEntities = await baseService.GetEntities();
+            //baseEntities = await baseService.GetEntities();
 
-        //    moveCommandEntities = await commonService.GetEntitiesWithMoves();
-        //}
+            MoveCommandEntities = await CommonService.GetEntitiesWithMove();
+        }
 
         async void OnCharacterChanged(string characterCode)
         {
-            if (childList != null && !string.IsNullOrEmpty(characterCode))
+            if (!string.IsNullOrEmpty(characterCode))
             {
                 CharacterId = int.Parse(characterCode);
-                childList.baseEntities = await CommonService.GetEntitiesWithMoveByCharacterCode(int.Parse(characterCode));
+                MoveCommandEntities = await CommonService.GetEntitiesWithMoveByCharacterCode(int.Parse(characterCode));
                 StateHasChanged();
             }
         }

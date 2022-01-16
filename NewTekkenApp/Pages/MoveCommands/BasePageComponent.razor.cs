@@ -5,12 +5,16 @@ using TekkenApp.Models;
 
 namespace NewTekkenApp.Pages.MoveCommands
 {
-    public partial class BasePageComponent : BaseDataComponent<MoveCommand, MoveCommand_name>
+    public partial class BasePageComponent : BaseComponent<MoveCommand, MoveCommand_name>
     {
         public int? CharacterId { get; set; }
 
         [Inject]
         protected MoveCommandService<MoveCommand, MoveCommand_name> CommonService { get; set; } = default!;
+
+        [Inject]
+        protected MoveService<Move, Move_name> MoveService { get; set; } = default!;
+
 
         public BasePageComponent()
         {

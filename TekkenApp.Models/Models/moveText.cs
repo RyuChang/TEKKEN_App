@@ -9,9 +9,7 @@ namespace TekkenApp.Models
         public MoveText()
         {
             SetApp(TableName.MoveText);
-            NameSet = new HashSet<MoveText_name>();
         }
-        public new ICollection<MoveText_name> NameSet { get; set; }
         public new int Character_code { get; set; }
 
         //public virtual Character character_codeNavigation { get; set; }

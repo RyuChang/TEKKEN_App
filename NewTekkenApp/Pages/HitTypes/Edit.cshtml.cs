@@ -25,7 +25,7 @@ namespace NewTekkenApp.Pages.HitTypes
                 return NotFound();
             }
 
-            HitType = await _context.hitType.FirstOrDefaultAsync(m => m.Id == id);
+            HitType = await _context.HitType.FirstOrDefaultAsync(m => m.Id == id);
 
             if (HitType == null)
             {
@@ -66,7 +66,7 @@ namespace NewTekkenApp.Pages.HitTypes
 
         private bool HitTypeExists(int id)
         {
-            return _context.hitType.Any(e => e.Id == id);
+            return _context.HitType.Any(e => e.Id == id);
         }
     }
 }

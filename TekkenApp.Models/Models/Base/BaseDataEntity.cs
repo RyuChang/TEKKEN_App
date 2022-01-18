@@ -1,11 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace TekkenApp.Models
 {
     [NotMapped]
+    
     public class BaseDataEntity
     {
         [NotMapped]
@@ -30,7 +31,6 @@ namespace TekkenApp.Models
         [Required]
         public string Description { get; set; }
 
-        [NotMapped]
         public virtual ICollection<BaseNameEntity> NameSet { get; set; }
 
         protected void SetApp(TableName tableName)

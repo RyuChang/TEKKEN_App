@@ -13,9 +13,8 @@ namespace TekkenApp.Models
         public MoveData()
         {
             SetApp(TableName.MoveData);
-            NameSet = new HashSet<MoveData_name>();
         }
-        public new ICollection<MoveData_name> NameSet { get; set; }
+        
 
         [NotMapped]
         public new int Number { get; set; }

@@ -140,7 +140,6 @@ namespace NewTekkenApp.Data
         public async Task<List<TDataEntity>> GetEntitiesWithName()
         {
             return await _dataDbSet.Include("NameSet").ToListAsync();
-            //return  _dataDbSet.ToList();
         }
 
         public List<TDataEntity> GetEntitiesWithName(string tname)
@@ -197,7 +196,7 @@ namespace NewTekkenApp.Data
             await _tekkenDBContext.SaveChangesAsync();
             return BaseDataEntity;
         }
-
+ 
 
     }
 

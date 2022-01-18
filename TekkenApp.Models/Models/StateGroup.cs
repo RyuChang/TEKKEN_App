@@ -15,10 +15,7 @@ namespace TekkenApp.Models
         public StateGroup()
         {
             SetApp(TableName.StateGroup);
-            //State = new HashSet<State>();
-            NameSet = new HashSet<StateGroup_name>();
         }
-        public new ICollection<StateGroup_name> NameSet { get; set; }
         
         //public virtual ICollection<State> State { get; set; }
         //public virtual ICollection<StateGroup_name> StateGroup_name { get; set; }

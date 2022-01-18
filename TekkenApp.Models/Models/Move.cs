@@ -13,14 +13,10 @@ namespace TekkenApp.Models
         public Move()
         {
             SetApp(TableName.Move);
-            NameSet = new HashSet<Move_name>();
         }
-        public new ICollection<Move_name> NameSet { get; set; }
 
         public new int Character_code { get; set; }
 
-        [Required]
-        public string description { get; set; }
         //[Column(TypeName = "decimal(4, 2)")]
         public double? version { get; set; }
 

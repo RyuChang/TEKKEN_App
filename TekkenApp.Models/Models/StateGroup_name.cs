@@ -12,7 +12,7 @@ namespace TekkenApp.Models
             SetApp(TableName.StateGroup_name);
         }
 
-        public virtual StateGroup StateGroup_codeNavigation { get; set; }
+        //public virtual StateGroup StateGroup{ get; set; }
         //public virtual Language language_codeNavigation { get; set; }
     }
 }

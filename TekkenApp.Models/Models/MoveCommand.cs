@@ -15,10 +15,8 @@ namespace TekkenApp.Models
         public MoveCommand ()
         {
             SetApp(TableName.MoveCommand);
-            NameSet = new HashSet<MoveCommand_name>();
         }
 
-        public new ICollection<MoveCommand_name> NameSet { get; set; }
         
         [NotMapped]
         public new int Number { get; set; }

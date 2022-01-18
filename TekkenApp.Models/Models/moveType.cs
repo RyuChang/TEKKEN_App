@@ -11,9 +11,6 @@ namespace TekkenApp.Models
         public MoveType()
         {
             SetApp(TableName.MoveType);
-            NameSet = new HashSet<MoveType_name>();
-
         }
-        public new ICollection<MoveType_name> NameSet { get; set; }
     }
 }

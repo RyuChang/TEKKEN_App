@@ -26,7 +26,7 @@ namespace NewTekkenApp.Data
         {
             return await _dataDbSet.Include("Move").Include("NameSet").ToListAsync();
             //return  _dataDbSet.ToList();
-        }
+        } 
 
         public async Task<MoveData> GetEntityWithMovesByIdAsync(int id)
         {

@@ -24,7 +24,7 @@ namespace TEKKEN_WEB.areas.Admin.Controllers
         {
             try
             {
-                return Ok(await CommandService.GetEntities());
+                return Ok(await CommandService.GetCommands());
             }
             catch (Exception)
             {

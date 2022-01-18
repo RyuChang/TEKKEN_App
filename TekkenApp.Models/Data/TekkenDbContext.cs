@@ -396,7 +396,7 @@ namespace TekkenApp.Data
             #region Command
             modelBuilder.Entity<Command>(entity =>
             {
-                entity.Property(e => e.commandCode).IsUnicode(false).IsFixedLength(true);
+                entity.Property(e => e.CommandCode).IsUnicode(false).IsFixedLength(true);
 
                 //entity.Property(e => e.Description).IsUnicode(false);
 
@@ -404,7 +404,7 @@ namespace TekkenApp.Data
 
                 entity.HasMany(d => d.NameSet)
                  .WithOne()
-                 .HasPrincipalKey(p => p.commandCode)
+                 .HasPrincipalKey(p => p.CommandCode)
                  .HasForeignKey(d => d.CommandCode)
                  //.HasConstraintName("FK_character_name_character")
                  .OnDelete(DeleteBehavior.Cascade);

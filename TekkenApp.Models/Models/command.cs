@@ -26,11 +26,11 @@ namespace TekkenApp.Models
         [NotMapped]
         public new int Code { get; set; }
 
-        public string commandCode { get; set; }
+        public string CommandCode { get; set; }
 
         [Required]
         [Column("command")]
-        public string command { get; set; }
+        public string Command { get; set; }
         [Required]
         public string key { get; set; }
     }

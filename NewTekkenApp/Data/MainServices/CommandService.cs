@@ -15,14 +15,14 @@ namespace NewTekkenApp.Data
             //App = AppType.HitType;
         }
 
-       /* public virtual async Task<List<Command>> GetCommands()
+        public virtual async Task<List<CommandVM>> GetCommands()
         {
-            return await _dataDbSet.Select(p => new
+            return await _dataDbSet.Select(p => new CommandVM
             {
-                p.command,
-                p.Code
-            } ).ToListAsync();
-        }*/
+                Command = p.Command,
+                Code = p.Code
+            }).ToListAsync();
+        }
 
     }
 }

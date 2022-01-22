@@ -15,12 +15,12 @@ namespace NewTekkenApp.Data
             //App = AppType.HitType;
         }
 
-        public virtual async Task<List<CommandVM>> GetCommands()
+        public virtual async Task<List<KeyMapVM>> GetKeyMaps()
         {
-            return await _dataDbSet.Select(p => new CommandVM
+            return await _dataDbSet.Select(p => new KeyMapVM
             {
-                Command = p.Command,
-                Code = p.Code
+                Code = p.CommandCode,
+                Key = p.key
             }).ToListAsync();
         }
 

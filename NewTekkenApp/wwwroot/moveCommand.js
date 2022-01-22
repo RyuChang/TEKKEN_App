@@ -4,16 +4,34 @@
         this.resultKey = [];
         this.keyMap = [];
         this.command = document.getElementById('Command');
-        this.rowCommand = this.command.value;
+        this.displayCommand = document.getElementById('displayCommand');
+        this.rawCommand = this.command.value;
         this.clickedKey = [];
         //zaibatsuCommand = document.getElementById("zaibatsuCommand");
     }
 
     init() {
+        this.SetKeyMap();
+        this.SetKeyDown();
+        this.SetKeyUp();
+        this.SetStateGroup();
+    }
+
+    AddKey(key) {
+        if (this.clickedKey.indexOf(key) < 0) {
+            this.clickedKey.push(key);
+            this.resultKey.push(key);
+        }
+    }
+
+    SetKeyDown() {
         this.command.addEventListener("keydown", function (event) {
             commandUtil.AddKey(event.key);
-            commandUtil.timer++;
+            this.timer++;
         });
+    }
+
+    SetKeyUp() {
         this.command.addEventListener("keyup", function (event) {
             commandUtil.RemoveKey(event.key);
 
@@ -21,13 +39,6 @@
                 commandUtil.AddCommand(event.key);
             }
         });
-    }
-
-    AddKey(key) {
-        if (commandUtil.clickedKey.indexOf(key) < 0) {
-            commandUtil.clickedKey.push(key);
-            commandUtil.resultKey.push(key);
-        }
     }
 
     RemoveKey(key) {
@@ -45,11 +56,11 @@
             let lastIndex = this.rawCommand.lastIndexOf('/');
             commandUtil.SetCommand(this.rawCommand.substring(0, lastIndex));
             return;
-        } else if (this.clickedKey.length == 1 && this.timer < 2) {
+        } else if (commandUtil.clickedKey.length == 1 && this.timer < 2) {
             formedKey = key.toUpperCase();
-        } else if (this.clickedKey.length >= 2) {
-            formedKey = this.clickedKey.sort().toString().replace(/,/gi, '+').toUpperCase();
-        } else if (this.timer > 2) {
+        } else if (commandUtil.clickedKey.length >= 2) {
+            formedKey = commandUtil.clickedKey.sort().toString().replace(/,/gi, '+').toUpperCase();
+        } else if (commandUtil.timer > 2) {
             formedKey = 'L' + key.toUpperCase();
         }
         let mapppedKey = commandUtil.MapKey(formedKey);
@@ -61,8 +72,8 @@
 
 
     MapKey(formedKey) {
-        if (this.keyMap[formedKey] != undefined) {
-            return '[' + this.keyMap[formedKey] + ']';
+        if (commandUtil.keyMap[formedKey] != undefined) {
+            return '[' + commandUtil.keyMap[formedKey].trim() + ']';
         }
         return '';
     }
@@ -72,21 +83,88 @@
             result = result.substr(1);
         }
 
-        this.rawCommand = result;
-        this.command.value = this.rawCommand;
-        this.displayCommand.value = this.rawCommand.replace(/\//gi, ' ');
+        commandUtil.rawCommand = result;
+        commandUtil.command.value = commandUtil.rawCommand;
+        commandUtil.displayCommand.value = commandUtil.rawCommand.replace(/\//gi, ' ');
+
 
         this.InitCommand();
     }
 
     InitCommand() {
-        this.clickedKey = [];
-        this.timer = 0;
+        commandUtil.clickedKey = [];
+        commandUtil.timer = 0;
     }
     AddState(state) {
-        var result = this.rawCommand + '/{S:' + this.state + '}';
+        var result = commandUtil.rawCommand + '/{S:' + commandUtil.state + '}';
         //displayCommand.value = command;
         this.SetCommand(result);
+    }
+
+    async SetKeyMap() {
+        //fetch('/api/commands').then(data => console.log(data));
+
+
+        commandUtil.keyMap = await fetch('/api/commands', {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'none'
+            }
+        }).then(res => res.json())
+            .then(data => {
+                let result = [];
+                data.forEach(
+                    function (data) {
+                        result[data.key] = data.code;
+                    }
+                );
+                return result;
+            }).catch((err) => handleError(err));
+    }
+
+    SetStateGroup() {
+        const stateGroup = document.getElementById('StateGroup');
+        const stateGroup_Code = stateGroup.value;
+    }
+
+    AddStateModal(stateType, stateCode) {
+        let url;
+
+        if (stateType == "MOVE") {
+            url = "/Admin/Move/SelectMove";
+        } else {
+            url = "/Admin/MoveText/SelectMoveText";
+        }
+
+
+        var placeholderElement = $('#modal-placeholder');
+        var character_code = $('#Character_code').val();
+
+        $.get(url, { stateType: stateType, character_code: character_code }).done(function (data) {
+            placeholderElement.html(data);
+            placeholderElement.find('.modal').modal('show');
+        });
+
+        placeholderElement.off('click', '[data-save="modal"]').on('click', '[data-save="modal"]', function (event) {
+            event.preventDefault();
+            if (stateType == "MOVE") {
+                var result = rawCommand + '/{M:' + stateCode + ':' + $('#move').val() + '}';
+            } else {
+                var result = rawCommand + '/{T:' + stateCode + ':' + $('#move').val() + '}';
+            }
+
+            SetCommand(result);
+            placeholderElement.find('.modal').modal('hide');
+
+            //})
+        });
+
+        placeholderElement.off('click', '[data-bs-dismiss="modal"]').on('click', '[data-bs-dismiss="modal"]', function (event) {
+            event.preventDefault();
+            placeholderElement.find('.modal').modal('hide');
+        });
     }
 }
 
@@ -101,64 +179,12 @@ export { commandLib, commandUtil };
 
 
 
-
-
-
-//function AddStateModal(stateType, stateCode) {
-//    var url;
-
-//    if (stateType == "MOVE") {
-//        url = "/Admin/Move/SelectMove";
-//    } else {
-//        url = "/Admin/MoveText/SelectMoveText";
-//    }
-
-
-//    var placeholderElement = $('#modal-placeholder');
-//    var character_code = $('#Character_code').val();
-
-//    $.get(url, { stateType: stateType, character_code: character_code }).done(function (data) {
-//        placeholderElement.html(data);
-//        placeholderElement.find('.modal').modal('show');
-//    });
-
-//    placeholderElement.off('click', '[data-save="modal"]').on('click', '[data-save="modal"]', function (event) {
-//        event.preventDefault();
-//        if (stateType == "MOVE") {
-//            var result = rawCommand + '/{M:' + stateCode + ':' + $('#move').val() + '}';
-//        } else {
-//            var result = rawCommand + '/{T:' + stateCode + ':' + $('#move').val() + '}';
-//        }
-
-//        SetCommand(result);
-//        placeholderElement.find('.modal').modal('hide');
-
-//        //})
-//    });
-
-//    placeholderElement.off('click', '[data-bs-dismiss="modal"]').on('click', '[data-bs-dismiss="modal"]', function (event) {
-//        event.preventDefault();
-//        placeholderElement.find('.modal').modal('hide');
-//    });
-//}
-
-
-
-
 ////function SetZaibatsuCommand() {
 ////    CommandArray.forEach(function (item, index, array) {
 ////        zaibatsuCommand += item;
 ////    });
 ////}
 
-//function SetKeyMap() {
-//    $.getJSON("/Admin/MoveCommand/GetKeyMap", function (data) {
-//        var items = '';
-//        $.each(data, function (i, keyInfo) {
-//            keyMap[keyInfo.key] = keyInfo.code
-//        });
-//    });
-//}
 
 //$(function () {
 //    $("#TransCommand").click(function () {
@@ -205,26 +231,7 @@ export { commandLib, commandUtil };
 //}
 
 //$(function () {
-//    $('#StateGroup').change(function () {
-//        var url = '/Admin/State/GetJsonSelectListByStateGroup';
-//        var stateGroup_Code = $('#StateGroup').val();
 
-//        $.getJSON(url, { stateGroup_Code: stateGroup_Code }, function (data) {
-//            var items = '';
-//            $('#States').empty();
-//            $.each(data, function (i, States) {
-//                if (stateGroup_Code == 80000007) {
-//                    items += '<button type="button" class="col btn btn-primary" value="' + States.value + '" onClick="AddStateModal(\'MOVE\',this.value);" >' + States.text + '</button>';
-
-//                } else if (stateGroup_Code == 80000015) {
-//                    items += '<button type="button" class="col btn btn-primary" value="' + States.value + '" onClick="AddStateModal(\'TEXT\',this.value);" >' + States.text + '</button>';
-
-//                } else {
-//                    items += '<button type="button" class="col btn btn-primary" value="' + States.value + '" onClick="AddState(this.value);" >' + States.text + '</button>';
-//                }
-//            });
-//            $('#State').html(items);
-//        });
 
 //        var placeholderElement = $('#modal-placeholder');
 //        $('button[data-toggle="ajax-modal"]').click(function (event) {

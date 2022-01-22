@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using System.Data;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using System.Data;
 using TekkenApp.Data;
 using TekkenApp.Models;
 
@@ -146,6 +146,10 @@ namespace NewTekkenApp.Data
         {
             return _dataDbSet.Include(tname).ToList();
         }
+        public List<TDataEntity> GetEntitiesWithNameByStateGroup(int stateGroupCode)
+        {
+            return _dataDbSet.Where(d => d.StateGroup_code == stateGroupCode).Include("NameSet").ToList();
+        }
 
         public async Task<List<SelectListItem>> GetSelectItems()
         {
@@ -196,7 +200,7 @@ namespace NewTekkenApp.Data
             await _tekkenDBContext.SaveChangesAsync();
             return BaseDataEntity;
         }
- 
+
 
     }
 

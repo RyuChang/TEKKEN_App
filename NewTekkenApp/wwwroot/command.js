@@ -8,6 +8,11 @@ var clickedKey = [];
 var resultKey = [];
 var keyMap = [];
 
+onload(){
+    SetKeyMap();
+
+}
+
 command.addEventListener("keydown", function (event) {
     AddKey(event.key);
     timer++;
@@ -134,13 +139,23 @@ function RemoveKey(key) {
 //}
 
 function SetKeyMap() {
-    $.getJSON("/Admin/MoveCommand/GetKeyMap", function (data) {
-        var items = '';
-        $.each(data, function (i, keyInfo) {
-            keyMap[keyInfo.key] = keyInfo.code
-        });
+    var requestURL = "/Admin/MoveCommand/GetKeyMap";
+    var request = new XMLHttpRequest();
+    request.open('GET', requestURL);
+    request.responseType = 'json';
+    request.send();
+
+    var commands = request.response;
+
+    //var items = '';
+    $.each(commands, function (i, keyInfo) {
+        keyMap[keyInfo.key] = keyInfo.code
     });
 }
+
+
+
+
 /*
 $(function () {
     $("#TransCommand").click(function () {

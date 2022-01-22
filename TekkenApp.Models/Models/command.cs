@@ -20,17 +20,17 @@ namespace TekkenApp.Models
         [NotMapped]
         public new int Number { get; set; }
 
-        [NotMapped]
-        public new string Description { get; set; }
+        //[NotMapped]
+        //public new string Description { get; set; }
 
         [NotMapped]
         public new int Code { get; set; }
 
         public string CommandCode { get; set; }
 
-        [Required]
-        [Column("command")]
-        public string Command { get; set; }
+        //[Required]
+        //public string Description { get; set; }
+
         [Required]
         public string key { get; set; }
     }

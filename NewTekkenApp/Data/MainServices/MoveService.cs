@@ -23,6 +23,14 @@ namespace NewTekkenApp.Data
 
         }
 
+        public virtual async Task<List<MoveListVM>> GetKeyMoveLists()
+        {
+            return await _dataDbSet.Select(p => new MoveListVM
+            {
+                Code = p.Description,
+                Key = p.Code
+            }).ToListAsync();
+        }
 
     }
 }

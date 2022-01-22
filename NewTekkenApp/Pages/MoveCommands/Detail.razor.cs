@@ -20,10 +20,10 @@ namespace NewTekkenApp.Pages.MoveCommands
         {
             if (firstRender)
             {
-                module = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./command.js");
+                module = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./moveCommand.js");
             }
             //if(module is not null)  await module.InvokeAsync<object>("test2");
-            //if(module is not null)  await module.InvokeAsync<object>("commandUtil.init");
+            if(module is not null)  await module.InvokeAsync<object>("commandUtil.init");
             //await JSRuntime.InvokeAsync<object>("alert");
         }
 

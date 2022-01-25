@@ -1,4 +1,5 @@
 ﻿@page "/MoveCommands/Edit/{Id:int}"
+@using System.Collections
 @inherits BasePageComponent
 <h3>@GetAppTitle()</h3>
 
@@ -42,7 +43,7 @@ else
         <div class="mb-3 row">
             <label class="col-1 col-form-label">커맨드</label>
             <div class="col-auto">
-                <input id="Command" type="text" readonly class="form-control" placeholder="커맨드 입력" @bind="@moveEntity.MoveCommand.Description" />
+                <input id="Command" type="text" readonly class="form-control" placeholder="커맨드 입력" @bind="@moveEntity.MoveCommand.Description" @onkeydown="SetKeyDown" @onkeydown:preventDefault @onkeyup="SetKeyUp" @onkeyup:preventDefault />
             </div>
         </div>
 
@@ -50,7 +51,7 @@ else
         <div class="mb-3 row">
             <label class="col-1 col-form-label">커맨드</label>
             <div class="col-auto">
-                <input id="displayCommand" type="text" readonly class="form-control" placeholder="커맨드 입력" @bind="@moveEntity.MoveCommand.Description" />
+                <input id="displayCommand" type="text" readonly class="form-control" placeholder="커맨드 입력" @bind="@displayCommand" />
             </div>
         </div>
 
@@ -122,11 +123,11 @@ else
                 {
                     if (_stateGroupCode == 80000007)
                     {
-                        <button type="button" class="mb-1 col btn btn-primary" value="@item.Description" onClick="AddStateModal(\'MOVE\',this.value);">@item.Description</button>
+                        <button type="button" class="mb-1 col btn btn-primary" value="@item.Description" @onclick="ShowMovesModal">@item.Description</button>
                     }
                     else if (_stateGroupCode == 80000015)
                     {
-                        <button type="button" class="mb-1 col btn btn-primary" value="@item.Description" onClick="AddStateModal(\'TEXT\',this.value);">@item.Description</button>
+                        <button type="button" class="mb-1 col btn btn-primary" value="@item.Description" onClick="ShowTextModal(\'TEXT\',this.value);">@item.Description</button>
                     }
                     else
                     {
@@ -139,14 +140,186 @@ else
     </div>
 </div>
 
-@*<div class="mb-3 row">
+<button class="btn btn-primary">Show Modal</button>
+
+@code {
+
+    [CascadingParameter] public IModalService Modal { get; set; }
+
+    public async Task ShowMovesModal()
+    {
+        var parameters = new ModalParameters();
+        parameters.Add(nameof(moveEntity.Character_code), moveEntity.Character_code);
+
+        var moveModal = Modal.Show<MoveListComponent>("State Move", parameters);
+        var result = await moveModal.Result;
+
+        if (result.Cancelled)
+        {
+            Console.WriteLine("Modal was cancelled");
+        }
+        else
+        {
+            //await JSRuntime.InvokeVoidAsync("AddMovesModal", result.Data);
+
+            if (module is not null) await module.InvokeAsync<object>("commandUtil.AddMovesModal", result.Data);
+            Console.WriteLine("Modal was closed");
+        }
+    }
+
+    async Task ShowTextModal()
+    {
+
+        //url = "/Admin/MoveText/SelectMoveText";
+
+        //        var result = rawCommand + '/{T:' + stateCode + ':' + $('#move').val() + '}';
+
+    }
+    //    void ShowMovesModal() => Modal.Show<MoveListComponent>("State Move");
+
+    private int timer { get; set; } = 0;
+    public List<string> resultKey { get; set; }
+    public List<string> clickedKey { get; set; }
+    private Hashtable keyMap = new Hashtable();
+    public string rawCommand { get; set; }
+    public string displayCommand { get; set; }
+
+
+    public void InitCommand()
+    {
+        SetKeyMap();
+        rawCommand = moveEntity.MoveCommand.Description;
+        clickedKey = new();
+        resultKey = new();
+
+    }
+    public void ClearCommand()
+    {
+        clickedKey.Clear();
+        timer = 0;
+    }
+
+
+
+    public void SetKeyDown(KeyboardEventArgs e)
+    {
+        AddKey(e.Key);
+        timer++;
+    }
+
+
+    public void SetKeyUp(KeyboardEventArgs e)
+    {
+        RemoveKey(e.Key);
+        if (resultKey.Count == 0)
+        {
+            AddCommand(e.Key);
+        }
+        timer++;
+    }
+
+
+    public void AddCommand(string key)
+    {
+        string result = rawCommand;
+        string formedKey = "";
+
+        if (key == "Backspace")
+        {
+            int lastIndex = rawCommand.LastIndexOf("/");
+            if (lastIndex < 0) lastIndex = 0;
+            SetCommand(rawCommand.Substring(0, lastIndex));
+            return;
+        }
+        else if (clickedKey.Count == 1 && this.timer < 2)
+        {
+            formedKey = key.ToUpper();
+        }
+        else if (clickedKey.Count >= 2)
+        {
+            clickedKey.Sort();
+            formedKey = clickedKey.ToArray().ToString().Replace(",", "+").ToUpper();
+        }
+        else if (timer > 2)
+        {
+            formedKey = 'L' + key.ToUpper();
+        }
+
+        string mapppedKey = MapKey(formedKey);
+        if (mapppedKey != "")
+        {
+            result += '/' + mapppedKey;
+        }
+        SetCommand(result);
+    }
+
+
+
+    public string MapKey(string formedKey)
+    {
+        if (keyMap[formedKey] != null)
+        {
+            return $"[{keyMap[formedKey].ToString().Trim()}]";
+        }
+        return "";
+    }
+
+    public void SetCommand(string result)
+    {
+        if (result.Length > 0 && result[0] == '/')
+        {
+            result = result.Substring(1, result.Length - 1);
+        }
+
+        rawCommand = result;
+        moveEntity.MoveCommand.Description = rawCommand;
+        displayCommand = rawCommand.Replace("/", " ");
+
+
+        ClearCommand();
+    }
+
+
+    public void AddKey(string key)
+    {
+        if (clickedKey.Count <= 0)
+        {
+            clickedKey.Add(key);
+            resultKey.Add(key);
+        }
+    }
+
+    public void RemoveKey(string key)
+    {
+        bool isExist = this.resultKey.Contains(key);
+        if (isExist)
+        {
+            resultKey.Remove(key);
+        }
+    }
+
+
+    public async void SetKeyMap()
+    {
+        var results = await httpClient.GetFromJsonAsync<MoveListVM[]>("https://localhost:8164/api/commands");
+        //keyMap = new HashSet();
+
+        foreach (var result in results)
+        {
+            keyMap[result.Key] = result.Code;
+        }
+        //   result[data.key] = data.code;
+    }
+}
+
+    @*<div class="mb-3 row">
     <label for="@moveEntity.MoveCommand.FirstOrDefault().Command" class="col-1 col-form-label">Command</label>
     <div class="col-auto">
     <input id="displayCommand" type="text" class="form-control form-control-sm"  @bind="@moveEntity.Command" readonly="readonly" />
     </div>
     </div>*@
 
-@*
+    @*
 
     @{int i = 0; }
     @foreach (var item in @ViewBag.moveCommand)
@@ -171,44 +344,43 @@ else
     <a asp-action="Delete" class="btn btn-primary text-right" asp-route-id="@Model[0].Id" onclick="return confirm('정말 삭제하겠습니까?');">삭제</a>
     </div>*@
 
-@*    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    @*    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
     <span class="text-danger">@ViewBag.ErrorMessage</span>
     </div>
-*@
+    *@
 
 
-
-
-@*==================== 변환 커맨드 ====================*@
+    /*
+    @*==================== 변환 커맨드 ====================*@
 <!--<div class="row mb-3">
-    <div class="col-sm-2">
-        <label class="col-form-label col-form-label-sm">변환 커맨드 EN</label>
-    </div>
-    <div class="col-sm">
-        <input id="TlanslatedCommand_en" type="text" class="form-control form-control-sm" placeholder="커맨드 입력" readonly="readonly"></input>
-    </div>
+<div class="col-sm-2">
+<label class="col-form-label col-form-label-sm">변환 커맨드 EN</label>
+</div>
+<div class="col-sm">
+<input id="TlanslatedCommand_en" type="text" class="form-control form-control-sm" placeholder="커맨드 입력" readonly="readonly"></input>
+</div>
 </div>-->
-@*==================== 변환 커맨드 ====================*@
+    @*==================== 변환 커맨드 ====================*@
 <!--<div class="row mb-3">
-    <div class="col-sm-2">
-        <label class="col-form-label col-form-label-sm">변환 커맨드 KO</label>
-    </div>
-    <div class="col-sm">
-        <input id="TlanslatedCommand_ko" type="text" class="form-control form-control-sm" placeholder="커맨드 입력" readonly="readonly"></input>
-    </div>
+<div class="col-sm-2">
+<label class="col-form-label col-form-label-sm">변환 커맨드 KO</label>
+</div>
+<div class="col-sm">
+<input id="TlanslatedCommand_ko" type="text" class="form-control form-control-sm" placeholder="커맨드 입력" readonly="readonly"></input>
+</div>
 </div>-->
-@*==================== 변환 커맨드 ====================*@
+    @*==================== 변환 커맨드 ====================*@
 <!--<div class="row mb-3">
-    <div class="col-sm-2">
-        <label class="col-form-label col-form-label-sm">변환 커맨드 JP</label>
-    </div>
-    <div class="col-sm">
-        <input id="TlanslatedCommand_jp" type="text" class="form-control form-control-sm" placeholder="커맨드 입력" readonly="readonly"></input>
-    </div>
+<div class="col-sm-2">
+<label class="col-form-label col-form-label-sm">변환 커맨드 JP</label>
+</div>
+<div class="col-sm">
+<input id="TlanslatedCommand_jp" type="text" class="form-control form-control-sm" placeholder="커맨드 입력" readonly="readonly"></input>
+</div>
 </div>-->
-@*==================== 기술 상태 입력 ====================*@
-@*<div class="row mb-3">
+    @*==================== 기술 상태 입력 ====================*@
+    @*<div class="row mb-3">
     <div class="col-sm-2">
     <label class="col-form-label col-form-label-sm">States Group</label>
     </div>
@@ -232,31 +404,4 @@ else
 
 
 <!-- Modal placeholder -->
-<div id="modal-placeholder"></div>
-
-<div class="modal fade" id="ModalSelectMove" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="row mb-3">
-
-                        <div class="col-sm-2">
-                            <label class="col-form-label col-form-label-sm">Move</label>
-                        </div>
-                        <div class="col-sm">
-                            <select id="move" asp-items="@ViewBag.SelectMoves"></select>
-                        </div>
-                   
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-save="modal">Save</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
+*/

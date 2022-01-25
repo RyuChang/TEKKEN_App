@@ -26,6 +26,8 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddBlazoredModal();
 builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
+builder.Services.AddSingleton<HttpClient>();
+
 builder.Services.AddSingleton<WeatherForecastService>();
 
 builder.Services.AddTransient<HitTypeService<HitType, HitType_name>>();

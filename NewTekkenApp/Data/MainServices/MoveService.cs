@@ -20,17 +20,16 @@ namespace NewTekkenApp.Data
         {
             //
             return await _dataDbSet.Where(m => m.Id == id).Include(m => m.MoveCommand).ThenInclude(c => c.NameSet).FirstOrDefaultAsync();
-
         }
 
-        public virtual async Task<List<MoveListVM>> GetKeyMoveLists()
-        {
-            return await _dataDbSet.Select(p => new MoveListVM
-            {
-                Code = p.Description,
-                Key = p.Code
-            }).ToListAsync();
-        }
+        //public virtual async Task<List<MoveListVM>> GetMoveStatesByCharacterCode(int character_code)
+        //{
+        //    return await _dataDbSet.Where(p => p.Character_code == character_code).Select(p => new MoveListVM
+        //    {
+        //        Code = p.Description,
+        //        //Key = p.Code
+        //    }).ToListAsync();
+        //}
 
     }
 }

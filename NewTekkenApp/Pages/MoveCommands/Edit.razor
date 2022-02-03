@@ -43,7 +43,7 @@ else
         <div class="mb-3 row">
             <label class="col-1 col-form-label">커맨드</label>
             <div class="col-auto">
-                <input id="Command" type="text" readonly class="form-control" placeholder="커맨드 입력" @bind="@moveEntity.MoveCommand.Description" @onkeydown="SetKeyDown" @onkeydown:preventDefault @onkeyup="SetKeyUp" @onkeyup:preventDefault />
+                <input id="Command" type="text" readonly class="form-control" placeholder="커맨드 입력" @bind="@moveEntity.MoveCommand.Description" @onkeydown="SetKeyDown" @onkeydown:preventDefault,stopPropagation  @onkeyup="SetKeyUp" @onkeyup:preventDefault,stopPropagation />
             </div>
         </div>
 
@@ -201,7 +201,7 @@ else
 
 
 
-    public void SetKeyDown(KeyboardEventArgs e)
+    public async Task SetKeyDown(KeyboardEventArgs e)
     {
         AddKey(e.Key);
         timer++;

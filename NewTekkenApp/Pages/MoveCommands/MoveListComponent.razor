@@ -25,7 +25,7 @@ else
 }
 
 @code {
-    [Inject] protected MoveService<Move, Move_name> MoveService { get; set; } = default!;
+    [Inject] protected IMoveService MoveService { get; set; } = default!;
 
     [Parameter] public int Character_code { get; set; } = default!;
     [CascadingParameter] BlazoredModalInstance ModalInstance { get; set; } = default!;

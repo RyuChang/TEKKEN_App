@@ -4,8 +4,7 @@ using TekkenApp.Models;
 
 namespace NewTekkenApp.Data
 {
-    public class MoveDataService<TDataEntity, TNameEntity> : BaseService<MoveData, MoveData_name>
-
+    public class MoveDataService : BaseService<MoveData, MoveData_name>, IMoveDataService
     {
 
         public MoveDataService(TekkenDbContext tekkenDbContext) : base(tekkenDbContext, tekkenDbContext.MoveData, tekkenDbContext.MoveData_Name)
@@ -26,7 +25,7 @@ namespace NewTekkenApp.Data
         {
             return await _dataDbSet.Include("Move").Include("NameSet").ToListAsync();
             //return  _dataDbSet.ToList();
-        } 
+        }
 
         public async Task<MoveData> GetEntityWithMovesByIdAsync(int id)
         {

@@ -10,7 +10,7 @@ namespace NewTekkenApp.Pages.MoveDatas
         public int? CharacterId { get; set; }
 
         [Inject]
-        protected MoveDataService<MoveData, MoveData_name> CommonService { get; set; } = default!;
+        protected IMoveDataService CommonService { get; set; } = default!;
 
         [Inject]
         protected IMoveTypeService moveTypeService { get; set; } = default!;

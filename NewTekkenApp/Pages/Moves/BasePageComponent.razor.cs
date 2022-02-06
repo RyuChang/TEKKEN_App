@@ -10,7 +10,7 @@ namespace NewTekkenApp.Pages.Moves
         public int? CharacterId { get; set; }
 
         [Inject]
-        protected MoveService<Move, Move_name>? CommonService { get; set; }
+        protected IMoveService? CommonService { get; set; }
 
         public BasePageComponent()
         {

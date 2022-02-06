@@ -1,3 +1,4 @@
+using Blazored.Modal;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -6,7 +7,6 @@ using NewTekkenApp.Data;
 using NewTekkenApp.Utilities;
 using TekkenApp.Data;
 using TekkenApp.Models;
-using Blazored.Modal;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,9 +36,10 @@ builder.Services.AddTransient<IStateGroupService, StateGroupService>();
 builder.Services.AddTransient<IMoveTextService, MoveTextService>();
 builder.Services.AddTransient<IMoveTypeService, MoveTypeService>();
 builder.Services.AddTransient<IMoveSubTypeService, MoveSubTypeService>();
-builder.Services.AddTransient<MoveService<Move, Move_name>>();
-builder.Services.AddTransient<MoveDataService<MoveData, MoveData_name>>();
-builder.Services.AddTransient<MoveCommandService<MoveCommand, MoveCommand_name>>();
+builder.Services.AddTransient<IMoveService, MoveService>();
+builder.Services.AddTransient<IMoveDataService, MoveDataService>();
+builder.Services.AddTransient<IMoveCommandService, MoveCommandService>();
+
 builder.Services.AddTransient<CommandService<Command, Command_name>>();
 builder.Services.AddTransient<CharacterService<Character, Character_name>>();
 

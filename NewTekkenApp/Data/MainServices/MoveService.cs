@@ -5,7 +5,7 @@ using TekkenApp.Models;
 
 namespace NewTekkenApp.Data
 {
-    public class MoveService<TDataEntity, TNameEntity> : BaseService<Move, Move_name>
+    public class MoveService : BaseService<Move, Move_name>, IMoveService
     {
         [CascadingParameter]
         public int? StateGroupId { get; set; }

@@ -11,9 +11,9 @@ namespace TEKKEN_WEB.areas.Admin.Controllers
     public class MovesController : ControllerBase
     {
         [Inject]
-        MoveService<Move, Move_name> MoveService { get; set; } = default!;
+        IMoveService MoveService { get; set; } = default!;
 
-        public MovesController(MoveService<Move, Move_name> _MoveService)
+        public MovesController(IMoveService _MoveService)
         {
             MoveService = _MoveService;
         }

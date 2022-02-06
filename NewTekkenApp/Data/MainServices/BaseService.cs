@@ -6,8 +6,7 @@ using TekkenApp.Models;
 
 namespace NewTekkenApp.Data
 {
-    public abstract class BaseService<TDataEntity, TNameEntity>
-        where TDataEntity : BaseDataEntity
+    public abstract class BaseService<TDataEntity, TNameEntity> : IBaseService<TDataEntity, TNameEntity> where TDataEntity : BaseDataEntity
         where TNameEntity : BaseNameEntity, new()
     {
         protected TekkenDbContext _tekkenDBContext;

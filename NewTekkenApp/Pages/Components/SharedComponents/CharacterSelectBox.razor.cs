@@ -1,14 +1,13 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using NewTekkenApp.Data;
-using TekkenApp.Models;
 
 namespace NewTekkenApp.Pages.Components.SharedComponents
 {
     public partial class CharacterSelectBox
     {
         [Inject]
-        protected CharacterService<Character, Character_name> characterService { get; set; } = default!;
+        protected ICharacterService characterService { get; set; } = default!;
 
         public List<SelectListItem> selectListItems { get; set; } = default!;
 

@@ -9,11 +9,11 @@ namespace TEKKEN_WEB.areas.Admin.Controllers
     [ApiController]
     public class CommandsController : ControllerBase
     {
-        CommandService<Command, Command_name> CommandService { get; set; } = default!;
+        ICommandService CommandService { get; set; } = default!;
         //[Inject]
         //protected CommandService<Command, Command_name> CommandService { get; set; } = default!;
 
-        public CommandsController(CommandService<Command, Command_name> _CommandService)
+        public CommandsController(ICommandService _CommandService)
         {
             CommandService = _CommandService;
 

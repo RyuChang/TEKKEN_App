@@ -9,7 +9,7 @@ namespace NewTekkenApp.Pages.Commands
     {
 
         [Inject]
-        protected CommandService<Command, Command_name> CommonService { get; set; } = default!;
+        protected ICommandService CommonService { get; set; } = default!;
 
         public BasePageComponent()
         {

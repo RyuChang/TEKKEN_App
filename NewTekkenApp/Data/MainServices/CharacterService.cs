@@ -4,7 +4,7 @@ using TekkenApp.Models;
 
 namespace NewTekkenApp.Data
 {
-    public class CharacterService<TDataEntity, TNameEntity> : BaseService<Character, Character_name>
+    public class CharacterService : BaseService<Character, Character_name>, ICharacterService
     {
         [CascadingParameter]
         public int? CharacterId { get; set; }

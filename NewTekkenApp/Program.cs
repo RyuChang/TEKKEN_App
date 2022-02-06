@@ -6,7 +6,6 @@ using NewTekkenApp.Areas.Identity;
 using NewTekkenApp.Data;
 using NewTekkenApp.Utilities;
 using TekkenApp.Data;
-using TekkenApp.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,8 +39,8 @@ builder.Services.AddTransient<IMoveService, MoveService>();
 builder.Services.AddTransient<IMoveDataService, MoveDataService>();
 builder.Services.AddTransient<IMoveCommandService, MoveCommandService>();
 
-builder.Services.AddTransient<CommandService<Command, Command_name>>();
-builder.Services.AddTransient<CharacterService<Character, Character_name>>();
+builder.Services.AddTransient<ICommandService, CommandService>();
+builder.Services.AddTransient<ICharacterService, CharacterService>();
 
 builder.Services.AddTransient<NavigationUtil>();
 

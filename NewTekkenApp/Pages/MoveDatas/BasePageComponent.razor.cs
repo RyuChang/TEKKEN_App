@@ -13,11 +13,11 @@ namespace NewTekkenApp.Pages.MoveDatas
         protected MoveDataService<MoveData, MoveData_name> CommonService { get; set; } = default!;
 
         [Inject]
-        protected MoveTypeService<MoveType, MoveType_name> moveTypeService { get; set; } = default!;
+        protected IMoveTypeService moveTypeService { get; set; } = default!;
 
 
         [Inject]
-        protected MoveSubTypeService<MoveSubType, MoveSubType_name> moveSubTypeService { get; set; } = default!;
+        protected IMoveSubTypeService moveSubTypeService { get; set; } = default!;
 
         [Inject]
         protected IHitTypeService hitTypeService { get; set; } = default!;

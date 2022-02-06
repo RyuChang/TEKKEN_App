@@ -33,14 +33,14 @@ builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddTransient<IHitTypeService, HitTypeService>();
 builder.Services.AddTransient<IStateService, StateService>();
 builder.Services.AddTransient<IStateGroupService, StateGroupService>();
+builder.Services.AddTransient<IMoveTextService, MoveTextService>();
+builder.Services.AddTransient<IMoveTypeService, MoveTypeService>();
+builder.Services.AddTransient<IMoveSubTypeService, MoveSubTypeService>();
 builder.Services.AddTransient<MoveService<Move, Move_name>>();
 builder.Services.AddTransient<MoveDataService<MoveData, MoveData_name>>();
 builder.Services.AddTransient<MoveCommandService<MoveCommand, MoveCommand_name>>();
 builder.Services.AddTransient<CommandService<Command, Command_name>>();
-builder.Services.AddTransient<MoveTextService<MoveText, MoveText_name>>();
 builder.Services.AddTransient<CharacterService<Character, Character_name>>();
-builder.Services.AddTransient<MoveTypeService<MoveType, MoveType_name>>();
-builder.Services.AddTransient<MoveSubTypeService<MoveSubType, MoveSubType_name>>();
 
 builder.Services.AddTransient<NavigationUtil>();
 

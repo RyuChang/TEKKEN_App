@@ -4,8 +4,7 @@ using TekkenApp.Models;
 
 namespace NewTekkenApp.Data
 {
-    public class MoveTypeService<TDataEntity, TNameEntity> : BaseService<MoveType, MoveType_name>
-
+    public class MoveTypeService : BaseService<MoveType, MoveType_name>, IMoveTypeService
     {
 
         public MoveTypeService(TekkenDbContext tekkenDbContext) : base(tekkenDbContext, tekkenDbContext.moveType, tekkenDbContext.moveType_name)

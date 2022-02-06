@@ -14,7 +14,7 @@ namespace NewTekkenApp.Pages.Components.Base
         public AppType App { get; set; }
 
         [Parameter]
-        public BaseService<TDataEntity, TNameEntity> baseService { get; set; } = default!;
+        public IBaseService<TDataEntity, TNameEntity> baseService { get; set; } = default!;
 
 
         //[Inject]

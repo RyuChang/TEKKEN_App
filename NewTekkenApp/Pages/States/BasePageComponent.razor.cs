@@ -11,7 +11,7 @@ namespace NewTekkenApp.Pages.States
         public int? StateGroupCode { get; set; }
 
         [Inject]
-        protected StateService<State, State_name>? CommonService { get; set; }
+        protected IStateService? CommonService { get; set; }
 
 
         public BasePageComponent()

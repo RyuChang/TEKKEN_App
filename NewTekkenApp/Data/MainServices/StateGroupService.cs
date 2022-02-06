@@ -1,13 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Components;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using TekkenApp.Data;
 using TekkenApp.Models;
 
 namespace NewTekkenApp.Data
 {
-    public class StateGroupService<TDataEntity, TNameEntity> :  BaseService<StateGroup, StateGroup_name>
+    public class StateGroupService : BaseService<StateGroup, StateGroup_name>, IStateGroupService
     {
         public StateGroupService(TekkenDbContext tekkenDbContext) : base(tekkenDbContext, tekkenDbContext.StateGroup, tekkenDbContext.StateGroup_name)
         {
@@ -28,7 +25,7 @@ namespace NewTekkenApp.Data
         public async Task<List<StateGroup>> GetStateGroups()
         {
             //_dataDbSet.sta`
-            
+
             return await _dataDbSet.ToListAsync();
         }
 

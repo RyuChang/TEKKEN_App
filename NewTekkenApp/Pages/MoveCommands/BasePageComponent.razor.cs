@@ -17,7 +17,7 @@ namespace NewTekkenApp.Pages.MoveCommands
 
         [Inject]
 
-        protected StateService<State, State_name> StateService { get; set; } = default!;
+        protected StateService StateService { get; set; } = default!;
 
 
         public BasePageComponent()

@@ -1,14 +1,13 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using NewTekkenApp.Data;
-using TekkenApp.Models;
 
 namespace NewTekkenApp.Pages.Components.SharedComponents
 {
     public partial class StateGroupSelectBox
     {
         [Inject]
-        protected StateGroupService<StateGroup, StateGroup_name> StateGroupService { get; set; } = default!;
+        protected IStateGroupService StateGroupService { get; set; } = default!;
 
         public List<SelectListItem> selectListItems { get; set; } = default!;
 
@@ -17,7 +16,7 @@ namespace NewTekkenApp.Pages.Components.SharedComponents
 
         protected override async Task OnInitializedAsync()
         {
-               selectListItems = await StateGroupService.GetSelectItems();
+            selectListItems = await StateGroupService.GetSelectItems();
         }
 
         [Parameter]

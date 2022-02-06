@@ -4,7 +4,7 @@ using TekkenApp.Models;
 
 namespace NewTekkenApp.Data
 {
-    public class StateService<TDataEntity, TNameEntity> : BaseService<State, State_name>
+    public class StateService : BaseService<State, State_name>, IStateService
     {
         [CascadingParameter]
         public int? StateGroupId { get; set; }

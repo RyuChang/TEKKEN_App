@@ -20,7 +20,7 @@ namespace NewTekkenApp.Pages.MoveDatas
         protected MoveSubTypeService<MoveSubType, MoveSubType_name> moveSubTypeService { get; set; } = default!;
 
         [Inject]
-        protected HitTypeService<HitType, HitType_name> hitTypeService { get; set; } = default!;
+        protected IHitTypeService hitTypeService { get; set; } = default!;
 
         public BasePageComponent()
         {

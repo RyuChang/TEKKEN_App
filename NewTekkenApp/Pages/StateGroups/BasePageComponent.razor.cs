@@ -1,13 +1,14 @@
 ﻿using Microsoft.AspNetCore.Components;
 using NewTekkenApp.Data;
+using NewTekkenApp.Pages.Components.Base;
 using TekkenApp.Models;
 
 namespace NewTekkenApp.Pages.StateGroups
 {
-    public partial class BasePageComponent : NewTekkenApp.Pages.Components.Base.BaseDataComponent<StateGroup, StateGroup_name>
+    public partial class BasePageComponent : BaseDataComponent<StateGroup, StateGroup_name>
     {
         [Inject]
-        protected StateGroupService<StateGroup, StateGroup_name>? CommonService { get; set; }
+        protected IStateGroupService? CommonService { get; set; }
 
         public BasePageComponent()
         {

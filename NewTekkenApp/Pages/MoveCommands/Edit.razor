@@ -41,9 +41,9 @@ else
         </div>
 
         <div class="mb-3 row">
-            <label class="col-1 col-form-label">커맨드</label>
+            <label class="col-1 col-form-label">커맨드</label> <input class="col-1 col-form-label" @bind="@timer"></input>
             <div class="col-auto">
-                <input id="Command" type="text" readonly class="form-control" placeholder="커맨드 입력" @bind="@moveEntity.MoveCommand.Description" @onkeydown="SetKeyDown" @onkeydown:preventDefault,stopPropagation  @onkeyup="SetKeyUp" @onkeyup:preventDefault,stopPropagation />
+                <input id="Command" type="text" readonly class="form-control" placeholder="커맨드 입력" @bind="@moveEntity.MoveCommand.Description" @onkeydown="SetKeyDown" @onkeydown:preventDefault="true" @onkeydown:stopPropagation="true" @onkeyup="SetKeyUp" @onkeyup:preventDefault="true" @onkeyup:stopPropagation="true" />
             </div>
         </div>
 
@@ -184,13 +184,14 @@ else
     public string rawCommand { get; set; }
     public string displayCommand { get; set; }
 
+    Boolean keyDown = false;
 
     public void InitCommand()
     {
         SetKeyMap();
         rawCommand = moveEntity.MoveCommand.Description;
-        clickedKey = new();
-        resultKey = new();
+        clickedKey = new List<string>();
+        resultKey = new List<string>();
 
     }
     public void ClearCommand()
@@ -205,17 +206,31 @@ else
     {
         AddKey(e.Key);
         timer++;
+        Console.WriteLine("SetKeyDown");
     }
 
 
-    public void SetKeyUp(KeyboardEventArgs e)
+    public async Task SetKeyUp(KeyboardEventArgs e)
     {
         RemoveKey(e.Key);
         if (resultKey.Count == 0)
         {
             AddCommand(e.Key);
         }
-        timer++;
+        timer = 0;
+        Console.WriteLine("SetKeyUp");
+
+    }
+
+
+    public void AddKey(string key)
+    {
+
+        if (!clickedKey.Contains(key))
+        {
+            clickedKey.Add(key);
+            resultKey.Add(key);
+        }
     }
 
 
@@ -231,26 +246,33 @@ else
             SetCommand(rawCommand.Substring(0, lastIndex));
             return;
         }
-        else if (clickedKey.Count == 1 && this.timer < 2)
+        else if (clickedKey.Count == 1)
         {
             formedKey = key.ToUpper();
         }
         else if (clickedKey.Count >= 2)
         {
             clickedKey.Sort();
-            formedKey = clickedKey.ToArray().ToString().Replace(",", "+").ToUpper();
+
+            formedKey = String.Join("+", clickedKey.ToArray()).ToUpper();
         }
-        else if (timer > 2)
+        
+        if (timer > 2)
         {
-            formedKey = 'L' + key.ToUpper();
+            formedKey = 'L' + formedKey.ToUpper();
         }
+        
 
         string mapppedKey = MapKey(formedKey);
+       
+
         if (mapppedKey != "")
         {
             result += '/' + mapppedKey;
         }
+
         SetCommand(result);
+        clickedKey.Clear();
     }
 
 
@@ -277,16 +299,6 @@ else
 
 
         ClearCommand();
-    }
-
-
-    public void AddKey(string key)
-    {
-        if (clickedKey.Count <= 0)
-        {
-            clickedKey.Add(key);
-            resultKey.Add(key);
-        }
     }
 
     public void RemoveKey(string key)

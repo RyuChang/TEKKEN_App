@@ -1,13 +1,14 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
-using NewTekkenApp.Data;
-using TekkenApp.Models;
-
+using TekkenApp.Data;
+using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
 
 namespace TEKKEN_WEB.areas.Admin.Controllers
 {
-    [Microsoft.AspNetCore.Mvc.Route("api/[controller]")]
+    //[Microsoft.AspNetCore.Mvc.Route("api/[controller]/{id?}")]
     [ApiController]
+    [Area("API")]
+    [Produces("application/json")]
     public class MovesController : ControllerBase
     {
         [Inject]
@@ -19,12 +20,12 @@ namespace TEKKEN_WEB.areas.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetMovesByCharacterId(int character_id)
+        [Route("api/[controller]/{id?}")]
+        public async Task<ActionResult> GetEntityWithCommandsByCharacterIdAsync(int id)
         {
             try
             {
-
-                return Ok(await MoveService.GetEntitiesWithCharacterCode(character_id));
+                return Ok(await MoveService.GetEntityWithCommandsByCharacterIdAsync(id));
             }
             catch (Exception)
             {

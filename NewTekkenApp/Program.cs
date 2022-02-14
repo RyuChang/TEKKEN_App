@@ -1,7 +1,9 @@
+using System.Text.Json.Serialization;
 using Blazored.Modal;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Net.Http.Headers;
 using NewTekkenApp.Areas.Identity;
 using NewTekkenApp.Data;
 using NewTekkenApp.Utilities;
@@ -16,7 +18,13 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddDbContext<TekkenDbContext>(options =>
     options.UseSqlServer(
         builder.Configuration.GetConnectionString("tekkenConnection"), b => b.MigrationsAssembly("TekkenApp")).EnableSensitiveDataLogging(), ServiceLifetime.Transient);
+builder.Services.AddControllers().AddJsonOptions(x =>
+                    {
+                        x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+                        x.JsonSerializerOptions.WriteIndented = true;
 
+                    }
+                    );
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
@@ -66,8 +74,35 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+         name: "API",
+         pattern: "{area:exists}/{controller=Moves}/{action=Index}/{id?}");
+
+    endpoints.MapControllerRoute(
+         name: "API",
+         pattern: "{area:exists}/{controller=Commands}/{action=Index}");
+
+
+    endpoints.MapAreaControllerRoute(
+        name: "default",
+        areaName: "Admin",
+        pattern: "{area:exists}/{controller=Move}/{action=Index}/{id?}");
+
+
+});
+
+app.UseCors(policy =>
+    policy.WithOrigins("https://localhost:7275;", "http://localhost:5275")
+    .AllowAnyMethod()
+    .WithHeaders(HeaderNames.ContentType, HeaderNames.Authorization, "x-custom-header")
+    .AllowCredentials());
+
 app.UseAuthentication();
 app.UseAuthorization();
+
+
 
 app.MapControllers();
 app.MapBlazorHub();

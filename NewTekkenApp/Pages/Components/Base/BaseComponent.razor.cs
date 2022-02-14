@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using NewTekkenApp.Data;
 using NewTekkenApp.Utilities;
+using TekkenApp.Data;
 using TekkenApp.Models;
 
 namespace NewTekkenApp.Pages.Components.Base

@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
-using NewTekkenApp.Data;
 using NewTekkenApp.Pages.Components.Base;
+using TekkenApp.Data;
 using TekkenApp.Models;
-
 namespace NewTekkenApp.Pages.MoveDatas
 {
     public partial class BasePageComponent : BaseComponent<MoveData, MoveData_name>

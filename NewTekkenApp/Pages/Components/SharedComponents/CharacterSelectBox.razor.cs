@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using NewTekkenApp.Data;
+using TekkenApp.Data;
 
 namespace NewTekkenApp.Pages.Components.SharedComponents
 {

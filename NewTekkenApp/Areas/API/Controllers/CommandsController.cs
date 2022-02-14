@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using NewTekkenApp.Data;
-using TekkenApp.Models;
+using TekkenApp.Data;
 
 
 namespace TEKKEN_WEB.areas.Admin.Controllers
 {
-    [Microsoft.AspNetCore.Mvc.Route("api/[controller]")]
-    [ApiController]
+    //[Microsoft.AspNetCore.Mvc.Route("api/[controller]")]
+    //[ApiController]
+    [Area("API")]
     public class CommandsController : ControllerBase
     {
         ICommandService CommandService { get; set; } = default!;

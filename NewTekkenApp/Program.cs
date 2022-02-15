@@ -1,10 +1,8 @@
-using System.Runtime.InteropServices;
 using System.Text.Json.Serialization;
 using Blazored.Modal;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
 using NewTekkenApp.Areas.Identity;
 using NewTekkenApp.Data;
@@ -109,25 +107,29 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseAuthentication();
+app.UseAuthorization();
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+    app.MapControllers();
+    app.MapBlazorHub();
+    app.MapFallbackToPage("/_Host");
 
-//app.UseEndpoints(endpoints =>
-//{
-//    endpoints.MapControllerRoute(
-//         name: "API",
-//         pattern: "{area:exists}/{controller=Moves}/{action=Index}/{id?}");
+    endpoints.MapControllerRoute(
+         name: "API",
+         pattern: "{area:exists}/{controller=Moves}/{action=Index}/{id?}");
 
-//    endpoints.MapControllerRoute(
-//         name: "API",
-//         pattern: "{area:exists}/{controller=Commands}/{action=Index}");
+    endpoints.MapControllerRoute(
+         name: "Identity",
+         pattern: "{area:exists}/{controller=Identity}/{action=Index}");
 
 
-//    endpoints.MapAreaControllerRoute(
-//        name: "default",
-//        areaName: "Admin",
-//        pattern: "{area:exists}/{controller=Move}/{action=Index}/{id?}");
-
-
-//});
+    endpoints.MapAreaControllerRoute(
+        name: "default",
+        areaName: "Admin",
+        pattern: "{area:exists}/{controller=Move}/{action=Index}/{id?}");
+});
 
 app.UseCors(policy =>
     policy.WithOrigins("https://localhost:7275;", "http://localhost:5275")
@@ -135,13 +137,8 @@ app.UseCors(policy =>
     .WithHeaders(HeaderNames.ContentType, HeaderNames.Authorization, "x-custom-header")
     .AllowCredentials());
 
-app.UseAuthentication();
-app.UseAuthorization();
-
-
-
-app.MapControllers();
-app.MapBlazorHub();
-app.MapFallbackToPage("/_Host");
+//
+//
+//
 
 app.Run();

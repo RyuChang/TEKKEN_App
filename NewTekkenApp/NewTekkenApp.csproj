@@ -67,6 +67,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\ADMIN\" />
     <Folder Include="Data\ResponseServices\" />
   </ItemGroup>
 

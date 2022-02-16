@@ -1,0 +1,51 @@
+﻿@page "/Admin/Components/Base/Data/EditComponent"
+@inherits BaseComponent<TDataEntity, TNameEntity>
+@typeparam TDataEntity
+@typeparam TNameEntity
+
+<h3 class="mt-3 mb-3">Edit</h3>
+@if (baseData == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <EditForm Model="@baseData" OnValidSubmit="@HandleValidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <div class="mb-3 row">
+            <label for="@baseData.Id" class="col-1 col-form-label">ID</label>
+            <div class="col-auto">
+                <input type="text" readonly class="form-control" @bind-value="@baseData.Id" />
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label for="@baseData.Number" class="col-1 col-form-label">순번</label>
+            <div class="col-auto">
+                <input type="text" readonly class="form-control" value="@baseData.Number" @oninput="@(e => number_Changed((string)e.Value))" />
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label for="@baseData.Code" class="col-1 col-form-label">코드</label>
+            <div class="col-auto">
+                <input type="text" readonly class="form-control" @bind-value="@baseData.Code" />
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label for="@baseData.Description" class="col-1 col-form-label">설명</label>
+            <div class="col-auto">
+                <input type="text" class="form-control" @bind-value="@baseData.Description" />
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <div class="col-md-4">
+                <input type="button" class="btn btn-primary btn-lg" value="저장" id="SaveEdit" @onclick="SaveEdit" />
+                <input type="button" class="btn btn-primary btn-lg" value="취소" id="Cancel" @onclick="() => MoveToList()" />
+            </div>
+        </div>
+    </EditForm>
+}

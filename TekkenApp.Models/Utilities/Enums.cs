@@ -2,6 +2,11 @@
 
 namespace TekkenApp.Models
 {
+    public enum UserType
+    {
+        User,
+        Admin,
+    }
     public enum AppType
     {
         States,

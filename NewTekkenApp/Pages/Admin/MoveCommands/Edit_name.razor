@@ -1,0 +1,6 @@
+﻿@page "/Admin/MoveCommands/Edit_name/{Id:int}"
+@inherits BasePageComponent
+<h3>@GetAppTitle()</h3>
+<EditNameComponent APP="@App" TDataEntity="MoveCommand" TNameEntity="MoveCommand_name" baseService="@CommonService" Id="@Id">
+</EditNameComponent>
+

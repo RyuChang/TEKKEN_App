@@ -1,0 +1,5 @@
+﻿@page "/Admin/StateGroups/Delete/{Id:int}"
+@inherits BasePageComponent
+<h3>@GetAppTitle()</h3>
+<DeleteComponent APP="@App" TDataEntity="StateGroup" TNameEntity="StateGroup_name" baseService="@CommonService" Id="@Id">
+</DeleteComponent>

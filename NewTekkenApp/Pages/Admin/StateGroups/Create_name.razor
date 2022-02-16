@@ -1,0 +1,5 @@
+﻿@page "/Admin/StateGroups/Create_name/{Code:int}"
+@inherits BasePageComponent
+<h3>@GetAppTitle()</h3>
+<CreateNameComponent APP="@App" TDataEntity="StateGroup" TNameEntity="StateGroup_name" Code="@Code" Language="@Language" baseService="@CommonService">
+</CreateNameComponent>

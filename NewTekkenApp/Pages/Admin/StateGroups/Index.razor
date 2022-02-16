@@ -1,0 +1,6 @@
+﻿@page "/Admin/StateGroups"
+@page "/Admin/StateGroups/Index"
+@inherits BasePageComponent
+<h3>@GetAppTitle()</h3>
+<ListComponent APP="@App" TDataEntity="StateGroup" TNameEntity="StateGroup_name" baseService="@CommonService">
+</ListComponent>

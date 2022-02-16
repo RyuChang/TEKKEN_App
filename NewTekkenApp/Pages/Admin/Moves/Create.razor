@@ -1,0 +1,7 @@
+﻿@page "/Admin/Moves/Create"
+@inherits BasePageComponent
+
+<h3>@GetAppTitle()</h3>
+
+<CreateComponent APP="@App" TDataEntity="Move" TNameEntity="Move_name" baseService="@CommonService">
+</CreateComponent>

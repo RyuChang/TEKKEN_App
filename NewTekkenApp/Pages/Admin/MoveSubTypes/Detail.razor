@@ -1,0 +1,5 @@
+﻿@page "/Admin/MoveSubTypes/Detail/{Id:int}"
+@inherits BasePageComponent
+<h3>@GetAppTitle()</h3>
+<DetailComponent APP="@App" TDataEntity="MoveSubType" TNameEntity="MoveSubType_name" baseService="@CommonService" Id="@Id">
+</DetailComponent>

@@ -14,25 +14,25 @@ namespace NewTekkenApp.Utilities
             navigationManager = navManager;
         }
 
-        public void MoveTo(AppType appType)
+    /*    public void MoveTo(AppType appType)
         {
             MoveTo(appType);
-        }
+        }*/
 
-        public void MoveTo(AppType appType, ActionType actionType, string paramName, string paramValue)
+        public void MoveTo(AppType appType, UserType userType, ActionType actionType, string paramName, string paramValue)
         {
             Dictionary<string, string> param = new();
             param.Add(paramName, paramValue);
-            MoveTo(appType, actionType, 0, param);
+            MoveTo(appType, userType, actionType, 0, param);
         }
 
 
-        public void MoveTo(AppType appType, ActionType actionType = ActionType.List, int id = 0, Dictionary<string, string> param = default!)
+        public void MoveTo(AppType appType, UserType userType, ActionType actionType = ActionType.List, int id = 0, Dictionary<string, string> param = default!)
         {
             //string action = (actionType == ActionType.List) ? "" : $"/{GetAction(actionType)}";
 
             string idUri = (id > 0) ? $"/{id}" : "";
-            string url = $"{GetUrl(appType)}{GetActionUrl(actionType)}{idUri}";
+            string url = $"{userType.ToString()}/{GetUrl(appType)}{GetActionUrl(actionType)}{idUri}";
 
             if (param != null)
             {

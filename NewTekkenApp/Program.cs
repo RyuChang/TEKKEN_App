@@ -114,8 +114,7 @@ app.UseEndpoints(endpoints =>
     endpoints.MapControllers();
     app.MapControllers();
     app.MapBlazorHub();
-    app.MapFallbackToPage("/_Host");
-
+    //endpoints.MapFallbackToAreaPage("/Admin/{*clientroutes:nonfile}", "/_HostAdmin", "Admin");
     endpoints.MapControllerRoute(
          name: "API",
          pattern: "{area:exists}/{controller=Moves}/{action=Index}/{id?}");
@@ -123,13 +122,11 @@ app.UseEndpoints(endpoints =>
     endpoints.MapControllerRoute(
          name: "Identity",
          pattern: "{area:exists}/{controller=Identity}/{action=Index}");
-
-
-    endpoints.MapAreaControllerRoute(
-        name: "default",
-        areaName: "Admin",
-        pattern: "{area:exists}/{controller=Move}/{action=Index}/{id?}");
+    
 });
+    //app.MapFallbackToAreaPage("~/Admin/{*clientroutes:nonfile}", "/Admin/_Host", "Admin");
+    app.MapFallbackToPage("/_Host");
+
 
 app.UseCors(policy =>
     policy.WithOrigins("https://localhost:7275;", "http://localhost:5275")

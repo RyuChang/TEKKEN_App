@@ -36,11 +36,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Pages\Admin\_HostAdmin.cshtml" />
     <Content Remove="wwwroot\command.js" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Pages\MoveCommands\moveCommand.js" />
+    <None Remove="Pages\Admin\MoveCommands\moveCommand.js" />
   </ItemGroup>
 
   <ItemGroup>
@@ -67,8 +68,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\ADMIN\" />
+    <Folder Include="Pages\Admin\Shared\" />
     <Folder Include="Data\ResponseServices\" />
+    <Folder Include="Pages\User\" />
   </ItemGroup>
 
 </Project>

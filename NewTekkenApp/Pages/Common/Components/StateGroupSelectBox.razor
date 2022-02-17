@@ -1,4 +1,4 @@
-﻿@page "/Common/Components/SharedComponents/CharacterSelectBox"
+﻿@page "/Common/Components/StateGroupSelectBox"
 
 @if (selectListItems == null)
 {
@@ -7,7 +7,7 @@
 else
 {
     <div>
-        <select id="Character" class="form-control" @onchange="(e =>  OnCharacterChanged.Invoke(e.Value as string))">
+        <select id="StateGroup" class="form-control" @onchange="@(e =>  OnStateGroupChanged.Invoke((string)e.Value))">
             @foreach (var selectItem in selectListItems)
             {
                 <option value="@selectItem.Value">@selectItem.Text</option>

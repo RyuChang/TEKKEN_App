@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using NewTekkenApp.Pages.Admin.Components.Base;
+using NewTekkenApp.Pages.Common.Components.Base;
 
 namespace NewTekkenApp.Pages.Admin.MoveDatas
 {

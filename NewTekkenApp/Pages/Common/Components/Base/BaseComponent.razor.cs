@@ -4,7 +4,7 @@ using NewTekkenApp.Utilities;
 using TekkenApp.Data;
 using TekkenApp.Models;
 
-namespace NewTekkenApp.Pages.Admin.Components.Base
+namespace NewTekkenApp.Pages.Common.Components.Base
 {
     public abstract partial class BaseComponent<TDataEntity, TNameEntity> : ComponentBase
         where TDataEntity : BaseDataEntity

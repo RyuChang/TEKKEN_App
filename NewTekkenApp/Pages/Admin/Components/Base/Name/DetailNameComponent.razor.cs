@@ -1,7 +1,6 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Components;
-using TekkenApp.Models;
+﻿using NewTekkenApp.Pages.Common.Components.Base;
 
+using TekkenApp.Models;
 namespace NewTekkenApp.Pages.Admin.Components.Base.Name
 {
     public partial class DetailNameComponent<TDataEntity, TNameEntity> :

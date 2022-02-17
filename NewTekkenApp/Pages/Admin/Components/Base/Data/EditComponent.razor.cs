@@ -1,6 +1,5 @@
-﻿using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
-using Microsoft.JSInterop;
+﻿using Microsoft.JSInterop;
+using NewTekkenApp.Pages.Common.Components.Base;
 using TekkenApp.Models;
 
 namespace NewTekkenApp.Pages.Admin.Components.Base.Data

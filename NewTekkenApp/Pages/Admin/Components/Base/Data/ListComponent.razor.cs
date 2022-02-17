@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
-using NewTekkenApp.Pages.Admin.Components.Base;
+using NewTekkenApp.Pages.Common.Components.Base;
 using TekkenApp.Models;
 
 namespace NewTekkenApp.Pages.Admin.Components.Base.Data

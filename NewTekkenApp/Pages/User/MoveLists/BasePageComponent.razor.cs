@@ -3,18 +3,18 @@ using NewTekkenApp.Pages.Common.Components.Base;
 using TekkenApp.Data;
 using TekkenApp.Models;
 
-namespace NewTekkenApp.Pages.Admin.MoveTexts
+namespace NewTekkenApp.Pages.User.MoveLists
 {
-    public partial class BasePageComponent : BaseDataComponent<MoveText, MoveText_name>
+    public partial class BasePageComponent : BaseDataComponent<Move, Move_name>
     {
         public int? CharacterId { get; set; }
-
         [Inject]
-        protected IMoveTextService? CommonService { get; set; }
+        protected IMoveService? CommonService { get; set; }
+
 
         public BasePageComponent()
         {
-            SetAppType(AppType.MoveTexts);
+            SetAppType(AppType.Moves);
         }
     }
 }

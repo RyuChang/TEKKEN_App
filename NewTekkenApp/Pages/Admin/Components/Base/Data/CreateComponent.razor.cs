@@ -1,6 +1,6 @@
-﻿using TekkenApp.Models;
+﻿using NewTekkenApp.Pages.Common.Components.Base;
+using TekkenApp.Models;
 
-//namespace NewTekkenApp.Pages.Admin.Components.Base.Data
 namespace NewTekkenApp.Pages.Admin.Components.Base.Data
 {
     public partial class CreateComponent<TDataEntity, TNameEntity> :

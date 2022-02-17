@@ -1,6 +1,6 @@
 ﻿using System.Net.NetworkInformation;
 using Microsoft.AspNetCore.Components;
-using NewTekkenApp.Pages.Admin.Components.Base;
+using NewTekkenApp.Pages.Common.Components.Base;
 //using NewTekkenApp.Pages.Admin.Components.Base.Data;
 //using NewTekkenApp.Pages.Admin.Components.Base.Name;
 

@@ -1,6 +1,5 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Components;
-using NewTekkenApp.Data;
+﻿using Microsoft.AspNetCore.Components;
+using NewTekkenApp.Pages.Common.Components.Base;
 using TekkenApp.Models;
 
 namespace NewTekkenApp.Pages.Admin.Components.Base.Name

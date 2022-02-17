@@ -114,7 +114,7 @@ app.UseEndpoints(endpoints =>
     endpoints.MapControllers();
     app.MapControllers();
     app.MapBlazorHub();
-    //endpoints.MapFallbackToAreaPage("/Admin/{*clientroutes:nonfile}", "/_HostAdmin", "Admin");
+
     endpoints.MapControllerRoute(
          name: "API",
          pattern: "{area:exists}/{controller=Moves}/{action=Index}/{id?}");
@@ -125,6 +125,7 @@ app.UseEndpoints(endpoints =>
     
 });
     //app.MapFallbackToAreaPage("~/Admin/{*clientroutes:nonfile}", "/Admin/_Host", "Admin");
+    //app.MapFallbackToAreaPage("/Admin/{*clientroutes:nonfile}", "/_AdminHost", "Admin");
     app.MapFallbackToPage("/_Host");
 
 

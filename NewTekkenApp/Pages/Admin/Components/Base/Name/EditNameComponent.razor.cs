@@ -1,4 +1,5 @@
 ﻿using Microsoft.JSInterop;
+using NewTekkenApp.Pages.Common.Components.Base;
 using TekkenApp.Models;
 
 namespace NewTekkenApp.Pages.Admin.Components.Base.Name

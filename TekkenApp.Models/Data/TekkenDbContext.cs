@@ -198,11 +198,12 @@ namespace TekkenApp.Data
                 .OnDelete(DeleteBehavior.Cascade);
 
                 entity.HasOne(m => m.Move)
-                .WithOne()
+                .WithOne(p => p.MoveData)
                 .HasPrincipalKey<MoveData>(m => m.Base_Code)
                 .HasForeignKey<Move>(p => p.Code);
-
-
+                //.HasConstraintName("fk_movecommand_move");
+                
+                    //.ondelete(deletebehavior.cascade);
 
 
                 //entity.HasOne(d => d.counterType_codeNavigation)

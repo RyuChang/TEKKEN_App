@@ -1,24 +1,31 @@
-﻿using NewTekkenApp.Pages.Admin.Components.Base.Data;
+﻿using System.Text.RegularExpressions;
 using TekkenApp.Models;
 
 namespace NewTekkenApp.Pages.User.MoveLists
 {
     public partial class Index : BasePageComponent
     {
-        ListComponent<Move, Move_name>? childList;
+        public IList<Move> moveLists { get; set; } = default!;
 
-        void OnCharacterChanged(string characterCode)
+        protected async void OnCharacterChanged(string characterCode)
         {
             if (!string.IsNullOrEmpty(characterCode))
             {
                 CharacterId = int.Parse(characterCode);
-                childList?.GetEntitiesByCharacterCode(int.Parse(characterCode));
+
+                moveLists = await CommonService?.GetEntityWithCommandsByCharacterIdAsync(CharacterId.Value);
                 StateHasChanged();
             }
             else
             {
 
             }
+        }
+
+        public string TranseCommandToImage(String command)
+        {
+            var result = $"<img class=\"move\" src=\"/images2/[C].svg\" />";
+            return Regex.Replace(command, @"\[(\S+?)\]", m => result.Replace("[C]", m.Value.Replace("[", "").Replace("]", "")), RegexOptions.Multiline | RegexOptions.IgnoreCase);
         }
 
     }

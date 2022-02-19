@@ -7,8 +7,24 @@
 
 
 <style>
-    .table tbody tr:nth-child(4n-3) {
-        background: #e2e2e2;
+
+    .table tbody tr td:nth-child(1) {
+        border: none;
+    }
+
+    .table tbody tr td:nth-child(2) {
+        border: thin;
+    }
+
+
+
+    .move {
+        display: flow;
+        flex-direction: row;
+        align-items: flex-start;
+        width: 1.0rem;
+        overflow-x: auto;
+        cursor: grab;
     }
 </style>
 
@@ -16,56 +32,139 @@
     <CharacterSelectBox OnCharacterChanged="OnCharacterChanged">
     </CharacterSelectBox>
 
-
     <div class="m-auto" id="Character-list">
-        @*<div class="table-responsive">
-            @if (MoveCommandEntities == null)
+        <div class="container-fluid bg-black ">
+            @if (moveLists == null)
             {
                 <p><em>Loading...</em></p>
             }
             else
             {
-                <table class="table table-bordered" style="width: 100%; margin-left: auto; margin-right: auto; border: 0;">
-                    <colgroup>
-                        <col style="width: 100px;" />
-                        <col style="width: 100px;" />
-                        <col style="width: 150px;" />
-                    </colgroup>
-                    <thead class="table-dark">
-                        <tr>
-                            <th>CODE</th>
-                            <th>NUMBER</th>
-                            <th>DESCRIPTION</th>
-                            <th>MODIFY</th>
-                        </tr>
-                    </thead>
+                @foreach (Move move in moveLists)
+                {
 
-                    <tbody>
-                        @foreach (var baseEntities in MoveCommandEntities)
-                        {
-                            <tr id="@baseEntities.Id">
-                                <td>@baseEntities.Code</td>
-                                <td>@baseEntities.Move.Number</td>
-                                <td>@baseEntities.Move.Description</td>
+                    <div class="row mb-2">
+                        <div class="col">
+                            <div class="card p-1 bg-black border border-2 border-whites rounded-3" style="max-width: 38rem;">
+                                <div class="card-header my-0 py-0 ">
+                                    <div class="row py-0 my-0 card-title">
+                                        <div class="col-3 my-0 py-0 text-warning">
+                                            <h5>@move.Number.ToString("D3")</h5>
+                                        </div>
+                                        <div class="col my-0 py-0 text-white-50 text-start">
+                                            <h5>@move.Description</h5>
+                                        </div>
+                                    </div>
+                                </div>
 
-                            </tr>
+                                <div class="card-body text-success border border-1 py-0 px-1">
+                                    <div class="row my-1 mx-0">
 
-                            @foreach (var base_name in baseEntities.NameSet)
-                            {
-                                <tr>
-                                    <td>@base_name.Language_code</td>
-                                    <td colspan="2">
-                                        @base_name.Name
-                                    </td>
+                                        <div class="col col-sm me-0 me-sm-2">
+                                            <div class="row border mb-1">
+                                                <div class="col">
+                                                    @((MarkupString)TranseCommandToImage(move.MoveCommand.NameSet.FirstOrDefault().Name))
+                                                    @*//@move.MoveCommand.NameSet.FirstOrDefault().Name*@
+                                                </div>
+                                            </div>
+                                            <div class="row gx-4 mb-1">
+                                                <div class="col-2 border me-2 text-danger text-center">
+                                                    @move.MoveData.HitCount Hits
+                                                </div>
+                                                <div class="col border text-info text-start">
+                                                    @move.MoveData.HitLevel
+                                                </div>
+                                                <div class="col-2 ms-2 border text-danger text-end">
+                                                    @move.MoveData.Damage
+                                                </div>
+                                            </div>
+                                            <div class="row border">
+                                                <div class="col">
+                                                    @move.MoveData.Note
+                                                </div>
+                                            </div>
+                                        </div>
 
-                                </tr>
-                            }
+                                        <div class="co col-sm-3 mx-0">
+                                            <div class="row  text-white-50 border my-1">
+                                                <div class="col-8">Start Up</div>
+                                                <div class="col">@move.MoveData.StartFrame_Display</div>
+                                            </div>
+                                            <div class="row px-0 text-white-50 border my-1">
+                                                <div class="col-8">Block</div>
+                                                <div class="col">@move.MoveData.GuardFrame_Display</div>
+                                            </div>
+                                            <div class="row px-0 text-white-50 border my-1">
+                                                <div class="col-8">Hit</div>
+                                                <div class="col">@move.MoveData.HitFrame_Display</div>
+                                            </div>
+                                            <div class="row px-0 text-white-50 border my-1">
+                                                <div class="col-8">Count Hit</div>
+                                                <div class="col">@move.MoveData.CounterFrame_Display</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-                        }
-                    </tbody>
-                </table>
+                    </div>
+
+                    @*<div>@move.Character_code </div>
+                        <div>@move.Description</div>*@
+
+                }
+
             }
-        </div>*@
+        </div>
     </div>
+    @*<div class="table-responsive">
+        @if (MoveCommandEntities == null)
+        {
+        <p><em>Loading...</em></p>
+        }
+        else
+        {
+        <table class="table table-bordered" style="width: 100%; margin-left: auto; margin-right: auto; border: 0;">
+        <colgroup>
+        <col style="width: 100px;" />
+        <col style="width: 100px;" />
+        <col style="width: 150px;" />
+        </colgroup>
+        <thead class="table-dark">
+        <tr>
+        <th>CODE</th>
+        <th>NUMBER</th>
+        <th>DESCRIPTION</th>
+        <th>MODIFY</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        @foreach (var baseEntities in MoveCommandEntities)
+        {
+        <tr id="@baseEntities.Id">
+        <td>@baseEntities.Code</td>
+        <td>@baseEntities.Move.Number</td>
+        <td>@baseEntities.Move.Description</td>
+
+        </tr>
+
+        @foreach (var base_name in baseEntities.NameSet)
+        {
+        <tr>
+        <td>@base_name.Language_code</td>
+        <td colspan="2">
+        @base_name.Name
+        </td>
+
+        </tr>
+        }
+
+        }
+        </tbody>
+        </table>
+        }*@
+
 </CascadingValue>
 

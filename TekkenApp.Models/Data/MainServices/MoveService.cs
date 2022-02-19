@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
@@ -23,9 +24,10 @@ namespace TekkenApp.Data
             return test;
         }
 
-        public async Task<Move> GetEntityWithCommandsByCharacterIdAsync(int Character_code)
+        public async Task<List<Move>> GetEntityWithCommandsByCharacterIdAsync(int Character_code)
         {
-            var test = await _dataDbSet.Where(m => m.Character_code == Character_code).Include(m => m.MoveCommand).ThenInclude(c => c.NameSet).FirstOrDefaultAsync();
+            var test = await _dataDbSet.Where(m => m.Character_code == Character_code).Include(m => m.MoveCommand).ThenInclude(c => c.NameSet).Include(m=>m.MoveData).ThenInclude(c => c.NameSet).ToListAsync<Move>();
+            //var test = await _dataDbSet.Where(m => m.Character_code == Character_code).Include(m => m.MoveData).ThenInclude(c => c.NameSet).ToListAsync<Move>();
             return test;
         }
         //public virtual async Task<List<MoveListVM>> GetMoveStatesByCharacterCode(int character_code)

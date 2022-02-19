@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using TekkenApp.Models;
 
 namespace TekkenApp.Data
@@ -9,6 +10,6 @@ namespace TekkenApp.Data
 
         Task<Move> GetEntityWithCommandsByIdAsync(int id);
 
-        Task<Move> GetEntityWithCommandsByCharacterIdAsync(int id);
+        Task<List<Move>> GetEntityWithCommandsByCharacterIdAsync(int id);
     }
 }

@@ -57,7 +57,8 @@ namespace TekkenApp.Models
         MoveText,
         MoveText_name,
         HitType,
-        HitType_name
+        HitType_name,
+        Language,
     }
 
 

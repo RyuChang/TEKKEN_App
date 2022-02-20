@@ -10,11 +10,11 @@ using Microsoft.EntityFrameworkCore;
 namespace TekkenApp.Models
 {
     [Index(nameof(code), Name = "IX_language", IsUnique = true)]
-    public partial class Language
+    public partial class Language : BaseDataEntity
     {
         public Language()
         {
-            
+            SetApp(TableName.Language);
             //StateGroup_name = new HashSet<StateGroup_name>();
             //State_name = new HashSet<State_name>();
             //character_name = new HashSet<Character_name>();
@@ -26,8 +26,7 @@ namespace TekkenApp.Models
             //move_name = new HashSet<Move_name>();
         }
 
-        [Key]
-        public int id { get; set; }
+        
         [Required]
         [StringLength(2)]
         public string code { get; set; }

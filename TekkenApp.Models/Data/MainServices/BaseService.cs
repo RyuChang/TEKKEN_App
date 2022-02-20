@@ -81,7 +81,7 @@ namespace TekkenApp.Data
         public async Task<bool> CreateAllNameEntitiesAsync(TDataEntity dataEntity)
         {
             bool result = false;
-            List<Language> languageList = await _tekkenDBContext.language.ToListAsync();
+            List<Language> languageList = await _tekkenDBContext.Language.ToListAsync();
 
             foreach (Language language in languageList)
             {
@@ -127,11 +127,13 @@ namespace TekkenApp.Data
         {
             return await _dataDbSet.ToListAsync();
         }
-
+        
+        #region Load Entity by Character
         public async Task<List<TDataEntity>> GetEntitiesWithCharacterCode(int characterCode)
         {
             return await _dataDbSet.Where(p => p.Character_code == characterCode).ToListAsync();
         }
+        #endregion
 
         public async Task<List<TDataEntity>> GetEntitiesWithStateGroup(int stateGroupCode)
         {

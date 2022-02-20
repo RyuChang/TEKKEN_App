@@ -31,7 +31,7 @@ namespace TekkenApp.Data
         public virtual DbSet<Command_name> Command_name { get; set; }
         public virtual DbSet<HitType> HitType { get; set; }
         public virtual DbSet<HitType_name> HitType_name { get; set; }
-        public virtual DbSet<Language> language { get; set; }
+        public virtual DbSet<Language> Language { get; set; }
         public virtual DbSet<MoveSubType> moveSubType { get; set; }
         public virtual DbSet<MoveSubType_name> moveSubType_name { get; set; }
         public virtual DbSet<MoveText> moveText { get; set; }

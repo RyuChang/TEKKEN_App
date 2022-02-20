@@ -8,7 +8,7 @@ using TekkenApp.Models;
 
 namespace TekkenApp.Data
 {
-    public abstract class BaseService<TDataEntity, TNameEntity> : IBaseService<TDataEntity, TNameEntity> where TDataEntity : BaseDataEntity
+    public abstract class BaseNameService<TDataEntity, TNameEntity> : IBaseService<TDataEntity, TNameEntity> where TDataEntity : BaseDataEntity
         where TNameEntity : BaseNameEntity, new()
     {
         protected TekkenDbContext _tekkenDBContext;
@@ -21,7 +21,7 @@ namespace TekkenApp.Data
         protected string MainTable { get; set; } = default!;
         protected string NameTable { get; set; } = default!;
 
-        public BaseService(TekkenDbContext tekkenDbContext, DbSet<TDataEntity> dbset, DbSet<TNameEntity> nameDbSet)
+        public BaseNameService(TekkenDbContext tekkenDbContext, DbSet<TDataEntity> dbset, DbSet<TNameEntity> nameDbSet)
         {
             _tekkenDBContext = tekkenDbContext;
             _dataDbSet = dbset;

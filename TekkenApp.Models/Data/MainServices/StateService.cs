@@ -3,7 +3,7 @@ using TekkenApp.Models;
 
 namespace TekkenApp.Data
 {
-    public class StateService : BaseService<State, State_name>, IStateService
+    public class StateService : BaseNameService<State, State_name>, IStateService
     {
         [CascadingParameter]
         public int? StateGroupId { get; set; }

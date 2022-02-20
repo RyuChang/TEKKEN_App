@@ -3,7 +3,7 @@ using TekkenApp.Models;
 
 namespace TekkenApp.Data
 {
-    public class MoveSubTypeService : BaseService<MoveSubType, MoveSubType_name>, IMoveSubTypeService
+    public class MoveSubTypeService : BaseNameService<MoveSubType, MoveSubType_name>, IMoveSubTypeService
     {
         [CascadingParameter]
         public int? StateGroupId { get; set; }

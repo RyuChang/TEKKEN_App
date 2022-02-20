@@ -6,7 +6,7 @@ using TekkenApp.Models;
 
 namespace TekkenApp.Data
 {
-    public class MoveDataService : BaseService<MoveData, MoveData_name>, IMoveDataService
+    public class MoveDataService : BaseNameService<MoveData, MoveData_name>, IMoveDataService
     {
 
         public MoveDataService(TekkenDbContext tekkenDbContext) : base(tekkenDbContext, tekkenDbContext.MoveData, tekkenDbContext.MoveData_Name)

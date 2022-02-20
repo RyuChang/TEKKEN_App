@@ -3,7 +3,7 @@ using TekkenApp.Models;
 
 namespace TekkenApp.Data
 {
-    public class MoveTextService : BaseService<MoveText, MoveText_name>, IMoveTextService
+    public class MoveTextService : BaseNameService<MoveText, MoveText_name>, IMoveTextService
     {
         [CascadingParameter]
         public int? StateGroupId { get; set; }

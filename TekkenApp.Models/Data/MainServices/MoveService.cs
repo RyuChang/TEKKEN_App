@@ -24,20 +24,10 @@ namespace TekkenApp.Data
             return test;
         }
 
-        public async Task<List<Move>> GetEntityWithCommandsByCharacterIdAsync(int Character_code)
+        public async Task<IEnumerable<Move>> GetMoveListWithCommandsByCharacterIdAsync(int Character_code)
         {
-            var test = await _dataDbSet.Where(m => m.Character_code == Character_code).Include(m => m.MoveCommand).ThenInclude(c => c.NameSet).Include(m=>m.MoveData).ThenInclude(c => c.NameSet).ToListAsync<Move>();
-            //var test = await _dataDbSet.Where(m => m.Character_code == Character_code).Include(m => m.MoveData).ThenInclude(c => c.NameSet).ToListAsync<Move>();
-            return test;
+            return await _dataDbSet.Where(m => m.Character_code == Character_code).Include(m => m.MoveCommand).ThenInclude(c => c.NameSet).Include(m => m.MoveData).ThenInclude(c => c.NameSet).ToListAsync<Move>();
         }
-        //public virtual async Task<List<MoveListVM>> GetMoveStatesByCharacterCode(int character_code)
-        //{
-        //    return await _dataDbSet.Where(p => p.Character_code == character_code).Select(p => new MoveListVM
-        //    {
-        //        Code = p.Description,
-        //        //Key = p.Code
-        //    }).ToListAsync();
-        //}
 
     }
 }

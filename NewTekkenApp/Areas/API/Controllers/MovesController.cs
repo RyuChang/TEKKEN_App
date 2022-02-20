@@ -25,7 +25,7 @@ namespace TEKKEN_WEB.areas.Admin.Controllers
         {
             try
             {
-                return Ok(await MoveService.GetEntityWithCommandsByCharacterIdAsync(id));
+                return Ok(await MoveService.GetMoveListWithCommandsByCharacterIdAsync(id));
             }
             catch (Exception)
             {

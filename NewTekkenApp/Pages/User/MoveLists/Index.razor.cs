@@ -5,7 +5,7 @@ namespace NewTekkenApp.Pages.User.MoveLists
 {
     public partial class Index : BasePageComponent
     {
-        public IList<Move> moveLists { get; set; } = default!;
+        public IEnumerable<Move> moveLists { get; set; } = default!;
 
         protected async void OnCharacterChanged(string characterCode)
         {
@@ -13,7 +13,7 @@ namespace NewTekkenApp.Pages.User.MoveLists
             {
                 CharacterId = int.Parse(characterCode);
 
-                moveLists = await CommonService?.GetEntityWithCommandsByCharacterIdAsync(CharacterId.Value);
+                moveLists = await CommonService?.GetMoveListWithCommandsByCharacterIdAsync(CharacterId.Value);
                 StateHasChanged();
             }
             else

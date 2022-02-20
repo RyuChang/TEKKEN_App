@@ -11,6 +11,7 @@ namespace TekkenApp.Data
     {
         [CascadingParameter]
         public int? StateGroupId { get; set; }
+        int? IMoveService.StateGroupId { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
 
         public MoveService(TekkenDbContext tekkenDbContext) : base(tekkenDbContext, tekkenDbContext.Move, tekkenDbContext.Move_name)
         {
@@ -18,16 +19,15 @@ namespace TekkenApp.Data
             NameTable = TableName.Move_name.ToString();
         }
 
-        public async Task<Move> GetEntityWithCommandsByIdAsync(int id)
+        public async Task<Move> GetMoveListWithCommandsByIdAsync(int id)
         {
             var test = await _dataDbSet.Where(m => m.Id == id).Include(m => m.MoveCommand).ThenInclude(c => c.NameSet).FirstOrDefaultAsync();
             return test;
         }
 
-        public async Task<IEnumerable<Move>> GetMoveListWithCommandsByCharacterIdAsync(int Character_code)
+        public async Task<IEnumerable<Move>> GetMoveListWithCommandsByCharacterCodeAsync(int Character_code)
         {
             return await _dataDbSet.Where(m => m.Character_code == Character_code).Include(m => m.MoveCommand).ThenInclude(c => c.NameSet).Include(m => m.MoveData).ThenInclude(c => c.NameSet).ToListAsync<Move>();
         }
-
     }
 }

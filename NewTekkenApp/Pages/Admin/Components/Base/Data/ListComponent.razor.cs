@@ -28,7 +28,7 @@ namespace NewTekkenApp.Pages.Admin.Components.Base.Data
 
         public async void GetEntitiesByCharacterCode(int characterCode)
         {
-            baseEntities = await baseService.GetEntitiesWithCharacterCode(characterCode);
+            baseEntities = await baseService.GetEntitiesByCharacterCode(characterCode);
             StateHasChanged();
         }
     }

@@ -37,7 +37,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        moveList = await MoveService.GetEntitiesWithCharacterCode(Character_code);
+        moveList = await MoveService.GetEntitiesByCharacterCode(Character_code);
     }
 
     void Submit()

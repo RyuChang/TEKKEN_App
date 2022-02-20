@@ -8,7 +8,7 @@ using TekkenApp.Models;
 
 namespace TekkenApp.Data
 {
-    public abstract class BaseNameService<TDataEntity, TNameEntity> : IBaseService<TDataEntity, TNameEntity> where TDataEntity : BaseDataEntity
+    public abstract class BaseNameService<TDataEntity, TNameEntity> : IBaseNameService<TDataEntity, TNameEntity> where TDataEntity : BaseDataEntity
         where TNameEntity : BaseNameEntity, new()
     {
         protected TekkenDbContext _tekkenDBContext;
@@ -129,7 +129,7 @@ namespace TekkenApp.Data
         }
         
         #region Load Entity by Character
-        public async Task<List<TDataEntity>> GetEntitiesWithCharacterCode(int characterCode)
+        public async Task<List<TDataEntity>> GetEntitiesByCharacterCode(int characterCode)
         {
             return await _dataDbSet.Where(p => p.Character_code == characterCode).ToListAsync();
         }

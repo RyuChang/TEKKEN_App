@@ -13,7 +13,7 @@ namespace NewTekkenApp.Pages.User.MoveLists
             {
                 CharacterId = int.Parse(characterCode);
 
-                moveLists = await CommonService?.GetMoveListWithCommandsByCharacterIdAsync(CharacterId.Value);
+                moveLists = await CommonService?.GetMoveListWithCommandsByCharacterCodeAsync(CharacterId.Value);
                 StateHasChanged();
             }
             else

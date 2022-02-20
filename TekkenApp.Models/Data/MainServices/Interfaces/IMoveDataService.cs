@@ -4,7 +4,7 @@ using TekkenApp.Models;
 
 namespace TekkenApp.Data
 {
-    public interface IMoveDataService : IBaseService<MoveData, MoveData_name>
+    public interface IMoveDataService : IBaseNameService<MoveData, MoveData_name>
     {
         Task<List<MoveData>> GetEntitiesWithMoveByCharacterCode(int characterCode);
         Task<List<MoveData>> GetEntitiesWithMoves();

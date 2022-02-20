@@ -5,7 +5,7 @@ using TekkenApp.Models;
 
 namespace TekkenApp.Data
 {
-    public interface IBaseService<TDataEntity, TNameEntity>
+    public interface IBaseNameService<TDataEntity, TNameEntity>
         where TDataEntity : BaseDataEntity
         where TNameEntity : BaseNameEntity, new()
     {
@@ -20,7 +20,7 @@ namespace TekkenApp.Data
         Task<int> GetCreateNumber();
         Task<TDataEntity?> GetDataEntityByIdAsync(int id);
         Task<List<TDataEntity>> GetEntities();
-        Task<List<TDataEntity>> GetEntitiesWithCharacterCode(int characterCode);
+        Task<List<TDataEntity>> GetEntitiesByCharacterCode(int characterCode);
         Task<List<TDataEntity>> GetEntitiesWithName();
         List<TDataEntity> GetEntitiesWithName(string tname);
         List<TDataEntity> GetEntitiesWithNameByStateGroup(int stateGroupCode);

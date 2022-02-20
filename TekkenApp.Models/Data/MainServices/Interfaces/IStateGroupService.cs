@@ -4,7 +4,7 @@ using TekkenApp.Models;
 
 namespace TekkenApp.Data
 {
-    public interface IStateGroupService : IBaseService<StateGroup, StateGroup_name>
+    public interface IStateGroupService : IBaseNameService<StateGroup, StateGroup_name>
     {
         Task<StateGroup> GetStateGroupByIdAsync(int id);
         Task<StateGroup_name> GetStateGroupNameByIdAsync(int id);

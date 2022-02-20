@@ -2,7 +2,7 @@
 
 namespace TekkenApp.Data
 {
-    public interface IMoveTextService : IBaseService<MoveText, MoveText_name>
+    public interface IMoveTextService : IBaseNameService<MoveText, MoveText_name>
     {
         int? StateGroupId { get; set; }
     }

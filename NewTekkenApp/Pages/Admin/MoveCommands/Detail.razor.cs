@@ -13,7 +13,7 @@ namespace NewTekkenApp.Pages.Admin.MoveCommands
         {
             await base.OnInitializedAsync();
 
-            moveEntity = await MoveService.GetEntityWithCommandsByIdAsync(Id); ;
+            moveEntity = await MoveService.GetDataEntityByIdAsync(Id); ;
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)

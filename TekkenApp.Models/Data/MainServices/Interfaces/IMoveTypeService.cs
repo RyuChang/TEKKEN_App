@@ -3,7 +3,7 @@ using TekkenApp.Models;
 
 namespace TekkenApp.Data
 {
-    public interface IMoveTypeService : IBaseService<MoveType, MoveType_name>
+    public interface IMoveTypeService : IBaseNameService<MoveType, MoveType_name>
     {
         Task<MoveType> UpdateHitTypeAsync(MoveType moveType);
     }

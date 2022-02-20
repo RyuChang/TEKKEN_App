@@ -2,7 +2,7 @@
 
 namespace TekkenApp.Data
 {
-    public interface ICharacterService : IBaseService<Character, Character_name>
+    public interface ICharacterService : IBaseNameService<Character, Character_name>
     {
         int? CharacterId { get; set; }
     }

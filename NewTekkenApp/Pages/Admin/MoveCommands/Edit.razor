@@ -313,7 +313,7 @@ else
 
     public async void SetKeyMap()
     {
-        var results = await httpClient.GetFromJsonAsync<MoveListVM[]>("https://localhost:8164/api/commands");
+        var results = await httpClient.GetFromJsonAsync<MoveListVM[]>("https://localhost:44354/api/commands");
         //keyMap = new HashSet();
 
         foreach (var result in results)

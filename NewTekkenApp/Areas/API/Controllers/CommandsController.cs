@@ -20,7 +20,8 @@ namespace TEKKEN_WEB.areas.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetDepartments()
+        [Route("api/[controller]")]
+        public async Task<ActionResult> GetCommands()
         {
             try
             {

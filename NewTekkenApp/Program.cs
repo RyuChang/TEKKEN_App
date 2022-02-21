@@ -121,13 +121,17 @@ app.UseEndpoints(endpoints =>
          pattern: "{area:exists}/{controller=Moves}/{action=Index}/{id?}");
 
     endpoints.MapControllerRoute(
+         name: "API",
+         pattern: "{area:exists}/{controller=Commands}/{action=Index}/{id?}");
+
+    endpoints.MapControllerRoute(
          name: "Identity",
          pattern: "{area:exists}/{controller=Identity}/{action=Index}");
-    
+
 });
-    //app.MapFallbackToAreaPage("~/Admin/{*clientroutes:nonfile}", "/Admin/_Host", "Admin");
-    //app.MapFallbackToAreaPage("/Admin/{*clientroutes:nonfile}", "/_AdminHost", "Admin");
-    app.MapFallbackToPage("/_Host");
+//app.MapFallbackToAreaPage("~/Admin/{*clientroutes:nonfile}", "/Admin/_Host", "Admin");
+//app.MapFallbackToAreaPage("/Admin/{*clientroutes:nonfile}", "/_AdminHost", "Admin");
+app.MapFallbackToPage("/_Host");
 
 
 app.UseCors(policy =>

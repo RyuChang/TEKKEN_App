@@ -15,11 +15,16 @@ namespace TekkenApp.Data
         Task<bool> CreateAllNameEntitiesAsync(TDataEntity dataEntity);
         Task<bool> CreateEntityAsync(TDataEntity entity);
         Task<bool> CreateNameEntityAsync(TNameEntity nameEntity);
+        Task<bool> CreateNameEntityAsync(TDataEntity dataEntity, string language_code);
         Task<TDataEntity?> DeleteDataEntityByIdAsync(TDataEntity dataEntity);
         Task<int> GetCreateCode(int number, int character_code = 0, int stateGroup_code = 0);
         Task<int> GetCreateNumber();
+        Task<int> GetCreateNumberByCharacterCode(int characterCode);
+        Task<int> GetCreateNumberByStateGroup(int stateGroupCode);
+
         Task<TDataEntity?> GetDataEntityByIdAsync(int id);
         Task<List<TDataEntity>> GetEntities();
+        Task<TNameEntity> GetNameEntitiyByBaseCodeAndLanguageCode(int baseCode, string languageCode);
         Task<List<TDataEntity>> GetEntitiesByCharacterCode(int characterCode);
         Task<List<TDataEntity>> GetEntitiesWithName();
         List<TDataEntity> GetEntitiesWithName(string tname);

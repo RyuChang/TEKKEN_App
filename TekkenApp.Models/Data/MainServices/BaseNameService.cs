@@ -8,7 +8,7 @@ using TekkenApp.Models;
 
 namespace TekkenApp.Data
 {
-    public abstract class BaseNameService<TDataEntity, TNameEntity> : IBaseService<TDataEntity, TNameEntity> where TDataEntity : BaseDataEntity
+    public abstract class BaseNameService<TDataEntity, TNameEntity> : IBaseNameService<TDataEntity, TNameEntity> where TDataEntity : BaseDataEntity
         where TNameEntity : BaseNameEntity, new()
     {
         protected TekkenDbContext _tekkenDBContext;
@@ -33,6 +33,12 @@ namespace TekkenApp.Data
         public async Task<TDataEntity?> GetDataEntityByIdAsync(int id)
         {
             return await _dataDbSet.FindAsync(id);
+        }
+
+
+        public async Task<TNameEntity> GetNameEntitiyByBaseCodeAndLanguageCode(int baseCode, string languageCode)
+        {
+            return await _nameDbSet.Where(n => n.Base_code == baseCode).Where(n => n.Language_code == languageCode).FirstOrDefaultAsync();
         }
 
         private bool BaseDataEntityExistsById(int id)
@@ -85,14 +91,20 @@ namespace TekkenApp.Data
 
             foreach (Language language in languageList)
             {
-                TNameEntity newNameEntity = new TNameEntity();
-                newNameEntity.Base_code = dataEntity.Code;
-                newNameEntity.Language_code = language.code;
-                newNameEntity.Name = dataEntity.Description;
-
-                result = await CreateNameEntityAsync(newNameEntity);
+                result = await CreateNameEntityAsync(dataEntity, language.Language_code);
             }
             return result;
+        }
+
+        public async Task<bool> CreateNameEntityAsync(TDataEntity dataEntity, string language_code)
+        {
+            TNameEntity newNameEntity = new TNameEntity();
+            newNameEntity.Base_code = dataEntity.Code;
+            newNameEntity.Language_code = language_code;
+            newNameEntity.Name = dataEntity.Description;
+
+            await CreateNameEntityAsync(newNameEntity);
+            return true;
         }
 
         public async Task<bool> CreateNameEntityAsync(TNameEntity nameEntity)
@@ -127,7 +139,10 @@ namespace TekkenApp.Data
         {
             return await _dataDbSet.ToListAsync();
         }
-        
+
+
+
+
         #region Load Entity by Character
         public async Task<List<TDataEntity>> GetEntitiesByCharacterCode(int characterCode)
         {
@@ -175,6 +190,14 @@ namespace TekkenApp.Data
         {
             return await _dataDbSet.MaxAsync(p => (int?)p.Number + 1) ?? 1;
         }
+        public async Task<int> GetCreateNumberByCharacterCode(int characterCode)
+        {
+            return await _dataDbSet.Where(d => d.Character_code == characterCode).MaxAsync(p => (int?)p.Number + 1) ?? 1;
+        }
+        public async Task<int> GetCreateNumberByStateGroup(int stateGroupCode)
+        {
+            return await _dataDbSet.Where(d => d.StateGroup_code == stateGroupCode).MaxAsync(p => (int?)p.Number + 1) ?? 1;
+        }
         #endregion
 
         #region GetCreateCode
@@ -187,6 +210,7 @@ namespace TekkenApp.Data
             int code = tableCode is not null ? tableCode.code + (character_code * 1000) + stateGroupNumber + number : 0;
             return code;
         }
+
         public async Task<bool> CreateEntityAsync(TDataEntity entity)
         {
             await _dataDbSet.AddAsync(entity);
@@ -203,8 +227,5 @@ namespace TekkenApp.Data
             await _tekkenDBContext.SaveChangesAsync();
             return BaseDataEntity;
         }
-
-
     }
-
 }

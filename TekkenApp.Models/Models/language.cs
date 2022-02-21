@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace TekkenApp.Models
 {
-    [Index(nameof(code), Name = "IX_language", IsUnique = true)]
+    //[Index(nameof(code), Name = "IX_language", IsUnique = true)]
     public partial class Language : BaseDataEntity
     {
         public Language()
@@ -26,13 +26,14 @@ namespace TekkenApp.Models
             //move_name = new HashSet<Move_name>();
         }
 
-        
-        [Required]
-        [StringLength(2)]
-        public string code { get; set; }
-        [Required]
-        public string name { get; set; }
- 
+
+        //[Required]
+        //[StringLength(2)]
+                
+        public string Language_code { get; set; }
+        //[Required]
+        //public string name { get; set; }
+
         //public virtual ICollection<StateGroup_name> StateGroup_name { get; set; }
         //public virtual ICollection<State_name> State_name { get; set; }
         //public virtual ICollection<Character_name> character_name { get; set; }

@@ -39,7 +39,10 @@ namespace TekkenApp.Data
             return await _dataDbSet.Include("Move").Where(m => m.Move.Character_code == characterCode).ToListAsync();
         }
 
-
+        public async Task<MoveCommand> GetDataEntityByBaseCodeAsync(int baseCode)
+        {
+            return await _dataDbSet.Where(d => d.Base_Code == baseCode).FirstOrDefaultAsync();
+        }
     }
 }
 

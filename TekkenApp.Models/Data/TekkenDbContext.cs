@@ -70,11 +70,11 @@ namespace TekkenApp.Data
             });
             modelBuilder.Entity<Language>(entity =>
             {
-                entity.Property(e => e.code)
+                entity.Property(e => e.Code)
                     .IsUnicode(false)
                     .IsFixedLength(true);
 
-                entity.Property(e => e.name).IsUnicode(false);
+                entity.Property(e => e.Description).IsUnicode(false);
             });
 
             #region Move

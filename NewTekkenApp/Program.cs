@@ -83,6 +83,7 @@ builder.Services.AddTransient<IMoveCommandService, MoveCommandService>();
 
 builder.Services.AddTransient<ICommandService, CommandService>();
 builder.Services.AddTransient<ICharacterService, CharacterService>();
+builder.Services.AddTransient<ILanguageService, LanguageService>();
 
 builder.Services.AddTransient<NavigationUtil>();
 

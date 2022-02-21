@@ -33,12 +33,10 @@ namespace NewTekkenApp.Pages.Admin.MoveCommands
 
         async void GenerateAllname(int? characterCode)
         {
-
             if (characterCode is not null)
             {
                 var moveEntities = await MoveService.GetEntitiesByCharacterCode(characterCode.Value);
                 var languageEntities = await LanguageService.GetEntities();
-
 
                 foreach (Move move in moveEntities)
                 {
@@ -58,12 +56,7 @@ namespace NewTekkenApp.Pages.Admin.MoveCommands
                                 bool result = false;
                                 result = await CommonService.CreateNameEntityAsync(moveCommand, language.Language_code);
                             }
-                            else
-                            {
-                                Console.WriteLine(command_name.Base_code);
-                            }
                         }
-
                     }
                 }
             }
@@ -81,7 +74,5 @@ namespace NewTekkenApp.Pages.Admin.MoveCommands
             await CommonService.CreateAllNameEntitiesAsync(moveCommand);
             return true;
         }
-
-
     }
 }

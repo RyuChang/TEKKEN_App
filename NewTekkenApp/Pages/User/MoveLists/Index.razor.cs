@@ -24,7 +24,7 @@ namespace NewTekkenApp.Pages.User.MoveLists
 
         public string TranseCommandToImage(String command)
         {
-            var result = $"<img class=\"move\" src=\"/images2/[C].svg\" />";
+            var result = $"<img class=\"move\" src=\"/images/[C].svg\" />";
             return Regex.Replace(command, @"\[(\S+?)\]", m => result.Replace("[C]", m.Value.Replace("[", "").Replace("]", "")), RegexOptions.Multiline | RegexOptions.IgnoreCase);
         }
 

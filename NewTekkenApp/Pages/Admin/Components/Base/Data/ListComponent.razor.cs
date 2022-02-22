@@ -4,10 +4,8 @@ using TekkenApp.Models;
 
 namespace NewTekkenApp.Pages.Admin.Components.Base.Data
 {
-    public partial class ListComponent<TDataEntity, TNameEntity> :
-        BaseComponent<TDataEntity, TNameEntity>
-                            where TDataEntity : BaseDataEntity
-                            where TNameEntity : BaseNameEntity, new()
+    public partial class ListComponent<TDataEntity, TNameEntity> : BaseComponent<TDataEntity, TNameEntity> where TDataEntity : BaseDataEntity, new()
+                                                                                                           where TNameEntity : BaseNameEntity, new()
     {
         public IList<TDataEntity> baseEntities { get; set; } = default!;
 

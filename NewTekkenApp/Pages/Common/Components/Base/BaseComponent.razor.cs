@@ -7,7 +7,7 @@ using TekkenApp.Models;
 namespace NewTekkenApp.Pages.Common.Components.Base
 {
     public abstract partial class BaseComponent<TDataEntity, TNameEntity> : ComponentBase
-        where TDataEntity : BaseDataEntity
+        where TDataEntity : BaseDataEntity, new()
         where TNameEntity : BaseNameEntity, new()
     {
         [Parameter]

@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TekkenApp.Models;
 
 namespace TekkenApp.Data
 {
-    public abstract class BaseDataService<TDataEntity> : IBaseDataService<TDataEntity> where TDataEntity : BaseDataEntity
-        , new()
+    public abstract class BaseDataService<TDataEntity> : IBaseDataService<TDataEntity> where TDataEntity : BaseDataEntity, new()
     {
         protected TekkenDbContext _tekkenDBContext;
 
@@ -86,36 +83,6 @@ namespace TekkenApp.Data
             return await _dataDbSet.Where(p => p.StateGroup_code == stateGroupCode).ToListAsync();
         }
 
-        public async Task<List<TDataEntity>> GetEntitiesWithName()
-        {
-            return await _dataDbSet.Include("NameSet").ToListAsync();
-        }
-
-        public List<TDataEntity> GetEntitiesWithName(string tname)
-        {
-            return _dataDbSet.Include(tname).ToList();
-        }
-        public List<TDataEntity> GetEntitiesWithNameByStateGroup(int stateGroupCode)
-        {
-            return _dataDbSet.Where(d => d.StateGroup_code == stateGroupCode).Include("NameSet").ToList();
-        }
-
-        public async Task<List<SelectListItem>> GetSelectItems()
-        {
-            throw new NotImplementedException();
-/*            List<SelectListItem> selectListItems = await (from data in _dataDbSet
-                                                          join name in _nameDbSet
-                                                              on data.Code equals name.Base_code
-                                                          select new SelectListItem { Value = data.Code.ToString(), Text = name.Name.ToString() }).ToListAsync<SelectListItem>();
-
-            selectListItems.Insert(0, new SelectListItem()
-            {
-                Value = "",
-                Text = "---Select---"
-            });
-            return selectListItems;*/
-        }
-
         #region GetCreateNumber
         public async Task<int> GetCreateNumber()
         {
@@ -149,8 +116,5 @@ namespace TekkenApp.Data
             await _tekkenDBContext.SaveChangesAsync();
             return BaseDataEntity;
         }
-
-
     }
-
 }

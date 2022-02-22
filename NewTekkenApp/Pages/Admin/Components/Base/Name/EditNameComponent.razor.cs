@@ -6,7 +6,7 @@ namespace NewTekkenApp.Pages.Admin.Components.Base.Name
 {
     public partial class EditNameComponent<TDataEntity, TNameEntity> :
         BaseComponent<TDataEntity, TNameEntity>
-                            where TDataEntity : BaseDataEntity
+                            where TDataEntity : BaseDataEntity, new()
                             where TNameEntity : BaseNameEntity, new()
     {
         protected override async Task OnInitializedAsync()

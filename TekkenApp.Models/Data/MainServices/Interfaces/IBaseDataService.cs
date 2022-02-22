@@ -8,8 +8,6 @@ namespace TekkenApp.Data
     public interface IBaseDataService<TDataEntity>
         where TDataEntity : BaseDataEntity, new()
     {
-        AppType App { get; }
-        string PreUrl { get; set; }
 
         Task<bool> CreateEntityAsync(TDataEntity entity);
         Task<TDataEntity?> DeleteDataEntityByIdAsync(TDataEntity dataEntity);
@@ -19,7 +17,6 @@ namespace TekkenApp.Data
         Task<List<TDataEntity>> GetEntities();
         Task<List<TDataEntity>> GetEntitiesByCharacterCode(int characterCode);
         Task<List<TDataEntity>> GetEntitiesWithStateGroup(int stateGroupCode);
-        Task<List<SelectListItem>> GetSelectItems();
         Task<BaseDataEntity> UpdateDataAsync(BaseDataEntity BaseDataEntity);
     }
 }

@@ -28,5 +28,6 @@ namespace NewTekkenApp.Pages.User.MoveLists
             return Regex.Replace(command, @"\[(\S+?)\]", m => result.Replace("[C]", m.Value.Replace("[", "").Replace("]", "")), RegexOptions.Multiline | RegexOptions.IgnoreCase);
         }
 
+
     }
 }

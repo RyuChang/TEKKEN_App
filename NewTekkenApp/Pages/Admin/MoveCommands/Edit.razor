@@ -9,6 +9,16 @@
 }
 else
 {
+    <style>
+        .move {
+            display: flow;
+            flex-direction: row;
+            align-items: flex-start;
+            width: 1.5rem;
+            overflow-x: auto;
+            cursor: grab;
+        }
+    </style>
 
     <form method="post">
         <div class="mb-3 row">
@@ -41,17 +51,19 @@ else
         </div>
 
         <div class="mb-3 row">
-            <label class="col-1 col-form-label">커맨드</label> <input class="col-1 col-form-label" @bind="@timer"></input>
-            <div class="col-auto">
-                <input id="Command" type="text" readonly class="form-control" placeholder="커맨드 입력" @bind="@moveEntity.MoveCommand.Command" @onkeydown="SetKeyDown" @onkeydown:preventDefault="true" @onkeydown:stopPropagation="true" @onkeyup="SetKeyUp" @onkeyup:preventDefault="true" @onkeyup:stopPropagation="true" />
+            <label class="col-1 col-form-label">입력</label> <input class="col-1 col-form-label" @bind="@timer"></input>
+            <div class="col">
+                <textarea rows=3 id="Command" type="text" readonly class="form-control" placeholder="커맨드 입력" @bind="@moveEntity.MoveCommand.Command" @onkeydown="SetKeyDown" @onkeydown:preventDefault="true" @onkeydown:stopPropagation="true" @onkeyup="SetKeyUp" @onkeyup:preventDefault="true" @onkeyup:stopPropagation="true" />
             </div>
         </div>
 
 
         <div class="mb-3 row">
             <label class="col-1 col-form-label">커맨드</label>
-            <div class="col-auto">
-                <input id="displayCommand" type="text" readonly class="form-control" placeholder="커맨드 입력" @bind="@displayCommand" />
+            <div class="col">
+                <div class="border border-1 text-black fs-6 m-0 p-0" style="min-height:3.5rem;">
+                    @((MarkupString)displayCommand)
+                </div>
             </div>
         </div>
 
@@ -141,3 +153,10 @@ else
 </div>
 
 <button class="btn btn-primary">Show Modal</button>
+
+<div class="mb-3 row">
+    <div class="col-md-4">
+        <input type="button" class="btn btn-primary btn-lg" value="저장" id="SaveEdit" @onclick="SaveEdit" />
+        <input type="button" class="btn btn-primary btn-lg" value="취소" id="Cancel" @onclick="() => MoveToList()" />
+    </div>
+</div>

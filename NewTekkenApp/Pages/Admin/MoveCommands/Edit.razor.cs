@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
 using NewTekkenApp.Pages.Admin.Components.Base.Data;
 using TekkenApp.Models;
+using NewTekkenApp.Utilities;
 
 namespace NewTekkenApp.Pages.Admin.MoveCommands
 {
@@ -38,7 +39,7 @@ namespace NewTekkenApp.Pages.Admin.MoveCommands
                 InitCommand();
             }
             //    //if(module is not null)  await module.InvokeAsync<object>("test2");
-            //    if (module is not null) await module.InvokeAsync<object>("commandUtil.init");
+              //  if (module is not null) await module.InvokeAsync<object>("commandUtil.init");
             //    //await JSRuntime.InvokeAsync<object>("alert");
 
             //    SetKeyMap();
@@ -92,7 +93,7 @@ namespace NewTekkenApp.Pages.Admin.MoveCommands
         public List<string> resultKey { get; set; }
         public List<string> clickedKey { get; set; }
         private Hashtable keyMap = new Hashtable();
-        public string rawCommand { get; set; }
+        public string rawCommand = String.Empty;
         public string displayCommand { get; set; }
 
         Boolean keyDown = false;
@@ -100,7 +101,7 @@ namespace NewTekkenApp.Pages.Admin.MoveCommands
         public void InitCommand()
         {
             SetKeyMap();
-            rawCommand = moveEntity.MoveCommand.Description;
+            rawCommand = moveEntity.MoveCommand.Command;
             
             clickedKey = new List<string>();
             resultKey = new List<string>();
@@ -200,9 +201,11 @@ namespace NewTekkenApp.Pages.Admin.MoveCommands
             }
 
             rawCommand = result;
+            moveEntity.MoveCommand.Command = result;
             moveEntity.MoveCommand.Description = rawCommand;
-            displayCommand = rawCommand.Replace("/", " ");
-
+            //displayCommand = rawCommand.Replace("/", " ");
+            displayCommand = CommandLibrary.TranseCommandToImage(rawCommand);
+            
             ClearCommand();
         }
 
@@ -224,6 +227,18 @@ namespace NewTekkenApp.Pages.Admin.MoveCommands
                 keyMap[result.Key] = result.Code;
             }
         }
+
+        protected async Task SaveEdit()
+        {
+
+            if (!await JSRuntime.InvokeAsync<bool>("confirm", "저장 하겠습니까"))
+            {
+                return;
+            }
+            await MoveService.UpdateDataAsync(moveEntity);
+            MoveToDetail(Id);
+        }
     }
+
 }
 

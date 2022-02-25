@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +18,8 @@ namespace TekkenApp.Data
 
         public AppType App { get; protected set; }
         protected string MainTable { get; set; } = default!;
+
+        protected string language_code = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
 
         public BaseDataService(TekkenDbContext tekkenDbContext, DbSet<TDataEntity> dbset)
         {

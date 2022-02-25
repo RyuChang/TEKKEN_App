@@ -62,7 +62,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 
 builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
-
+builder.Services.AddLocalization();
 builder.Services.AddDatabaseDeveloperPageExceptionFilter(); // 개발 환경에 유용한 오류 정보 제공
 
 builder.Services.AddBlazoredModal();
@@ -84,6 +84,8 @@ builder.Services.AddTransient<IMoveCommandService, MoveCommandService>();
 builder.Services.AddTransient<ICommandService, CommandService>();
 builder.Services.AddTransient<ICharacterService, CharacterService>();
 builder.Services.AddTransient<ILanguageService, LanguageService>();
+//builder.Services.AddScoped<ILocalizationService, LocalizationService>();
+
 
 builder.Services.AddTransient<NavigationUtil>();
 
@@ -108,14 +110,20 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+var supportedCultures = new[] { "ko-KR", "en-US" };
+var localizationOptions = new RequestLocalizationOptions()
+    .SetDefaultCulture(supportedCultures[0])
+    .AddSupportedCultures(supportedCultures)
+    .AddSupportedUICultures(supportedCultures);
+
+app.UseRequestLocalization(localizationOptions);
+
+
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();
-    app.MapControllers();
-    app.MapBlazorHub();
-
     endpoints.MapControllerRoute(
          name: "API",
          pattern: "{area:exists}/{controller=Moves}/{action=Index}/{id?}");
@@ -131,6 +139,9 @@ app.UseEndpoints(endpoints =>
 });
 //app.MapFallbackToAreaPage("~/Admin/{*clientroutes:nonfile}", "/Admin/_Host", "Admin");
 //app.MapFallbackToAreaPage("/Admin/{*clientroutes:nonfile}", "/_AdminHost", "Admin");
+
+app.MapControllers();
+app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
 
 

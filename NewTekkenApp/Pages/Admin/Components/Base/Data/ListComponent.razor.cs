@@ -13,7 +13,7 @@ namespace NewTekkenApp.Pages.Admin.Components.Base.Data
         {
             await base.OnInitializedAsync();
 
-            baseEntities = await baseService.GetEntitiesWithName();
+            baseEntities = await baseService.GetEntitiesWithAllNames();
         }
 
         [CascadingParameter]

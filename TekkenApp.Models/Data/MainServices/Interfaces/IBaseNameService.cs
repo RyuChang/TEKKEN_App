@@ -19,8 +19,8 @@ namespace TekkenApp.Data
         Task<int> GetCreateNumberByStateGroup(int stateGroupCode);
 
         Task<TNameEntity> GetNameEntitiyByBaseCodeAndLanguageCode(int baseCode, string languageCode);
+        Task<List<TDataEntity>> GetEntitiesWithAllNames();
         Task<List<TDataEntity>> GetEntitiesWithName();
-        List<TDataEntity> GetEntitiesWithName(string tname);
         List<TDataEntity> GetEntitiesWithNameByStateGroup(int stateGroupCode);
         Task<TNameEntity?> GetNameEntityByIdAsync(int id);
         Task<List<SelectListItem>> GetSelectItems();

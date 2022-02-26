@@ -98,11 +98,12 @@ namespace TekkenApp.Data
         #endregion
         public async Task<List<TDataEntity>> GetEntitiesWithName()
         {
-            return await _dataDbSet.Include("NameSet").ToListAsync();
+            return await _dataDbSet.Include(d => d.NameSet.Where(n => n.Language_code == language_code)).ToListAsync();
         }
-        public List<TDataEntity> GetEntitiesWithName(string tname)
+
+        public async Task<List<TDataEntity>> GetEntitiesWithAllNames()
         {
-            return _dataDbSet.Include(tname).ToList();
+            return await _dataDbSet.Include(d => d.NameSet).ToListAsync();
         }
 
         public List<TDataEntity> GetEntitiesWithNameByStateGroup(int stateGroupCode)
@@ -116,6 +117,7 @@ namespace TekkenApp.Data
             List<SelectListItem> selectListItems = await (from data in _dataDbSet
                                                           join name in _nameDbSet
                                                               on data.Code equals name.Base_code
+                                                              where name.Language_code == language_code
                                                           select new SelectListItem { Value = data.Code.ToString(), Text = name.Name.ToString() }).ToListAsync<SelectListItem>();
             selectListItems.Insert(0, new SelectListItem()
             {

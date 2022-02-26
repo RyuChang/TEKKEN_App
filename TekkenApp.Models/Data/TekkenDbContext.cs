@@ -62,7 +62,7 @@ namespace TekkenApp.Data
             //    b.IndexerProperty<decimal>("Price");
             //});
 
-            modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
+            modelBuilder.HasAnnotation("Relational:Collation", "Korean_Wansung_BIN2");
 
             modelBuilder.Entity<BaseUtil>(entity =>
             {

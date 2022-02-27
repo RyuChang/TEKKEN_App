@@ -42,11 +42,11 @@ namespace NewTekkenApp.Pages.Common.Components.Base
             navigationUtil.MoveTo(App, UserType.Admin, ActionType.List);
         }
         #region 데이터 버튼
-        protected void MovetoCreate()
+        protected void MoveToCreate()
         {
             navigationUtil.MoveTo(App, UserType.Admin, ActionType.Create);
         }
-        protected void MovetoCreateWithStateGroup(int stateGroupCode)
+        protected void MoveToCreateWithStateGroup(int stateGroupCode)
         {
             navigationUtil.MoveTo(App, UserType.Admin, ActionType.Create, stateGroupCode);
         }

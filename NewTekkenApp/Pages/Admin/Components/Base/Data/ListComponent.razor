@@ -8,11 +8,11 @@
 <div>
     @if (StateGroupCode == null)
     {
-        <input type="button" class="btn btn-primary" id="DetailName" value="추가" @onclick="() => MovetoCreate()" />
+        <input type="button" class="btn btn-primary" id="DetailName" value="추가" @onclick="() => MoveToCreate()" />
     }
     else
     {
-        <input type="button" class="btn btn-primary" id="DetailName" value="추가" @onclick="() => MovetoCreateWithStateGroup(StateGroupCode.Value)" />
+        <input type="button" class="btn btn-primary" id="DetailName" value="추가" @onclick="() => MoveToCreateWithStateGroup(StateGroupCode.Value)" />
     }
 </div>
 

@@ -11,8 +11,8 @@ namespace NewTekkenApp.Pages.Admin.States
         {
             if (!string.IsNullOrEmpty(stateGroupCode))
             {
-                childList?.GetEntitiesByStateGroup(int.Parse(stateGroupCode));
-                StateHasChanged();
+                StateGroupCode = int.Parse(stateGroupCode);
+                childList?.GetEntitiesByStateGroup(StateGroupCode.Value);
             }
         }
     }

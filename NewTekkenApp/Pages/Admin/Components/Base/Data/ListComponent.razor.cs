@@ -22,6 +22,7 @@ namespace NewTekkenApp.Pages.Admin.Components.Base.Data
         public async void GetEntitiesByStateGroup(int stateGroupCode)
         {
             baseEntities = await baseService.GetEntitiesWithStateGroup(stateGroupCode);
+            StateHasChanged();
         }
 
         public async void GetEntitiesByCharacterCode(int characterCode)

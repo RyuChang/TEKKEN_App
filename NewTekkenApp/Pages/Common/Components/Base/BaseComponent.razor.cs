@@ -32,7 +32,7 @@ namespace NewTekkenApp.Pages.Common.Components.Base
         [Inject]
         public IJSRuntime JSRuntime { get; set; } = default!;
 
-        public TDataEntity baseData { get; set; } = default!;
+        public TDataEntity? baseData { get; set; }
         public TNameEntity? baseName { get; set; } = default!;
 
         #region 기본 버튼

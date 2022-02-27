@@ -20,6 +20,6 @@ namespace NewTekkenApp.Pages.Common.Components
         }
 
         [Parameter]
-        public Action<String>? OnStateGroupChanged { get; set; }
+        public Action<int>? OnStateGroupChanged { get; set; }
     }
 }

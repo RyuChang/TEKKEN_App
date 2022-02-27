@@ -1,12 +1,12 @@
-﻿using Blazored.Modal.Services;
+﻿using System.Collections;
 using Blazored.Modal;
-using System.Collections;
+using Blazored.Modal.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
 using NewTekkenApp.Pages.Admin.Components.Base.Data;
-using TekkenApp.Models;
 using NewTekkenApp.Utilities;
+using TekkenApp.Models;
 
 namespace NewTekkenApp.Pages.Admin.MoveCommands
 {
@@ -39,18 +39,17 @@ namespace NewTekkenApp.Pages.Admin.MoveCommands
                 InitCommand();
             }
             //    //if(module is not null)  await module.InvokeAsync<object>("test2");
-              //  if (module is not null) await module.InvokeAsync<object>("commandUtil.init");
+            //  if (module is not null) await module.InvokeAsync<object>("commandUtil.init");
             //    //await JSRuntime.InvokeAsync<object>("alert");
 
             //    SetKeyMap();
         }
 
-        void OnStateGroupChanged(string stateGroupCode)
+        void OnStateGroupChanged(int stateGroupCode)
         {
-            if (!string.IsNullOrEmpty(stateGroupCode))
+            if (stateGroupCode > 0)
             {
-                _stateGroupCode = int.Parse(stateGroupCode);
-                state = StateService?.GetEntitiesWithNameByStateGroup(int.Parse(stateGroupCode));
+                state = StateService?.GetEntitiesWithNameByStateGroup(stateGroupCode);
                 StateHasChanged();
             }
         }
@@ -102,7 +101,7 @@ namespace NewTekkenApp.Pages.Admin.MoveCommands
         {
             SetKeyMap();
             rawCommand = moveEntity.MoveCommand.Command;
-            
+
             clickedKey = new List<string>();
             resultKey = new List<string>();
 
@@ -205,7 +204,7 @@ namespace NewTekkenApp.Pages.Admin.MoveCommands
             moveEntity.MoveCommand.Description = rawCommand;
             //displayCommand = rawCommand.Replace("/", " ");
             displayCommand = CommandLibrary.TranseCommandToImage(rawCommand);
-            
+
             ClearCommand();
         }
 

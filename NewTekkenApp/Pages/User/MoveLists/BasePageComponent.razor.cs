@@ -7,7 +7,7 @@ namespace NewTekkenApp.Pages.User.MoveLists
 {
     public partial class BasePageComponent : BaseDataComponent<Move, Move_name>
     {
-        public int? CharacterId { get; set; }
+        public int CharacterCode { get; set; }
         [Inject]
         protected IMoveService? CommonService { get; set; }
 

@@ -7,14 +7,11 @@ namespace NewTekkenApp.Pages.Admin.MoveSubTypes
     {
         ListComponent<MoveSubType, MoveSubType_name>? childList;
 
-        void OnCharacterChanged(string characterCode)
+        void OnCharacterChanged(int characterCode)
         {
-            if (!string.IsNullOrEmpty(characterCode))
-            {
-                CharacterId = int.Parse(characterCode);
-                childList?.GetEntitiesByCharacterCode(int.Parse(characterCode));
-                StateHasChanged();
-            }
+            CharacterCode = characterCode;
+            childList?.GetEntitiesByCharacterCode(CharacterCode);
+            StateHasChanged();
         }
     }
 }

@@ -7,17 +7,10 @@ namespace NewTekkenApp.Pages.Admin.Moves
     {
         ListComponent<Move, Move_name>? childList;
 
-        void OnCharacterChanged(string characterCode)
+        void OnCharacterChanged(int characterCode)
         {
-            if (!string.IsNullOrEmpty(characterCode))
-            {
-                CharacterId = int.Parse(characterCode);
-                childList?.GetEntitiesByCharacterCode(int.Parse(characterCode));
-            }
-            else
-            {
-
-            }
+            CharacterCode = characterCode;
+            childList?.GetEntitiesByCharacterCode(CharacterCode);
         }
     }
 }

@@ -20,14 +20,11 @@ namespace NewTekkenApp.Pages.Admin.MoveCommands
             MoveCommandEntities = await CommonService.GetEntitiesWithMove();
         }
 
-        async void OnCharacterChanged(string characterCode)
+        async void OnCharacterChanged(int characterCode)
         {
-            if (!string.IsNullOrEmpty(characterCode))
-            {
-                CharacterId = int.Parse(characterCode);
-                MoveCommandEntities = await CommonService.GetEntitiesWithMoveByCharacterCode(int.Parse(characterCode));
-                StateHasChanged();
-            }
+            CharacterCode = characterCode;
+            MoveCommandEntities = await CommonService.GetEntitiesWithMoveByCharacterCode(CharacterCode);
+            StateHasChanged();
         }
 
 

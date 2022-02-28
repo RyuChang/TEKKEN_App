@@ -7,7 +7,7 @@ namespace NewTekkenApp.Pages.Admin.MoveCommands
 {
     public partial class BasePageComponent : BaseComponent<MoveCommand, MoveCommand_name>
     {
-        public int? CharacterId { get; set; }
+        public int CharacterCode { get; set; }
 
         [Inject]
         protected IMoveCommandService CommonService { get; set; } = default!;

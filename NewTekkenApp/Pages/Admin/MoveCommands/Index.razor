@@ -12,11 +12,11 @@
     }
 </style>
 
-<CascadingValue Value="CharacterId">
+<CascadingValue Value="CharacterCode">
     <CharacterSelectBox OnCharacterChanged="OnCharacterChanged">
     </CharacterSelectBox>
 
-    <input type="button" class="btn btn-primary my-2" id="btnDetail" value="명칭 일괄 생성" @onclick="()=>GenerateAllname(CharacterId)" />
+    <input type="button" class="btn btn-primary my-2" id="btnDetail" value="명칭 일괄 생성" @onclick="()=>GenerateAllname(CharacterCode)" />
 
     <div class="m-auto" id="Character-list">
         <div class="table-responsive">

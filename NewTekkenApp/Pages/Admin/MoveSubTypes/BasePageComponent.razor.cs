@@ -11,7 +11,7 @@ namespace NewTekkenApp.Pages.Admin.MoveSubTypes
 {
     public partial class BasePageComponent : BaseDataComponent<MoveSubType, MoveSubType_name>
     {
-        public int? CharacterId { get; set; }
+        public int CharacterCode { get; set; }
 
         [Inject]
         protected IMoveSubTypeService? CommonService { get; set; }

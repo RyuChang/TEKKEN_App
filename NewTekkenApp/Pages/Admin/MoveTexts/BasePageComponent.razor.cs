@@ -7,7 +7,7 @@ namespace NewTekkenApp.Pages.Admin.MoveTexts
 {
     public partial class BasePageComponent : BaseDataComponent<MoveText, MoveText_name>
     {
-        public int? CharacterId { get; set; }
+        [Parameter] public int CharacterCode { get; set; }
 
         [Inject]
         protected IMoveTextService? CommonService { get; set; }
@@ -15,6 +15,16 @@ namespace NewTekkenApp.Pages.Admin.MoveTexts
         public BasePageComponent()
         {
             SetAppType(AppType.MoveTexts);
+        }
+
+        protected override Task OnInitializedAsync()
+        {
+            var queryStrings = navigationUtil.GetQueryStrings();
+            if (queryStrings.TryGetValue("CharacterCode", out var _characterCode))
+            {
+                CharacterCode = int.Parse(_characterCode);
+            }
+            return base.OnInitializedAsync();
         }
     }
 }

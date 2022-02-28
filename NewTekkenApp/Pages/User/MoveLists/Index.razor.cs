@@ -6,19 +6,13 @@ namespace NewTekkenApp.Pages.User.MoveLists
     {
         public IEnumerable<Move> moveLists { get; set; } = default!;
 
-        protected async void OnCharacterChanged(string characterCode)
+        protected async void OnCharacterChanged(int characterCode)
         {
-            if (!string.IsNullOrEmpty(characterCode))
-            {
-                CharacterId = int.Parse(characterCode);
+            CharacterCode = characterCode;
 
-                moveLists = await CommonService?.GetMoveListWithCommandsByCharacterCodeAsync(CharacterId.Value);
-                StateHasChanged();
-            }
-            else
-            {
+            moveLists = await CommonService?.GetMoveListWithCommandsByCharacterCodeAsync(CharacterCode);
+            StateHasChanged();
 
-            }
         }
     }
 }

@@ -6,7 +6,7 @@ namespace NewTekkenApp.Pages.Admin.MoveDatas
 {
     public partial class BasePageComponent : BaseComponent<MoveData, MoveData_name>
     {
-        public int? CharacterId { get; set; }
+        public int CharacterCode { get; set; }
 
         [Inject]
         protected IMoveDataService CommonService { get; set; } = default!;

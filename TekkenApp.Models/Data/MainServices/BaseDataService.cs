@@ -83,7 +83,7 @@ namespace TekkenApp.Data
 
         public async Task<List<TDataEntity>> GetEntitiesWithStateGroup(int stateGroupCode)
         {
-            return await _dataDbSet.Where(p => p.StateGroup_code == stateGroupCode).ToListAsync();
+            return await _dataDbSet.Where(p => p.StateGroup_code == stateGroupCode || stateGroupCode == 0).Include(p => p.NameSet).ToListAsync();
         }
 
         #region GetCreateNumber
@@ -113,7 +113,7 @@ namespace TekkenApp.Data
         #endregion
 
 
-        public async Task<BaseDataEntity> UpdateDataAsync(BaseDataEntity BaseDataEntity)
+        public async Task<TDataEntity> UpdateDataAsync(TDataEntity BaseDataEntity)
         {
             _tekkenDBContext.Entry(BaseDataEntity).State = EntityState.Modified;
             await _tekkenDBContext.SaveChangesAsync();

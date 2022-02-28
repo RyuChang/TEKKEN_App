@@ -7,17 +7,22 @@ namespace NewTekkenApp.Pages.Admin.Components.Base.Data
     public partial class ListComponent<TDataEntity, TNameEntity> : BaseComponent<TDataEntity, TNameEntity> where TDataEntity : BaseDataEntity, new()
                                                                                                            where TNameEntity : BaseNameEntity, new()
     {
+        [CascadingParameter] public int? StateGroupId { get; set; }
         public IList<TDataEntity> baseEntities { get; set; } = default!;
 
         protected override async Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
+            if (StateGroupCode is null)
+            {
+                baseEntities = await baseService.GetEntitiesWithAllNames();
 
-            baseEntities = await baseService.GetEntitiesWithAllNames();
+            }
+            else
+            {
+                baseEntities = await baseService.GetEntitiesWithStateGroup(StateGroupCode.Value);
+            }
         }
-
-        [CascadingParameter]
-        public int? StateGroupId { get; set; }
 
         public async void GetEntitiesByStateGroup(int stateGroupCode)
         {

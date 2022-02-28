@@ -8,7 +8,7 @@ namespace NewTekkenApp.Pages.Admin.States
     public partial class BasePageComponent : BaseDataComponent<State, State_name>
     {
         [Parameter]
-        public int? StateGroupCode { get; set; }
+        public int StateGroupCode { get; set; }
 
         [Inject]
         protected IStateService? CommonService { get; set; }
@@ -18,5 +18,20 @@ namespace NewTekkenApp.Pages.Admin.States
         {
             SetAppType(AppType.States);
         }
+
+
+        protected override Task OnInitializedAsync()
+        {
+
+            var queryStrings = navigationUtil.GetQueryStrings();
+            if (queryStrings.TryGetValue("StateGroupCode", out var _stateGroupCode))
+            {
+                StateGroupCode = int.Parse(_stateGroupCode);
+            }
+
+            return base.OnInitializedAsync();
+        }
+
+
     }
 }

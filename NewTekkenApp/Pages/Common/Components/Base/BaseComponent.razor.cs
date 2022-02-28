@@ -32,15 +32,18 @@ namespace NewTekkenApp.Pages.Common.Components.Base
         [Inject]
         public IJSRuntime JSRuntime { get; set; } = default!;
 
-        public TDataEntity? baseData { get; set; }
+        public TDataEntity baseData { get; set; } = default!;
         public TNameEntity? baseName { get; set; } = default!;
 
         #region 기본 버튼
 
         protected void MoveToList()
         {
-            navigationUtil.MoveTo(App, UserType.Admin, ActionType.List);
+            Dictionary<string, string> param = new Dictionary<string, string>();
+            param["StateGroupCode"] = this.StateGroupCode.ToString();
+            navigationUtil.MoveTo(App, UserType.Admin, ActionType.List, 0, param);
         }
+
         #region 데이터 버튼
         protected void MoveToCreate()
         {
@@ -48,11 +51,19 @@ namespace NewTekkenApp.Pages.Common.Components.Base
         }
         protected void MoveToCreateWithStateGroup(int stateGroupCode)
         {
-            navigationUtil.MoveTo(App, UserType.Admin, ActionType.Create, stateGroupCode);
+            if (stateGroupCode > 0)
+            {
+                Dictionary<string, string> param = new Dictionary<string, string>();
+                param["StateGroupCode"] = this.StateGroupCode.ToString();
+                navigationUtil.MoveTo(App, UserType.Admin, ActionType.Create, 0, param);
+            }
         }
         protected void MoveToDetail(int id)
         {
-            navigationUtil.MoveTo(App, UserType.Admin, ActionType.Detail, id);
+            Dictionary<string, string> param = new Dictionary<string, string>();
+            param["StateGroupCode"] = StateGroupCode.ToString();
+
+            navigationUtil.MoveTo(App, UserType.Admin, ActionType.Detail, id, param);
         }
 
         protected void MoveToEdit(int id)

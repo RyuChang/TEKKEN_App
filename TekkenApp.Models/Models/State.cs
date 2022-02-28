@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 #nullable disable
 
@@ -14,7 +15,19 @@ namespace TekkenApp.Models
         public State()
         {
         }
-        public new int StateGroup_code { get; set; }
+        //public new int StateGroup_code { get; set; }
+        public new int StateGroup_code
+        {
+            get
+            {
+                return base.StateGroup_code;
+            }
+            set
+            {
+                base.StateGroup_code = value;
+            }
+        }
+
         //public virtual StateGroup StateGroup_codeNavigation { get; set; }
         //public virtual ICollection<State_name> State_name { get; set; }
     }

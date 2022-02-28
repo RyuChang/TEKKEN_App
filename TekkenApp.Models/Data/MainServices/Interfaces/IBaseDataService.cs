@@ -17,6 +17,6 @@ namespace TekkenApp.Data
         Task<List<TDataEntity>> GetEntities();
         Task<List<TDataEntity>> GetEntitiesByCharacterCode(int characterCode);
         Task<List<TDataEntity>> GetEntitiesWithStateGroup(int stateGroupCode);
-        Task<BaseDataEntity> UpdateDataAsync(BaseDataEntity BaseDataEntity);
+        Task<TDataEntity> UpdateDataAsync(TDataEntity BaseDataEntity);
     }
 }

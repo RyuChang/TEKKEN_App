@@ -121,7 +121,7 @@ namespace TekkenApp.Data
                                                           select new SelectListItem { Value = data.Code.ToString(), Text = name.Name.ToString() }).ToListAsync<SelectListItem>();
             selectListItems.Insert(0, new SelectListItem()
             {
-                Value = "",
+                Value = "0",
                 Text = "---Select---"
             });
             return selectListItems;

@@ -7,12 +7,11 @@ namespace NewTekkenApp.Pages.Admin.States
     {
         ListComponent<State, State_name>? childList;
 
-        void OnStateGroupChanged(int stateGroupCode)
+        public void OnStateGroupChanged(int stateGroupCode)
         {
-            if (stateGroupCode > 0)
-            {
-                childList?.GetEntitiesByStateGroup(stateGroupCode);
-            }
+            StateGroupCode = stateGroupCode;
+            childList?.GetEntitiesByStateGroup(StateGroupCode);
+            StateHasChanged();
         }
     }
 }

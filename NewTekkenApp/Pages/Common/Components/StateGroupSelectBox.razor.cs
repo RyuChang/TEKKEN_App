@@ -8,6 +8,8 @@ namespace NewTekkenApp.Pages.Common.Components
     {
         [Parameter] public EventCallback<string> OnClickCallback { get; set; }
         [Parameter] public Action<int>? OnStateGroupChanged { get; set; }
+        [Parameter] public int StateGroupCode { get; set; }
+
         [Inject] protected IStateGroupService StateGroupService { get; set; } = default!;
 
         public List<SelectListItem> selectListItems { get; set; } = default!;

@@ -5,7 +5,7 @@
 
 <h3>@GetAppTitle()</h3>
 
-<StateGroupSelectBox OnStateGroupChanged="OnStateGroupChanged">
+<StateGroupSelectBox OnStateGroupChanged="OnStateGroupChanged" StateGroupCode="@StateGroupCode">
 </StateGroupSelectBox>
 
 <ListComponent @ref="childList" APP="@App" TDataEntity="State" TNameEntity="State_name" baseService="@CommonService" StateGroupCode="@StateGroupCode">

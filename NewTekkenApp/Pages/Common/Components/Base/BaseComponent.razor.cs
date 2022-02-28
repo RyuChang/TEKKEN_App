@@ -10,77 +10,73 @@ namespace NewTekkenApp.Pages.Common.Components.Base
         where TDataEntity : BaseDataEntity, new()
         where TNameEntity : BaseNameEntity, new()
     {
-        [Parameter]
-        public AppType App { get; set; }
-
-        [Parameter]
-        public IBaseNameService<TDataEntity, TNameEntity> baseService { get; set; } = default!;
-
+        [Parameter] public AppType App { get; set; }
+        [Parameter] public IBaseNameService<TDataEntity, TNameEntity> baseService { get; set; } = default!;
+        [Parameter] public int Id { get; set; }
+        [Parameter] public int? CharacterCode { get; set; }
+        [Parameter] public int? StateGroupCode { get; set; }
+        [Inject] public IJSRuntime JSRuntime { get; set; } = default!;
+        [Inject] protected NavigationUtil navigationUtil { get; set; } = default!;
 
         //[Inject]
         //protected ILogger<EditComponent<TDataEntity, TNameEntity>> Logger { get; set; }
 
-        [Inject]
-        protected NavigationUtil navigationUtil { get; set; } = default!;
-
-        [Parameter]
-        public int Id { get; set; }
-
-        [Parameter]
-        public int? StateGroupCode { get; set; }
-
-        [Inject]
-        public IJSRuntime JSRuntime { get; set; } = default!;
+        Dictionary<string, string> param = new Dictionary<string, string>();
 
         public TDataEntity baseData { get; set; } = default!;
         public TNameEntity? baseName { get; set; } = default!;
 
         #region 기본 버튼
 
+        private void SetCommonParam()
+        {
+            param["StateGroupCode"] = this.StateGroupCode.ToString();
+        }
+
         protected void MoveToList()
         {
-            Dictionary<string, string> param = new Dictionary<string, string>();
-            param["StateGroupCode"] = this.StateGroupCode.ToString();
+            SetCommonParam();
             navigationUtil.MoveTo(App, UserType.Admin, ActionType.List, 0, param);
         }
 
         #region 데이터 버튼
         protected void MoveToCreate()
         {
-            navigationUtil.MoveTo(App, UserType.Admin, ActionType.Create);
+            SetCommonParam();
+            navigationUtil.MoveTo(App, UserType.Admin, ActionType.Create, 0, param);
         }
         protected void MoveToCreateWithStateGroup(int stateGroupCode)
         {
             if (stateGroupCode > 0)
             {
-                Dictionary<string, string> param = new Dictionary<string, string>();
-                param["StateGroupCode"] = this.StateGroupCode.ToString();
+                SetCommonParam();
                 navigationUtil.MoveTo(App, UserType.Admin, ActionType.Create, 0, param);
             }
         }
         protected void MoveToDetail(int id)
         {
-            Dictionary<string, string> param = new Dictionary<string, string>();
-            param["StateGroupCode"] = StateGroupCode.ToString();
-
+            SetCommonParam();
             navigationUtil.MoveTo(App, UserType.Admin, ActionType.Detail, id, param);
         }
 
         protected void MoveToEdit(int id)
         {
-            navigationUtil.MoveTo(App, UserType.Admin, ActionType.Edit, id);
+            SetCommonParam();
+            navigationUtil.MoveTo(App, UserType.Admin, ActionType.Edit, id, param);
         }
 
         protected void MoveToDelete(int id)
         {
-            navigationUtil.MoveTo(App, UserType.Admin, ActionType.Delete, id);
+            SetCommonParam();
+            navigationUtil.MoveTo(App, UserType.Admin, ActionType.Delete, id, param);
         }
         #endregion
 
         #region 이름 버튼
         protected void MoveToDetailName(int Id)
         {
-            navigationUtil.MoveTo(App, UserType.Admin, ActionType.Detail_name, Id);
+            SetCommonParam();
+            navigationUtil.MoveTo(App, UserType.Admin, ActionType.Detail_name, Id, param);
         }
         protected void MoveToCreateName(int Code, string Language_code)
         {
@@ -89,11 +85,13 @@ namespace NewTekkenApp.Pages.Common.Components.Base
         }
         protected void MoveToEditName(int Id)
         {
-            navigationUtil.MoveTo(App, UserType.Admin, ActionType.Edit_name, Id);
+            SetCommonParam();
+            navigationUtil.MoveTo(App, UserType.Admin, ActionType.Edit_name, Id, param);
         }
         protected void MoveToDeleteName(int Id)
         {
-            navigationUtil.MoveTo(App, UserType.Admin, ActionType.Delete_name, Id);
+            SetCommonParam();
+            navigationUtil.MoveTo(App, UserType.Admin, ActionType.Delete_name, Id, param);
         }
         #endregion
 
@@ -104,7 +102,7 @@ namespace NewTekkenApp.Pages.Common.Components.Base
             if (int.TryParse(value, out number))
             {
                 baseData.Number = number;
-                baseData.Code = await baseService.GetCreateCode(number);
+                baseData.Code = await baseService.GetCreateCode(number,CharacterCode,StateGroupCode);
             }
         }
 

@@ -133,6 +133,7 @@ namespace TekkenApp.Data
         {
             return await _dataDbSet.Where(d => d.Character_code == characterCode).MaxAsync(p => (int?)p.Number + 1) ?? 1;
         }
+
         public async Task<int> GetCreateNumberByStateGroup(int stateGroupCode)
         {
             return await _dataDbSet.Where(d => d.StateGroup_code == stateGroupCode).MaxAsync(p => (int?)p.Number + 1) ?? 1;

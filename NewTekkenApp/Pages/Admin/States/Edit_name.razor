@@ -1,6 +1,6 @@
 ﻿@page "/Admin/States/Edit_name/{Id:int}"
 @inherits BasePageComponent
 <h3>@GetAppTitle()</h3>
-<EditNameComponent APP="@App" TDataEntity="State" TNameEntity="State_name" baseService="@CommonService" Id="@Id">
+<EditNameComponent APP="@App" TDataEntity="State" TNameEntity="State_name" baseService="@CommonService" Id="@Id" StateGroupCode="@StateGroupCode">
 </EditNameComponent>
 

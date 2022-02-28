@@ -91,16 +91,28 @@ namespace TekkenApp.Data
         {
             return await _dataDbSet.MaxAsync(p => (int?)p.Number + 1) ?? 1;
         }
+
+        public async Task<int> GetCreateNumberByStateGroupCode(int stateGroupCode)
+        {
+            return await _dataDbSet.Where(p => p.StateGroup_code == stateGroupCode).MaxAsync(p => (int?)p.Number + 1) ?? 1;
+        }
+
+        public async Task<int> GetCreateNumberByCharacterCode(int characterCode)
+        {
+            return await _dataDbSet.Where(p => p.Character_code == characterCode).MaxAsync(p => (int?)p.Number + 1) ?? 1;
+        }
         #endregion
 
         #region GetCreateCode
-        public async Task<int> GetCreateCode(int number, int character_code = 0, int stateGroup_code = 0)
+        public async Task<int> GetCreateCode(int number, int? character_code, int? stateGroup_code)
         {
             TableCode? tableCode = await
             _tekkenDBContext.tableCode.Where(x => x.tableName == this.MainTable).SingleOrDefaultAsync();
-            int stateGroupNumber = (stateGroup_code > 0) ? (stateGroup_code - 80000000) * 1000 : 0;
 
-            int code = tableCode is not null ? tableCode.code + (character_code * 1000) + stateGroupNumber + number : 0;
+            int characterCodeNumber = (character_code is not null) ? character_code.Value * 1000 : 0;
+            int stateGroupNumber = (stateGroup_code is not null) ? (stateGroup_code.Value - 80000000) * 1000 : 0;
+
+            int code = tableCode is not null ? tableCode.code + characterCodeNumber + stateGroupNumber + number : 0;
             return code;
         }
         public async Task<bool> CreateEntityAsync(TDataEntity entity)

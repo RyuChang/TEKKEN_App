@@ -12,10 +12,10 @@ namespace NewTekkenApp.Pages.Admin.Components.Base.Data
         protected override async Task OnInitializedAsync()
         {
             baseData = Activator.CreateInstance(typeof(TDataEntity)) as TDataEntity;
-            
+
             if (baseData == null) return;
-            baseData.Number = await baseService.GetCreateNumber();
-            baseData.Code = await baseService.GetCreateCode(baseData.Number);
+            baseData.Number = await GetCreateNumber(StateGroupCode, CharacterCode);
+            baseData.Code = await baseService.GetCreateCode(baseData.Number, CharacterCode, StateGroupCode);
             if (StateGroupCode is not null)
             {
                 baseData.StateGroup_code = StateGroupCode.Value;
@@ -30,6 +30,24 @@ namespace NewTekkenApp.Pages.Admin.Components.Base.Data
             TNameEntity nameEntity = new TNameEntity();
             await baseService.CreateAllNameEntitiesAsync(baseData);
             MoveToDetail(baseData.Id);
+        }
+
+        private async Task<int> GetCreateNumber(int? stateGroupCode, int? characterCode)
+        {
+            int result;
+            if (StateGroupCode is not null)
+            {
+                result = await baseService.GetCreateNumberByStateGroup(stateGroupCode.Value);
+            }
+            else if (CharacterCode is not null)
+            {
+                result = await baseService.GetCreateNumberByCharacterCode(characterCode.Value);
+            }
+            else
+            {
+                result = await baseService.GetCreateNumber();
+            }
+            return result;
         }
     }
 }

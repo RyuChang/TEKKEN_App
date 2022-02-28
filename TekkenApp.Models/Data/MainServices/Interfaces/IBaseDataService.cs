@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using TekkenApp.Models;
 
 namespace TekkenApp.Data
@@ -11,7 +10,7 @@ namespace TekkenApp.Data
 
         Task<bool> CreateEntityAsync(TDataEntity entity);
         Task<TDataEntity?> DeleteDataEntityByIdAsync(TDataEntity dataEntity);
-        Task<int> GetCreateCode(int number, int character_code = 0, int stateGroup_code = 0);
+        Task<int> GetCreateCode(int number, int? character_code, int? stateGroup_code);
         Task<int> GetCreateNumber();
         Task<TDataEntity?> GetDataEntityByIdAsync(int id);
         Task<List<TDataEntity>> GetEntities();

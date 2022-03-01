@@ -12,8 +12,17 @@ namespace TekkenApp.Models
         {
             SetApp(TableName.Move);
         }
-
-        public new int Character_code { get; set; }
+        public new int Character_code
+        {
+            get
+            {
+                return base.Character_code;
+            }
+            set
+            {
+                base.Character_code = value;
+            }
+        }
 
         //[Column(TypeName = "decimal(4, 2)")]
         public double? version { get; set; }

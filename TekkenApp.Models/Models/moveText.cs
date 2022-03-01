@@ -10,8 +10,17 @@ namespace TekkenApp.Models
         {
             SetApp(TableName.MoveText);
         }
-        public new int Character_code { get; set; }
-
+        public new int Character_code
+        {
+            get
+            {
+                return base.Character_code;
+            }
+            set
+            {
+                base.Character_code = value;
+            }
+        }
         //public virtual Character character_codeNavigation { get; set; }
         //public virtual ICollection<MoveText_name> moveText_name { get; set; }
     }

@@ -11,8 +11,18 @@ namespace TekkenApp.Models
         {
             SetApp(TableName.MoveSubType);
         }
-        public new int Character_code { get; set; }
 
+        public new int Character_code
+        {
+            get
+            {
+                return base.Character_code;
+            }
+            set
+            {
+                base.Character_code = value;
+            }
+        }
         //[Key]
         //public int id { get; set; }
         //public int code { get; set; }

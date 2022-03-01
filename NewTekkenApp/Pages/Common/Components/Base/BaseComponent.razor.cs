@@ -30,91 +30,90 @@ namespace NewTekkenApp.Pages.Common.Components.Base
 
         private void SetCommonParam()
         {
-            param["StateGroupCode"] = StateGroupCode.ToString();
-            param["CharacterCode"] = CharacterCode.ToString();
+            if (StateGroupCode is not null) { param["StateGroupCode"] = StateGroupCode?.ToString(); }
+            if (CharacterCode is not null) { param["CharacterCode"] = CharacterCode?.ToString(); }
         }
+            protected void MoveToList()
+            {
+                SetCommonParam();
+                navigationUtil.MoveTo(App, UserType.Admin, ActionType.List, 0, param);
+            }
 
-        protected void MoveToList()
-        {
-            SetCommonParam();
-            navigationUtil.MoveTo(App, UserType.Admin, ActionType.List, 0, param);
-        }
-
-        #region 데이터 버튼
-        protected void MoveToCreate()
-        {
-            SetCommonParam();
-            navigationUtil.MoveTo(App, UserType.Admin, ActionType.Create, 0, param);
-        }
-        protected void MoveToCreateWithStateGroup(int stateGroupCode)
-        {
-            if (stateGroupCode > 0)
+            #region 데이터 버튼
+            protected void MoveToCreate()
             {
                 SetCommonParam();
                 navigationUtil.MoveTo(App, UserType.Admin, ActionType.Create, 0, param);
             }
-        }
-        protected void MoveToDetail(int id)
-        {
-            SetCommonParam();
-            navigationUtil.MoveTo(App, UserType.Admin, ActionType.Detail, id, param);
-        }
-
-        protected void MoveToEdit(int id)
-        {
-            SetCommonParam();
-            navigationUtil.MoveTo(App, UserType.Admin, ActionType.Edit, id, param);
-        }
-
-        protected void MoveToDelete(int id)
-        {
-            SetCommonParam();
-            navigationUtil.MoveTo(App, UserType.Admin, ActionType.Delete, id, param);
-        }
-        #endregion
-
-        #region 이름 버튼
-        protected void MoveToDetailName(int Id)
-        {
-            SetCommonParam();
-            navigationUtil.MoveTo(App, UserType.Admin, ActionType.Detail_name, Id, param);
-        }
-        protected void MoveToCreateName(int Code, string Language_code)
-        {
-            var query = new Dictionary<string, string> { { "Code", Code.ToString() }, { "Language", Language_code } };
-            navigationUtil.MoveTo(App, UserType.Admin, ActionType.Create_name, Code, query);
-        }
-        protected void MoveToEditName(int Id)
-        {
-            SetCommonParam();
-            navigationUtil.MoveTo(App, UserType.Admin, ActionType.Edit_name, Id, param);
-        }
-        protected void MoveToDeleteName(int Id)
-        {
-            SetCommonParam();
-            navigationUtil.MoveTo(App, UserType.Admin, ActionType.Delete_name, Id, param);
-        }
-        #endregion
-
-        #endregion
-        protected async Task number_Changed(string value)
-        {
-            int number;
-            if (int.TryParse(value, out number))
+            protected void MoveToCreateWithStateGroup(int stateGroupCode)
             {
-                baseData.Number = number;
-                baseData.Code = await baseService.GetCreateCode(number,CharacterCode,StateGroupCode);
+                if (stateGroupCode > 0)
+                {
+                    SetCommonParam();
+                    navigationUtil.MoveTo(App, UserType.Admin, ActionType.Create, 0, param);
+                }
+            }
+            protected void MoveToDetail(int id)
+            {
+                SetCommonParam();
+                navigationUtil.MoveTo(App, UserType.Admin, ActionType.Detail, id, param);
+            }
+
+            protected void MoveToEdit(int id)
+            {
+                SetCommonParam();
+                navigationUtil.MoveTo(App, UserType.Admin, ActionType.Edit, id, param);
+            }
+
+            protected void MoveToDelete(int id)
+            {
+                SetCommonParam();
+                navigationUtil.MoveTo(App, UserType.Admin, ActionType.Delete, id, param);
+            }
+            #endregion
+
+            #region 이름 버튼
+            protected void MoveToDetailName(int Id)
+            {
+                SetCommonParam();
+                navigationUtil.MoveTo(App, UserType.Admin, ActionType.Detail_name, Id, param);
+            }
+            protected void MoveToCreateName(int Code, string Language_code)
+            {
+                var query = new Dictionary<string, string> { { "Code", Code.ToString() }, { "Language", Language_code } };
+                navigationUtil.MoveTo(App, UserType.Admin, ActionType.Create_name, Code, query);
+            }
+            protected void MoveToEditName(int Id)
+            {
+                SetCommonParam();
+                navigationUtil.MoveTo(App, UserType.Admin, ActionType.Edit_name, Id, param);
+            }
+            protected void MoveToDeleteName(int Id)
+            {
+                SetCommonParam();
+                navigationUtil.MoveTo(App, UserType.Admin, ActionType.Delete_name, Id, param);
+            }
+            #endregion
+
+            #endregion
+            protected async Task number_Changed(string value)
+            {
+                int number;
+                if (int.TryParse(value, out number))
+                {
+                    baseData.Number = number;
+                    baseData.Code = await baseService.GetCreateCode(number, CharacterCode, StateGroupCode);
+                }
+            }
+
+            public string GetAppTitle()
+            {
+                return App.ToString();
+            }
+
+            public void SetAppType(AppType appType)
+            {
+                this.App = appType;
             }
         }
-
-        public string GetAppTitle()
-        {
-            return App.ToString();
-        }
-
-        public void SetAppType(AppType appType)
-        {
-            this.App = appType;
-        }
     }
-}

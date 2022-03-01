@@ -11,6 +11,15 @@
 else
 {
     <form class="row g-3">
+        @if (CharacterCode is not null)
+        {
+            <div class="mb-3 row">
+                <label for="@baseData.Character_code" class="col-1 col-form-label">캐릭터 코드</label>
+                <div class="col-auto">
+                    <input type="text" class="form-control" placeholder="Character_code" readonly @bind="@baseData.Character_code" />
+                </div>
+            </div>
+        }
 
         <div class="mb-3 row">
             <label for="@baseData.Code" class="col-1 col-form-label">코드</label>
@@ -36,21 +45,6 @@ else
                 </div>
             </div>
         }
-
-        @*
-
-            @if (ViewBag.baseType == BaseType.Character_Code)
-            {
-
-            <div class="row mb-3">
-            <div class="col-sm-2">
-            <label asp-for="Character_code" class="col-form-label col-form-label-sm"></label>
-            </div>
-            <div class="col-sm">
-            <input asp-for="Character_code" class="col-form-label col-form-label-sm" readonly="readonly">
-            </div>
-            </div>
-            }*@
 
         <div class="mb-3 row">
             <label for="@baseData.Description" class="col-1 col-form-label">설명</label>

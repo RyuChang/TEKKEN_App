@@ -16,6 +16,11 @@ namespace NewTekkenApp.Pages.Admin.Components.Base.Data
             if (baseData == null) return;
             baseData.Number = await GetCreateNumber(StateGroupCode, CharacterCode);
             baseData.Code = await baseService.GetCreateCode(baseData.Number, CharacterCode, StateGroupCode);
+            
+            if (CharacterCode is not null)
+            {
+                baseData.Character_code = CharacterCode.Value;
+            }
             if (StateGroupCode is not null)
             {
                 baseData.StateGroup_code = StateGroupCode.Value;

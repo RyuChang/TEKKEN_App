@@ -1,5 +1,5 @@
 ﻿@page "/Admin/MoveSubTypes/Create_name/{Code:int}"
 @inherits BasePageComponent
 <h3>@GetAppTitle()</h3>
-<CreateNameComponent APP="@App" TDataEntity="MoveSubType" TNameEntity="MoveSubType_name" Code="@Code" Language="@Language" baseService="@CommonService">
+<CreateNameComponent APP="@App" TDataEntity="MoveSubType" TNameEntity="MoveSubType_name" Code="@Code" Language="@Language" baseService="@CommonService" CharacterCode="@CharacterCode">
 </CreateNameComponent>

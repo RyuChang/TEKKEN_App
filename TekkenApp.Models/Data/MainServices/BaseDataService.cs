@@ -77,7 +77,7 @@ namespace TekkenApp.Data
         #region Load Entity by Character
         public async Task<List<TDataEntity>> GetEntitiesByCharacterCode(int characterCode)
         {
-            return await _dataDbSet.Where(p => p.Character_code == characterCode).ToListAsync();
+            return await _dataDbSet.Where(p => p.Character_code == characterCode || characterCode == 0).Include(p => p.NameSet).ToListAsync();
         }
         #endregion
 

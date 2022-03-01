@@ -8,9 +8,7 @@ namespace NewTekkenApp.Pages.Admin.MoveTexts
     public partial class BasePageComponent : BaseDataComponent<MoveText, MoveText_name>
     {
         [Parameter] public int CharacterCode { get; set; }
-
-        [Inject]
-        protected IMoveTextService? CommonService { get; set; }
+        [Inject] protected IMoveTextService? CommonService { get; set; }
 
         public BasePageComponent()
         {

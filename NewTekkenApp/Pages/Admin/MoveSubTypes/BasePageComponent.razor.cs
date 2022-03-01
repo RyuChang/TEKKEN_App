@@ -1,8 +1,5 @@
-﻿using System.Net.NetworkInformation;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using NewTekkenApp.Pages.Common.Components.Base;
-//using NewTekkenApp.Pages.Admin.Components.Base.Data;
-//using NewTekkenApp.Pages.Admin.Components.Base.Name;
 
 using TekkenApp.Data;
 using TekkenApp.Models;
@@ -11,14 +8,21 @@ namespace NewTekkenApp.Pages.Admin.MoveSubTypes
 {
     public partial class BasePageComponent : BaseDataComponent<MoveSubType, MoveSubType_name>
     {
-        public int CharacterCode { get; set; }
-
-        [Inject]
-        protected IMoveSubTypeService? CommonService { get; set; }
+        [Parameter] public int CharacterCode { get; set; }
+        [Inject] protected IMoveSubTypeService? CommonService { get; set; }
 
         public BasePageComponent()
         {
             SetAppType(AppType.MoveSubTypes);
+        }
+        protected override Task OnInitializedAsync()
+        {
+            var queryStrings = navigationUtil.GetQueryStrings();
+            if (queryStrings.TryGetValue("CharacterCode", out var _characterCode))
+            {
+                CharacterCode = int.Parse(_characterCode);
+            }
+            return base.OnInitializedAsync();
         }
     }
 }

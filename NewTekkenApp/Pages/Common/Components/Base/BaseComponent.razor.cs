@@ -30,7 +30,8 @@ namespace NewTekkenApp.Pages.Common.Components.Base
 
         private void SetCommonParam()
         {
-            param["StateGroupCode"] = this.StateGroupCode.ToString();
+            param["StateGroupCode"] = StateGroupCode.ToString();
+            param["CharacterCode"] = CharacterCode.ToString();
         }
 
         protected void MoveToList()

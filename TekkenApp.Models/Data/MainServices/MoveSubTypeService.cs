@@ -10,8 +10,8 @@ namespace TekkenApp.Data
 
         public MoveSubTypeService(TekkenDbContext tekkenDbContext) : base(tekkenDbContext, tekkenDbContext.moveSubType, tekkenDbContext.moveSubType_name)
         {
-            MainTable = TableName.MoveText.ToString();
-            NameTable = TableName.MoveText_name.ToString();
+            MainTable = TableName.MoveSubType.ToString();
+            NameTable = TableName.MoveSubType_name.ToString();
         }
 
 

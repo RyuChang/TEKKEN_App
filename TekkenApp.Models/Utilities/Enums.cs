@@ -40,6 +40,7 @@ namespace TekkenApp.Models
         Move,
         Move_name,
         MoveSubType,
+        MoveSubType_name,
         MoveType,
         MoveType_name,
         MoveCommand,

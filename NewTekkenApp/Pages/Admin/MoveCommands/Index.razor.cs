@@ -14,16 +14,17 @@ namespace NewTekkenApp.Pages.Admin.MoveCommands
         protected override async Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
-
+            if (CharacterCode is not null)
+            Console.WriteLine(CharacterCode.Value);
             //baseEntities = await baseService.GetEntities();
 
-            MoveCommandEntities = await CommonService.GetEntitiesWithMove();
+            MoveCommandEntities = await CommonService.GetEntitiesWithMoveByCharacterCode(CharacterCode.Value);
         }
 
         async void OnCharacterChanged(int characterCode)
         {
             CharacterCode = characterCode;
-            MoveCommandEntities = await CommonService.GetEntitiesWithMoveByCharacterCode(CharacterCode);
+            MoveCommandEntities = await CommonService.GetEntitiesWithMoveByCharacterCode(CharacterCode.Value);
             StateHasChanged();
         }
 

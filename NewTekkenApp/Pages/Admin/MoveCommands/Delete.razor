@@ -1,5 +1,5 @@
 ﻿@page "/Admin/MoveCommands/Delete/{Id:int}"
 @inherits BasePageComponent
 <h3>@GetAppTitle()</h3>
-<DeleteComponent APP="@App" TDataEntity="MoveCommand" TNameEntity="MoveCommand_name" baseService="@CommonService" Id="@Id">
+<DeleteComponent APP="@App" TDataEntity="MoveCommand" TNameEntity="MoveCommand_name" baseService="@CommonService" Id="@Id" CharacterCode="@CharacterCode">
 </DeleteComponent>

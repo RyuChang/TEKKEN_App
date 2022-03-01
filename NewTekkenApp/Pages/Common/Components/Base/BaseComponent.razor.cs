@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web.Virtualization;
 using Microsoft.JSInterop;
 using NewTekkenApp.Utilities;
 using TekkenApp.Data;
@@ -30,8 +31,8 @@ namespace NewTekkenApp.Pages.Common.Components.Base
 
         private void SetCommonParam()
         {
-            if (StateGroupCode is not null) { param["StateGroupCode"] = StateGroupCode?.ToString(); }
-            if (CharacterCode is not null) { param["CharacterCode"] = CharacterCode?.ToString(); }
+            if (StateGroupCode is not null) { param["StateGroupCode"] = StateGroupCode.ToString(); }
+            if (CharacterCode is not null) { param["CharacterCode"] = CharacterCode.ToString(); }
         }
             protected void MoveToList()
             {

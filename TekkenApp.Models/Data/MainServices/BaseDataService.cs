@@ -81,7 +81,7 @@ namespace TekkenApp.Data
         }
         #endregion
 
-        public async Task<List<TDataEntity>> GetEntitiesWithStateGroup(int stateGroupCode)
+        public async Task<List<TDataEntity>> GetEntitiesByStateGroup(int stateGroupCode)
         {
             return await _dataDbSet.Where(p => p.StateGroup_code == stateGroupCode || stateGroupCode == 0).Include(p => p.NameSet).ToListAsync();
         }

@@ -15,7 +15,6 @@ namespace NewTekkenApp.Pages.Admin.Components.Base.Data
             if (StateGroupCode is null)
             {
                 baseEntities = await baseService.GetEntitiesWithAllNames();
-
             }
             else
             {

@@ -10,7 +10,7 @@ namespace NewTekkenApp.Pages.Admin.MoveTexts
         void OnCharacterChanged(int characterCode)
         {
             CharacterCode = characterCode;
-            childList?.GetEntitiesByCharacterCode(characterCode);
+            childList?.GetEntitiesByCharacterCode(CharacterCode);
         }
     }
 }

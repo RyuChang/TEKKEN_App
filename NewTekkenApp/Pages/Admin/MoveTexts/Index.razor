@@ -5,9 +5,8 @@
 
 <h3>@GetAppTitle()</h3>
 
-<CascadingValue Value="CharacterCode">
-    <CharacterSelectBox OnCharacterChanged="OnCharacterChanged" CharacterCode="@CharacterCode">
-    </CharacterSelectBox>
-    <ListComponent @ref="childList" APP="@App" TDataEntity="MoveText" TNameEntity="MoveText_name" baseService="@CommonService" CharacterCode="@CharacterCode">
-    </ListComponent>
-</CascadingValue>
+<CharacterSelectBox OnCharacterChanged="OnCharacterChanged" CharacterCode="@CharacterCode">
+</CharacterSelectBox>
+
+<ListComponent @ref="childList" APP="@App" TDataEntity="MoveText" TNameEntity="MoveText_name" baseService="@CommonService" CharacterCode="@CharacterCode">
+</ListComponent>

@@ -11,6 +11,7 @@ namespace NewTekkenApp.Pages.Admin.Moves
         {
             CharacterCode = characterCode;
             childList?.GetEntitiesByCharacterCode(CharacterCode);
+            StateHasChanged();
         }
     }
 }

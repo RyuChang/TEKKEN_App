@@ -20,17 +20,17 @@ namespace NewTekkenApp.Pages.Admin.MoveDatas
 
             moveDataEntity = await CommonService.GetEntityWithMovesByIdAsync(Id);
 
-            MoveTypeSelectListItems = await moveTypeService.GetSelectItems();
+            MoveTypeSelectListItems = await moveTypeService.GetSelectItems(true);
 
-            MoveSubTypeSelectListItems = await moveSubTypeService.GetSelectItems();
+            MoveSubTypeSelectListItems = await moveSubTypeService.GetSelectItems(true);
 
-            StartTypeSelectListItems = await hitTypeService.GetSelectItems();
+            StartTypeSelectListItems = await hitTypeService.GetSelectItems(true);
 
-            HitTypeSelectListItems = await hitTypeService.GetSelectItems();
+            HitTypeSelectListItems = await hitTypeService.GetSelectItems(true);
 
-            GuardTypeSelectListItems = await hitTypeService.GetSelectItems();
+            GuardTypeSelectListItems = await hitTypeService.GetSelectItems(true);
 
-            CounterTypeSelectListItems = await hitTypeService.GetSelectItems();
+            CounterTypeSelectListItems = await hitTypeService.GetSelectItems(true);
         }
     }
 }

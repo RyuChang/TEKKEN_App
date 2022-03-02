@@ -16,7 +16,7 @@ namespace NewTekkenApp.Pages.Common.Components
 
         protected override async Task OnInitializedAsync()
         {
-            selectListItems = await characterService.GetSelectItems();
+            selectListItems = await characterService.GetSelectItems(true);
         }
     }
 }

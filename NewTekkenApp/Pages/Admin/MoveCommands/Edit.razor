@@ -51,14 +51,6 @@ else
         </div>
 
         <div class="mb-3 row">
-            <label class="col-1 col-form-label">입력</label> <input class="col-1 col-form-label" @bind="@timer"></input>
-            <div class="col">
-                <textarea rows=3 id="Command" type="text" readonly class="form-control" placeholder="커맨드 입력" @bind="@moveEntity.MoveCommand.Command" @onkeydown="SetKeyDown" @onkeydown:preventDefault="true" @onkeydown:stopPropagation="true" @onkeyup="SetKeyUp" @onkeyup:preventDefault="true" @onkeyup:stopPropagation="true" />
-            </div>
-        </div>
-
-
-        <div class="mb-3 row">
             <label class="col-1 col-form-label">커맨드</label>
             <div class="col">
                 <div class="border border-1 text-black fs-6 m-0 p-0" style="min-height:3.5rem;">
@@ -66,6 +58,51 @@ else
                 </div>
             </div>
         </div>
+
+        <div class="mb-3 row">
+            <label class="col-1 col-form-label">입력</label> <input class="col-1 col-form-label" @bind="@timer" />
+            <div class="col">
+                <textarea rows=3 id="Command" type="text" readonly class="form-control" placeholder="커맨드 입력" @bind="@moveEntity.MoveCommand.Command" @onkeydown="SetKeyDown" @onkeydown:preventDefault="true" @onkeydown:stopPropagation="true" @onkeyup="SetKeyUp" @onkeyup:preventDefault="true" @onkeyup:stopPropagation="true" />
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label class="col-1 col-form-label">State</label>
+            <div class="col">
+                <StateGroupButtonList OnStateGroupChanged="OnStateGroupChanged" />
+
+                <div class="row mb-3">
+                    <div class="col-sm-2">
+                        <label class="col-form-label col-form-label-sm">States</label>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-sm">
+                            @if (state != null)
+                            {
+                                @foreach (var item in state)
+                                {
+                                    if (_stateGroupCode == 80000007)
+                                    {
+                                        <button type="button" class="mb-1 col btn btn-primary" value="@item.Description" @onclick="ShowMovesModal">@item.Description</button>
+                                    }
+                                    else if (_stateGroupCode == 80000016)
+                                    {
+                                        <button type="button" class="mb-1 col btn btn-primary" value="@item.Description" @onclick="ShowTextModal">@item.Description</button>
+                                    }
+                                    else
+                                    {
+                                        <button type="button" class="mb-1 col btn btn-primary" value="@item.Description" @onclick="()=>AddState(item.Description)">@item.Description</button>
+                                    }
+                                    <br />
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
 
 
@@ -117,42 +154,6 @@ else
         }
     </form>
 }
-
-<StateGroupSelectBox OnStateGroupChanged="OnStateGroupChanged">
-</StateGroupSelectBox>
-
-
-<div class="row mb-3">
-    <div class="col-sm-2">
-        <label class="col-form-label col-form-label-sm">States</label>
-    </div>
-
-    <div class="row mb-3">
-        <div class="col-sm">
-            @if (state != null)
-            {
-                @foreach (var item in state)
-                {
-                    if (_stateGroupCode == 80000007)
-                    {
-                        <button type="button" class="mb-1 col btn btn-primary" value="@item.Description" @onclick="ShowMovesModal">@item.Description</button>
-                    }
-                    else if (_stateGroupCode == 80000015)
-                    {
-                        <button type="button" class="mb-1 col btn btn-primary" value="@item.Description" onClick="ShowTextModal(\'TEXT\',this.value);">@item.Description</button>
-                    }
-                    else
-                    {
-                        <button type="button" class="mb-1 col btn btn-primary" value="@item.Description" onClick="AddStateModal(this.value);">@item.Description</button>
-                    }
-                    <br />
-                }
-            }
-        </div>
-    </div>
-</div>
-
-<button class="btn btn-primary">Show Modal</button>
 
 <div class="mb-3 row">
     <div class="col-md-4">

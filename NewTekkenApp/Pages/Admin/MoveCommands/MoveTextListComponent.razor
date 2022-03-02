@@ -1,12 +1,12 @@
 ﻿@inject IModalService ModalService
 
-@if (moveList != null && ShowForm)
+@if (moveTextList != null && ShowForm)
 {
     <div>
-        <select @bind="moveCode" id="SelectMoveList" class="form-control">
-            @foreach (var move in moveList)
+        <select @bind="moveTextCode" id="SelectMoveTextList" class="form-control">
+            @foreach (var moveText in moveTextList)
             {
-                <option value=@move.Code>@move.Description</option>
+                <option value=@moveText.Code>@moveText.Description</option>
             }
         </select>
     </div>
@@ -25,24 +25,24 @@ else
 }
 
 @code {
-    [Parameter] public int Character_code { get; set; } = default!;
     [CascadingParameter] BlazoredModalInstance ModalInstance { get; set; } = default!;
-    [Inject] protected IMoveService MoveService { get; set; } = default!;
+    [Parameter] public int Character_code { get; set; } = default!;
+    [Inject] protected IMoveTextService MoveTextService { get; set; } = default!;
 
-    public IList<Move> moveList { get; set; }
+    public IList<MoveText> moveTextList { get; set; }
 
     bool ShowForm { get; set; } = true;
-    public int moveCode { get; set; }
+    public int moveTextCode { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        moveList = await MoveService.GetEntitiesByCharacterCode(Character_code);
+        moveTextList = await MoveTextService.GetEntitiesByCharacterCode(Character_code);
     }
 
     void Submit()
     {
         ShowForm = false;
-        ModalInstance.CloseAsync(ModalResult.Ok<int>(moveCode));
+        ModalInstance.CloseAsync(ModalResult.Ok<int>(moveTextCode));
     }
 
     void Cancel()
@@ -50,3 +50,4 @@ else
         ModalInstance.CancelAsync();
     }
 }
+

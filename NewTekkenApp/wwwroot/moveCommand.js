@@ -18,55 +18,10 @@
     }
     
 
-
-    //AddKey(key) {
-    //    if (this.clickedKey.indexOf(key) < 0) {
-    //        this.clickedKey.push(key);
-    //        this.resultKey.push(key);
-    //    }
-    //}
-
-    //SetKeyDown() {
-    //    this.command.addEventListener("keydown", function (event) {
-    //        commandUtil.AddKey(event.key);
-    //        this.timer++;
-    //    });
-    //}
-
-    //SetKeyUp() {
-    //    this.command.addEventListener("keyup", function (event) {
-    //        commandUtil.RemoveKey(event.key);
-
-    //        if (commandUtil.resultKey.length == 0) {
-    //            commandUtil.AddCommand(event.key);
-    //        }
-    //    });
-    //}
-
-    //RemoveKey(key) {
-    //    let keyIndex = this.resultKey.indexOf(key);
-    //    if (keyIndex > -1) {
-    //        this.resultKey.splice(k    /*x, 1);
-    //    }
-    //}
 }
     /*
 
 
-
-MapKey(formedKey) {
-    if (commandUtil.keyMap[formedKey] != undefined) {
-        return '[' + commandUtil.keyMap[formedKey].trim() + ']';
-    }
-    return '';
-}
-
-
-
-InitCommand() {
-    commandUtil.clickedKey = [];
-    commandUtil.timer = 0;
-}
 AddState(state) {
     var result = commandUtil.rawCommand + '/{S:' + commandUtil.state + '}';
     //displayCommand.value = command;
@@ -118,17 +73,6 @@ al').modal('hide');
     //            return result;
     //        }).catch((err) => handl//rror(err));
     //}
-
-
-
-
-    //const//ommandUtil = new commandLib();
-
-    //export { commandLib, commandUtil };
-
-
-
-
 
 
 

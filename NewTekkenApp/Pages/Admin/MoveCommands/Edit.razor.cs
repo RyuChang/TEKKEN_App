@@ -47,14 +47,16 @@ namespace NewTekkenApp.Pages.Admin.MoveCommands
 
         void OnStateGroupChanged(int stateGroupCode)
         {
+
             if (stateGroupCode > 0)
             {
+                _stateGroupCode = stateGroupCode; ;
                 state = StateService?.GetEntitiesWithNameByStateGroup(stateGroupCode);
                 StateHasChanged();
             }
         }
 
-
+        #region State 처리
         [CascadingParameter] public IModalService Modal { get; set; }
 
         public async Task ShowMovesModal()
@@ -71,23 +73,48 @@ namespace NewTekkenApp.Pages.Admin.MoveCommands
             }
             else
             {
-                //await JSRuntime.InvokeVoidAsync("AddMovesModal", result.Data);
-
-                if (module is not null) await module.InvokeAsync<object>("commandUtil.AddMovesModal", result.Data);
-                Console.WriteLine("Modal was closed");
+                await AddMoves(result.Data.ToString());
             }
         }
 
-        async Task ShowTextModal()
+        public async Task ShowTextModal()
         {
 
-            //url = "/Admin/MoveText/SelectMoveText";
+            var parameters = new ModalParameters();
+            parameters.Add(nameof(moveEntity.Character_code), moveEntity.Character_code);
 
-            //        var result = rawCommand + '/{T:' + stateCode + ':' + $('#move').val() + '}';
+            var moveTextModal = Modal.Show<MoveTextListComponent>("State MoveText", parameters);
+            var result = await moveTextModal.Result;
+
+            if (result.Cancelled)
+            {
+                Console.WriteLine("Modal was cancelled");
+            }
+            else
+            {
+                await AddMoveTextModal(result.Data.ToString());
+            }
 
         }
-        //    void ShowMovesModal() => Modal.Show<MoveListComponent>("State Move");
 
+        public async Task AddState(string stateCode)
+        {
+            var result = $"{this.rawCommand}/{{S:{stateCode}}}";
+            //var result = this.rawCommand + "/{M:80000007:" + stateCode + '}';
+            SetCommand(result);
+        }
+
+        public async Task AddMoves(string moveCode)
+        {
+            var result = $"{this.rawCommand}/{{M:80000007:{moveCode}}}";
+            this.SetCommand(result);
+        }
+        public async Task AddMoveTextModal(string moveTextCode)
+        {
+            var result = $"{this.rawCommand}/{{T:80000015:{moveTextCode}}}";
+            this.SetCommand(result);
+        }
+        #endregion
         private int timer { get; set; } = 0;
         public List<string> resultKey { get; set; }
         public List<string> clickedKey { get; set; }

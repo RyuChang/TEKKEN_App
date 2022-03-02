@@ -111,19 +111,22 @@ namespace TekkenApp.Data
             return _dataDbSet.Where(d => d.StateGroup_code == stateGroupCode).Include("NameSet").ToList();
         }
 
-        public async Task<List<SelectListItem>> GetSelectItems()
+        public async Task<List<SelectListItem>> GetSelectItems(bool isDefault)
         {
 
             List<SelectListItem> selectListItems = await (from data in _dataDbSet
                                                           join name in _nameDbSet
                                                               on data.Code equals name.Base_code
-                                                              where name.Language_code == language_code
+                                                          where name.Language_code == language_code
                                                           select new SelectListItem { Value = data.Code.ToString(), Text = name.Name.ToString() }).ToListAsync<SelectListItem>();
-            selectListItems.Insert(0, new SelectListItem()
+            if (isDefault is true)
             {
-                Value = "0",
-                Text = "---Select---"
-            });
+                selectListItems.Insert(0, new SelectListItem()
+                {
+                    Value = "0",
+                    Text = "---Select---"
+                });
+            }
             return selectListItems;
         }
 

@@ -174,21 +174,17 @@ namespace TekkenApp.Data
             #region MoveData
             modelBuilder.Entity<MoveData>(entity =>
             {
-                entity.Property(e => e.AfterBreak).IsUnicode(false);
 
-                entity.Property(e => e.BreakThrow).IsUnicode(false);
 
-                entity.Property(e => e.CounterFrame_Display).IsUnicode(false);
 
-                entity.Property(e => e.GuardFrame_Display).IsUnicode(false);
-
-                entity.Property(e => e.HitFrame_Display).IsUnicode(false);
-
-                entity.Property(e => e.HitLevel).IsUnicode(false);
-
-                entity.Property(e => e.Note).IsUnicode(false);
-
-                entity.Property(e => e.StartFrame_Display).IsUnicode(false);
+                entity.Property(e => e.AfterBreak).+(false).HasDefaultValue("");
+                entity.Property(e => e.BreakThrow).IsUnicode(false).HasDefaultValue("");
+                entity.Property(e => e.CounterFrame_Display).IsUnicode(false).HasDefaultValue("");
+                entity.Property(e => e.GuardFrame_Display).IsUnicode(false).HasDefaultValue("");
+                entity.Property(e => e.HitFrame_Display).IsUnicode(false).HasDefaultValue("");
+                entity.Property(e => e.HitLevel).IsUnicode(false).HasDefaultValue("");
+                entity.Property(e => e.Note).IsUnicode(false).HasDefaultValue("");
+                entity.Property(e => e.StartFrame_Display).IsUnicode(false).HasDefaultValue("");
 
                 entity.HasMany(d => d.NameSet as HashSet<MoveData_name>)
                 .WithOne()
@@ -199,7 +195,7 @@ namespace TekkenApp.Data
 
                 entity.HasOne(m => m.Move)
                 .WithOne(p => p.MoveData)
-                .HasPrincipalKey<MoveData>(m => m.Base_Code)
+                .HasPrincipalKey<MoveData>(m => m.Base_code)
                 .HasForeignKey<Move>(p => p.Code);
                 //.HasConstraintName("fk_movecommand_move");
                 

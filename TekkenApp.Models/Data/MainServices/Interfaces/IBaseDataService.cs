@@ -13,9 +13,13 @@ namespace TekkenApp.Data
         Task<int> GetCreateCode(int number, int? character_code, int? stateGroup_code);
         Task<int> GetCreateNumber();
         Task<TDataEntity?> GetDataEntityByIdAsync(int id);
+        Task<TDataEntity> GetDataEntityByBaseCodeAsync(int baseCode);
+
         Task<List<TDataEntity>> GetEntities();
         Task<List<TDataEntity>> GetEntitiesByCharacterCode(int characterCode);
         Task<List<TDataEntity>> GetEntitiesByStateGroup(int stateGroupCode);
         Task<TDataEntity> UpdateDataAsync(TDataEntity BaseDataEntity);
+
+
     }
 }

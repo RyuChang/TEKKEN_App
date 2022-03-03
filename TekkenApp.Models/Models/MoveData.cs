@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 #nullable disable
 
@@ -19,8 +20,18 @@ namespace TekkenApp.Models
         [NotMapped]
         public new int Number { get; set; }
 
-        public int Base_Code { get; set; }
-        public int? MoveType_code { get; set; }
+        public int Base_code
+        {
+            get
+            {
+                return base.Base_code;
+            }
+            set
+            {
+                base.Base_code= value;
+            }
+        }
+        public int MoveType_code { get; set; } = 0;
         public int? MoveSubType_code { get; set; }
         public int HitCount { get; set; }
         [Required]
@@ -46,6 +57,8 @@ namespace TekkenApp.Models
         public bool TechnicallyJumping { get; set; }
         public bool TailSpin { get; set; }
         public bool WallSplat { get; set; }
+
+        [Unicode(true)]
         public string Note { get; set; }
         //[Column(TypeName = "decimal(4, 2)")]
         public int? Version { get; set; }

@@ -33,6 +33,10 @@ namespace TekkenApp.Data
         {
             return await _dataDbSet.FindAsync(id);
         }
+        public async Task<TDataEntity> GetDataEntityByBaseCodeAsync(int baseCode)
+        {
+            return await _dataDbSet.Where(d => d.Base_code == baseCode).FirstOrDefaultAsync();
+        }
 
         private bool BaseDataEntityExistsById(int id)
         {
@@ -131,5 +135,7 @@ namespace TekkenApp.Data
             await _tekkenDBContext.SaveChangesAsync();
             return BaseDataEntity;
         }
+
+
     }
 }

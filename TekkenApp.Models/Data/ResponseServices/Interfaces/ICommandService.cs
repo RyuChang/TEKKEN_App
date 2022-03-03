@@ -6,6 +6,6 @@ namespace TekkenApp.Data
 {
     public interface ICommandService : IBaseNameService<Command, Command_name>
     {
-        Task<List<KeyMapVM>> GetKeyMaps();
+        public Task<List<KeyMapVM>> GetKeyMaps();
     }
 }

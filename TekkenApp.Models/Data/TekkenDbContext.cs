@@ -174,36 +174,21 @@ namespace TekkenApp.Data
             #region MoveData
             modelBuilder.Entity<MoveData>(entity =>
             {
-                entity.Property(e => e.AfterBreak).IsUnicode(false);
-
-                entity.Property(e => e.BreakThrow).IsUnicode(false);
-
-                entity.Property(e => e.CounterFrame_Display).IsUnicode(false);
-
-                entity.Property(e => e.GuardFrame_Display).IsUnicode(false);
-
-                entity.Property(e => e.HitFrame_Display).IsUnicode(false);
-
-                entity.Property(e => e.HitLevel).IsUnicode(false);
-
-                entity.Property(e => e.Note).IsUnicode(false);
-
-                entity.Property(e => e.StartFrame_Display).IsUnicode(false);
 
                 entity.HasMany(d => d.NameSet as HashSet<MoveData_name>)
-                .WithOne()
-                .HasPrincipalKey(p => p.Code)
-                .HasForeignKey(d => d.Base_code)
-                // .HasConstraintName("FK_moveData_Move")
-                .OnDelete(DeleteBehavior.Cascade);
+                    .WithOne()
+                    .HasPrincipalKey(p => p.Code)
+                    .HasForeignKey(d => d.Base_code)
+                    // .HasConstraintName("FK_moveData_Move")
+                    .OnDelete(DeleteBehavior.Cascade);
 
                 entity.HasOne(m => m.Move)
                 .WithOne(p => p.MoveData)
-                .HasPrincipalKey<MoveData>(m => m.Base_Code)
+                .HasPrincipalKey<MoveData>(m => m.Base_code)
                 .HasForeignKey<Move>(p => p.Code);
                 //.HasConstraintName("fk_movecommand_move");
-                
-                    //.ondelete(deletebehavior.cascade);
+
+                //.ondelete(deletebehavior.cascade);
 
 
                 //entity.HasOne(d => d.counterType_codeNavigation)

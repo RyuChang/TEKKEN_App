@@ -10,7 +10,7 @@ else
         @foreach (var selectItem in selectListItems)
         {
 
-            <button type="button" class="btn btn-primary" value="@selectItem.Value" @onclick="() => OnStateGroupChanged.Invoke(int.Parse(selectItem.Value))">@selectItem.Text.Replace(" ", "\r\n")</button>
+            <button type="button" class="btn btn-primary" value="@selectItem.Value" @onclick="() => OnStateGroupChanged.InvokeAsync(int.Parse(selectItem.Value))">@selectItem.Text.Replace(" ", "\r\n")</button>
         }
     </div>
 }

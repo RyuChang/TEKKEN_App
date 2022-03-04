@@ -6,8 +6,7 @@ namespace NewTekkenApp.Pages.Common.Components
 {
     public partial class CharacterSelectBox
     {
-        [Parameter] public EventCallback<string> OnClickCallback { get; set; }
-        [Parameter] public Action<int>? OnCharacterChanged { get; set; }
+        [Parameter] public EventCallback<int> OnCharacterChanged { get; set; }
         [Parameter] public int CharacterCode { get; set; }
 
         [Inject] protected ICharacterService characterService { get; set; } = default!;

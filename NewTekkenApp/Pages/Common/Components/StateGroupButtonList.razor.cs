@@ -7,7 +7,7 @@ namespace NewTekkenApp.Pages.Common.Components
     public partial class StateGroupButtonList
     {
         [Parameter] public EventCallback<string> OnClickCallback { get; set; }
-        [Parameter] public Action<int>? OnStateGroupChanged { get; set; }
+        [Parameter] public EventCallback<int> OnStateGroupChanged { get; set; }
         [Parameter] public int StateGroupCode { get; set; }
 
         [Inject] protected IStateGroupService StateGroupService { get; set; } = default!;

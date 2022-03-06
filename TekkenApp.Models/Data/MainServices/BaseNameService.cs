@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
@@ -28,7 +29,16 @@ namespace TekkenApp.Data
 
         public async Task<TNameEntity> GetNameEntitiyByBaseCodeAndLanguageCode(int baseCode, string languageCode)
         {
-            return await _nameDbSet.Where(n => n.Base_code == baseCode).Where(n => n.Language_code == languageCode).FirstOrDefaultAsync();
+            TNameEntity entity = null;
+            try
+            {
+                entity = await _nameDbSet.Where(n => n.Base_code == baseCode).Where(n => n.Language_code == languageCode).FirstOrDefaultAsync();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            return entity;
         }
 
 
@@ -106,9 +116,9 @@ namespace TekkenApp.Data
             return await _dataDbSet.Include(d => d.NameSet).ToListAsync();
         }
 
-        public List<TDataEntity> GetEntitiesWithNameByStateGroup(int stateGroupCode)
+        public async Task<List<TDataEntity>> GetEntitiesWithNameByStateGroup(int stateGroupCode)
         {
-            return _dataDbSet.Where(d => d.StateGroup_code == stateGroupCode).Include("NameSet").ToList();
+            return await _dataDbSet.Where(d => d.StateGroup_code == stateGroupCode).Include("NameSet").ToListAsync();
         }
 
         public async Task<List<SelectListItem>> GetSelectItems(bool isDefault)

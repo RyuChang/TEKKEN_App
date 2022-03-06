@@ -54,13 +54,13 @@ else
             <label class="col-1 col-form-label">커맨드</label>
             <div class="col">
                 <div class="border border-1 text-black fs-6 m-0 p-0" style="min-height:3.5rem;">
-                    @((MarkupString)displayCommand)
+                    @((MarkupString)DisplayCommand)
                 </div>
             </div>
         </div>
 
         <div class="mb-3 row">
-            <label class="col-1 col-form-label">입력</label> <input class="col-1 col-form-label" @bind="@timer" />
+            @*<label class="col-1 col-form-label">입력</label> <input class="col-1 col-form-label" @bind="@Timer" />*@
             <div class="col">
                 <textarea rows=3 id="Command" type="text" readonly class="form-control" placeholder="커맨드 입력" @bind="@moveEntity.MoveCommand.Command" @onkeydown="SetKeyDown" @onkeydown:preventDefault="true" @onkeydown:stopPropagation="true" @onkeyup="SetKeyUp" @onkeyup:preventDefault="true" @onkeyup:stopPropagation="true" />
             </div>
@@ -82,18 +82,7 @@ else
                             {
                                 @foreach (var item in state)
                                 {
-                                    if (_stateGroupCode == 80000007)
-                                    {
-                                        <button type="button" class="mb-1 col btn btn-primary" value="@item.Description" @onclick="ShowMovesModal">@item.Description</button>
-                                    }
-                                    else if (_stateGroupCode == 80000016)
-                                    {
-                                        <button type="button" class="mb-1 col btn btn-primary" value="@item.Description" @onclick="ShowTextModal">@item.Description</button>
-                                    }
-                                    else
-                                    {
-                                        <button type="button" class="mb-1 col btn btn-primary" value="@item.Description" @onclick="()=>AddState(item.Description)">@item.Description</button>
-                                    }
+                                    <button type="button" class="mb-1 col btn btn-primary" value="@item.Description" @onclick="()=>AddState(item)">@item.Description</button>
                                     <br />
                                 }
                             }
@@ -106,52 +95,51 @@ else
 
 
 
-        @foreach (var item in @moveEntity.MoveCommand.NameSet)
-        {
-            <div class="row mb-1">
-                <div class="col-1">
-                    <label class="col-form-label col-form-label-sm">Id</label>
-                </div>
-                <div class="col-2">
-                    <input class="form-control form-control-sm" value="@item.Id" readonly="readonly" />
-                </div>
-                <div class="col-1">
-                    <label class="col-form-label col-form-label-sm">Code</label>
-                </div>
-                <div class="col-2">
-                    <input value="@item.Language_code" class="form-control col-form-label-sm" readonly="readonly" />
-                </div>
+        @*@foreach (var item in @moveEntity.MoveCommand.NameSet)
+            {
+                <div class="row mb-1">
+                    <div class="col-1">
+                        <label class="col-form-label col-form-label-sm">Id</label>
+                    </div>
+                    <div class="col-2">
+                        <input class="form-control form-control-sm" value="@item.Id" readonly="readonly" />
+                    </div>
+                    <div class="col-1">
+                        <label class="col-form-label col-form-label-sm">Code</label>
+                    </div>
+                    <div class="col-2">
+                        <input value="@item.Language_code" class="form-control col-form-label-sm" readonly="readonly" />
+                    </div>
 
-                <div class="col text-right">
-                    <div class="form-check">
-                        <input id="@String.Format("Change_{0}", @item.Language_code)" asp-for="@item.Checked" class="form-check-input" type="checkbox">
-                        @*<input id="@String.Format("Change_{0}", @item.Language_Code)" asp-for="@Model[i].Change" class="form-check-input" type="checkbox">*@
-                        <label class="form-check-label" for="Change">
-                            Modified
-                        </label>
+                    <div class="col text-right">
+                        <div class="form-check">
+                            <input id="@String.Format("Change_{0}", @item.Language_code)" asp-for="@item.Checked" class="form-check-input" type="checkbox">
+                            <label class="form-check-label" for="Change">
+                                Modified
+                            </label>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="row mb-1">
-                <div class="col-1">
-                    <label class="col-form-label col-form-label-sm">AsIs</label>
+                <div class="row mb-1">
+                    <div class="col-1">
+                        <label class="col-form-label col-form-label-sm">AsIs</label>
+                    </div>
+                    <div class="col-11">
+                        <input type="text" class="form-control form-control-sm" value="@item.Name" placeholder="col-form-label-sm" readonly="readonly">
+                    </div>
                 </div>
-                <div class="col-11">
-                    <input type="text" class="form-control form-control-sm" value="@item.Name" placeholder="col-form-label-sm" readonly="readonly">
-                </div>
-            </div>
 
-            <div class="row mb-3">
-                <div class="col-1">
-                    <label class="col-form-label col-form-label-sm">ToBe</label>
+                <div class="row mb-3">
+                    <div class="col-1">
+                        <label class="col-form-label col-form-label-sm">ToBe</label>
+                    </div>
+                    <div class="col-11">
+                        <input id="@String.Format("TlanslatedCommand_{0}", @item.Language_code)" language_Code="@item.Language_code" type="text" class="form-control form-control-sm commandName" placeholder="col-form-label-sm">
+                    </div>
                 </div>
-                <div class="col-11">
-                    <input id="@String.Format("TlanslatedCommand_{0}", @item.Language_code)" language_Code="@item.Language_code" type="text" class="form-control form-control-sm commandName" placeholder="col-form-label-sm">
-                </div>
-            </div>
 
-        }
+            }*@
     </form>
 }
 

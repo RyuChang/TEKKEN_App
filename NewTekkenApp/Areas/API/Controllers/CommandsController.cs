@@ -19,19 +19,19 @@ namespace TEKKEN_WEB.areas.Admin.Controllers
 
         }
 
-        [HttpGet]
+        /*[HttpGet]
         [Route("api/[controller]")]
         public async Task<ActionResult> GetCommands()
         {
             try
             {
-                return Ok(await CommandService.GetKeyMaps());
+                return Ok(CommandService.GetKeyMaps());
             }
             catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
                     "Error retrieving data from the database");
             }
-        }
+        }*/
     }
 }

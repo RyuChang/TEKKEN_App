@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using TekkenApp.Models;
@@ -22,7 +21,7 @@ namespace TekkenApp.Data
         Task<TNameEntity> GetNameEntitiyByBaseCodeAndLanguageCode(int baseCode, string languageCode);
         Task<List<TDataEntity>> GetEntitiesWithAllNames();
         Task<List<TDataEntity>> GetEntitiesWithName();
-        List<TDataEntity> GetEntitiesWithNameByStateGroup(int stateGroupCode);
+        Task<List<TDataEntity>> GetEntitiesWithNameByStateGroup(int stateGroupCode);
         Task<TNameEntity?> GetNameEntityByIdAsync(int id);
         Task<List<SelectListItem>> GetSelectItems(bool isDefault);
         Task<BaseNameEntity> UpdateNameEntityAsync(BaseNameEntity nameEntity);

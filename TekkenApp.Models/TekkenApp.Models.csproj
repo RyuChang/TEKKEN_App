@@ -29,6 +29,7 @@
 
   <ItemGroup>
     <Folder Include="Data\ResponseServices\" />
+    <Folder Include="Data\ResponseServices\Interfaces\" />
   </ItemGroup>
 
 </Project>

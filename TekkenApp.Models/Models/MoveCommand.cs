@@ -20,17 +20,7 @@ namespace TekkenApp.Models
         
         [NotMapped]
         public new int Number { get; set; }
-        public int Base_code
-        {
-            get
-            {
-                return base.Base_code;
-            }
-            set
-            {
-                base.Base_code = value;
-            }
-        }
+        public int Base_Code { get; set; }
 
         [Required]
         public string Command { get; set; }

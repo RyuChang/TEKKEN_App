@@ -8,18 +8,15 @@ namespace TekkenApp.Data
 {
     public class CommandService : BaseNameService<Command, Command_name>, ICommandService
     {
-        //List<CommandInfo> commandList = new List<CommandInfo>();
-        IStateService StateService { get; set; }
-        IMoveService MoveService { get; set; }
-        IMoveTextService MoveTextService { get; set; }
-
-        ICommanderMapperService CommanderMapperService { get; set; }
-        public int Timer { get; set; }
-
-        public string RawCommand { get; set; }
-        public string DisplayCommand { get; set; }
-        public List<string> resultKey { get; set; }
-        public List<string> clickedKey { get; set; }
+        private IStateService StateService { get; set; }
+        private IMoveService MoveService { get; set; }
+        private IMoveTextService MoveTextService { get; set; }
+        private ICommanderMapperService CommanderMapperService { get; set; }
+        private int Timer { get; set; }
+        private string RawCommand { get; set; }
+        private string DisplayCommand { get; set; }
+        private List<string> resultKey { get; set; }
+        private List<string> clickedKey { get; set; }
 
 
         public CommandService(TekkenDbContext tekkenDbContext, ICommanderMapperService _commanderMapperService, IStateService _stateService, IMoveService _moveService, IMoveTextService _moveTextService) : base(tekkenDbContext, tekkenDbContext.Command, tekkenDbContext.Command_name)
@@ -41,12 +38,6 @@ namespace TekkenApp.Data
             clickedKey = new List<string>();
             resultKey = new List<string>();
         }
-        public void ClearCommand()
-        {
-            clickedKey.Clear();
-            resultKey.Clear();
-            Timer = 0;
-        }
 
         public void AddKey(string key)
         {
@@ -56,6 +47,36 @@ namespace TekkenApp.Data
                 clickedKey.Add(key);
                 resultKey.Add(key);
             }
+        }
+
+        public void AddCommand(string key)
+        {
+            string result = RawCommand;
+            string formedKey = String.Empty;
+
+            if (key == "Backspace")
+            {
+                int lastIndex = RawCommand.LastIndexOf("/");
+                if (lastIndex < 0) { lastIndex = 0; }
+                result = RawCommand.Substring(0, lastIndex);
+            }
+            else if (clickedKey.Count == 1)
+            {
+                formedKey = $"{(Timer > 1 ? "L" : "")}{key.ToUpper()}";
+            }
+            else if (clickedKey.Count >= 2)
+            {
+                clickedKey.Sort();
+                formedKey = String.Join("+", clickedKey.ToArray()).ToUpper();
+            }
+
+            string mapppedKey = CommanderMapperService.MapKey(formedKey);
+            if (!string.IsNullOrEmpty(mapppedKey))
+            {
+                result += '/' + mapppedKey;
+            }
+
+            RawCommand = result;
         }
 
         public void RemoveKey(string key)
@@ -71,56 +92,25 @@ namespace TekkenApp.Data
                 AddCommand(key);
             }
         }
+
+        private void ClearCommand()
+        {
+            clickedKey.Clear();
+            resultKey.Clear();
+            Timer = 0;
+        }
         #endregion
 
-        public void AddCommand(string key)
+
+        public async Task SetCommand()
         {
-            string result = RawCommand;
-            string formedKey = "";
-
-            if (key == "Backspace")
+            if (RawCommand.Length > 0 && RawCommand[0] == '/')
             {
-                int lastIndex = RawCommand.LastIndexOf("/");
-                if (lastIndex < 0) lastIndex = 0;
-                SetCommand(RawCommand.Substring(0, lastIndex));
-                return;
-            }
-            else if (clickedKey.Count == 1)
-            {
-                formedKey = key.ToUpper();
-            }
-            else if (clickedKey.Count >= 2)
-            {
-                clickedKey.Sort();
-                formedKey = String.Join("+", clickedKey.ToArray()).ToUpper();
-            }
-            if (Timer > 2)
-            {
-                formedKey = 'L' + formedKey.ToUpper();
+                RawCommand = RawCommand.Substring(1, RawCommand.Length - 1);
             }
 
-
-            string mapppedKey = CommanderMapperService.MapKey(formedKey);
-            if (!string.IsNullOrEmpty(mapppedKey))
-            {
-                result += '/' + mapppedKey;
-            }
-
-            SetCommand(result);
-
-        }
-
-        public async Task SetCommand(string result)
-        {
-            if (result.Length > 0 && result[0] == '/')
-            {
-                result = result.Substring(1, result.Length - 1);
-            }
-
-            RawCommand = result;
             DisplayCommand = await TransCommand(RawCommand, "en");
             ClearCommand();
-            //StateHasChanged();
         }
 
         public string GetRawCommand()
@@ -133,11 +123,9 @@ namespace TekkenApp.Data
             return DisplayCommand;
         }
 
-
-        public async Task AddState(string stateGroupType, int stateCode, int dataCode = 0)
+        public void AddState(string stateGroupType, int stateCode, int dataCode = 0)
         {
-            var result = $"{RawCommand}/{{{stateGroupType}:{stateCode}{(dataCode == 0 ? "" : $":{dataCode}")}}}";
-            await SetCommand(result);
+            RawCommand = $"{RawCommand}/{{{stateGroupType}:{stateCode}{(dataCode == 0 ? "" : $":{dataCode}")}}}";
         }
 
 
@@ -173,16 +161,17 @@ namespace TekkenApp.Data
             {
                 result = commandInfo.Command;
             }
-            else if (commandInfo.Type == "M")
+            else if (commandInfo.Type == "T")
             {
                 string moveText = await GetMoveText(commandInfo.Data, language_code);
                 string stateName = CommanderMapperService.MapState(commandInfo.Command, language_code);
-                result = stateName.Replace("{MOVE}", moveText);
+                result = stateName.Replace("{TEXT}", moveText);
             }
-            else if (commandInfo.Type == "T")
+            else if (commandInfo.Type == "M")
             {
-                string[] codes = commandInfo.Command.Split(":");
-                //result = await GetMoveText(int.Parse(codes[0]), language_code).Result.Replace("{TEXT}", await GetMoveText(int.Parse(codes[1]), language_code));
+                string move = await GetMove(commandInfo.Data, language_code);
+                string stateName = CommanderMapperService.MapState(commandInfo.Command, language_code);
+                result = stateName.Replace("{MOVE}", move);
             }
             else if (commandInfo.Type == "S")
             {
@@ -198,7 +187,12 @@ namespace TekkenApp.Data
             MoveText_name moveText_Name = await MoveTextService.GetNameEntitiyByBaseCodeAndLanguageCode(int.Parse(code), language_code);
             return moveText_Name.Name;
         }
-
+        public async Task<string> GetMove(string code, string language_code = "en")
+        {
+            // 없을 경우 예외 처리 필요
+            Move_name move_Name = await MoveService.GetNameEntitiyByBaseCodeAndLanguageCode(int.Parse(code), language_code);
+            return move_Name.Name;
+        }
         private CommandDetail GetCommand(string cmd)
         {
             string[] devidedCommands = cmd.Replace("{", "").Replace("}", "").Split(":");
@@ -228,7 +222,7 @@ namespace TekkenApp.Data
             {
                 type = "M";
             }
-            else if (stateGroupCode == 80000015)
+            else if (stateGroupCode == 80000016)
             {
                 type = "T";
             }

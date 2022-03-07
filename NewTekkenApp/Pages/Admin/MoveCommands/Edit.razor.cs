@@ -10,13 +10,15 @@ namespace NewTekkenApp.Pages.Admin.MoveCommands
 {
     public partial class Edit : BasePageComponent
     {
-        [Inject] HttpClient httpClient { get; set; }
-        ListComponent<State, State_name>? stateList { get; set; } = default;
-        IList<State>? state;
-        private IJSObjectReference? module;
+        [CascadingParameter] private IModalService Modal { get; set; }
+        private ListComponent<State, State_name>? stateList { get; set; } = default;
+        private IList<State>? state;
+        private Move moveEntity { get; set; } = default!;
 
-        public Move moveEntity { get; set; } = default!;
-        public int _stateGroupCode { get; set; }
+        private int _stateGroupCode { get; set; }
+        private string DisplayCommand { get; set; } = default!;
+        private string rawCommand { get; set; } = default!;
+        private bool keyDown = false;
 
         protected override async Task OnInitializedAsync()
         {
@@ -28,11 +30,11 @@ namespace NewTekkenApp.Pages.Admin.MoveCommands
         {
             if (firstRender)
             {
-                InitCommand();
+                await InitCommand();
             }
         }
 
-        protected async void OnStateGroupChanged(int stateGroupCode)
+        private async void OnStateGroupChanged(int stateGroupCode)
         {
             if (stateGroupCode > 0)
             {
@@ -42,50 +44,8 @@ namespace NewTekkenApp.Pages.Admin.MoveCommands
             }
         }
 
-        //private int timer { get; set; } = 0;
-
-        public string DisplayCommand { get; set; }
-        public string rawCommand { get; set; }
-
-        Boolean keyDown = false;
-
-        public void InitCommand()
+        private async Task SaveEdit()
         {
-            rawCommand = moveEntity.MoveCommand.Command;
-            CommandService.InitCommand(rawCommand);
-        }
-
-        public async Task SetKeyDown(KeyboardEventArgs e)
-        {
-            //timer++;
-            CommandService.AddKey(e.Key);
-            Console.WriteLine("SetKeyDown");
-        }
-
-        public async Task SetKeyUp(KeyboardEventArgs e)
-        {
-            CommandService.RemoveKey(e.Key);
-            //timer = 0;
-            Console.WriteLine("SetKeyUp");
-            SetCommand();
-        }
-
-
-        public async void SetCommand()
-        {
-            // CommandService.SetCommand(result);
-
-            moveEntity.MoveCommand.Command = CommandService.GetRawCommand();
-            //moveEntity.MoveCommand.Description = RawCommand;
-            //displayCommand = await CommandService.TransCommand(RawCommand, "");
-            DisplayCommand = CommandService.GetDisplayCommand();
-            StateHasChanged();
-        }
-
-
-        protected async Task SaveEdit()
-        {
-
             if (!await JSRuntime.InvokeAsync<bool>("confirm", "저장 하겠습니까"))
             {
                 return;
@@ -94,10 +54,39 @@ namespace NewTekkenApp.Pages.Admin.MoveCommands
             MoveToDetail(Id);
         }
 
-        #region State 처리
-        [CascadingParameter] public IModalService Modal { get; set; }
+        #region 커맨드 입출력 처리
+        private async Task InitCommand()
+        {
+            rawCommand = moveEntity.MoveCommand.Command;
+            CommandService.InitCommand(rawCommand);
+            await SetCommand();
+        }
 
-        public async Task AddState(State state)
+        private void SetKeyDown(KeyboardEventArgs e)
+        {
+            CommandService.AddKey(e.Key);
+        }
+
+        private async Task SetKeyUp(KeyboardEventArgs e)
+        {
+            CommandService.RemoveKey(e.Key);
+            await SetCommand();
+        }
+
+
+        private async Task SetCommand()
+        {
+            await CommandService.SetCommand();
+            moveEntity.MoveCommand.Command = CommandService.GetRawCommand();
+            //moveEntity.MoveCommand.Description = RawCommand;
+            //displayCommand = await CommandService.TransCommand(RawCommand, "");
+            DisplayCommand = CommandService.GetDisplayCommand();
+            StateHasChanged();
+        }
+
+
+
+        private async Task AddState(State state)
         {
             string stateGroupType = CommandService.GetStateGroupType(_stateGroupCode);
 
@@ -107,31 +96,31 @@ namespace NewTekkenApp.Pages.Admin.MoveCommands
             }
             else
             {
-                await CommandService.AddState(stateGroupType, state.Code);
+                CommandService.AddState(stateGroupType, state.Code);
                 SetCommand();
             }
         }
 
-        public async Task ShowStateModal(string stateGroupType, int stateCode)
+        private async Task ShowStateModal(string stateGroupType, int stateCode)
         {
             var parameters = new ModalParameters();
             parameters.Add(nameof(moveEntity.Character_code), moveEntity.Character_code);
 
-            IModalReference moveData = null;;
-            if (stateGroupType == "C")
+            IModalReference moveData = null; ;
+            if (stateGroupType == "M")
             {
                 moveData = Modal.Show<MoveListComponent>("State Move", parameters);
             }
-            else if (stateGroupType == "M")
+            else if (stateGroupType == "T")
             {
-                moveData = Modal.Show<MoveTextListComponent>("State MoveText", parameters);
+                moveData = Modal.Show<MoveTextListComponent>("State Text", parameters);
             }
 
             var result = await moveData.Result;
 
             if (result.Data != null)
             {
-                await CommandService.AddState(stateGroupType, stateCode,(int)result.Data);
+                CommandService.AddState(stateGroupType, stateCode, (int)result.Data);
                 SetCommand();
             }
 

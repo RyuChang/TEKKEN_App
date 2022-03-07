@@ -7,14 +7,14 @@ namespace TekkenApp.Data
 {
     public interface ICommandService : IBaseNameService<Command, Command_name>
     {
+        void InitCommand(string rawCommand);
         void AddKey(string key);
+        void RemoveKey(string key);
         string GetRawCommand();
         string GetDisplayCommand();
-        void InitCommand(string rawCommand);
-        void RemoveKey(string key);
-        Task SetCommand(string result);
+        void AddState(string stateGroupType, int stateCode, int dataCode = 0);
+        Task SetCommand();
         Task<string> TransCommand(string rawCommand, string language_code);
-        Task AddState(string stateGroupType, int stateCode, int dataCode = 0);
         string GetStateGroupType(int stateGroupCode);
     }
 }

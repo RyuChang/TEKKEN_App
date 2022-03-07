@@ -21,8 +21,7 @@ namespace TekkenApp.Data
 
         public async Task<Move> GetMoveListWithCommandsByIdAsync(int id)
         {
-            var test = await _dataDbSet.Where(m => m.Id == id).Include(m => m.MoveCommand).ThenInclude(c => c.NameSet).FirstOrDefaultAsync();
-            return test;
+            return await _dataDbSet.Where(m => m.Id == id).Include(m => m.MoveCommand).ThenInclude(c => c.NameSet).FirstOrDefaultAsync();
         }
 
         public async Task<IEnumerable<Move>> GetMoveListWithCommandsByCharacterCodeAsync(int Character_code)

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
 using NewTekkenApp.Pages.Admin.Components.Base.Data;
+using TekkenApp.Data;
 using TekkenApp.Models;
 
 namespace NewTekkenApp.Pages.Admin.MoveCommands
@@ -17,7 +18,7 @@ namespace NewTekkenApp.Pages.Admin.MoveCommands
 
         private int _stateGroupCode { get; set; }
         private string DisplayCommand { get; set; } = default!;
-        private string rawCommand { get; set; } = default!;
+        private string RawCommand { get; set; } = default!;
         private bool keyDown = false;
 
         protected override async Task OnInitializedAsync()
@@ -57,8 +58,8 @@ namespace NewTekkenApp.Pages.Admin.MoveCommands
         #region 커맨드 입출력 처리
         private async Task InitCommand()
         {
-            rawCommand = moveEntity.MoveCommand.Command;
-            CommandService.InitCommand(rawCommand);
+            RawCommand = moveEntity.MoveCommand.Command;
+            CommandService.InitCommand(RawCommand);
             await SetCommand();
         }
 
@@ -84,8 +85,14 @@ namespace NewTekkenApp.Pages.Admin.MoveCommands
             StateHasChanged();
         }
 
-
-
+        private async Task TransCommands()
+        {
+            var nameSet = moveEntity.MoveCommand.NameSet;
+            foreach (MoveCommand_name name in nameSet)
+            {
+                name.Name = await CommandService.TransCommand(RawCommand, name.Language_code);
+            }
+        }
         private async Task AddState(State state)
         {
             string stateGroupType = CommandService.GetStateGroupType(_stateGroupCode);

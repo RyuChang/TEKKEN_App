@@ -60,6 +60,7 @@ else
         </div>
 
         <div class="mb-3 row">
+            <label class="col-1 col-form-label">입력</label>
             <div class="col">
                 <textarea rows=3 id="Command" type="text" readonly class="form-control" placeholder="커맨드 입력" @bind="@moveEntity.MoveCommand.Command" @onkeydown="SetKeyDown" @onkeydown:preventDefault="true" @onkeydown:stopPropagation="true" @onkeyup="SetKeyUp" @onkeyup:preventDefault="true" @onkeyup:stopPropagation="true" />
             </div>
@@ -91,7 +92,7 @@ else
             </div>
         </div>
 
-
+        <button type="button" class="mb-1 col btn btn-primary" @onclick="()=>TransCommands()">변환</button>
 
 
         @foreach (var item in @moveEntity.MoveCommand.NameSet)
@@ -120,12 +121,18 @@ else
                 </div>
             </div>
 
-            <div class="row mb-1">
-                <div class="col-1">
-                    <label class="col-form-label col-form-label-sm">AsIs</label>
+            <div class="mb-3 row">
+                <label class="col-1 col-form-label">커맨드</label>
+                <div class="col">
+                    <div class="border border-1 text-black fs-6 m-0 p-0" style="min-height:3.5rem;">
+                        @((MarkupString)item.Name)
+                    </div>
                 </div>
-                <div class="col-11">
-                    <input type="text" class="form-control form-control-sm" value="@item.Name" placeholder="col-form-label-sm" readonly="readonly">
+            </div>
+            <div class="mb-3 row">
+                <label class="col-1 col-form-label">입력</label>
+                <div class="col">
+                    <textarea rows=3 id="Command" type="text" readonly class="form-control" placeholder="커맨드 입력" @bind="@item.Name" @onkeydown="SetKeyDown" @onkeydown:preventDefault="true" @onkeydown:stopPropagation="true" @onkeyup="SetKeyUp" @onkeyup:preventDefault="true" @onkeyup:stopPropagation="true" />
                 </div>
             </div>
 

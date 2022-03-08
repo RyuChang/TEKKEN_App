@@ -42,6 +42,7 @@ else
         <div class="mb-3 row">
             <div class="col-md-4">
                 <input type="button" class="btn btn-primary btn-lg" value="수정" id="MoveToEditName" @onclick="()=>MoveToEditName(baseName.Id)" />
+                <input type="button" class="btn btn-primary btn-lg" value="다음 수정" id="MovetoEditNextName" @onclick="() => MoveToNextEditName(baseName.BaseData.Number+1)" />
                 <input type="button" class="btn btn-primary btn-lg" value="삭제" id="MoveToDeleteName" @onclick="()=>MoveToDeleteName(baseName.Id)" />
                 <input type="button" class="btn btn-primary btn-lg" value="리스트" id="MoveToList" @onclick="()=>MoveToList()" />
             </div>

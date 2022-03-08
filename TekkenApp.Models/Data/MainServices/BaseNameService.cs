@@ -44,10 +44,14 @@ namespace TekkenApp.Data
 
         public async Task<TNameEntity?> GetNameEntityByIdAsync(int id)
         {
-            TNameEntity? nameEntity = await _nameDbSet.FindAsync(id);
+            TNameEntity? nameEntity = await _nameDbSet.Where(name => name.Id == id).Include(name => name.BaseData).FirstOrDefaultAsync();
             return nameEntity;
         }
 
+        public async Task<TNameEntity?> GetNameEntityByCharacterCodeAndNumberAsync(int characterCode, int number)
+        {
+            return await _nameDbSet.Where(name => name.BaseData.Character_code == characterCode && name.BaseData.Number == number && name.Language_code == language_code).Include(name => name.BaseData).FirstOrDefaultAsync();
+        }
 
         #region CreateTranslateName
         public async Task<bool> CreateAllNameEntitiesAsync(TDataEntity dataEntity)

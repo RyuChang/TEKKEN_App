@@ -13,13 +13,13 @@ namespace NewTekkenApp.Pages.Admin.MoveDatas
         {
             await base.OnInitializedAsync();
 
-            moveDataEntities = await CommonService.GetEntitiesWithMoves();
+            moveDataEntities = await CommonService.GetEntitiesWithMoveByCharacterCode(CharacterCode.Value);
         }
 
         async void OnCharacterChanged(int characterCode)
         {
             CharacterCode = characterCode;
-            moveDataEntities = await CommonService.GetEntitiesWithMoveByCharacterCode(CharacterCode);
+            moveDataEntities = await CommonService.GetEntitiesWithMoveByCharacterCode(CharacterCode.Value);
             StateHasChanged();
         }
 

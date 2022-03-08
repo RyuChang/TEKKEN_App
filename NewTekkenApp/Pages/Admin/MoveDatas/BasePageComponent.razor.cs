@@ -12,11 +12,23 @@ namespace NewTekkenApp.Pages.Admin.MoveDatas
         [Inject] protected IMoveSubTypeService moveSubTypeService { get; set; } = default!;
         [Inject] protected IHitTypeService hitTypeService { get; set; } = default!;
 
-        public int CharacterCode { get; set; }
-
         public BasePageComponent()
         {
             SetAppType(AppType.MoveDatas);
+        }
+
+        protected override async Task OnInitializedAsync()
+        {
+            await base.OnInitializedAsync();
+            var queryStrings = navigationUtil.GetQueryStrings();
+            if (queryStrings.TryGetValue("CharacterCode", out var _characterCode))
+            {
+                CharacterCode = int.Parse(_characterCode);
+            }
+            else
+            {
+                CharacterCode = 0;
+            }
         }
     }
 }

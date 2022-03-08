@@ -15,7 +15,7 @@
 
 <div class="container">
     <CascadingValue Value="CharacterCode">
-        <CharacterSelectBox OnCharacterChanged="OnCharacterChanged">
+        <CharacterSelectBox OnCharacterChanged="OnCharacterChanged" CharacterCode="@CharacterCode.Value">
         </CharacterSelectBox>
 
         <input type="button" class="btn btn-primary my-2" id="btnDetail" value="데이터 일괄 생성" @onclick="()=>GenerateAllData(CharacterCode)" />

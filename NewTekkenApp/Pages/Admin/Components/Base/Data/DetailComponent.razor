@@ -44,7 +44,7 @@ else
                 <div class="form-group">
                     <input type="button" class="btn btn-primary btn-lg" value="추가" @onclick="() => MoveToCreate()" />
                     <input type="button" class="btn btn-primary btn-lg" value="수정" id="btnEdit" @onclick="() => MoveToEdit(baseData.Id)" />
-                    <input type="button" class="btn btn-primary btn-lg" value="다음 수정" id="btnEdit" @onclick="() => MoveToNextEdit(baseData.Number+1)" />
+                    <input type="button" class="btn btn-primary btn-lg" value="다음 수정" id="btnEditNext" @onclick="() => MoveToNextEdit(baseData.Number+1)" />
                     <input type="button" class="btn btn-primary btn-lg" value="삭제" id="btnDelete" @onclick="() => MoveToDelete(baseData.Id)" />
                     <input type="button" class="btn btn-primary btn-lg" value="리스트" id="btnList" @onclick="() => MoveToList()" />
                 </div>

@@ -1,4 +1,5 @@
-﻿using Microsoft.JSInterop;
+﻿using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using NewTekkenApp.Pages.Common.Components.Base;
 using TekkenApp.Models;
 
@@ -10,11 +11,28 @@ namespace NewTekkenApp.Pages.Admin.Components.Base.Data
                             where TNameEntity : BaseNameEntity, new()
     {
 
+        [Parameter] public string NextNumber { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
-            baseData = await baseService.GetDataEntityByIdAsync(Id);
+
+            var queryStrings = navigationUtil.GetQueryStrings();
+            if (queryStrings.TryGetValue("NextNumber", out var _nextNumber))
+            {
+                NextNumber = _nextNumber;
+            }
+
+
+            if (NextNumber is null)
+            {
+                baseData = await baseService.GetDataEntityByIdAsync(Id);
+            }
+            else
+            {
+                baseData = await baseService.GetDataEntityByCharacterCodeAndNumberAsync(CharacterCode.Value, int.Parse(NextNumber));
+            }
         }
+
 
         protected async Task SaveEdit()
         {

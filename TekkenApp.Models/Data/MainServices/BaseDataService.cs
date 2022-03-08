@@ -33,6 +33,15 @@ namespace TekkenApp.Data
         {
             return await _dataDbSet.FindAsync(id);
         }
+        public async Task<TDataEntity?> GetDataEntityByNumberAsync(int number)
+        {
+            return await _dataDbSet.Where(data => data.Number == number).FirstOrDefaultAsync();
+        }
+
+        public async Task<TDataEntity?> GetDataEntityByCharacterCodeAndNumberAsync(int characterCode, int number)
+        {
+            return await _dataDbSet.Where(data => data.Character_code == characterCode && data.Number == number).FirstOrDefaultAsync();
+        }
         public async Task<TDataEntity> GetDataEntityByBaseCodeAsync(int baseCode)
         {
             return await _dataDbSet.Where(d => d.Base_code == baseCode).FirstOrDefaultAsync();

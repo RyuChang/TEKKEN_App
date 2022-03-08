@@ -70,8 +70,11 @@ namespace NewTekkenApp.Pages.Admin.MoveCommands
 
         private async Task SetKeyUp(KeyboardEventArgs e)
         {
-            CommandService.RemoveKey(e.Key);
-            await SetCommand();
+            bool isFinish = CommandService.RemoveKey(e.Key);
+            if (isFinish)
+            {
+                await SetCommand();
+            }
         }
 
 

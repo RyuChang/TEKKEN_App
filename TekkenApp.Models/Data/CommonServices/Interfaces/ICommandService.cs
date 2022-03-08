@@ -9,7 +9,7 @@ namespace TekkenApp.Data
     {
         void InitCommand(string rawCommand);
         void AddKey(string key);
-        void RemoveKey(string key);
+        bool RemoveKey(string key);
         string GetRawCommand();
         string GetDisplayCommand();
         void AddState(string stateGroupType, int stateCode, int dataCode = 0);

@@ -79,7 +79,7 @@ namespace TekkenApp.Data
             RawCommand = result;
         }
 
-        public void RemoveKey(string key)
+        public bool RemoveKey(string key)
         {
             bool isExist = this.resultKey.Contains(key);
             if (isExist)
@@ -90,13 +90,14 @@ namespace TekkenApp.Data
             if (resultKey.Count == 0)
             {
                 AddCommand(key);
+                return true;
             }
+            return false;
         }
 
         private void ClearCommand()
         {
             clickedKey.Clear();
-            resultKey.Clear();
             Timer = 0;
         }
         #endregion

@@ -18,12 +18,16 @@ namespace TekkenApp.Models
         [NotMapped]
         public int Character_code { get; set; }
 
+        [NotMapped]
+        public  int Base_code { get; set; }
+
         [Key]
         [Display(Name = "ID")]
         [Required(ErrorMessage = "ID를 입력해 주세요.")]
         public int Id { get; set; }
 
         public int Code { get; set; }
+
 
         public int Number { get; set; }
 

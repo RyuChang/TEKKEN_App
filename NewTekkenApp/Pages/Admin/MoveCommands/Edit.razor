@@ -51,22 +51,48 @@ else
         </div>
 
         <div class="mb-3 row">
-            <label class="col-1 col-form-label">입력</label> <input class="col-1 col-form-label" @bind="@timer"></input>
+            <label class="col-1 col-form-label">커맨드</label>
+            <div class="col">
+                <div class="border border-1 text-black fs-6 m-0 p-0" style="min-height:3.5rem;">
+                    @((MarkupString)DisplayCommand)
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label class="col-1 col-form-label">입력</label>
             <div class="col">
                 <textarea rows=3 id="Command" type="text" readonly class="form-control" placeholder="커맨드 입력" @bind="@moveEntity.MoveCommand.Command" @onkeydown="SetKeyDown" @onkeydown:preventDefault="true" @onkeydown:stopPropagation="true" @onkeyup="SetKeyUp" @onkeyup:preventDefault="true" @onkeyup:stopPropagation="true" />
             </div>
         </div>
 
-
         <div class="mb-3 row">
-            <label class="col-1 col-form-label">커맨드</label>
+            <label class="col-1 col-form-label">State</label>
             <div class="col">
-                <div class="border border-1 text-black fs-6 m-0 p-0" style="min-height:3.5rem;">
-                    @((MarkupString)displayCommand)
+                <StateGroupButtonList OnStateGroupChanged="OnStateGroupChanged" />
+
+                <div class="row mb-3">
+                    <div class="col-sm-2">
+                        <label class="col-form-label col-form-label-sm">States</label>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-sm">
+                            @if (state != null)
+                            {
+                                @foreach (var item in state)
+                                {
+                                    <button type="button" class="mb-1 col btn btn-primary" value="@item.Description" @onclick="()=>AddState(item)">@item.Description</button>
+                                    <br />
+                                }
+                            }
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
+        <button type="button" class="mb-1 col btn btn-primary" @onclick="()=>TransCommands()">변환</button>
 
 
         @foreach (var item in @moveEntity.MoveCommand.NameSet)
@@ -88,7 +114,6 @@ else
                 <div class="col text-right">
                     <div class="form-check">
                         <input id="@String.Format("Change_{0}", @item.Language_code)" asp-for="@item.Checked" class="form-check-input" type="checkbox">
-                        @*<input id="@String.Format("Change_{0}", @item.Language_Code)" asp-for="@Model[i].Change" class="form-check-input" type="checkbox">*@
                         <label class="form-check-label" for="Change">
                             Modified
                         </label>
@@ -96,12 +121,18 @@ else
                 </div>
             </div>
 
-            <div class="row mb-1">
-                <div class="col-1">
-                    <label class="col-form-label col-form-label-sm">AsIs</label>
+            <div class="mb-3 row">
+                <label class="col-1 col-form-label">커맨드</label>
+                <div class="col">
+                    <div class="border border-1 text-black fs-6 m-0 p-0" style="min-height:3.5rem;">
+                        @((MarkupString)item.Name)
+                    </div>
                 </div>
-                <div class="col-11">
-                    <input type="text" class="form-control form-control-sm" value="@item.Name" placeholder="col-form-label-sm" readonly="readonly">
+            </div>
+            <div class="mb-3 row">
+                <label class="col-1 col-form-label">입력</label>
+                <div class="col">
+                    <textarea rows=3 id="Command" type="text" readonly class="form-control" placeholder="커맨드 입력" @bind="@item.Name" @onkeydown="SetKeyDown" @onkeydown:preventDefault="true" @onkeydown:stopPropagation="true" @onkeyup="SetKeyUp" @onkeyup:preventDefault="true" @onkeyup:stopPropagation="true" />
                 </div>
             </div>
 
@@ -117,42 +148,6 @@ else
         }
     </form>
 }
-
-<StateGroupSelectBox OnStateGroupChanged="OnStateGroupChanged">
-</StateGroupSelectBox>
-
-
-<div class="row mb-3">
-    <div class="col-sm-2">
-        <label class="col-form-label col-form-label-sm">States</label>
-    </div>
-
-    <div class="row mb-3">
-        <div class="col-sm">
-            @if (state != null)
-            {
-                @foreach (var item in state)
-                {
-                    if (_stateGroupCode == 80000007)
-                    {
-                        <button type="button" class="mb-1 col btn btn-primary" value="@item.Description" @onclick="ShowMovesModal">@item.Description</button>
-                    }
-                    else if (_stateGroupCode == 80000015)
-                    {
-                        <button type="button" class="mb-1 col btn btn-primary" value="@item.Description" onClick="ShowTextModal(\'TEXT\',this.value);">@item.Description</button>
-                    }
-                    else
-                    {
-                        <button type="button" class="mb-1 col btn btn-primary" value="@item.Description" onClick="AddStateModal(this.value);">@item.Description</button>
-                    }
-                    <br />
-                }
-            }
-        </div>
-    </div>
-</div>
-
-<button class="btn btn-primary">Show Modal</button>
 
 <div class="mb-3 row">
     <div class="col-md-4">

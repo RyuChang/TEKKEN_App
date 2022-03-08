@@ -27,4 +27,12 @@
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.0" />
   </ItemGroup>
 
+<<<<<<< HEAD
+=======
+  <ItemGroup>
+    <Folder Include="Data\ResponseServices\" />
+    <Folder Include="Data\ResponseServices\Interfaces\" />
+  </ItemGroup>
+
+>>>>>>> Change
 </Project>

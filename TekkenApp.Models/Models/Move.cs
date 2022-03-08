@@ -24,6 +24,7 @@ namespace TekkenApp.Models
             }
         }
 
+
         //[Column(TypeName = "decimal(4, 2)")]
         public double? version { get; set; }
 

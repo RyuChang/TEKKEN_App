@@ -4,8 +4,9 @@ using TekkenApp.Data;
 
 namespace NewTekkenApp.Pages.Common.Components
 {
-    public partial class StateGroupSelectBox
+    public partial class StateGroupButtonList
     {
+        [Parameter] public EventCallback<string> OnClickCallback { get; set; }
         [Parameter] public EventCallback<int> OnStateGroupChanged { get; set; }
         [Parameter] public int StateGroupCode { get; set; }
 
@@ -16,7 +17,7 @@ namespace NewTekkenApp.Pages.Common.Components
 
         protected override async Task OnInitializedAsync()
         {
-            selectListItems = await StateGroupService.GetSelectItems(true);
+            selectListItems = await StateGroupService.GetSelectItems(false);
         }
     }
 }

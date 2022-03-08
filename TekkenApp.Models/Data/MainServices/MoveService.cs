@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
@@ -21,13 +22,16 @@ namespace TekkenApp.Data
 
         public async Task<Move> GetMoveListWithCommandsByIdAsync(int id)
         {
-            var test = await _dataDbSet.Where(m => m.Id == id).Include(m => m.MoveCommand).ThenInclude(c => c.NameSet).FirstOrDefaultAsync();
-            return test;
+            return await _dataDbSet.Where(m => m.Id == id).Include(m => m.MoveCommand).ThenInclude(c => c.NameSet).FirstOrDefaultAsync();
         }
-
         public async Task<IEnumerable<Move>> GetMoveListWithCommandsByCharacterCodeAsync(int Character_code)
         {
-            return await _dataDbSet.Where(m => m.Character_code == Character_code).Include(m => m.MoveCommand).ThenInclude(c => c.NameSet).Include(m => m.MoveData).ThenInclude(c => c.NameSet).ToListAsync<Move>();
+            return await _dataDbSet.Where(m => m.Character_code == Character_code)
+                .Include(m => m.MoveCommand)
+                .ThenInclude(c => c.NameSet.Where(n=>n.Language_code.Equals(CultureInfo.CurrentCulture.TwoLetterISOLanguageName)))
+                .Include(m => m.MoveData)
+                .ThenInclude(c => c.NameSet)
+                .ToListAsync<Move>();
         }
     }
 }

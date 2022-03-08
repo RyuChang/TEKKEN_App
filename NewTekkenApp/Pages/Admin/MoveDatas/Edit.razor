@@ -13,49 +13,49 @@ else
         <DataAnnotationsValidator />
         <ValidationSummary />
         <div class="mb-3 row">
-            <label for="@moveDataEntity.Id" class="col-1 col-form-label">ID</label>
+            <label class="col-1 col-form-label">ID</label>
             <div class="col-auto">
                 <input type="text" readonly class="form-control" @bind="@moveDataEntity.Id" />
             </div>
         </div>
 
         <div class="mb-3 row">
-            <label for="@moveDataEntity.Character_code" class="col-1 col-form-label">캐릭터 코드</label>
+            <label class="col-1 col-form-label">캐릭터 코드</label>
             <div class="col-auto">
-                <input type="text" readonly class="form-control" @bind="@moveDataEntity.Character_code" />
+                <input type="text" readonly class="form-control" @bind="@moveDataEntity.Move.Character_code" />
             </div>
         </div>
 
         <div class="mb-3 row">
-            <label for="@moveDataEntity.Number" class="col-1 col-form-label">순번</label>
+            <label class="col-1 col-form-label">순번</label>
             <div class="col-auto">
-                <input type="text" readonly class="form-control" @bind="@moveDataEntity.Number" />
+                <input type="text" readonly class="form-control" @bind="@moveDataEntity.Move.Number" />
             </div>
         </div>
 
         <div class="mb-3 row">
-            <label for="@moveDataEntity.Description" class="col-1 col-form-label">설명</label>
+            <label class="col-1 col-form-label">설명</label>
             <div class="col-auto">
-                <input type="text" readonly class="form-control" @bind="@moveDataEntity.Description" />
+                <input type="text" readonly class="form-control" @bind="@moveDataEntity.Move.Description" />
             </div>
         </div>
 
         <div class="mb-3 row">
-            <label for="@moveDataEntity.Code" class="col-1 col-form-label">코드</label>
+            <label class="col-1 col-form-label">코드</label>
             <div class="col-auto">
                 <input type="text" readonly class="form-control" @bind="@moveDataEntity.Code" />
             </div>
         </div>
 
         <div class="mb-3 row">
-            <label for="@moveDataEntity.Move.Code" class="col-1 col-form-label">Move_Code</label>
+            <label class="col-1 col-form-label">Move_Code</label>
             <div class="col-auto">
                 <input type="text" readonly class="form-control" @bind="@moveDataEntity.Move.Code" />
             </div>
         </div>
 
         <div class="mb-3 row">
-            <label for="@moveDataEntity.MoveType_code" class="col-1 col-form-label">기술 종류</label>
+            <label class="col-1 col-form-label">기술 종류</label>
             <select @bind="@moveDataEntity.MoveType_code" class="form-control">
                 @foreach (var selectItem in MoveTypeSelectListItems)
                 {
@@ -66,7 +66,7 @@ else
 
 
         <div class="mb-3 row">
-            <label for="@moveDataEntity.MoveSubType_code" class="col-1 col-form-label">기술 하위분류</label>
+            <label class="col-1 col-form-label">기술 하위분류</label>
             <select @bind="@moveDataEntity.MoveSubType_code" class="form-control">
                 @foreach (var selectItem in MoveSubTypeSelectListItems)
                 {
@@ -76,40 +76,40 @@ else
         </div>
 
         <div class="mb-3 row">
-            <label for="@moveDataEntity.HitCount" class="col-1 col-form-label">HitCount</label>
+            <label class="col-1 col-form-label">HitCount</label>
             <div class="col-auto">
-                <input type="text" readonly class="form-control" @bind="@moveDataEntity.HitCount" />
+                <input type="text" class="form-control" @bind="@moveDataEntity.HitCount" />
             </div>
         </div>
 
         <div class="mb-3 row">
-            <label for="@moveDataEntity.HitLevel" class="col-1 col-form-label">HitLevel</label>
+            <label class="col-1 col-form-label">HitLevel</label>
             <div class="col-auto">
-                <input type="text" readonly class="form-control" @bind="@moveDataEntity.HitLevel" />
+                <input type="text" class="form-control" @bind="@moveDataEntity.HitLevel" />
             </div>
         </div>
 
 
 
         <div class="mb-3 row">
-            <label for="@moveDataEntity.Damage" class="col-1 col-form-label">Damage</label>
+            <label class="col-1 col-form-label">Damage</label>
             <div class="col-auto">
-                <input type="text" readonly class="form-control" @bind="@moveDataEntity.Damage" />
+                <input type="text" class="form-control" @bind="@moveDataEntity.Damage" />
             </div>
         </div>
 
         @*==================== Start ====================*@
         <div class="mb-3 row">
             <div class="col-auto">
-                <label for="@moveDataEntity.StartFrame" class="col-1 col-form-label">StartFrame</label>
-                <input type="text" readonly class="form-control" @bind="@moveDataEntity.StartFrame" />
+                <label class="col-1 col-form-label">StartFrame</label>
+                <input type="text" class="form-control" @bind="@moveDataEntity.StartFrame" />
             </div>
             <div class="col-auto">
-                <label for="@moveDataEntity.StartFrame_Display" class="col-1 col-form-label">StartFrame_Display</label>
-                <input type="text" readonly class="form-control" @bind="@moveDataEntity.StartFrame_Display" />
+                <label class="col-1 col-form-label">StartFrame_Display</label>
+                <input type="text" class="form-control" @bind="@moveDataEntity.StartFrame_Display" />
             </div>
             <div class="col-auto">
-                <label for="@moveDataEntity.StartType_code" class="col-1 col-form-label">StartType_code</label>
+                <label class="col-1 col-form-label">StartType_code</label>
                 <select @bind="moveDataEntity.StartType_code" id="" class="form-control">
                     @foreach (var selectItem in HitTypeSelectListItems)
                     {
@@ -123,15 +123,15 @@ else
         @*==================== Guard ====================*@
         <div class="mb-3 row">
             <div class="col-auto">
-                <label for="@moveDataEntity.GuardFrame" class="col-1 col-form-label">GuardFrame</label>
-                <input type="text" readonly class="form-control" @bind="@moveDataEntity.GuardFrame" />
+                <label class="col-1 col-form-label">GuardFrame</label>
+                <input type="text" class="form-control" @bind="@moveDataEntity.GuardFrame" />
             </div>
             <div class="col-auto">
-                <label for="@moveDataEntity.GuardFrame_Display" class="col-1 col-form-label">GuardFrame_Display</label>
-                <input type="text" readonly class="form-control" @bind="@moveDataEntity.GuardFrame_Display" />
+                <label class="col-1 col-form-label">GuardFrame_Display</label>
+                <input type="text" class="form-control" @bind="@moveDataEntity.GuardFrame_Display" />
             </div>
             <div class="col-auto">
-                <label for="@moveDataEntity.GuardType_code" class="col-1 col-form-label">GuardType_code</label>
+                <label class="col-1 col-form-label">GuardType_code</label>
                 <select @bind="moveDataEntity.GuardType_code" id="" class="form-control">
                     @foreach (var selectItem in GuardTypeSelectListItems)
                     {
@@ -145,15 +145,15 @@ else
         @*==================== Hit ====================*@
         <div class="mb-3 row">
             <div class="col-auto">
-                <label for="@moveDataEntity.HitFrame" class="col-1 col-form-label">HitFrame</label>
-                <input type="text" readonly class="form-control" @bind="@moveDataEntity.HitFrame" />
+                <label class="col-1 col-form-label">HitFrame</label>
+                <input type="text" class="form-control" @bind="@moveDataEntity.HitFrame" />
             </div>
             <div class="col-auto">
-                <label for="@moveDataEntity.HitFrame_Display" class="col-1 col-form-label">HitFrame_Display</label>
-                <input type="text" readonly class="form-control" @bind="@moveDataEntity.HitFrame_Display" />
+                <label class="col-1 col-form-label">HitFrame_Display</label>
+                <input type="text" class="form-control" @bind="@moveDataEntity.HitFrame_Display" />
             </div>
             <div class="col-auto">
-                <label for="@moveDataEntity.HitType_code" class="col-1 col-form-label">HitType_code</label>
+                <label class="col-1 col-form-label">HitType_code</label>
                 <select @bind="moveDataEntity.HitType_code" id="" class="form-control">
                     @foreach (var selectItem in HitTypeSelectListItems)
                     {
@@ -167,15 +167,15 @@ else
         @*==================== Counter ====================*@
         <div class="mb-3 row">
             <div class="col-auto">
-                <label for="@moveDataEntity.CounterFrame" class="col-1 col-form-label">CounterFrame</label>
+                <label class="col-1 col-form-label">CounterFrame</label>
                 <input type="text" readonly class="form-control" @bind="@moveDataEntity.CounterFrame" />
             </div>
             <div class="col-auto">
-                <label for="@moveDataEntity.CounterFrame_Display" class="col-1 col-form-label">CounterFrame_Display</label>
-                <input type="text" readonly class="form-control" @bind="@moveDataEntity.CounterFrame_Display" />
+                <label class="col-1 col-form-label">CounterFrame_Display</label>
+                <input type="text" class="form-control" @bind="@moveDataEntity.CounterFrame_Display" />
             </div>
             <div class="col-auto">
-                <label for="@moveDataEntity.CounterType_code" class="col-1 col-form-label">CounterType_code</label>
+                <label class="col-1 col-form-label">CounterType_code</label>
                 <select @bind="moveDataEntity.CounterType_code" id="" class="form-control">
                     @foreach (var selectItem in CounterTypeSelectListItems)
                     {
@@ -187,16 +187,16 @@ else
 
         @*==================== BreakThrow ====================*@
         <div class="mb-3 row">
-            <label for="@moveDataEntity.BreakThrow" class="col-1 col-form-label">BreakThrow</label>
+            <label class="col-1 col-form-label">BreakThrow</label>
             <div class="col-auto">
-                <input type="text" readonly class="form-control" @bind="@moveDataEntity.BreakThrow" />
+                <input type="text" class="form-control" @bind="@moveDataEntity.BreakThrow" />
             </div>
         </div>
         @*==================== AfterBreak ====================*@
         <div class="mb-3 row">
-            <label for="@moveDataEntity.AfterBreak" class="col-1 col-form-label">AfterBreak</label>
+            <label class="col-1 col-form-label">AfterBreak</label>
             <div class="col-auto">
-                <input type="text" readonly class="form-control" @bind="@moveDataEntity.AfterBreak" />
+                <input type="text" class="form-control" @bind="@moveDataEntity.AfterBreak" />
             </div>
         </div>
 

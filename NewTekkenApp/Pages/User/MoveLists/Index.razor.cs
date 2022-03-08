@@ -1,4 +1,5 @@
-﻿using TekkenApp.Models;
+﻿using System.Globalization;
+using TekkenApp.Models;
 
 namespace NewTekkenApp.Pages.User.MoveLists
 {
@@ -9,8 +10,8 @@ namespace NewTekkenApp.Pages.User.MoveLists
         protected async void OnCharacterChanged(int characterCode)
         {
             CharacterCode = characterCode;
-
-            moveLists = await CommonService?.GetMoveListWithCommandsByCharacterCodeAsync(CharacterCode);
+            
+           moveLists = await CommonService?.GetMoveListWithCommandsByCharacterCodeAsync(CharacterCode);
             StateHasChanged();
 
         }

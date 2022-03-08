@@ -1,235 +1,52 @@
-﻿using System.Collections;
-using Blazored.Modal;
+﻿using Blazored.Modal;
 using Blazored.Modal.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
 using NewTekkenApp.Pages.Admin.Components.Base.Data;
-using NewTekkenApp.Utilities;
+using TekkenApp.Data;
 using TekkenApp.Models;
 
 namespace NewTekkenApp.Pages.Admin.MoveCommands
 {
     public partial class Edit : BasePageComponent
     {
+        [CascadingParameter] private IModalService Modal { get; set; }
+        private ListComponent<State, State_name>? stateList { get; set; } = default;
+        private IList<State>? state;
+        private Move moveEntity { get; set; } = default!;
 
-        [Inject] HttpClient httpClient { get; set; }
-        ListComponent<State, State_name>? stateList { get; set; } = default;
-        IList<State>? state;
-        private IJSObjectReference? module;
-
-        public Move moveEntity { get; set; } = default!;
-        public int _stateGroupCode { get; set; }
-
-
-
+        private int _stateGroupCode { get; set; }
+        private string DisplayCommand { get; set; } = default!;
+        private string RawCommand { get; set; } = default!;
+        private bool keyDown = false;
 
         protected override async Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
             moveEntity = await MoveService.GetMoveListWithCommandsByIdAsync(Id); ;
-
-
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             if (firstRender)
             {
-                InitCommand();
+                await InitCommand();
             }
-            //    //if(module is not null)  await module.InvokeAsync<object>("test2");
-            //  if (module is not null) await module.InvokeAsync<object>("commandUtil.init");
-            //    //await JSRuntime.InvokeAsync<object>("alert");
-
-            //    SetKeyMap();
         }
 
-        void OnStateGroupChanged(int stateGroupCode)
+        private async void OnStateGroupChanged(int stateGroupCode)
         {
             if (stateGroupCode > 0)
             {
-                state = StateService?.GetEntitiesWithNameByStateGroup(stateGroupCode);
+                _stateGroupCode = stateGroupCode; ;
+                state = await StateService?.GetEntitiesWithNameByStateGroup(_stateGroupCode);
                 StateHasChanged();
             }
         }
 
-
-        [CascadingParameter] public IModalService Modal { get; set; }
-
-        public async Task ShowMovesModal()
+        private async Task SaveEdit()
         {
-            var parameters = new ModalParameters();
-            parameters.Add(nameof(moveEntity.Character_code), moveEntity.Character_code);
-
-            var moveModal = Modal.Show<MoveListComponent>("State Move", parameters);
-            var result = await moveModal.Result;
-
-            if (result.Cancelled)
-            {
-                Console.WriteLine("Modal was cancelled");
-            }
-            else
-            {
-                //await JSRuntime.InvokeVoidAsync("AddMovesModal", result.Data);
-
-                if (module is not null) await module.InvokeAsync<object>("commandUtil.AddMovesModal", result.Data);
-                Console.WriteLine("Modal was closed");
-            }
-        }
-
-        async Task ShowTextModal()
-        {
-
-            //url = "/Admin/MoveText/SelectMoveText";
-
-            //        var result = rawCommand + '/{T:' + stateCode + ':' + $('#move').val() + '}';
-
-        }
-        //    void ShowMovesModal() => Modal.Show<MoveListComponent>("State Move");
-
-        private int timer { get; set; } = 0;
-        public List<string> resultKey { get; set; }
-        public List<string> clickedKey { get; set; }
-        private Hashtable keyMap = new Hashtable();
-        public string rawCommand = String.Empty;
-        public string displayCommand { get; set; }
-
-        Boolean keyDown = false;
-
-        public void InitCommand()
-        {
-            SetKeyMap();
-            rawCommand = moveEntity.MoveCommand.Command;
-
-            clickedKey = new List<string>();
-            resultKey = new List<string>();
-
-        }
-        public void ClearCommand()
-        {
-            clickedKey.Clear();
-            timer = 0;
-        }
-
-        public async Task SetKeyDown(KeyboardEventArgs e)
-        {
-            AddKey(e.Key);
-            timer++;
-            Console.WriteLine("SetKeyDown");
-        }
-
-        public async Task SetKeyUp(KeyboardEventArgs e)
-        {
-            RemoveKey(e.Key);
-            if (resultKey.Count == 0)
-            {
-                AddCommand(e.Key);
-            }
-            timer = 0;
-            Console.WriteLine("SetKeyUp");
-
-        }
-
-        public void AddKey(string key)
-        {
-
-            if (!clickedKey.Contains(key))
-            {
-                clickedKey.Add(key);
-                resultKey.Add(key);
-            }
-        }
-
-        public void AddCommand(string key)
-        {
-            string result = rawCommand;
-            string formedKey = "";
-
-            if (key == "Backspace")
-            {
-                int lastIndex = rawCommand.LastIndexOf("/");
-                if (lastIndex < 0) lastIndex = 0;
-                SetCommand(rawCommand.Substring(0, lastIndex));
-                return;
-            }
-            else if (clickedKey.Count == 1)
-            {
-                formedKey = key.ToUpper();
-            }
-            else if (clickedKey.Count >= 2)
-            {
-                clickedKey.Sort();
-
-                formedKey = String.Join("+", clickedKey.ToArray()).ToUpper();
-            }
-
-            if (timer > 2)
-            {
-                formedKey = 'L' + formedKey.ToUpper();
-            }
-
-
-            string mapppedKey = MapKey(formedKey);
-
-
-            if (mapppedKey != "")
-            {
-                result += '/' + mapppedKey;
-            }
-
-            SetCommand(result);
-            clickedKey.Clear();
-        }
-
-
-        public string MapKey(string formedKey)
-        {
-            if (keyMap[formedKey] != null)
-            {
-                return $"[{keyMap[formedKey].ToString().Trim()}]";
-            }
-            return "";
-        }
-
-        public void SetCommand(string result)
-        {
-            if (result.Length > 0 && result[0] == '/')
-            {
-                result = result.Substring(1, result.Length - 1);
-            }
-
-            rawCommand = result;
-            moveEntity.MoveCommand.Command = result;
-            moveEntity.MoveCommand.Description = rawCommand;
-            //displayCommand = rawCommand.Replace("/", " ");
-            displayCommand = CommandLibrary.TranseCommandToImage(rawCommand);
-
-            ClearCommand();
-        }
-
-        public void RemoveKey(string key)
-        {
-            bool isExist = this.resultKey.Contains(key);
-            if (isExist)
-            {
-                resultKey.Remove(key);
-            }
-        }
-
-        public async void SetKeyMap()
-        {
-            var results = await httpClient.GetFromJsonAsync<MoveListVM[]>("https://localhost:44354/api/commands");
-
-            foreach (var result in results)
-            {
-                keyMap[result.Key] = result.Code;
-            }
-        }
-
-        protected async Task SaveEdit()
-        {
-
             if (!await JSRuntime.InvokeAsync<bool>("confirm", "저장 하겠습니까"))
             {
                 return;
@@ -237,6 +54,87 @@ namespace NewTekkenApp.Pages.Admin.MoveCommands
             await MoveService.UpdateDataAsync(moveEntity);
             MoveToDetail(Id);
         }
+
+        #region 커맨드 입출력 처리
+        private async Task InitCommand()
+        {
+            RawCommand = moveEntity.MoveCommand.Command;
+            CommandService.InitCommand(RawCommand);
+            await SetCommand();
+        }
+
+        private void SetKeyDown(KeyboardEventArgs e)
+        {
+            CommandService.AddKey(e.Key);
+        }
+
+        private async Task SetKeyUp(KeyboardEventArgs e)
+        {
+            CommandService.RemoveKey(e.Key);
+            await SetCommand();
+        }
+
+
+        private async Task SetCommand()
+        {
+            await CommandService.SetCommand();
+            moveEntity.MoveCommand.Command = CommandService.GetRawCommand();
+            //moveEntity.MoveCommand.Description = RawCommand;
+            //displayCommand = await CommandService.TransCommand(RawCommand, "");
+            DisplayCommand = CommandService.GetDisplayCommand();
+            StateHasChanged();
+        }
+
+        private async Task TransCommands()
+        {
+            var nameSet = moveEntity.MoveCommand.NameSet;
+            foreach (MoveCommand_name name in nameSet)
+            {
+                name.Name = await CommandService.TransCommand(RawCommand, name.Language_code);
+            }
+        }
+        private async Task AddState(State state)
+        {
+            string stateGroupType = CommandService.GetStateGroupType(_stateGroupCode);
+
+            if (stateGroupType == "M" || stateGroupType == "T")
+            {
+                await ShowStateModal(stateGroupType, state.Code);
+            }
+            else
+            {
+                CommandService.AddState(stateGroupType, state.Code);
+                SetCommand();
+            }
+        }
+
+        private async Task ShowStateModal(string stateGroupType, int stateCode)
+        {
+            var parameters = new ModalParameters();
+            parameters.Add(nameof(moveEntity.Character_code), moveEntity.Character_code);
+
+            IModalReference moveData = null; ;
+            if (stateGroupType == "M")
+            {
+                moveData = Modal.Show<MoveListComponent>("State Move", parameters);
+            }
+            else if (stateGroupType == "T")
+            {
+                moveData = Modal.Show<MoveTextListComponent>("State Text", parameters);
+            }
+
+            var result = await moveData.Result;
+
+            if (result.Data != null)
+            {
+                CommandService.AddState(stateGroupType, stateCode, (int)result.Data);
+                SetCommand();
+            }
+
+        }
+
+
+        #endregion
     }
 
 }

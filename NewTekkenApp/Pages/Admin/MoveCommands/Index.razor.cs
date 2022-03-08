@@ -15,7 +15,7 @@ namespace NewTekkenApp.Pages.Admin.MoveCommands
         {
             await base.OnInitializedAsync();
             if (CharacterCode is not null)
-            Console.WriteLine(CharacterCode.Value);
+                Console.WriteLine(CharacterCode.Value);
             //baseEntities = await baseService.GetEntities();
 
             MoveCommandEntities = await CommonService.GetEntitiesWithMoveByCharacterCode(CharacterCode.Value);
@@ -62,8 +62,8 @@ namespace NewTekkenApp.Pages.Admin.MoveCommands
 
         private async Task<bool> CreateMoveCommandEntity(int moveCode)
         {
-            MoveCommand moveCommand = new MoveCommand();
-            moveCommand.Base_Code = moveCode;
+            MoveCommand moveCommand = new();
+            moveCommand.Base_code = moveCode;
             moveCommand.Code = moveCode;
             moveCommand.Command = "";
             moveCommand.Description = "";

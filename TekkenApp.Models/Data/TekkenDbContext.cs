@@ -254,6 +254,19 @@ namespace TekkenApp.Data
 
                 entity.Property(e => e.Name).IsUnicode(false);
 
+
+                entity.HasOne(d => d.BaseData as Move)
+              .WithMany(p => p.NameSet as IEnumerable<Move_name>)
+              .HasPrincipalKey(n => n.Code)
+              .HasForeignKey(m => m.Base_code);
+                //.HasConstraintName("fk_movecommand_move");
+
+                /* entity.HasOne(d => d.Move)
+                 .WithOne(p => p.MoveCommand)
+                 .HasPrincipalKey<MoveCommand>(c => c.Base_code)
+                 .HasForeignKey<Move>(m => m.Code)
+                 .HasConstraintName("fk_movecommand_move");*/
+
                 //entity.HasOne(d => d.language_codeNavigation)
                 //    .WithMany(p => p.move_name)
                 //    .HasPrincipalKey(p => p.code)

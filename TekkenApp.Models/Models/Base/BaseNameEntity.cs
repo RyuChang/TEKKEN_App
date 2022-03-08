@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
 
 namespace TekkenApp.Models
 {
@@ -47,6 +46,8 @@ namespace TekkenApp.Models
 
         [Column("checked")]
         public bool Checked { get; set; }
+
+        public virtual BaseDataEntity BaseData { get; set; }
 
         public string GetTableName()
         {

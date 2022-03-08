@@ -34,7 +34,7 @@ namespace TekkenApp.Models
         [Required]
         public string Description { get; set; }
 
-        public virtual ICollection<BaseNameEntity> NameSet { get; set; }
+        public virtual IEnumerable<BaseNameEntity> NameSet { get; set; }
 
         protected void SetApp(TableName tableName)
         {

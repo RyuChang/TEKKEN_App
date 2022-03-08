@@ -92,7 +92,7 @@ namespace TekkenApp.Data
                 entity.HasOne(d => d.MoveCommand)
                     .WithOne(p => p.Move)
                     .HasPrincipalKey<Move>(p => p.Code)
-                    .HasForeignKey<MoveCommand>(d => d.Base_Code)
+                    .HasForeignKey<MoveCommand>(d => d.Base_code)
                     .HasConstraintName("FK_MoveCommand_Move");
                 //.OnDelete(DeleteBehavior.Cascade);
 
@@ -126,7 +126,7 @@ namespace TekkenApp.Data
 
                 entity.HasOne(d => d.Move)
                .WithOne(p => p.MoveCommand)
-               .HasPrincipalKey<MoveCommand>(c => c.Base_Code)
+               .HasPrincipalKey<MoveCommand>(c => c.Base_code)
                .HasForeignKey<Move>(m => m.Code)
                .HasConstraintName("fk_movecommand_move");
                 //.ondelete(deletebehavior.cascade);

@@ -85,6 +85,7 @@ namespace NewTekkenApp.Pages.Admin.MoveCommands
             //moveEntity.MoveCommand.Description = RawCommand;
             //displayCommand = await CommandService.TransCommand(RawCommand, "");
             DisplayCommand = CommandService.GetDisplayCommand();
+            RawCommand = moveEntity.MoveCommand.Command;
             StateHasChanged();
         }
 
@@ -95,6 +96,7 @@ namespace NewTekkenApp.Pages.Admin.MoveCommands
             {
                 name.Name = await CommandService.TransCommand(RawCommand, name.Language_code);
             }
+            await SetCommand();
         }
         private async Task AddState(State state)
         {
@@ -107,7 +109,7 @@ namespace NewTekkenApp.Pages.Admin.MoveCommands
             else
             {
                 CommandService.AddState(stateGroupType, state.Code);
-                SetCommand();
+                await SetCommand();
             }
         }
 

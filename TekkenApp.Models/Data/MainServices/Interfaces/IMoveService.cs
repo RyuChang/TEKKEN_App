@@ -11,5 +11,6 @@ namespace TekkenApp.Data
         Task<Move> GetMoveListWithCommandsByIdAsync(int id);
 
         Task<IEnumerable<Move>> GetMoveListWithCommandsByCharacterCodeAsync(int Character_code);
+        Task<Move> GetMoveListWithCommandsByCharacterCodeAndNumberAsync(int characterCode, int number);
     }
 }

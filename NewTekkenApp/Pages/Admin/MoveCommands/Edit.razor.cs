@@ -12,6 +12,7 @@ namespace NewTekkenApp.Pages.Admin.MoveCommands
     public partial class Edit : BasePageComponent
     {
         [CascadingParameter] private IModalService Modal { get; set; }
+        [Parameter] public string NextNumber { get; set; }
         private ListComponent<State, State_name>? stateList { get; set; } = default;
         private IList<State>? state;
         private Move moveEntity { get; set; } = default!;
@@ -24,17 +25,25 @@ namespace NewTekkenApp.Pages.Admin.MoveCommands
         protected override async Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
-            moveEntity = await MoveService.GetMoveListWithCommandsByIdAsync(Id); ;
-        }
 
-        protected override async Task OnAfterRenderAsync(bool firstRender)
-        {
-            if (firstRender)
+            var queryStrings = navigationUtil.GetQueryStrings();
+            if (queryStrings.TryGetValue("NextNumber", out var _nextNumber))
             {
-                await InitCommand();
+                NextNumber = _nextNumber;
             }
+
+            if (NextNumber is null)
+            {
+                moveEntity = await MoveService.GetMoveListWithCommandsByIdAsync(Id); ;
+            }
+            else
+            {
+                moveEntity = await MoveService.GetMoveListWithCommandsByCharacterCodeAndNumberAsync(CharacterCode.Value, int.Parse(NextNumber));
+            }
+            await InitCommand();
         }
 
+       
         private async void OnStateGroupChanged(int stateGroupCode)
         {
             if (stateGroupCode > 0)

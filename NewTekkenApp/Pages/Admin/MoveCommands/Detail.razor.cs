@@ -9,23 +9,40 @@ namespace NewTekkenApp.Pages.Admin.MoveCommands
 
         public Move moveEntity { get; set; } = default!;
 
+
+        private string DisplayCommand { get; set; } = default!;
+        private string RawCommand { get; set; } = default!;
         protected override async Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
-
-            moveEntity = await MoveService.GetDataEntityByIdAsync(Id); ;
+            moveEntity = await MoveService.GetMoveListWithCommandsByIdAsync(Id); ;
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             if (firstRender)
             {
-                module = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./moveCommand.js");
+                await InitCommand();
             }
-            //if(module is not null)  await module.InvokeAsync<object>("test2");
-            if(module is not null)  await module.InvokeAsync<object>("commandUtil.init");
-            //await JSRuntime.InvokeAsync<object>("alert");
         }
+        private async Task InitCommand()
+        {
+            RawCommand = moveEntity.MoveCommand.Command;
+            CommandService.InitCommand(RawCommand);
+            await SetCommand();
+        }
+
+        private async Task SetCommand()
+        {
+            await CommandService.SetCommand();
+            moveEntity.MoveCommand.Command = CommandService.GetRawCommand();
+            //moveEntity.MoveCommand.Description = RawCommand;
+            //displayCommand = await CommandService.TransCommand(RawCommand, "");
+            DisplayCommand = CommandService.GetDisplayCommand();
+            RawCommand = moveEntity.MoveCommand.Command;
+            StateHasChanged();
+        }
+
 
     }
 }

@@ -156,6 +156,10 @@ namespace TekkenApp.Data
 
                 entity.Property(e => e.Name).IsUnicode(false);
 
+                entity.HasOne(d => d.BaseData as MoveCommand)
+                    .WithMany(p => p.NameSet as IEnumerable<MoveCommand_name>)
+                    .HasPrincipalKey(n => n.Code)
+                    .HasForeignKey(m => m.Base_code);
                 //entity.HasOne(d => d.Move_Command_codeNavigation)
                 //    .WithMany(p => p.move_command_name)
                 //    .HasPrincipalKey(p => p.code)
@@ -236,6 +240,10 @@ namespace TekkenApp.Data
                     .IsUnicode(false)
                     .IsFixedLength(true);
 
+                entity.HasOne(d => d.BaseData as MoveData)
+                    .WithMany(p => p.NameSet as IEnumerable<MoveData_name>)
+                    .HasPrincipalKey(n => n.Code)
+                    .HasForeignKey(m => m.Base_code);
                 //entity.HasOne(d => d.Move_Data_CodeNavigation)
                 //    .WithMany(p => p.NameSet)
                 //    .HasPrincipalKey(p => p.Move_Code)
@@ -259,6 +267,7 @@ namespace TekkenApp.Data
               .WithMany(p => p.NameSet as IEnumerable<Move_name>)
               .HasPrincipalKey(n => n.Code)
               .HasForeignKey(m => m.Base_code);
+
                 //.HasConstraintName("fk_movecommand_move");
 
                 /* entity.HasOne(d => d.Move)
@@ -309,6 +318,11 @@ namespace TekkenApp.Data
 
                 entity.Property(e => e.Name).IsUnicode(false);
 
+                entity.HasOne(d => d.BaseData as State)
+                    .WithMany(p => p.NameSet as IEnumerable<State_name>)
+                    .HasPrincipalKey(n => n.Code)
+                    .HasForeignKey(m => m.Base_code);
+
                 //entity.HasOne(d => d.language_codeNavigation)
                 //    .WithMany(p => p.State_name)
                 //    .HasPrincipalKey(p => p.code)
@@ -347,7 +361,10 @@ namespace TekkenApp.Data
 
                 entity.Property(e => e.Name).IsUnicode(false);
 
-
+                entity.HasOne(d => d.BaseData as StateGroup)
+                    .WithMany(p => p.NameSet as IEnumerable<StateGroup_name>)
+                    .HasPrincipalKey(n => n.Code)
+                    .HasForeignKey(m => m.Base_code);
 
 
                 //entity.HasOne(d => d.language_codeNavigation)
@@ -420,6 +437,10 @@ namespace TekkenApp.Data
 
                 entity.Property(e => e.Name).IsUnicode(false);
 
+                entity.HasOne(d => d.BaseData as Command)
+                    .WithMany(p => p.NameSet as IEnumerable<Command_name>)
+                    .HasPrincipalKey(n => n.Code)
+                    .HasForeignKey(m => m.Base_code);
                 //entity.HasOne(d => d.language_codeNavigation)
                 //    .WithMany(p => p.command_name)
                 //    .HasPrincipalKey(p => p.code)
@@ -452,6 +473,10 @@ namespace TekkenApp.Data
 
                 entity.Property(e => e.Name).IsUnicode(false);
 
+                entity.HasOne(d => d.BaseData as HitType)
+                    .WithMany(p => p.NameSet as IEnumerable<HitType_name>)
+                    .HasPrincipalKey(n => n.Code)
+                    .HasForeignKey(m => m.Base_code);
 
                 //entity.HasOne(d => d.hitType_codeNavigation)
                 //    .WithMany(p => p.NameSet)
@@ -460,6 +485,9 @@ namespace TekkenApp.Data
                 //    .HasConstraintName("FK_hitType_name_hitType")
                 //    .OnDelete(DeleteBehavior.Cascade);
             });
+
+
+
             #endregion HitType
 
 
@@ -483,6 +511,10 @@ namespace TekkenApp.Data
 
                 entity.Property(e => e.Name).IsUnicode(false);
 
+                entity.HasOne(d => d.BaseData as MoveSubType)
+                    .WithMany(p => p.NameSet as IEnumerable<MoveSubType_name>)
+                    .HasPrincipalKey(n => n.Code)
+                    .HasForeignKey(m => m.Base_code);
                 //entity.HasOne(d => d.language_codeNavigation)
                 //    .WithMany(p => p.moveSubType_name)
                 //    .HasPrincipalKey(p => p.code)
@@ -520,6 +552,11 @@ namespace TekkenApp.Data
 
                 entity.Property(e => e.Name).IsUnicode(false);
 
+                entity.HasOne(d => d.BaseData as MoveText)
+                    .WithMany(p => p.NameSet as IEnumerable<MoveText_name>)
+                    .HasPrincipalKey(n => n.Code)
+                    .HasForeignKey(m => m.Base_code);
+
                 //entity.HasOne(d => d.Base_code)
                 //    .WithMany(p => p.)
                 //    .HasPrincipalKey(p => p.Code)
@@ -556,6 +593,13 @@ namespace TekkenApp.Data
                     .IsFixedLength(true);
 
                 entity.Property(e => e.Name).IsUnicode(false);
+
+
+                entity.HasOne(d => d.BaseData as MoveType)
+                    .WithMany(p => p.NameSet as IEnumerable<MoveType_name>)
+                    .HasPrincipalKey(n => n.Code)
+                    .HasForeignKey(m => m.Base_code);
+
 
                 //entity.HasOne(d => d.language_codeNavigation)
                 //    .WithMany(p => p.moveType_name)

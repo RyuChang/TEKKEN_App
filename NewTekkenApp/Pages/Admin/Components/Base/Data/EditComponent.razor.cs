@@ -15,7 +15,7 @@ namespace NewTekkenApp.Pages.Admin.Components.Base.Data
 
         protected override async Task OnInitializedAsync()
         {
-
+             
             var queryStrings = navigationUtil.GetQueryStrings();
             if (queryStrings.TryGetValue("NextNumber", out var _nextNumber))
             {
@@ -30,6 +30,7 @@ namespace NewTekkenApp.Pages.Admin.Components.Base.Data
             else
             {
                 baseData = await baseService.GetDataEntityByCharacterCodeAndNumberAsync(CharacterCode.Value, int.Parse(NextNumber));
+                Id = baseData.Id;
             }
         }
 

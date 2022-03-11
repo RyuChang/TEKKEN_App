@@ -23,7 +23,7 @@ else
         <div class="mb-3 row">
             <label for="@baseData.Number" class="col-1 col-form-label">순번</label>
             <div class="col-auto">
-                <input type="text" readonly class="form-control" value="@baseData.Number" @oninput="@(e => number_Changed((string)e.Value))" />
+                <input type="text" class="form-control" value="@baseData.Number" @oninput="@(e => number_Changed((string)e.Value))" />
             </div>
         </div>
 

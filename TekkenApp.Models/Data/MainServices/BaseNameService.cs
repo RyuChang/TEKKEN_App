@@ -166,11 +166,10 @@ namespace TekkenApp.Data
 
         public async Task<int> UpdateNumberAsync(TDataEntity moveDataEntity)
         {
-            TDataEntity newEntity = await GetDataEntityWithAllNameByIdAsync(moveDataEntity.Id);
-            int oldId = newEntity.Id;
-            newEntity.Id = 0;
+            int oldId = moveDataEntity.Id;
+            moveDataEntity.Id = 0;
 
-            await CreateEntityAsync(newEntity);
+            await CreateEntityAsync(moveDataEntity);
 
             TDataEntity oldEntity = await GetDataEntityWithAllNameByIdAsync(oldId);
             _dataDbSet.Remove(oldEntity);

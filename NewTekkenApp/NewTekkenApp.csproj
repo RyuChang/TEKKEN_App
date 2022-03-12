@@ -82,6 +82,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="Pages\Admin\Moves\Edit_number.razor">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
     <Content Update="Pages\Common\Components\StateGroupButtonList.razor">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
     </Content>

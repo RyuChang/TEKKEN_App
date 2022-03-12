@@ -94,6 +94,11 @@ namespace NewTekkenApp.Pages.Common.Components.Base
             SetCommonParam();
             navigationUtil.MoveTo(App, UserType.Admin, ActionType.Edit_name, Id, param);
         }
+        protected void MoveToEditNumber(int Id)
+        {
+            SetCommonParam();
+            navigationUtil.MoveTo(App, UserType.Admin, ActionType.Edit_number, Id, param);
+        }
         protected void MoveToNextEditName(int number)
         {
             SetCommonParam();

@@ -1,6 +1,4 @@
-﻿using TekkenApp.Data;
-
-namespace TekkenApp.Models
+﻿namespace TekkenApp.Models
 {
     public enum UserType
     {
@@ -31,6 +29,7 @@ namespace TekkenApp.Models
         Create_name,
         Detail_name,
         Edit_name,
+        Edit_number,
         Delete_name,
     }
 

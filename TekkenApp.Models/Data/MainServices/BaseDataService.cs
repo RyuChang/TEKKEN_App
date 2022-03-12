@@ -47,6 +47,11 @@ namespace TekkenApp.Data
             return await _dataDbSet.Where(d => d.Base_code == baseCode).FirstOrDefaultAsync();
         }
 
+        public async Task<TDataEntity> GetDataEntityWithAllNameByIdAsync(int id)
+        {
+            return await _dataDbSet.Where(d => d.Id == id).Include(d => d.NameSet).FirstOrDefaultAsync();
+        }
+
         private bool BaseDataEntityExistsById(int id)
         {
             return _dataDbSet.Any(e => e.Id == id);

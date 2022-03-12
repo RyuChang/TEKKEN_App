@@ -120,6 +120,12 @@ namespace TekkenApp.Data
             return await _dataDbSet.Include(d => d.NameSet).ToListAsync();
         }
 
+        public async Task<TDataEntity?> GetEntitiesWithAllNamesByCharacterCodeAndNumberAsync(int characterCode, int number)
+        {
+            return await _dataDbSet.Where(data => data.Character_code == characterCode && data.Number == number).Include(d => d.NameSet).FirstOrDefaultAsync();
+        }
+
+
         public async Task<List<TDataEntity>> GetEntitiesWithNameByStateGroup(int stateGroupCode)
         {
             return await _dataDbSet.Where(d => d.StateGroup_code == stateGroupCode).Include("NameSet").ToListAsync();
@@ -156,5 +162,23 @@ namespace TekkenApp.Data
             return await _dataDbSet.Where(d => d.StateGroup_code == stateGroupCode).MaxAsync(p => (int?)p.Number + 1) ?? 1;
         }
         #endregion
+
+
+        public async Task<int> UpdateNumberAsync(TDataEntity moveDataEntity)
+        {
+            TDataEntity newEntity = await GetDataEntityWithAllNameByIdAsync(moveDataEntity.Id);
+            int oldId = newEntity.Id;
+            newEntity.Id = 0;
+
+            await CreateEntityAsync(newEntity);
+
+            TDataEntity oldEntity = await GetDataEntityWithAllNameByIdAsync(oldId);
+            _dataDbSet.Remove(oldEntity);
+
+            int result = await _tekkenDBContext.SaveChangesAsync();
+
+            return result;
+        }
     }
+
 }

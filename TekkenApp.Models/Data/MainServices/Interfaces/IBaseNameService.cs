@@ -26,5 +26,7 @@ namespace TekkenApp.Data
         Task<TNameEntity?> GetNameEntityByCharacterCodeAndNumberAsync(int characterCode, int number);
         Task<List<SelectListItem>> GetSelectItems(bool isDefault);
         Task<BaseNameEntity> UpdateNameEntityAsync(BaseNameEntity nameEntity);
+        Task<int> UpdateNumberAsync(TDataEntity moveDataEntity);
+        Task<TDataEntity> GetEntitiesWithAllNamesByCharacterCodeAndNumberAsync(int characterCode, int number);
     }
 }

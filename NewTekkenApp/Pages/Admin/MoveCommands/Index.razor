@@ -2,7 +2,6 @@
 @page "/Admin/MoveCommands/Index"
 
 @inherits BasePageComponent
-
 @*<h3>@GetAppTitle()</h3>*@
 
 
@@ -10,8 +9,16 @@
     .table tbody tr:nth-child(4n-3) {
         background: #e2e2e2;
     }
-</style>
 
+    .move {
+        display: flow;
+        flex-direction: row;
+        align-items: flex-start;
+        width: 1.5rem;
+        overflow-x: auto;
+        cursor: grab;
+    }
+</style>
 <CharacterSelectBox OnCharacterChanged="OnCharacterChanged" CharacterCode="@CharacterCode.Value">
 </CharacterSelectBox>
 
@@ -58,8 +65,8 @@
                         {
                             <tr>
                                 <td>@base_name.Language_code</td>
-                                <td colspan="2">
-                                    @base_name.Name
+                                <td class="text-black fs-6 m-1 p-1" style="width:1.5rem;min-height:3.5rem;" colspan="2">
+                                        @((MarkupString)@base_name.Name)
                                 </td>
                                 <td>
                                     @if (String.IsNullOrEmpty(base_name.Name))

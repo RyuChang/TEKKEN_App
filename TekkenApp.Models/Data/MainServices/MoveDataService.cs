@@ -31,7 +31,7 @@ namespace TekkenApp.Data
 
         public async Task<MoveData> GetEntityWithMovesByIdAsync(int id)
         {
-            return await _dataDbSet.Include("Move").Where(m => m.Id == id).FirstOrDefaultAsync();
+            return await _dataDbSet.Include(moveData=>moveData.Move).ThenInclude(move=>move.NameSet).Where(moveData => moveData.Id == id).FirstOrDefaultAsync();
         }
 
         public async Task<List<MoveData>> GetEntitiesWithMoveByCharacterCode(int characterCode)

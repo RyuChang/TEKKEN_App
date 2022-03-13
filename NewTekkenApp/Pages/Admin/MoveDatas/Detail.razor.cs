@@ -5,7 +5,7 @@ namespace NewTekkenApp.Pages.Admin.MoveDatas
 {
     public partial class Detail : BasePageComponent
     {
-        public MoveData? moveDataEntity { get; set; } = default;
+        public Move moveEntity { get; set; } = default!;
 
         public List<SelectListItem> MoveTypeSelectListItems { get; set; } = default!;
         public List<SelectListItem> MoveSubTypeSelectListItems { get; set; } = default!;
@@ -18,7 +18,7 @@ namespace NewTekkenApp.Pages.Admin.MoveDatas
         {
             await base.OnInitializedAsync();
 
-            moveDataEntity = await CommonService.GetEntityWithMovesByIdAsync(Id);
+            moveEntity = await MoveService.GetMoveWithMoveDataByIdAsync(Id);
 
             MoveTypeSelectListItems = await moveTypeService.GetSelectItems(true);
 

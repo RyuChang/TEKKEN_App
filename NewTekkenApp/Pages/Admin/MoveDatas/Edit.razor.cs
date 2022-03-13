@@ -1,13 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.JSInterop;
 using TekkenApp.Models;
 
 namespace NewTekkenApp.Pages.Admin.MoveDatas
 {
-    public partial class Edit :
-         BasePageComponent
+    public partial class Edit : BasePageComponent
     {
-        public MoveData moveDataEntity { get; set; } = default!;
+        [Parameter] public string NextNumber { get; set; }
+        public Move moveEntity { get; set; } = default!;
 
         public List<SelectListItem> MoveTypeSelectListItems { get; set; } = default!;
         public List<SelectListItem> MoveSubTypeSelectListItems { get; set; } = default!;
@@ -22,7 +23,19 @@ namespace NewTekkenApp.Pages.Admin.MoveDatas
         {
             await base.OnInitializedAsync();
 
-            moveDataEntity = await CommonService.GetEntityWithMovesByIdAsync(Id);
+            var queryStrings = navigationUtil.GetQueryStrings();
+            if (queryStrings.TryGetValue("NextNumber", out var _nextNumber))
+            {
+                NextNumber = _nextNumber;
+            }
+            if (NextNumber is null)
+            {
+                moveEntity = await MoveService.GetMoveWithMoveDataByIdAsync(Id);
+            }
+            else
+            {
+                moveEntity = await MoveService.GetMoveWithMoveDataByCharacterCodeAndNumberAsync(CharacterCode.Value, int.Parse(NextNumber));
+            }
 
             MoveTypeSelectListItems = await moveTypeService.GetSelectItems(true);
 
@@ -45,8 +58,8 @@ namespace NewTekkenApp.Pages.Admin.MoveDatas
             {
                 return;
             }
-            await CommonService.UpdateDataAsync(moveDataEntity);
-            MoveToDetail(Id);
+            await MoveService.UpdateDataAsync(moveEntity);
+            MoveToDetail(moveEntity.Id);
         }
 
         private void HandleValidSubmit()

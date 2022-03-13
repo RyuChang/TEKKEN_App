@@ -29,7 +29,7 @@ namespace TekkenApp.Data
             //return  _dataDbSet.ToList();
         }
 
-        public async Task<MoveData> GetEntityWithMovesByIdAsync(int id)
+        public async Task<MoveData> GetMoveDataWithMovesByIdAsync(int id)
         {
             return await _dataDbSet.Include(moveData=>moveData.Move).ThenInclude(move=>move.NameSet).Where(moveData => moveData.Id == id).FirstOrDefaultAsync();
         }

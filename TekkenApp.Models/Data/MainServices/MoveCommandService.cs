@@ -36,7 +36,7 @@ namespace TekkenApp.Data
 
         public async Task<List<MoveCommand>> GetEntitiesWithMoveByCharacterCode(int characterCode)
         {
-            return await _dataDbSet.Where(m => m.Move.Character_code == characterCode).Include(d => d.Move).Include(d => d.NameSet).ToListAsync();
+            return await _dataDbSet.Where(m => m.Move.Character_code == characterCode).OrderBy(m => m.Move.Number).Include(d => d.Move).Include(d => d.NameSet).ToListAsync();
         }
 
     }

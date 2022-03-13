@@ -61,7 +61,7 @@ namespace NewTekkenApp.Pages.Admin.MoveCommands
                 return;
             }
             await MoveService.UpdateDataAsync(moveEntity);
-            MoveToDetail(Id);
+            MoveToDetail(moveEntity.Id);
         }
 
         #region 커맨드 입출력 처리

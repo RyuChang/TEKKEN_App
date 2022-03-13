@@ -15,18 +15,19 @@ namespace NewTekkenApp.Pages.Admin.MoveCommands
         protected override async Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
-            moveEntity = await MoveService.GetMoveListWithCommandsByIdAsync(Id); ;
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             if (firstRender)
             {
+                moveEntity = await MoveService.GetMoveListWithCommandsByIdAsync(Id); ;
                 await InitCommand();
             }
         }
         private async Task InitCommand()
         {
+
             RawCommand = moveEntity.MoveCommand.Command;
             CommandService.InitCommand(RawCommand);
             await SetCommand();

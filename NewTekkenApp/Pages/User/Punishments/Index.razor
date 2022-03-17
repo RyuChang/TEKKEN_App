@@ -1,0 +1,127 @@
+﻿@page "/User/Punishments"
+@page "/User/Punishments/Index"
+@using Ljbc1994.Blazor.IntersectionObserver.Components
+
+
+@inherits BasePageComponent
+
+<h3>@GetAppTitle()</h3>
+
+<style>
+
+    .table tbody tr td:nth-child(1) {
+        border: none;
+    }
+
+    .table tbody tr td:nth-child(2) {
+        border: thin;
+    }
+
+    .move {
+        display: flow;
+        flex-direction: row;
+        align-items: flex-start;
+        width: 1.5rem;
+        overflow-x: auto;
+        cursor: grab;
+    }
+
+    .moveFrame {
+        color: white;
+        text-align: right;
+    }
+</style>
+
+<CascadingValue Value="CharacterCode">
+    <div class="col-2">
+        <CharacterSelectBox OnCharacterChanged="OnCharacterChanged">
+        </CharacterSelectBox>
+    </div>
+    <div class="m-auto" id="Character-list">
+        <div class="container-fluid bg-black ">
+            @if (moveLists == null)
+            {
+                <p><em>Loading...</em></p>
+            }
+            else
+            {
+                @foreach (Move move in moveLists)
+                {
+
+                    <IntersectionObserve>
+                        <div class="row mb-2" @ref="context.Ref.Current">
+                            <div class="col">
+                                <div class="card p-1 bg-black border border-2 border-whites rounded-3" style="max-width: 38rem;">
+                                    <div class="card-header my-0 py-0 ">
+                                        <div class="row py-0 my-0 card-title">
+                                            <div class="col-3 my-0 py-0 text-warning">
+                                                <h5>@move.Number.ToString("D3")</h5>
+                                            </div>
+                                            <div class="col my-0 py-0 text-white-50 text-white">
+                                                <h5>@move.Description</h5>
+                                                Hey... I'm @(context.IsIntersecting ? "in view": "out of view")
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="card-body text-white-50 border border-1 py-0 px-1">
+                                        <div class="row my-1 mx-0">
+                                            <div class="col col-sm me-0 me-sm-2">
+                                                <div class="row border mb-1">
+                                                    <div class="col-auto">
+                                                        @if (move.MoveData.MoveUrl is not null)
+                                                        {
+                                                            <iframe id="ytplayer" type="text/html" width="356" height="200" src="https://www.youtube.com/embed/@($"{move.MoveData.MoveUrl}")?autoplay=@($"{(context.IsIntersecting ? "1" : "0")}")&mute=1&controls=0&loop=1&playlist=@($"{move.MoveData.MoveUrl}")" frameborder="0"></iframe>
+                                                        }
+                                                        else
+                                                        {
+                                                            <img width="356" height="200" src="/images/no-video.svg" />
+                                                        }
+
+                                                    </div>
+                                                </div>
+                                                <div class="row gx-4 mb-1">
+                                                    <div class="col-2 border me-2 text-danger text-center">
+                                                        @move.MoveData.HitCount Hits
+                                                    </div>
+                                                    <div class="col border text-info text-start">
+                                                        @move.MoveData.HitLevel
+                                                    </div>
+                                                    <div class="col-2 ms-2 border text-danger text-end">
+                                                        @move.MoveData.Damage
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col col-sm-3 mx-0">
+                                                <div class="row  text-white-50 border">
+
+                                                    <div class="col-8">Start Up</div>
+                                                    <div class="col moveFrame">@move.MoveData.StartFrame_Display</div>
+                                                </div>
+                                                <div class="row px-0 text-white-50 border my-1">
+                                                    <div class="col-8">Block</div>
+                                                    <div class="col moveFrame">@move.MoveData.GuardFrame_Display</div>
+                                                </div>
+                                                <div class="row px-0 text-white-50 border my-1">
+                                                    <div class="col-8">Hit</div>
+                                                    <div class="col moveFrame">@move.MoveData.HitFrame_Display</div>
+                                                </div>
+                                                <div class="row px-0 text-white-50 border my-1">
+                                                    <div class="col-8">Count Hit</div>
+                                                    <div class="col moveFrame">@move.MoveData.CounterFrame_Display</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </IntersectionObserve>
+                }
+            }
+        </div>
+    </div>
+</CascadingValue>
+

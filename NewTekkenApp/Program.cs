@@ -8,6 +8,8 @@ using NewTekkenApp.Areas.Identity;
 using NewTekkenApp.Data;
 using NewTekkenApp.Utilities;
 using TekkenApp.Data;
+using Ljbc1994.Blazor.IntersectionObserver;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -51,6 +53,8 @@ builder.Services.AddSingleton<HttpClient>();
 
 builder.Services.AddSingleton<WeatherForecastService>();
 
+builder.Services.AddIntersectionObserver();
+
 builder.Services.AddSingleton<ICommanderMapperService, CommanderMapperService>();
 builder.Services.AddTransient<IHitTypeService, HitTypeService>();
 builder.Services.AddTransient<IStateService, StateService>();
@@ -66,11 +70,7 @@ builder.Services.AddTransient<ICharacterService, CharacterService>();
 builder.Services.AddTransient<ILanguageService, LanguageService>();
 builder.Services.AddTransient<ICommandService, CommandService>();
 
-
-
 builder.Services.AddTransient<NavigationUtil>();
-
-
 
 var app = builder.Build();
 

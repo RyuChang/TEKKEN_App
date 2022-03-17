@@ -57,6 +57,7 @@ namespace TekkenApp.Models
         public bool TechnicallyJumping { get; set; }
         public bool TailSpin { get; set; }
         public bool WallSplat { get; set; }
+        public string MoveUrl{ get; set; }
 
         [Unicode(true)]
         public string Note { get; set; }

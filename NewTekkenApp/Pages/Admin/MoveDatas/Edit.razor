@@ -9,267 +9,276 @@
 }
 else
 {
-    <EditForm Model="@moveEntity" OnValidSubmit="@HandleValidSubmit">
-        <DataAnnotationsValidator />
-        <ValidationSummary />
-        <div class="mb-3 row">
-            <div class="col-2">
-                <label for="@moveEntity.MoveData.Id" class="col-form-label">ID</label>
-            </div>
-            <div class="col-4">
-                <input type="text" readonly class="form-control" @bind="@moveEntity.MoveData.Id" />
-            </div>
-            <div class="col-2">
-                <label for="@moveEntity.Character_code" class="col-form-label">캐릭터 코드</label>
-            </div>
-            <div class="col-4">
-                <input type="text" readonly class="form-control" @bind="@moveEntity.Character_code" />
-            </div>
+<EditForm Model="@moveEntity" OnValidSubmit="@HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <div class="mb-3 row">
+        <div class="col-2">
+            <label for="@moveEntity.MoveData.Id" class="col-form-label">ID</label>
+        </div>
+        <div class="col-4">
+            <input type="text" readonly class="form-control" @bind="@moveEntity.MoveData.Id" />
+        </div>
+        <div class="col-2">
+            <label for="@moveEntity.Character_code" class="col-form-label">캐릭터 코드</label>
+        </div>
+        <div class="col-4">
+            <input type="text" readonly class="form-control" @bind="@moveEntity.Character_code" />
+        </div>
+    </div>
+
+    <div class="mb-3 row">
+        <div class="col-2">
+            <label class="col-form-label">순번</label>
+        </div>
+        <div class="col-4">
+            <input type="text" readonly class="form-control" @bind="@moveEntity.Number" />
+        </div>
+        <div class="col-2">
+            <label for="@moveEntity.Description" class="col-form-label">설명</label>
+        </div>
+        <div class="col-4">
+            <input type="text" readonly class="form-control" @bind="@moveEntity.Description" />
+        </div>
+    </div>
+
+    <div class="mb-3 row">
+        <div class="col-2">
+            <label for="@moveEntity.MoveData.Code" class="col-form-label">코드</label>
+        </div>
+        <div class="col-4">
+            <input type="text" readonly class="form-control" @bind="@moveEntity.MoveData.Code" />
+        </div>
+        <div class="col-2">
+            <label for="@moveEntity.Code" class="col-form-label">Move_Code</label>
+        </div>
+        <div class="col-4">
+            <input type="text" readonly class="form-control" @bind="@moveEntity.Code" />
+        </div>
+    </div>
+
+    <div class="mb-3 row">
+        <div class="col-2">
+            <label for="@moveEntity.MoveData.MoveUrl" class="col-form-label">동영상 URL</label>
+        </div>
+        <div class="col-auto">
+            <input type="text" class="form-control" @bind="@moveEntity.MoveData.MoveUrl" />
+        </div>
+    </div>
+
+    <div class="mb-3 row">
+        <div class="col-2">
+            <label for="@moveEntity.MoveData.MoveType_code" class="col-form-label">기술 종류</label>
+        </div>
+        <div class="col-4">
+            <select @bind="@moveEntity.MoveData.MoveType_code" class="form-control">
+                @foreach (var selectItem in MoveTypeSelectListItems)
+                {
+                    <option value="@selectItem.Value">@selectItem.Text</option>
+                }
+            </select>
+        </div>
+        <div class="col-2">
+            <label for="@moveEntity.MoveData.MoveSubType_code" class="col-form-label">기술 하위분류</label>
+        </div>
+        <div class="col-4">
+            <select @bind="@moveEntity.MoveData.MoveSubType_code" class="form-control">
+                @foreach (var selectItem in MoveSubTypeSelectListItems)
+                {
+                    <option value="@selectItem.Value">@selectItem.Text</option>
+                }
+            </select>
+        </div>
+    </div>
+
+    <div class="mb-3 row">
+        <div class="col-4">
+            <label for="@moveEntity.MoveData.HitCount" class="col-form-label">HitCount</label>
+            <input type="text" class="form-control" @bind="@moveEntity.MoveData.HitCount" />
         </div>
 
-        <div class="mb-3 row">
-            <div class="col-2">
-                <label class="col-form-label">순번</label>
-            </div>
-            <div class="col-4">
-                <input type="text" readonly class="form-control" @bind="@moveEntity.Number" />
-            </div>
-            <div class="col-2">
-                <label for="@moveEntity.Description" class="col-form-label">설명</label>
-            </div>
-            <div class="col-4">
-                <input type="text" readonly class="form-control" @bind="@moveEntity.Description" />
-            </div>
-        </div>
-
-        <div class="mb-3 row">
-            <div class="col-2">
-                <label for="@moveEntity.MoveData.Code" class="col-form-label">코드</label>
-            </div>
-            <div class="col-4">
-                <input type="text" readonly class="form-control" @bind="@moveEntity.MoveData.Code" />
-            </div>
-            <div class="col-2">
-                <label for="@moveEntity.Code" class="col-form-label">Move_Code</label>
-            </div>
-            <div class="col-4">
-                <input type="text" readonly class="form-control" @bind="@moveEntity.Code" />
-            </div>
-        </div>
-
-        <div class="mb-3 row">
-            <div class="col-2">
-                <label for="@moveEntity.MoveData.MoveType_code" class="col-form-label">기술 종류</label>
-            </div>
-            <div class="col-4">
-                <select @bind="@moveEntity.MoveData.MoveType_code" class="form-control">
-                    @foreach (var selectItem in MoveTypeSelectListItems)
-                    {
-                        <option value="@selectItem.Value">@selectItem.Text</option>
-                    }
-                </select>
-            </div>
-            <div class="col-2">
-                <label for="@moveEntity.MoveData.MoveSubType_code" class="col-form-label">기술 하위분류</label>
-            </div>
-            <div class="col-4">
-                <select @bind="@moveEntity.MoveData.MoveSubType_code" class="form-control">
-                    @foreach (var selectItem in MoveSubTypeSelectListItems)
-                    {
-                        <option value="@selectItem.Value">@selectItem.Text</option>
-                    }
-                </select>
-            </div>
-        </div>
-
-        <div class="mb-3 row">
-            <div class="col-4">
-                <label for="@moveEntity.MoveData.HitCount" class="col-form-label">HitCount</label>
-                <input type="text" class="form-control" @bind="@moveEntity.MoveData.HitCount" />
-            </div>
-
-            <div class="col-4">
-                <label for="@moveEntity.MoveData.HitLevel" class="col-form-label">HitLevel</label>
-                <input type="text" class="form-control" @bind="@moveEntity.MoveData.HitLevel" />
-            </div>
-
-
-
-            <div class="col-4">
-                <label for="@moveEntity.MoveData.Damage" class="col-form-label">Damage</label>
-                <input type="text" class="form-control" @bind="@moveEntity.MoveData.Damage" />
-            </div>
-        </div>
-
-        @*==================== Start ====================*@
-        <div class="mb-3 row">
-            <div class="col-4">
-                <label for="@moveEntity.MoveData.StartFrame" class="col-1 col-form-label">StartFrame</label>
-                <input type="text" class="form-control" @bind="@moveEntity.MoveData.StartFrame" />
-            </div>
-            <div class="col-4">
-                <label for="@moveEntity.MoveData.StartFrame_Display" class="col-1 col-form-label">StartFrame_Display</label>
-                <input type="text" class="form-control" @bind="@moveEntity.MoveData.StartFrame_Display" />
-            </div>
-            <div class="col-4">
-                <label for="@moveEntity.MoveData.StartType_code" class="col-1 col-form-label">StartType_code</label>
-                <select @bind="@moveEntity.MoveData.StartType_code" id="" class="form-control">
-                    @foreach (var selectItem in HitTypeSelectListItems)
-                    {
-                        <option value="@selectItem.Value">@selectItem.Text</option>
-                    }
-                </select>
-            </div>
-        </div>
-
-
-        @*==================== Guard ====================*@
-        <div class="mb-3 row">
-            <div class="col-4">
-                <label for="@moveEntity.MoveData.GuardFrame" class="col-form-label">GuardFrame</label>
-                <input type="text" class="form-control" @bind="@moveEntity.MoveData.GuardFrame" />
-            </div>
-            <div class="col-4">
-                <label for="@moveEntity.MoveData.GuardFrame_Display" class="col-form-label">GuardFrame_Display</label>
-                <input type="text" class="form-control" @bind="@moveEntity.MoveData.GuardFrame_Display" />
-            </div>
-            <div class="col-4">
-                <label for="@moveEntity.MoveData.GuardType_code" class="col-form-label">GuardType_code</label>
-                <select @bind="@moveEntity.MoveData.GuardType_code" id="" class="form-control">
-                    @foreach (var selectItem in GuardTypeSelectListItems)
-                    {
-                        <option value="@selectItem.Value">@selectItem.Text</option>
-                    }
-                </select>
-            </div>
-        </div>
-
-
-        @*==================== Hit ====================*@
-        <div class="mb-3 row">
-            <div class="col-4">
-                <label for="@moveEntity.MoveData.HitFrame" class="col-form-label">HitFrame</label>
-                <input type="text" class="form-control" @bind="@moveEntity.MoveData.HitFrame" />
-            </div>
-            <div class="col-4">
-                <label for="@moveEntity.MoveData.HitFrame_Display" class="col-form-label">HitFrame_Display</label>
-                <input type="text" class="form-control" @bind="@moveEntity.MoveData.HitFrame_Display" />
-            </div>
-            <div class="col-4">
-                <label for="@moveEntity.MoveData.HitType_code" class="col-form-label">HitType_code</label>
-                <select @bind="@moveEntity.MoveData.HitType_code" id="" class="form-control">
-                    @foreach (var selectItem in HitTypeSelectListItems)
-                    {
-                        <option value="@selectItem.Value">@selectItem.Text</option>
-                    }
-                </select>
-            </div>
+        <div class="col-4">
+            <label for="@moveEntity.MoveData.HitLevel" class="col-form-label">HitLevel</label>
+            <input type="text" class="form-control" @bind="@moveEntity.MoveData.HitLevel" />
         </div>
 
 
 
-        @*==================== Counter ====================*@
-        <div class="mb-3 row">
-            <div class="col-4">
-                <label for="@moveEntity.MoveData.CounterFrame" class="col-form-label">CounterFrame</label>
-                <input type="text" class="form-control" @bind="@moveEntity.MoveData.CounterFrame" />
-            </div>
-            <div class="col-4">
-                <label for="@moveEntity.MoveData.CounterFrame_Display" class="col-form-label">CounterFrame_Display</label>
-                <input type="text" class="form-control" @bind="@moveEntity.MoveData.CounterFrame_Display" />
-            </div>
-            <div class="col-4">
-                <label for="@moveEntity.MoveData.CounterType_code" class="col-form-label">CounterType_code</label>
-                <select @bind="@moveEntity.MoveData.CounterType_code" id="" class="form-control">
-                    @foreach (var selectItem in CounterTypeSelectListItems)
-                    {
-                        <option value="@selectItem.Value">@selectItem.Text</option>
-                    }
-                </select>
-            </div>
+        <div class="col-4">
+            <label for="@moveEntity.MoveData.Damage" class="col-form-label">Damage</label>
+            <input type="text" class="form-control" @bind="@moveEntity.MoveData.Damage" />
+        </div>
+    </div>
+
+    @*==================== Start ====================*@
+    <div class="mb-3 row">
+        <div class="col-4">
+            <label for="@moveEntity.MoveData.StartFrame" class="col-1 col-form-label">StartFrame</label>
+            <input type="text" class="form-control" @bind="@moveEntity.MoveData.StartFrame" />
+        </div>
+        <div class="col-4">
+            <label for="@moveEntity.MoveData.StartFrame_Display" class="col-1 col-form-label">StartFrame_Display</label>
+            <input type="text" class="form-control" @bind="@moveEntity.MoveData.StartFrame_Display" />
+        </div>
+        <div class="col-4">
+            <label for="@moveEntity.MoveData.StartType_code" class="col-1 col-form-label">StartType_code</label>
+            <select @bind="@moveEntity.MoveData.StartType_code" id="" class="form-control">
+                @foreach (var selectItem in HitTypeSelectListItems)
+                {
+                    <option value="@selectItem.Value">@selectItem.Text</option>
+                }
+            </select>
+        </div>
+    </div>
+
+
+    @*==================== Guard ====================*@
+    <div class="mb-3 row">
+        <div class="col-4">
+            <label for="@moveEntity.MoveData.GuardFrame" class="col-form-label">GuardFrame</label>
+            <input type="text" class="form-control" @bind="@moveEntity.MoveData.GuardFrame" />
+        </div>
+        <div class="col-4">
+            <label for="@moveEntity.MoveData.GuardFrame_Display" class="col-form-label">GuardFrame_Display</label>
+            <input type="text" class="form-control" @bind="@moveEntity.MoveData.GuardFrame_Display" />
+        </div>
+        <div class="col-4">
+            <label for="@moveEntity.MoveData.GuardType_code" class="col-form-label">GuardType_code</label>
+            <select @bind="@moveEntity.MoveData.GuardType_code" id="" class="form-control">
+                @foreach (var selectItem in GuardTypeSelectListItems)
+                {
+                    <option value="@selectItem.Value">@selectItem.Text</option>
+                }
+            </select>
+        </div>
+    </div>
+
+
+    @*==================== Hit ====================*@
+    <div class="mb-3 row">
+        <div class="col-4">
+            <label for="@moveEntity.MoveData.HitFrame" class="col-form-label">HitFrame</label>
+            <input type="text" class="form-control" @bind="@moveEntity.MoveData.HitFrame" />
+        </div>
+        <div class="col-4">
+            <label for="@moveEntity.MoveData.HitFrame_Display" class="col-form-label">HitFrame_Display</label>
+            <input type="text" class="form-control" @bind="@moveEntity.MoveData.HitFrame_Display" />
+        </div>
+        <div class="col-4">
+            <label for="@moveEntity.MoveData.HitType_code" class="col-form-label">HitType_code</label>
+            <select @bind="@moveEntity.MoveData.HitType_code" id="" class="form-control">
+                @foreach (var selectItem in HitTypeSelectListItems)
+                {
+                    <option value="@selectItem.Value">@selectItem.Text</option>
+                }
+            </select>
+        </div>
+    </div>
+
+
+
+    @*==================== Counter ====================*@
+    <div class="mb-3 row">
+        <div class="col-4">
+            <label for="@moveEntity.MoveData.CounterFrame" class="col-form-label">CounterFrame</label>
+            <input type="text" class="form-control" @bind="@moveEntity.MoveData.CounterFrame" />
+        </div>
+        <div class="col-4">
+            <label for="@moveEntity.MoveData.CounterFrame_Display" class="col-form-label">CounterFrame_Display</label>
+            <input type="text" class="form-control" @bind="@moveEntity.MoveData.CounterFrame_Display" />
+        </div>
+        <div class="col-4">
+            <label for="@moveEntity.MoveData.CounterType_code" class="col-form-label">CounterType_code</label>
+            <select @bind="@moveEntity.MoveData.CounterType_code" id="" class="form-control">
+                @foreach (var selectItem in CounterTypeSelectListItems)
+                {
+                    <option value="@selectItem.Value">@selectItem.Text</option>
+                }
+            </select>
+        </div>
+    </div>
+
+    @*==================== BreakThrow ====================*@
+    <div class="mb-3 row">
+        <div class="col-6">
+            <label class="col-1 col-form-label">BreakThrow</label>
+            <input type="text" class="form-control" @bind="@moveEntity.MoveData.BreakThrow" />
         </div>
 
-        @*==================== BreakThrow ====================*@
-        <div class="mb-3 row">
-            <div class="col-6">
-                <label class="col-1 col-form-label">BreakThrow</label>
-                <input type="text" class="form-control" @bind="@moveEntity.MoveData.BreakThrow" />
-            </div>
-
-            @*==================== AfterBreak ====================*@
-            <div class="col-6">
-                <label class="col-1 col-form-label">AfterBreak</label>
-                <input type="text" class="form-control" @bind="@moveEntity.MoveData.AfterBreak" />
-            </div>
+        @*==================== AfterBreak ====================*@
+        <div class="col-6">
+            <label class="col-1 col-form-label">AfterBreak</label>
+            <input type="text" class="form-control" @bind="@moveEntity.MoveData.AfterBreak" />
         </div>
+    </div>
 
 
 
-        <div class="row mb-3">
-            <div class="col-sm">
-                <table width="90%" border="1">
-                    <thead>
-                        <tr>
-                            <th>
-                                <label asp-for="Homing" class="col-form-label col-form-label-sm">Homing</label>
-                            </th>
-                            <th>
-                                <label asp-for="PowerCrush" class="col-form-label col-form-label-sm">PowerCrush</label>
-                            </th>
-                            <th>
-                                <label asp-for="TechnicallyCrouching" class="col-form-label text-center">TechnicallyCrouching</label>
-                            </th>
-                            <th>
-                                <label asp-for="TechnicallyJumping" class="col-form-label">TechnicallyJumping</label>
-                            </th>
-                            <th>
-                                <label asp-for="TailSpin" class="col-form-label">TailSpin</label>
-                            </th>
-                            <th>
-                                <label asp-for="WallSplat" class="col-form-label">WallSplat</label>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tr height="100">
-                        <td>
-                            <input asp-for="Homing" class="form-check-input" type="checkbox">
-                        </td>
-                        <td>
-                            P <input asp-for="PowerCrush" class="form-check-input" type="checkbox">
-                        </td>
-                        <td>
-                            T<input asp-for="TechnicallyCrouching" class="form-check-input text-center" type="checkbox">
-                        </td>
-                        <td>
-                            T <input asp-for="TechnicallyJumping" class="form-check-input" type="checkbox">
-                        </td>
-                        <td>
-                            T <input asp-for="TailSpin" class="form-check-input" type="checkbox">
-                        </td>
-                        <td>
-                            W <input asp-for="WallSplat" class="form-check-input" type="checkbox">
-                        </td>
+    <div class="row mb-3">
+        <div class="col-sm">
+            <table width="90%" border="1">
+                <thead>
+                    <tr>
+                        <th>
+                            <label asp-for="Homing" class="col-form-label col-form-label-sm">Homing</label>
+                        </th>
+                        <th>
+                            <label asp-for="PowerCrush" class="col-form-label col-form-label-sm">PowerCrush</label>
+                        </th>
+                        <th>
+                            <label asp-for="TechnicallyCrouching" class="col-form-label text-center">TechnicallyCrouching</label>
+                        </th>
+                        <th>
+                            <label asp-for="TechnicallyJumping" class="col-form-label">TechnicallyJumping</label>
+                        </th>
+                        <th>
+                            <label asp-for="TailSpin" class="col-form-label">TailSpin</label>
+                        </th>
+                        <th>
+                            <label asp-for="WallSplat" class="col-form-label">WallSplat</label>
+                        </th>
                     </tr>
-                </table>
+                </thead>
+                <tr height="100">
+                    <td>
+                        <input asp-for="Homing" class="form-check-input" type="checkbox">
+                    </td>
+                    <td>
+                        P <input asp-for="PowerCrush" class="form-check-input" type="checkbox">
+                    </td>
+                    <td>
+                        T<input asp-for="TechnicallyCrouching" class="form-check-input text-center" type="checkbox">
+                    </td>
+                    <td>
+                        T <input asp-for="TechnicallyJumping" class="form-check-input" type="checkbox">
+                    </td>
+                    <td>
+                        T <input asp-for="TailSpin" class="form-check-input" type="checkbox">
+                    </td>
+                    <td>
+                        W <input asp-for="WallSplat" class="form-check-input" type="checkbox">
+                    </td>
+                </tr>
+            </table>
 
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+    <div class="mb-3 row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <input type="button" class="btn btn-primary btn-lg" value="저장" id="SaveEdit" @onclick="SaveEdit" />
+                <input type="button" class="btn btn-primary btn-lg" value="취소" id="Cancel" @onclick="() => MoveToList()" />
             </div>
         </div>
+    </div>
 
-
-
-
-
-
-
-
-        <div class="mb-3 row">
-            <div class="col-md-4">
-                <div class="form-group">
-                    <input type="button" class="btn btn-primary btn-lg" value="저장" id="SaveEdit" @onclick="SaveEdit" />
-                    <input type="button" class="btn btn-primary btn-lg" value="취소" id="Cancel" @onclick="() => MoveToList()" />
-                </div>
-            </div>
-        </div>
-
-    </EditForm>
+</EditForm>
 }

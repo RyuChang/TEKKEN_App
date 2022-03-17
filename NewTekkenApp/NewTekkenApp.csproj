@@ -46,6 +46,7 @@
 
   <ItemGroup>
     <PackageReference Include="Blazored.Modal" Version="6.0.1" />
+    <PackageReference Include="BlazorIntersectionObserver" Version="3.1.0" />
     <PackageReference Include="bootstrap" Version="5.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="6.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="6.0.2" />
@@ -71,6 +72,7 @@
     <Folder Include="Data\ResponseServices\" />
     <Folder Include="Migrations\" />
     <Folder Include="Pages\Admin\Shared\" />
+    <Folder Include="wwwroot\NewFolder\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,17 +1,15 @@
 ﻿@using System.Globalization
 @inject NavigationManager Nav
 
-<p>
-    <label>
-        Select your locale:
-        <select @bind="Culture">
-            @foreach (var culture in supportedCultures)
-            {
-                <option value="@culture">@culture.DisplayName</option>
-            }
-        </select>
-    </label>
-</p>
+<label class="text-white .d-none">
+    <span class=".d-none">Locale:</span>
+    <select @bind="Culture">
+        @foreach (var culture in supportedCultures)
+        {
+            <option value="@culture">@culture.EnglishName</option>
+        }
+    </select>
+</label>
 
 @code
 {

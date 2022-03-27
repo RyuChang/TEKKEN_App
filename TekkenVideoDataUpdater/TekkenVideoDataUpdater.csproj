@@ -7,17 +7,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <LangVersion>default</LangVersion>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <LangVersion>default</LangVersion>
-  </PropertyGroup>
-
   <ItemGroup>
+    <PackageReference Include="Google.Apis.Auth" Version="1.56.0" />
     <PackageReference Include="Google.Apis.YouTube.v3" Version="1.56.0.2630" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
   <ItemGroup>

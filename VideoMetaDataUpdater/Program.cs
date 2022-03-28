@@ -1,5 +1,4 @@
 ﻿using System.Reflection;
-
 using System.Text;
 using FileUploader;
 using Google.Apis.Auth.OAuth2;
@@ -283,7 +282,7 @@ namespace Google.Apis.YouTube.Samples
             //await Upload(youtubeService, video, tekkenVideo.FilePath);
         }
 
-        private async Task Upload(YouTubeService youtubeService, Video video, string filePath)
+/*        private async Task Upload(YouTubeService youtubeService, Video video, string filePath)
         {
             using (var fileStream = new FileStream(filePath, FileMode.Open))
             {
@@ -312,6 +311,6 @@ namespace Google.Apis.YouTube.Samples
         void videosInsertRequest_ResponseReceived(Video video)
         {
             Console.WriteLine("Video id '{0}' was successfully uploaded.", video.Id);
-        }
+        }*/
     }
 }

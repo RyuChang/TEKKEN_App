@@ -21,6 +21,8 @@ namespace TekkenApp.Data
         public virtual DbSet<MoveData_name> MoveData_Name { get; set; }
         public virtual DbSet<MoveCommand> MoveCommand { get; set; }
         public virtual DbSet<MoveCommand_name> MoveCommand_name { get; set; }
+        public virtual DbSet<MoveVideo> MoveVideo { get; set; }
+        public virtual DbSet<MoveVideo_name> MoveVideo_name { get; set; }
         public virtual DbSet<State> State { get; set; }
         public virtual DbSet<State_name> State_name { get; set; }
         public virtual DbSet<StateGroup> StateGroup { get; set; }
@@ -253,6 +255,39 @@ namespace TekkenApp.Data
 
             #endregion Move_data
 
+
+            #region MoveVideo
+            modelBuilder.Entity<MoveVideo>(entity =>
+            {
+
+                entity.HasOne(d => d.Move)
+               .WithOne(p => p.MoveVideo)
+               .HasPrincipalKey<MoveVideo>(c => c.Base_code)
+               .HasForeignKey<Move>(m => m.Code)
+               .HasConstraintName("fk_moveVideo_move");
+
+                entity.HasMany(d => d.NameSet as HashSet<MoveVideo_name>)
+               .WithOne()
+               .HasPrincipalKey(p => p.Code)
+               .HasForeignKey(d => d.Base_code)
+               .HasConstraintName("FK_moveVideo_Move")
+               .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<MoveVideo_name>(entity =>
+            {
+                entity.Property(e => e.Language_code)
+                    .IsUnicode(false)
+                    .IsFixedLength(true);
+
+                entity.Property(e => e.Name).IsUnicode(false);
+
+                entity.HasOne(d => d.BaseData as MoveVideo)
+                    .WithMany(p => p.NameSet as IEnumerable<MoveVideo_name>)
+                    .HasPrincipalKey(n => n.Code)
+                    .HasForeignKey(m => m.Base_code);
+            });
+            #endregion MoveVideo
 
             modelBuilder.Entity<Move_name>(entity =>
             {

@@ -1,0 +1,92 @@
+﻿@page "/Admin/MoveVideos"
+@page "/Admin/MoveVideos/Index"
+
+@inherits BasePageComponent
+
+<h3>@GetAppTitle()</h3>
+
+<CharacterSelectBox OnCharacterChanged="OnCharacterChanged" CharacterCode="@CharacterCode.Value">
+</CharacterSelectBox>
+
+<input type="button" class="btn btn-primary my-2" id="btnDetail" value="비디오 일괄 생성" @onclick="()=>GenerateAllVideos(CharacterCode)" />
+
+<div class="m-auto" id="Character-list">
+    <div class="table-responsive">
+        @if (MoveVideoEntities == null)
+        {
+            <p><em>Loading...</em></p>
+        }
+        else
+        { <table class="table table-bordered" style="width: 100%; margin-left: auto; margin-right: auto; border: 0;">
+                <colgroup>
+                    <col style="width: 100px;" />
+                    <col style="width: 100px;" />
+                    <col style="width: 150px;" />
+                </colgroup>
+                <thead class="table-dark">
+                    <tr>
+                        <th>NUMBER</th>
+                        <th>DESCRIPTION</th>
+                        <th>CODE</th>
+                        <th>MODIFY</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var baseEntities in MoveVideoEntities)
+                    {
+                        <tr id="@baseEntities.Id">
+                            <td rowspan="4" class="row3">@baseEntities.Move.Number</td>
+                            <td>@baseEntities.Move.Description</td>
+                            <td>@baseEntities.Code</td>
+                            <td>
+                                <input type="button" class="btn btn-primary" id="btnDetail" value="상세" @onclick="()=>MoveToDetail(baseEntities.Move.Id)" />
+                                <input type="button" class="btn btn-primary" id="btnEdit" value="수정" @onclick="()=>MoveToEdit(baseEntities.Move.Id)" />
+                                <input type="button" class="btn btn-primary" id="btnDelete" value="삭제" @onclick="()=>MoveToDelete(baseEntities.Move.Id)" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>FileName</td>
+                            <td colspan="2">@baseEntities.FileName</td>
+                        </tr>
+                        <tr>
+                            <td>YouTube</td>
+                            <td>@baseEntities.YoutubeId</td>
+                            <td>@baseEntities.YoutubeUrl</td>
+                        </tr>
+                        <tr>
+                            <td>Tag</td>
+                            <td>@baseEntities.YoutubeTag</td>
+                        </tr>
+                        <tr>
+                            <td>FileName</td>
+                            <td>@baseEntities.FileName</td>
+                        </tr>
+                        @*@foreach (var base_name in baseEntities.NameSet)
+            {
+                <tr>
+                    <td>@base_name.Language_code</td>
+                    <td class="text-black fs-6 m-1 p-1" style="width:1.5rem;min-height:3.5rem;" colspan="2">
+                        @((MarkupString)@base_name.Name)
+                    </td>
+                    <td>
+                        @if (String.IsNullOrEmpty(base_name.Name))
+                        {
+                            <input type="button" class="btn btn-primary" id="CreateName" value="추가" @onclick="() => MoveToCreateName(baseEntities.Code, base_name.Language_code)" />
+                        }
+                        else
+                        {
+                            <input type="button" class="btn btn-primary" id="DetailName" value="상세" @onclick="() => MoveToDetailName(base_name.Id)" />
+                            <input type="button" class="btn btn-primary" id="EditName" value="수정" @onclick="() => MoveToEditName(base_name.Id)" />
+                            <input type="button" class="btn btn-primary" id="DeleteName" value="삭제" @onclick="() => MoveToDeleteName(base_name.Id)" />
+                        }
+                    </td>
+                </tr>
+            }*@
+
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+</div>

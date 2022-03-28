@@ -31,6 +31,7 @@ namespace TekkenApp.Models
         public virtual MoveCommand MoveCommand { get; set; }
 
         public virtual MoveData MoveData { get; set; }
+        public virtual MoveVideo MoveVideo { get; set; }
 
         //public virtual Character character_codeNavigation { get; set; }
         //[ForeignKey(nameof(version))]

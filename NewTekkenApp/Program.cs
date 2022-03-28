@@ -65,6 +65,7 @@ builder.Services.AddTransient<IMoveSubTypeService, MoveSubTypeService>();
 builder.Services.AddTransient<IMoveService, MoveService>();
 builder.Services.AddTransient<IMoveDataService, MoveDataService>();
 builder.Services.AddTransient<IMoveCommandService, MoveCommandService>();
+builder.Services.AddTransient<IMoveVideoService, MoveVideoService>();
 
 builder.Services.AddTransient<ICharacterService, CharacterService>();
 builder.Services.AddTransient<ILanguageService, LanguageService>();

@@ -15,6 +15,7 @@
         Moves,
         MoveTypes,
         MoveDatas,
+        MoveVideo,
         MoveCommands,
         Commands,
     }
@@ -46,6 +47,8 @@
         MoveCommand_name,
         MoveData,
         MoveData_name,
+        MoveVideo,
+        MoveVideo_name,
         Character,
         Character_name,
         Command,

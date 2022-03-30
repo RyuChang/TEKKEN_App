@@ -75,11 +75,20 @@ builder.Services.AddScoped<ClipboardService>();
 
 builder.Services.AddTransient<NavigationUtil>();
 
+builder.Services.AddAntiforgery(options =>
+{
+    options.HeaderName = "X-XSRF-TOKEN";
+    options.Cookie.Name = "__Host-X-XSRF-TOKEN";
+    options.Cookie.SameSite = Microsoft.AspNetCore.Http.SameSiteMode.Strict;
+    options.Cookie.SecurePolicy = Microsoft.AspNetCore.Http.CookieSecurePolicy.Always;
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    app.UseDeveloperExceptionPage();
     app.UseMigrationsEndPoint();
 }
 else
@@ -105,6 +114,7 @@ app.UseRequestLocalization(localizationOptions);
 
 app.UseAuthentication();
 app.UseAuthorization();
+
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();
@@ -119,6 +129,7 @@ app.UseEndpoints(endpoints =>
     endpoints.MapControllerRoute(
          name: "Identity",
          pattern: "{area:exists}/{controller=Identity}/{action=Index}");
+    endpoints.MapFallbackToPage("/_Host");
 
 });
 //app.MapFallbackToAreaPage("~/Admin/{*clientroutes:nonfile}", "/Admin/_Host", "Admin");
@@ -126,13 +137,12 @@ app.UseEndpoints(endpoints =>
 
 app.MapControllers();
 app.MapBlazorHub();
-app.MapFallbackToPage("/_Host");
+//app.MapFallbackToPage("/_Host");
 
 
 app.UseCors(policy =>
-    policy.WithOrigins("https://localhost:7275;", "http://localhost:5275")
+    policy.WithOrigins("https://localhost:8164;", "https://ryuc.duckdns.org:8164/")
     .AllowAnyMethod()
     .WithHeaders(HeaderNames.ContentType, HeaderNames.Authorization, "x-custom-header")
     .AllowCredentials());
-
 app.Run();

@@ -71,6 +71,13 @@ namespace NewTekkenApp.Pages.Common.Components.Base
             navigationUtil.MoveTo(App, UserType.Admin, ActionType.Edit, number, param);
         }
 
+        protected void MoveToNextDetailByNumber(int number)
+        {
+            SetCommonParam();
+            param["NextNumber"] = number.ToString();
+            navigationUtil.MoveTo(App, UserType.Admin, ActionType.Detail, number, param);
+        }
+
         protected void MoveToDelete(int id)
         {
             SetCommonParam();

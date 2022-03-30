@@ -1,0 +1,106 @@
+﻿@page "/Admin/MoveVideos/Detail/{Id:int}"
+@inherits BasePageComponent
+@using System.Collections
+@using Microsoft.AspNetCore.Mvc
+@inject ClipboardService ClipboardService
+
+<h3>@GetAppTitle()</h3>
+
+@if (moveEntity == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <style>
+        .move {
+            display: flow;
+            flex-direction: row;
+            align-items: flex-start;
+            width: 1.5rem;
+            overflow-x: auto;
+            cursor: grab;
+        }
+    </style>
+
+    <div>
+
+        <div class="mb-3 row">
+            <label class="col-1 col-form-label">순번</label>
+            <div class="col-auto">
+                <input type="text" readonly class="form-control" @bind="@moveEntity.Number" />
+            </div>
+        </div>
+
+
+
+        <div class="mb-3 row">
+            <label class="col-1 col-form-label">파일명</label>
+            <div class="col-auto">
+                <input type="text" readonly class="form-control" @bind="@moveEntity.MoveVideo.FileName" />
+            </div>
+            <div class="col-2">
+                <button class="btn btn-primary" @onclick="()=>CopyToClipboard(moveEntity.MoveVideo.FileName)" disabled=@state.IsDisabled>
+                    <i class="@state.IconClassName"></i> @state.Text
+                </button>
+            </div>
+        </div>
+
+
+        <div class="mb-3 row">
+            <label class="col-1 col-form-label">Description</label>
+            <div class="col-auto">
+                <input type="text" readonly class="form-control" @bind="@moveEntity.MoveVideo.YoutubeDescription" />
+            </div>
+            <div class="col-2">
+                <button class="btn btn-primary" @onclick="()=>CopyToClipboard(moveEntity.MoveVideo.YoutubeDescription)" disabled=@state.IsDisabled>
+                    <i class="@state.IconClassName"></i> @state.Text
+                </button>
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label class="col-1 col-form-label">Tag</label>
+            <div class="col-auto">
+                <input type="text" readonly class="form-control" @bind="@moveEntity.MoveVideo.YoutubeTag" />
+            </div>
+            <div class="col-2">
+                <button class="btn btn-primary" @onclick="()=>CopyToClipboard(moveEntity.MoveVideo.YoutubeTag)" disabled=@state.IsDisabled>
+                    <i class="@state.IconClassName"></i> @state.Text
+                </button>
+            </div>
+        </div>
+
+    </div>
+}
+
+<div class="mb-3 row">
+    <div class="col-md-4">
+        <input type="button" class="btn btn-primary btn-lg" value="수정" id="btnEdit" @onclick="() => MoveToEdit(moveEntity.Id)" />
+        <input type="button" class="btn btn-primary btn-lg" value="다음 상세" id="btnEditNext" @onclick="() => MoveToNextDetailByNumber(moveEntity.Number+1)" />
+        <input type="button" class="btn btn-primary btn-lg" value="삭제" id="btnDelete" @onclick="() => MoveToDelete(moveEntity.MoveVideo.Id)" />
+        <input type="button" class="btn btn-primary btn-lg" value="리스트" id="btnList" @onclick="() => MoveToList()" />
+    </div>
+</div>
+@code {
+    //CancellationTokenSource cts = new();
+    State state = new("Copy", "oi oi-clipboard");
+
+    async Task CopyToClipboard(string value)
+    {
+        var temp = state;
+        var fileName = moveEntity.MoveVideo.FileName;
+        state = new("Copied", "oi oi-check", IsDisabled: true);
+        await ClipboardService.WriteTextAsync(value);
+ //       await Task.Delay(TimeSpan.FromSeconds(2), cts.Token);
+        state = temp;
+    }
+
+    //public void Dispose()
+    //{
+    //    cts.Cancel(); // Cancel Task.Delay
+    //}
+    //}
+
+    record State(string Text, string IconClassName, bool IsDisabled = false);
+}

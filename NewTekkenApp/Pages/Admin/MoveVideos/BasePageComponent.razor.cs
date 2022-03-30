@@ -7,8 +7,8 @@ namespace NewTekkenApp.Pages.Admin.MoveVideos
 {
     public partial class BasePageComponent : BaseComponent<MoveVideo, MoveVideo_name>
     {
-        [Inject] protected IMoveVideoService CommonService { get; set; } = default!;
         [Inject] protected IMoveService MoveService { get; set; } = default!;
+        [Inject] protected IMoveVideoService CommonService { get; set; } = default!;
 
         public BasePageComponent()
         {

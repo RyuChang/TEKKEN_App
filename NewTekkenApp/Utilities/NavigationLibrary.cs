@@ -68,13 +68,14 @@ namespace NewTekkenApp.Utilities
                 AppType.MoveDatas => "MoveDatas",
                 AppType.Moves => "Moves",
                 AppType.MoveCommands => "MoveCommands",
+                AppType.MoveVideo=> "MoveVideos",
                 _ => ""
             };
         private string GetActionUrl(ActionType actionType) =>
             actionType switch
             {
                 ActionType.List => "",
-                _ => $"/{actionType.ToString()}"
+                _ => $"/{actionType.ToString()}" 
             };
 
 

@@ -35,6 +35,10 @@ namespace TekkenApp.Data
         {
             return await _dataDbSet.Where(m => m.Id == id).Include(m => m.MoveData).ThenInclude(c => c.NameSet).FirstOrDefaultAsync();
         }
+        public async Task<Move> GetMoveWithMoveVideoByIdAsync(int id)
+        {
+            return await _dataDbSet.Where(m => m.Id == id).Include(m => m.MoveVideo).ThenInclude(c => c.NameSet).FirstOrDefaultAsync();
+        }
 
         public async Task<Move> GetMoveWithMoveDataByCharacterCodeAndNumberAsync(int characterCode, int number)
         {
@@ -42,6 +46,14 @@ namespace TekkenApp.Data
                 .ThenInclude(c => c.NameSet)
                 .FirstOrDefaultAsync();
         }
+
+        public async Task<Move> GetMoveWithMoveVideoByCharacterCodeAndNumberAsync(int characterCode, int number)
+        {
+            return await _dataDbSet.Where(data => data.Character_code == characterCode && data.Number == number).Include(m => m.MoveVideo)
+                .ThenInclude(c => c.NameSet)
+                .FirstOrDefaultAsync();
+        }
+        
 
         public async Task<IEnumerable<Move>> GetMoveListWithCommandsByCharacterCodeAsync(int Character_code)
         {

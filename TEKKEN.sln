@@ -21,11 +21,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TekkenFrame.Shared", "Tekke
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileUploader", "FileUploader\FileUploader.csproj", "{6109D724-663A-4157-B9B4-8C2C65CC4626}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoMetaDataUpdater", "VideoMetaDataUpdater\VideoMetaDataUpdater.csproj", "{DE41C0E5-6305-40EB-97E9-3332E9DEF449}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VideoMetaDataUpdater", "VideoMetaDataUpdater\VideoMetaDataUpdater.csproj", "{DE41C0E5-6305-40EB-97E9-3332E9DEF449}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TekkenVideoUpdater", "TekkenVideoUpdater\TekkenVideoUpdater.csproj", "{2BF25EAD-27E4-48E9-BED2-E1AAD8E88DC1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TekkenVideoDataUpdater", "TekkenVideoDataUpdater\TekkenVideoDataUpdater.csproj", "{4BB323E6-FF78-46A3-B3E3-A98A15B3D9CE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TekkenVideoDataUpdater", "TekkenVideoDataUpdater\TekkenVideoDataUpdater.csproj", "{4BB323E6-FF78-46A3-B3E3-A98A15B3D9CE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

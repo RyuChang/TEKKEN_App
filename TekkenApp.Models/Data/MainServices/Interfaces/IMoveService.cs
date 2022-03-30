@@ -13,6 +13,8 @@ namespace TekkenApp.Data
         Task<IEnumerable<Move>> GetMoveListWithCommandsByCharacterCodeAsync(int Character_code);
         Task<Move> GetMoveListWithCommandsByCharacterCodeAndNumberAsync(int characterCode, int number);
         Task<Move> GetMoveWithMoveDataByCharacterCodeAndNumberAsync(int characterCode, int number);
+        Task<Move> GetMoveWithMoveVideoByCharacterCodeAndNumberAsync(int characterCode, int number);
         Task<Move> GetMoveWithMoveDataByIdAsync(int id);
+        Task<Move> GetMoveWithMoveVideoByIdAsync(int id);
     }
 }

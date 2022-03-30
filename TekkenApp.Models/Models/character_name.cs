@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TekkenApp.Models
 {
@@ -9,10 +10,14 @@ namespace TekkenApp.Models
         {
             SetApp(TableName.Character_name);
         }
-        public int character_code { get; set; }
 
         [Required]
         public string fullName { get; set; }
+
+        [NotMapped]
+        public string Checked { get; set; }
+
+        
 
     }
 }

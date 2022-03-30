@@ -20,6 +20,8 @@ namespace TekkenApp.Models
             NameSet = new HashSet<Character_name>();
 
         }
+        [NotMapped]
+        public new int Number { get; set; }
         public new ICollection<Character_name> NameSet { get; set; }
     }
 }

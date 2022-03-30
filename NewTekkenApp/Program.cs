@@ -71,6 +71,8 @@ builder.Services.AddTransient<ICharacterService, CharacterService>();
 builder.Services.AddTransient<ILanguageService, LanguageService>();
 builder.Services.AddTransient<ICommandService, CommandService>();
 
+builder.Services.AddScoped<ClipboardService>();
+
 builder.Services.AddTransient<NavigationUtil>();
 
 var app = builder.Build();

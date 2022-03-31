@@ -9,5 +9,6 @@ namespace TekkenApp.Data
         Task<List<MoveVideo>> GetEntitiesWithMove();
         Task<List<MoveVideo>> GetEntitiesWithMoveByCharacterCode(int characterCode);
         Task<MoveVideo> GetEntityWithMovesByIdAsync(int id);
+        Task UpdateYoutubeVideoInfos(int characterCode);
     }
 }

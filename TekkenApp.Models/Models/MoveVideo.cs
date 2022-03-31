@@ -29,6 +29,7 @@ namespace TekkenApp.Models
             }
         }
         public string YoutubeId { get; set; }
+        public string YoutubeTitle { get; set; }
         public string YoutubeUrl { get; set; }
         public string YoutubeDescription { get; set; }
         public string YoutubeTag{ get; set; }

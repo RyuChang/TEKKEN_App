@@ -103,9 +103,9 @@ namespace Google.Apis.YouTube.Samples
             channelsListRequest.Mine = true;
             var channelsListResponse = channelsListRequest.Execute();
 
-            var uploadListId = "PLs0IT9AM5mDvuR9ROGH605fC1yBWaDik6";
+            //var uploadListId = "PLs0IT9AM5mDvuR9ROGH605fC1yBWaDik6";
             ///foreach (var channel in channelsListResponse.Items[0]){}
-            //uploadListId = channelsListResponse.Items[0].ContentDetails.RelatedPlaylists.Uploads;
+            var uploadListId = channelsListResponse.Items[0].ContentDetails.RelatedPlaylists.Uploads;//UUh-_wQe1LT2JmAowcHd1Liw
 
 
 
@@ -116,7 +116,7 @@ namespace Google.Apis.YouTube.Samples
             {
                 var uploadListItemsListRequest = youtubeService.PlaylistItems.List("snippet");
                 uploadListItemsListRequest.PlaylistId = uploadListId;
-                uploadListItemsListRequest.MaxResults = 10;
+                uploadListItemsListRequest.MaxResults = 13;
                 uploadListItemsListRequest.PageToken = nextPageToken;
 
 

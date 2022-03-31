@@ -50,12 +50,20 @@ namespace NewTekkenApp.Pages.Admin.MoveVideos
             }
         }
 
+        async void UpdateVideoInfos(int? characterCode)
+        {
+            if (characterCode is not null)
+            {
+                CommonService.UpdateYoutubeVideoInfos(characterCode.Value);
+
+            }
+        }
         private async Task<bool> CreateMoveVideoEntity(Move move)
         {
             MoveVideo moveVideo = new();
             moveVideo.Base_code = move.Code;
             moveVideo.Code = move.Code;
-            moveVideo.FileName = $"{move.Number.ToString().PadLeft(3, '0')}.{move.Description}";
+            moveVideo.FileName = $"{move.Description}";
             moveVideo.Description = $"{move.Description} Movement Frame Data";
             //번호 영문 한글  영문 제목   한글 제목    Youtube Url
             //번호 영문  한글 파일명
@@ -64,7 +72,7 @@ namespace NewTekkenApp.Pages.Admin.MoveVideos
 
             await CommonService.CreateEntityAsync(moveVideo);
             await CreateAllNameEntitiesAsync(moveVideo, move);
-            await UpdateMoveVideoEntityDetail(moveVideo);
+            await UpdateMoveVideoEntityDetail(move.Number, moveVideo);
             return true;
         }
 
@@ -89,7 +97,7 @@ namespace NewTekkenApp.Pages.Admin.MoveVideos
             return result;
         }
 
-        private async Task<bool> UpdateMoveVideoEntityDetail(MoveVideo moveVideo)
+        private async Task<bool> UpdateMoveVideoEntityDetail(int number, MoveVideo moveVideo)
         {
             MoveVideo_name moveVideo_Name_en = moveVideo.NameSet.Where(n => n.Language_code == "en").FirstOrDefault() as MoveVideo_name;
             MoveVideo_name moveVideo_Name_ko = moveVideo.NameSet.Where(n => n.Language_code == "ko").FirstOrDefault() as MoveVideo_name;
@@ -98,11 +106,10 @@ namespace NewTekkenApp.Pages.Admin.MoveVideos
 
             Character_name character_name_en = character.NameSet.Where(n => n.Language_code == "en").FirstOrDefault();
             Character_name character_name_ko = character.NameSet.Where(n => n.Language_code == "ko").FirstOrDefault();
-
-
+            moveVideo.YoutubeTitle = $"{number.ToString().PadLeft(3, '0')}. {moveVideo_Name_en.Name}";
             moveVideo.YoutubeDescription = moveVideo_Name_en.Name + "\r\n" + moveVideo_Name_ko.Name;
-
             moveVideo.YoutubeTag = $"TEKKEN, TEKKEN7, MOVEMENT, FRAME, FRAMEDATA, 프레임, 데이타, {character_name_en.Name}, {character_name_en.fullName}, {character_name_ko.Name}, {character_name_ko.fullName}";
+
 
             //    카즈야 기술 암운 프레임 데이터Kazuya_Movement_Ultimate_Punch_1080p
             await CommonService.UpdateDataAsync(moveVideo);

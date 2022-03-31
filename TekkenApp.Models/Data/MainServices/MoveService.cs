@@ -64,5 +64,17 @@ namespace TekkenApp.Data
                 .ThenInclude(c => c.NameSet)
                 .ToListAsync<Move>();
         }
+
+        public async Task<IEnumerable<Move>> GetMoveListWithCommandsAndVideoByCharacterCodeAsync(int Character_code)
+        {
+            return await _dataDbSet.Where(m => m.Character_code == Character_code)
+                .Include(m => m.MoveVideo)
+                .Include(m => m.MoveCommand)
+                .ThenInclude(c => c.NameSet.Where(n => n.Language_code.Equals(CultureInfo.CurrentCulture.TwoLetterISOLanguageName)))
+                .Include(m => m.MoveData)
+                .ThenInclude(c => c.NameSet)
+                .ToListAsync<Move>();
+        }
+        
     }
 }

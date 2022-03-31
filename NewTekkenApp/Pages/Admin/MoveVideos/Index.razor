@@ -9,6 +9,7 @@
 </CharacterSelectBox>
 
 <input type="button" class="btn btn-primary my-2" id="btnDetail" value="비디오 일괄 생성" @onclick="()=>GenerateAllVideos(CharacterCode)" />
+<input type="button" class="btn btn-primary my-2" id="btnDetail" value="유튜브 일괄 업데이트" @onclick="()=>UpdateVideoInfos(CharacterCode)" />
 
 <div class="m-auto" id="Character-list">
     <div class="table-responsive">
@@ -46,6 +47,18 @@
                             </td>
                         </tr>
                         <tr>
+                            <td>Title</td>
+                            <td colspan="2">@baseEntities.YoutubeTitle</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">Description</td>
+                            <td>@baseEntities.YoutubeDescription</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">Tag</td>
+                            <td>@baseEntities.YoutubeTag</td>
+                        </tr>
+                        <tr>
                             <td>FileName</td>
                             <td colspan="2">@baseEntities.FileName</td>
                         </tr>
@@ -53,10 +66,6 @@
                             <td>YouTube</td>
                             <td>@baseEntities.YoutubeId</td>
                             <td>@baseEntities.YoutubeUrl</td>
-                        </tr>
-                        <tr>
-                            <td>Tag</td>
-                            <td>@baseEntities.YoutubeTag</td>
                         </tr>
                         <tr>
                             <td>FileName</td>

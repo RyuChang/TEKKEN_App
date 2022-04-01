@@ -69,9 +69,9 @@
                                             <div class="col col-sm me-0 me-sm-2">
                                                 <div class="row border mb-1">
                                                     <div class="col-auto">
-                                                        @if (move.MoveData.MoveUrl is not null)
+                                                        @if (move.MoveVideo.YoutubeId is not null)
                                                         {
-                                                            <iframe id="ytplayer" type="text/html" width="356" height="200" src="https://www.youtube.com/embed/@($"{move.MoveData.MoveUrl}")?autoplay=@($"{(context.IsIntersecting ? "1" : "0")}")&mute=1&controls=0&loop=1&playlist=@($"{move.MoveData.MoveUrl}")" frameborder="0"></iframe>
+                                                            <iframe id="ytplayer" type="text/html" width="356" height="200" src="https://www.youtube.com/embed/@($"{move.MoveVideo.YoutubeId}")?autoplay=@($"{(context.IsIntersecting ? "1" : "0")}")&mute=1&controls=0&loop=1&playlist=@($"{move.MoveVideo.YoutubeId}")" frameborder="0"></iframe>
                                                         }
                                                         else
                                                         {

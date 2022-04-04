@@ -3,19 +3,21 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using HtmlAgilityPack;
+using TekkenApp.Data;
 
 namespace MovePrettyParse
 {
-    internal class Program
+    class Program
     {
 
         static void Main(string[] args)
         {
+
             String fileName = "AKUMA_kr.TXT";
             string htmlFile = ReadVideoList(fileName);
 
             var htmlDoc = new HtmlDocument();
-            htmlDoc.LoadHtml(htmlFile);
+            htmlDoc.LoadHtml(html);
 
             var htmlBody = htmlDoc.DocumentNode.SelectSingleNode("//table");
 
@@ -31,7 +33,9 @@ namespace MovePrettyParse
 
             IEnumerable<HtmlNode> mainNodes = htmlDoc.DocumentNode.Descendants().Where(n => n.HasClass("move-card"));
 
-            foreach (var mainNode in mainNodes)
+            foreach public TekkenDbContext T { get => t; set => t = value; }
+
+        (var mainNode in mainNodes)
             {
                 foreach (var childNode in mainNode.ChildNodes)
                 {
@@ -58,34 +62,34 @@ namespace MovePrettyParse
 
                             }
                             else if (mainInfo.HasClass("move-string"))
-                            {
-                                foreach (var node in mainInfo.ChildNodes)
-                                {
+{
+    foreach (var node in mainInfo.ChildNodes)
+    {
 
-                                    Console.Write(node.InnerText);
-                                }
-                                Console.WriteLine();
-                            }
-                            else if (mainInfo.HasClass("move-hit-dmg"))
-                            {
-                                var firstNode = mainInfo.FirstChild;
-                                if (firstNode.HasChildNodes)
-                                {
-                                    Console.Write("Hit LV : ");
-                                    foreach (var node_hitLevel in firstNode.ChildNodes)
-                                    {
-                                        Console.Write(" " + node_hitLevel.InnerText);
-                                    }
-                                    Console.WriteLine();
-                                }
-                                //Console.Write("Hit LV:"+node.InnerText);
+        Console.Write(node.InnerText);
+    }
+    Console.WriteLine();
+}
+else if (mainInfo.HasClass("move-hit-dmg"))
+{
+    var firstNode = mainInfo.FirstChild;
+    if (firstNode.HasChildNodes)
+    {
+        Console.Write("Hit LV : ");
+        foreach (var node_hitLevel in firstNode.ChildNodes)
+        {
+            Console.Write(" " + node_hitLevel.InnerText);
+        }
+        Console.WriteLine();
+    }
+    //Console.Write("Hit LV:"+node.InnerText);
 
 
-                                var lastNode = mainInfo.LastChild;  //move-dmg
-                                Console.WriteLine("mv Frame: " + lastNode.FirstChild.InnerText);
-                                Console.WriteLine("mv hitdmg : " + lastNode.LastChild.LastChild.InnerText);
+    var lastNode = mainInfo.LastChild;  //move-dmg
+    Console.WriteLine("mv Frame: " + lastNode.FirstChild.InnerText);
+    Console.WriteLine("mv hitdmg : " + lastNode.LastChild.LastChild.InnerText);
 
-                            }
+}
 
                         }
                     }
@@ -93,47 +97,47 @@ namespace MovePrettyParse
                     //////////////////////////////////  move-card-content  /////////////////////////////////
 
                     if (childNode.HasClass("move-extra"))
-                    {
-                        var mvSection_node = childNode.FirstChild; //mv-section
+{
+    var mvSection_node = childNode.FirstChild; //mv-section
 
 
 
-                        var moveFramesNode = mvSection_node.LastChild;
+    var moveFramesNode = mvSection_node.LastChild;
 
-                        string frame_start = string.Empty;
-                        string frame_start_seg = string.Empty;
-                        string frame_block = string.Empty;
-                        string frame_hit = string.Empty;
+    string frame_start = string.Empty;
+    string frame_start_seg = string.Empty;
+    string frame_block = string.Empty;
+    string frame_hit = string.Empty;
 
-                        foreach (var frameNode in moveFramesNode.FirstChild.ChildNodes)
-                        {
+    foreach (var frameNode in moveFramesNode.FirstChild.ChildNodes)
+    {
 
-                            if (frameNode.HasClass("move-startf"))
-                            {
-                                frame_start = frameNode.LastChild.InnerText.Trim();
+        if (frameNode.HasClass("move-startf"))
+        {
+            frame_start = frameNode.LastChild.InnerText.Trim();
 
-                            }
-                            else if (frameNode.HasClass("move-startf-seg"))
-                            {
-                                frame_start_seg = frameNode.LastChild.InnerText.Trim();
-                            }
-                            else if (frameNode.HasClass("move-blockf"))
-                            {
+        }
+        else if (frameNode.HasClass("move-startf-seg"))
+        {
+            frame_start_seg = frameNode.LastChild.InnerText.Trim();
+        }
+        else if (frameNode.HasClass("move-blockf"))
+        {
 
-                                frame_block = frameNode.LastChild.InnerText.Trim();
-                            }
-                            else if (frameNode.HasClass("move-hitf"))
-                            {
-                                frame_hit = frameNode.LastChild.InnerText.Trim();
-                            }
-                        }
-                        Console.WriteLine("start Frame:" + frame_start);
-                        Console.WriteLine("start_seg Frame:" + frame_start_seg);
-                        Console.WriteLine("block Frame:" + frame_block);
-                        Console.WriteLine("hit Frame:" + frame_hit);
+            frame_block = frameNode.LastChild.InnerText.Trim();
+        }
+        else if (frameNode.HasClass("move-hitf"))
+        {
+            frame_hit = frameNode.LastChild.InnerText.Trim();
+        }
+    }
+    Console.WriteLine("start Frame:" + frame_start);
+    Console.WriteLine("start_seg Frame:" + frame_start_seg);
+    Console.WriteLine("block Frame:" + frame_block);
+    Console.WriteLine("hit Frame:" + frame_hit);
 
-                    }
-                    Console.WriteLine();
+}
+Console.WriteLine();
                 }
 
 
@@ -164,12 +168,12 @@ namespace MovePrettyParse
 
 
         private static string ReadVideoList(string path)
-        {
-            // Open the file to read from.
-            using (StreamReader sr = File.OpenText(path))
-            {
-                return sr.ReadToEnd();
-            }
-        }
+{
+    // Open the file to read from.
+    using (StreamReader sr = File.OpenText(path))
+    {
+        return sr.ReadToEnd();
+    }
+}
     }
 }

@@ -42,7 +42,8 @@ namespace TekkenApp.Data
         public virtual DbSet<MoveType_name> moveType_name { get; set; }
 
         public virtual DbSet<TableCode> tableCode { get; set; }
-        //public virtual DbSet<TekkenVersion> tekkenVersion { get; set; }
+        public virtual DbSet<TekkenPretty> TekkenPretty { get; set; }
+        public virtual DbSet<TekkenMoveList> TekkenMoveList{ get; set; }
         public DbSet<Dictionary<string, object>> Products => Set<Dictionary<string, object>>("Product");
 
 

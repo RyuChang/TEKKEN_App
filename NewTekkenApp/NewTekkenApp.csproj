@@ -48,6 +48,7 @@
     <PackageReference Include="Blazored.Modal" Version="6.0.1" />
     <PackageReference Include="BlazorIntersectionObserver" Version="3.1.0" />
     <PackageReference Include="bootstrap" Version="5.1.2" />
+    <PackageReference Include="Google.Apis.YouTube.v3" Version="1.56.0.2630" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="6.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="6.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.2" />

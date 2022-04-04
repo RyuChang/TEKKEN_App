@@ -53,5 +53,11 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TekkenApp.Models\TekkenApp.Models.csproj">
+      <Project>{153464a2-d77c-40b9-afc6-df06336d91e4}</Project>
+      <Name>TekkenApp.Models</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

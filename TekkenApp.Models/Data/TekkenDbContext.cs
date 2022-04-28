@@ -435,12 +435,12 @@ namespace TekkenApp.Data
                     .IsUnicode(false)
                     .IsFixedLength(true);
 
-                //entity.HasOne(d => d.language_codeNavigation)
-                //    .WithMany(p => p.character_name)
-                //    .HasPrincipalKey(p => p.code)
-                //    .HasForeignKey(d => d.language_code)
-                //    .OnDelete(DeleteBehavior.ClientSetNull)
-                //    .HasConstraintName("FK_character_name_language");
+
+                //entity.HasOne(d => d.BaseData as Character)
+                //.WithMany(p => p.NameSet as IEnumerable<Character_name>)
+                //.HasPrincipalKey(n => n.Code)
+                //.HasForeignKey(m => m.Base_code);
+
             });
             #endregion Character
 

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -8,6 +9,7 @@ using Google.Apis.Auth.OAuth2;
 using Google.Apis.Services;
 using Google.Apis.YouTube.v3;
 using Google.Apis.YouTube.v3.Data;
+using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
 using TekkenApp.Models;
 
@@ -15,14 +17,16 @@ namespace TekkenApp.Data
 {
     public class MoveVideoService : BaseNameService<MoveVideo, MoveVideo_name>, IMoveVideoService
     {
+        [Inject] ICharacterService CharacterService { get; set; } = default!;
 
         UserCredential credential;
         YouTubeService youtubeService;
 
-        public MoveVideoService(TekkenDbContext tekkenDbContext) : base(tekkenDbContext, tekkenDbContext.MoveVideo, tekkenDbContext.MoveVideo_name)
+        public MoveVideoService(TekkenDbContext tekkenDbContext, ICharacterService _characterService) : base(tekkenDbContext, tekkenDbContext.MoveVideo, tekkenDbContext.MoveVideo_name)
         {
             MainTable = TableName.MoveVideo.ToString();
             NameTable = TableName.MoveVideo_name.ToString();
+            CharacterService = _characterService;
         }
 
         public async Task<List<MoveVideo>> GetEntitiesWithMove()
@@ -50,97 +54,46 @@ namespace TekkenApp.Data
 
             var channelsListRequest = youtubeService.Channels.List("contentDetails");
             channelsListRequest.Mine = true;
+            //channelsListRequest.ManagedByMe= true;
             var channelsListResponse = channelsListRequest.Execute();
 
             //var uploadListId = "PLs0IT9AM5mDvuR9ROGH605fC1yBWaDik6";      //Upload
             //var uploadListId = "PLs0IT9AM5mDtiuL7EM5mTKYpOSULORc1x";    //카즈야
-            var uploadListId = channelsListResponse.Items[0].ContentDetails.RelatedPlaylists.Uploads;//UUh-_wQe1LT2JmAowcHd1Liw
 
+            // SIARIAPAPA "UCdJqpY1ix4PnCWhnJ8RayWQ"
+            // SIARIAPAPA1 "UCDR9pqs0PMhe7q_A6OiBIPg"
+            var uploadListId = channelsListResponse.Items[0].ContentDetails.RelatedPlaylists.Uploads;//UUh-_wQe1LT2JmAowcHd1Liw
+            //var uploadListId = "UCDR9pqs0PMhe7q_A6OiBIPg";
             string nextPageToken = string.Empty;
 
 
             List<Video> videoList = new List<Video>();
-            while (nextPageToken != null)
+            int count = 5;
+            while (nextPageToken != null /*&& count-- > 0*/)
             {
                 var uploadListItemsListRequest = youtubeService.PlaylistItems.List("snippet");
                 uploadListItemsListRequest.PlaylistId = uploadListId;
                 uploadListItemsListRequest.MaxResults = 50;
                 uploadListItemsListRequest.PageToken = nextPageToken;
                 var uploadListItemsListResponse = uploadListItemsListRequest.Execute();
-
+                Console.WriteLine("Count:" + count);
+                
                 foreach (var item in uploadListItemsListResponse.Items)
                 {
-                    var videoId = item.Snippet.ResourceId.VideoId;
-                    Video video = await GetVideoById(videoId);
-                    videoList.Add(video);
+                    //string characterName = await CharacterService.GetCharacterByCharacterCode(characterCode).Result.NameSet.ToList()[0].Name;
+
+                    var character = await CharacterService.GetCharacterByCharacterCode(characterCode);
+                    string characterName = character.NameSet.ToList()[0].Name;
+                    Console.WriteLine("Title:" + item.Snippet.Title);
+                    
+                    if (IsNotUpdated(characterName, item.Snippet.Title))
+                    {
+                        await UpdateVideo(characterCode, characterName, item.Snippet.ResourceId.VideoId);
+                    }
+
                 }
                 nextPageToken = uploadListItemsListResponse.NextPageToken;
             }
-
-
-
-            foreach (Video video in videoList)
-            {
-                //var moveVideoEntity = await _tekkenDBContext.MoveVideo.Where(v => v.FileName.Replace("_", " ").Replace(".", " ").Replace("(", "").Replace(")", "") == video.Snippet.Title).FirstOrDefaultAsync();
-                var moveVideoEntity = await _tekkenDBContext.MoveVideo.Where(v => v.FileName == video.FileDetails.FileName.Replace(".mp4", "")).FirstOrDefaultAsync();
-
-                if (moveVideoEntity != null && string.IsNullOrEmpty(video.Snippet.Description))
-                {
-                    video.Snippet.Title = moveVideoEntity.YoutubeTitle;
-                    video.Snippet.Description = moveVideoEntity.YoutubeDescription;
-                    video.Snippet.Tags = moveVideoEntity.YoutubeTag.Split(',');
-                    video.Snippet.CategoryId = "10";
-                    video.Status.PrivacyStatus = "public";
-                    //status.uploadStatus
-                    //video.Snippet.ChannelTitle = "Kazuya";
-                    //video.Snippet.s.publicStatsViewable=video.Status.PrivacyStatus = "unlisted"; // or "private" or "public"
-                    var my_update_request = youtubeService.Videos.Update(video, "snippet, status, fileDetails");
-                    var result = my_update_request.Execute();
-
-                    int updateResult = await UpdateYoutubeUrl(moveVideoEntity, result.Id);
-                    //result.Id
-                    //video.FileDetails.FileName
-                }
-            }
-            /*
-            var uploadListItemsListRequest1 = youtubeService.PlaylistItems.List("snippet");
-            uploadListItemsListRequest1.PlaylistId = uploadListId;
-            uploadListItemsListRequest1.MaxResults = 10;
-            uploadListItemsListRequest1.PageToken = nextPageToken;
-            var uploadListItemsListResponse1 = uploadListItemsListRequest1.Execute();
-
-
-
-            string AKUMA_playlist = "PLs0IT9AM5mDsdhS17PYnb8a1oP9HL-sdx";
-            var AKUMAListItemsListRequest = youtubeService.PlaylistItems.List("snippet");
-            AKUMAListItemsListRequest.PlaylistId = AKUMA_playlist;
-            AKUMAListItemsListRequest.MaxResults = 10;
-            AKUMAListItemsListRequest.PageToken = nextPageToken;
-            var AKUMAListItemsListResponse = AKUMAListItemsListRequest.Execute();
-
-
-
-            foreach (var item in uploadListItemsListResponse1.Items)
-            {
-                AKUMAListItemsListResponse.Items.Add(item);
-                item.Snippet.PlaylistId = AKUMA_playlist;
-                //item.Snippet.PlaylistId=
-                //var my_update_request = youtubeService.PlaylistItems.Update(item, "snippet, status");
-                //my_update_request.Execute();
-                var my_update_request = youtubeService.PlaylistItems.Update(item, "snippet").ExecuteAsync();
-            }
-            */
-
-            //TekkenVideo t = tekkenVideoList.Where(Video => Video.Title_en == videoList[3].Snippet.Title);
-
-
-            //youtubeService.Videos.List  = youtube.videos().list(videoId, "snippet");
-
-
-            //var updateVideoRequest = youtubeService.Videos.Update("snippet", video);
-            // Request is executed and updated video is returned
-            //Video videoResponse = updateVideosRequest.execute();
-
 
 
             List<string> channels = new List<string>();
@@ -148,7 +101,7 @@ namespace TekkenApp.Data
 
             async Task SetCredential()
             {
-                using (var stream = new FileStream("Properties/client_secrets.json", FileMode.Open, FileAccess.Read))
+                using (var stream = new FileStream("Properties/client_secret.json", FileMode.Open, FileAccess.Read))
                 {
                     credential = await GoogleWebAuthorizationBroker.AuthorizeAsync(
                         GoogleClientSecrets.Load(stream).Secrets,
@@ -166,15 +119,67 @@ namespace TekkenApp.Data
                     HttpClientInitializer = credential,
                     ApplicationName = Assembly.GetExecutingAssembly().GetName().Name
                 });
+                string ApplicationName = Assembly.GetExecutingAssembly().GetName().Name;
             }
 
-            async Task<Video> GetVideoById(string videoId)
+        }
+
+        private async Task<Video> GetVideoById(string videoId)
+        {
+            var my_video_request = youtubeService.Videos.List("snippet, status, fileDetails");
+            my_video_request.Id = videoId; // the Youtube video id of the video you want to update
+            my_video_request.MaxResults = 1;
+            var my_video_response = await my_video_request.ExecuteAsync();
+            return my_video_response.Items[0];
+        }
+
+        private bool IsNotUpdated(string characterName, string title)
+        {
+
+            if (title.Contains(characterName)|| title.Contains(characterName.Replace("-", " ")))
             {
-                var my_video_request = youtubeService.Videos.List("snippet, status, fileDetails");
-                my_video_request.Id = videoId; // the Youtube video id of the video you want to update
-                my_video_request.MaxResults = 1;
-                var my_video_response = await my_video_request.ExecuteAsync();
-                return my_video_response.Items[0];
+                return true;
+            }
+            return false;
+        }
+
+
+        private async Task UpdateVideo(int characterCode, string characterName, string videoId)
+        {
+            Video video = await GetVideoById(videoId);
+
+
+            //var moveVideoEntity = await _tekkenDBContext.MoveVideo.Where(v => v.FileName.Replace("_", " ").Replace(".", " ").Replace("(", "").Replace(")", "") == video.Snippet.Title).FirstOrDefaultAsync();
+            var moveVideoEntity = await _tekkenDBContext.MoveVideo.Where(d => d.Move.Character_code == characterCode).Where(v => video.Snippet.Title == v.FileName || v.FileName == video.FileDetails.FileName.ToLower().Replace(".mp4", "")).FirstOrDefaultAsync();
+            //var moveVideoEntity = await _tekkenDBContext.MoveVideo.Where(d => d.Move.Character_code == characterCode).Where(v =>  v.FileName == video.FileDetails.FileName.ToLower().Replace(".mp4", "")).FirstOrDefaultAsync();
+
+            if (moveVideoEntity != null && string.IsNullOrEmpty(video.Snippet.Description))
+            {
+                video.Snippet.Title = moveVideoEntity.YoutubeTitle;
+                video.Snippet.Description = moveVideoEntity.YoutubeDescription;
+                video.Snippet.Tags = moveVideoEntity.YoutubeTag.Split(',');
+                video.Snippet.CategoryId = "20";
+                //video.Snippet.DefaultLanguage = "en";
+                video.Snippet.DefaultAudioLanguage = "en-US";
+                video.Status.PrivacyStatus = "public";
+                //status.uploadStatus
+                //video.Snippet.ChannelTitle = "Kazuya";
+                //video.Status.PublicStatsViewable = false;
+                var my_update_request = youtubeService.Videos.Update(video, "snippet, status, fileDetails");
+                Video result = null;
+                try
+                {
+                    result = my_update_request.Execute();
+                    int updateResult = await UpdateYoutubeUrl(moveVideoEntity, result.Id);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
+
+
+                //result.Id
+                //video.FileDetails.FileName
             }
 
         }
@@ -198,3 +203,24 @@ namespace TekkenApp.Data
 }
 
 
+/*
+
+
+            string AKUMA_playlist = "PLs0IT9AM5mDsdhS17PYnb8a1oP9HL-sdx";
+            var AKUMAListItemsListRequest = youtubeService.PlaylistItems.List("snippet");
+            AKUMAListItemsListRequest.PlaylistId = AKUMA_playlist;
+            AKUMAListItemsListRequest.MaxResults = 10;
+            AKUMAListItemsListRequest.PageToken = nextPageToken;
+            var AKUMAListItemsListResponse = AKUMAListItemsListRequest.Execute();
+
+
+            foreach (var item in uploadListItemsListResponse1.Items)
+            {
+                AKUMAListItemsListResponse.Items.Add(item);
+                item.Snippet.PlaylistId = AKUMA_playlist;
+                //item.Snippet.PlaylistId=
+                //var my_update_request = youtubeService.PlaylistItems.Update(item, "snippet, status");
+                //my_update_request.Execute();
+                var my_update_request = youtubeService.PlaylistItems.Update(item, "snippet").ExecuteAsync();
+            }
+            */

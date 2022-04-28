@@ -36,8 +36,8 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 builder.Services.AddAuthentication().AddGoogle(googleOptions =>
 {
     var configuration = builder.Configuration;
-    googleOptions.ClientId = configuration["Authentication:Google:ClientId"];
-    googleOptions.ClientSecret = configuration["Authentication:Google:ClientSecret"];
+    googleOptions.ClientId = configuration["Google:ClientId"];
+    googleOptions.ClientSecret = configuration["Google:ClientSecret"];
 });
 
 builder.Services.AddRazorPages();

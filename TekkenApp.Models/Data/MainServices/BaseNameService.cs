@@ -97,6 +97,18 @@ namespace TekkenApp.Data
         //    return await baseTranslateName.ToListAsync();
         //}
 
+        public async Task<bool> UpdateNameEntityAsync(TDataEntity dataEntity, string language_code)
+        {
+
+            TNameEntity nameEntity = await GetNameEntitiyByBaseCodeAndLanguageCode(dataEntity.Code, language_code);
+            nameEntity.Name = dataEntity.Description;
+
+            await UpdateNameEntityAsync(nameEntity);
+            return true;
+        }
+
+
+
         public async Task<BaseNameEntity> UpdateNameEntityAsync(BaseNameEntity nameEntity)
         {
             _tekkenDBContext.Entry(nameEntity).State = EntityState.Modified;

@@ -6,7 +6,7 @@ namespace TekkenApp.Models
 {
     [NotMapped]
 
-    public class BaseDataEntity
+    public class BaseDataEntity : BaseAuditable
     {
         [NotMapped]
         public static string preUrl { get; set; }
@@ -19,7 +19,7 @@ namespace TekkenApp.Models
         public int Character_code { get; set; }
 
         [NotMapped]
-        public  int Base_code { get; set; }
+        public int Base_code { get; set; }
 
         [Key]
         [Display(Name = "ID")]

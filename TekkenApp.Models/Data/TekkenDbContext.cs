@@ -1,4 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.AccessControl;
+using System.Threading.Tasks;
+using System.Threading;
 using Microsoft.EntityFrameworkCore;
 using TekkenApp.Models;
 
@@ -43,7 +48,7 @@ namespace TekkenApp.Data
 
         public virtual DbSet<TableCode> tableCode { get; set; }
         public virtual DbSet<TekkenPretty> TekkenPretty { get; set; }
-        public virtual DbSet<TekkenMoveList> TekkenMoveList{ get; set; }
+        public virtual DbSet<TekkenMoveList> TekkenMoveList { get; set; }
         public DbSet<Dictionary<string, object>> Products => Set<Dictionary<string, object>>("Product");
 
 
@@ -669,7 +674,34 @@ namespace TekkenApp.Data
 
         }
 
-
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            var insertedEntries = this.ChangeTracker.Entries().Where(x => x.State == EntityState.Added).Select(x => x.Entity);
+            foreach (var insertedEntry in insertedEntries)
+            {
+                var auditableEntity = insertedEntry as BaseAuditable;
+                //If the inserted object is an Auditable. 
+                if (auditableEntity != null)
+                {
+                    auditableEntity.DateCreated = DateTimeOffset.UtcNow;
+                }
+            }
+            var modifiedEntries = this.ChangeTracker.Entries()
+                       .Where(x => x.State == EntityState.Modified)
+                       .Select(x => x.Entity);
+            foreach (var modifiedEntry in modifiedEntries)
+            {
+                //If the inserted object is an Auditable. 
+                var auditableEntity = modifiedEntry as BaseAuditable;
+                if (auditableEntity != null)
+                {
+                    auditableEntity.DateUpdated = DateTimeOffset.UtcNow;
+                }
+            }
+            return base.SaveChangesAsync(cancellationToken);
+        }
+
     }
 }

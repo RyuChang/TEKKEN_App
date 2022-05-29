@@ -1,4 +1,6 @@
-﻿using Microsoft.JSInterop;
+﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
+using Microsoft.JSInterop;
 using TekkenApp.Models;
 
 namespace NewTekkenApp.Pages.Admin.MoveCommands
@@ -12,6 +14,7 @@ namespace NewTekkenApp.Pages.Admin.MoveCommands
 
         private string DisplayCommand { get; set; } = default!;
         private string RawCommand { get; set; } = default!;
+        private ElementReference commandInput;
         protected override async Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
@@ -23,6 +26,7 @@ namespace NewTekkenApp.Pages.Admin.MoveCommands
             {
                 moveEntity = await MoveService.GetMoveListWithCommandsByIdAsync(Id); ;
                 await InitCommand();
+                await commandInput.FocusAsync();
             }
         }
         private async Task InitCommand()
@@ -44,6 +48,14 @@ namespace NewTekkenApp.Pages.Admin.MoveCommands
             StateHasChanged();
         }
 
+
+        private async Task SetKeyUp(KeyboardEventArgs e)
+        {
+            if (e.Key.ToLower() == "n")
+            {
+                MoveToNextEdit(moveEntity.Number + 1);
+            }
+        }
 
     }
 }

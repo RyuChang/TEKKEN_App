@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -68,7 +69,7 @@ namespace TekkenApp.Data
 
 
             List<Video> videoList = new List<Video>();
-            int count = 5;
+            int count = 10;
             while (nextPageToken != null /*&& count-- > 0*/)
             {
                 var uploadListItemsListRequest = youtubeService.PlaylistItems.List("snippet");
@@ -77,7 +78,7 @@ namespace TekkenApp.Data
                 uploadListItemsListRequest.PageToken = nextPageToken;
                 var uploadListItemsListResponse = uploadListItemsListRequest.Execute();
                 Console.WriteLine("Count:" + count);
-                
+
                 foreach (var item in uploadListItemsListResponse.Items)
                 {
                     //string characterName = await CharacterService.GetCharacterByCharacterCode(characterCode).Result.NameSet.ToList()[0].Name;
@@ -85,8 +86,14 @@ namespace TekkenApp.Data
                     var character = await CharacterService.GetCharacterByCharacterCode(characterCode);
                     string characterName = character.NameSet.ToList()[0].Name;
                     Console.WriteLine("Title:" + item.Snippet.Title);
+
+                    string title = item.Snippet.Title;
+                    if (title.Equals("LEROY_Chain Punch Branch"))
+                    {
+                        Debugger.Break();
+                    }
                     
-                    if (IsNotUpdated(characterName, item.Snippet.Title))
+                    if (IsNotUpdated(characterName, title))
                     {
                         await UpdateVideo(characterCode, characterName, item.Snippet.ResourceId.VideoId);
                     }
@@ -136,7 +143,7 @@ namespace TekkenApp.Data
         private bool IsNotUpdated(string characterName, string title)
         {
 
-            if (title.Contains(characterName)|| title.Contains(characterName.Replace("-", " ")))
+            if (title.Contains(characterName) || title.Contains(characterName.Replace("-", " ")))
             {
                 return true;
             }
@@ -150,7 +157,7 @@ namespace TekkenApp.Data
 
 
             //var moveVideoEntity = await _tekkenDBContext.MoveVideo.Where(v => v.FileName.Replace("_", " ").Replace(".", " ").Replace("(", "").Replace(")", "") == video.Snippet.Title).FirstOrDefaultAsync();
-            var moveVideoEntity = await _tekkenDBContext.MoveVideo.Where(d => d.Move.Character_code == characterCode).Where(v => video.Snippet.Title == v.FileName || v.FileName == video.FileDetails.FileName.ToLower().Replace(".mp4", "")).FirstOrDefaultAsync();
+            var moveVideoEntity = await _tekkenDBContext.MoveVideo.Where(d => d.Move.Character_code == characterCode).Where(v => video.Snippet.Title.Replace("_ ", "_") == v.FileName.Replace(":", "") || v.FileName == video.FileDetails.FileName.ToLower().Replace(".mp4", "")).FirstOrDefaultAsync();
             //var moveVideoEntity = await _tekkenDBContext.MoveVideo.Where(d => d.Move.Character_code == characterCode).Where(v =>  v.FileName == video.FileDetails.FileName.ToLower().Replace(".mp4", "")).FirstOrDefaultAsync();
 
             if (moveVideoEntity != null && string.IsNullOrEmpty(video.Snippet.Description))

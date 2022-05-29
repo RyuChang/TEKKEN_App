@@ -62,7 +62,7 @@ else
         <div class="mb-3 row">
             <label class="col-1 col-form-label">입력</label>
             <div class="col">
-                <textarea rows=3 id="Command" type="text" readonly class="form-control" placeholder="커맨드 입력" @bind="@moveEntity.MoveCommand.Command" @onkeydown="SetKeyDown" @onkeydown:preventDefault="true" @onkeydown:stopPropagation="true" @onkeyup="SetKeyUp" @onkeyup:preventDefault="true" @onkeyup:stopPropagation="true" />
+                <textarea rows=3 id="Command" type="text" @ref="commandInput" readonly class="form-control" placeholder="커맨드 입력" @bind="@moveEntity.MoveCommand.Command" @onkeydown="SetKeyDown" @onkeydown:preventDefault="true" @onkeydown:stopPropagation="true" @onkeyup="SetKeyUp" @onkeyup:preventDefault="true" @onkeyup:stopPropagation="true" />
             </div>
         </div>
 
@@ -78,6 +78,8 @@ else
 
                     <div class="row mb-3">
                         <div class="col-sm">
+                            <button type="button" class="mb-1 col btn btn-primary" value="RECENT STATE" @onclick="()=>AddRecentState()">RECENT STATE</button>
+                            <br />
                             @if (state != null)
                             {
                                 @foreach (var item in state)
@@ -130,20 +132,20 @@ else
                 </div>
             </div>
             @*<div class="mb-3 row">
-                <label class="col-1 col-form-label">입력</label>
-                <div class="col">
-                    <textarea rows=3 id="Command" type="text" readonly class="form-control" placeholder="커맨드 입력" @bind="@item.Name" @onkeydown="SetKeyDown" @onkeydown:preventDefault="true" @onkeydown:stopPropagation="true" @onkeyup="SetKeyUp" @onkeyup:preventDefault="true" @onkeyup:stopPropagation="true" />
-                </div>
-            </div>*@
+                    <label class="col-1 col-form-label">입력</label>
+                    <div class="col">
+                        <textarea rows=3 id="Command" type="text" readonly class="form-control" placeholder="커맨드 입력" @bind="@item.Name" @onkeydown="SetKeyDown" @onkeydown:preventDefault="true" @onkeydown:stopPropagation="true" @onkeyup="SetKeyUp" @onkeyup:preventDefault="true" @onkeyup:stopPropagation="true" />
+                    </div>
+                </div>*@
 
             @*<div class="row mb-3">
-                <div class="col-1">
-                    <label class="col-form-label col-form-label-sm">ToBe</label>
-                </div>
-                <div class="col-11">
-                    <input id="@String.Format("TlanslatedCommand_{0}", @item.Language_code)" language_Code="@item.Language_code" type="text" class="form-control form-control-sm commandName" placeholder="col-form-label-sm">
-                </div>
-            </div>*@
+                    <div class="col-1">
+                        <label class="col-form-label col-form-label-sm">ToBe</label>
+                    </div>
+                    <div class="col-11">
+                        <input id="@String.Format("TlanslatedCommand_{0}", @item.Language_code)" language_Code="@item.Language_code" type="text" class="form-control form-control-sm commandName" placeholder="col-form-label-sm">
+                    </div>
+                </div>*@
 
         }
     </form>

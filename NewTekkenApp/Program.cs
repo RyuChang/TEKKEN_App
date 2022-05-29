@@ -74,6 +74,7 @@ builder.Services.AddTransient<ICommandService, CommandService>();
 builder.Services.AddScoped<ClipboardService>();
 
 builder.Services.AddTransient<NavigationUtil>();
+builder.Services.AddScoped<ICookie, Cookie>();
 
 builder.Services.AddAntiforgery(options =>
 {

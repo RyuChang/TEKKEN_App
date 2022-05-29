@@ -19,7 +19,7 @@ else
             cursor: grab;
         }
     </style>
-
+    
     <form method="post">
         <div class="mb-3 row">
             <label class="col-1 col-form-label">코드</label>
@@ -62,7 +62,7 @@ else
         <div class="mb-3 row">
             <label class="col-1 col-form-label">입력</label>
             <div class="col">
-                <textarea rows=3 id="Command" type="text" readonly class="form-control" placeholder="커맨드 입력" @bind="@moveEntity.MoveCommand.Command" />
+                <textarea rows=3 id="Command" @ref="commandInput" @onkeyup="SetKeyUp" type="text" readonly class="form-control" placeholder="커맨드 입력" @bind="@moveEntity.MoveCommand.Command" />
             </div>
         </div>
 

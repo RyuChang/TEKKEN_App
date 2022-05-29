@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
 using NewTekkenApp.Pages.Admin.Components.Base.Data;
+using NewTekkenApp.Utilities;
 using TekkenApp.Data;
 using TekkenApp.Models;
 
@@ -20,7 +21,11 @@ namespace NewTekkenApp.Pages.Admin.MoveCommands
         private int _stateGroupCode { get; set; }
         private string DisplayCommand { get; set; } = default!;
         private string RawCommand { get; set; } = default!;
-        private bool keyDown = false;
+        private ElementReference commandInput;
+
+
+        [Inject]
+        protected ICookie cookie { get; set; } = default;
 
         protected override async Task OnInitializedAsync()
         {
@@ -40,10 +45,22 @@ namespace NewTekkenApp.Pages.Admin.MoveCommands
             {
                 moveEntity = await MoveService.GetMoveListWithCommandsByCharacterCodeAndNumberAsync(CharacterCode.Value, int.Parse(NextNumber));
             }
-            await InitCommand();
+            if (moveEntity is not null)
+            {
+                await InitCommand();
+            }
         }
 
-       
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            if (firstRender)
+            {
+                await commandInput.FocusAsync();
+            }
+        }
+
+
+
         private async void OnStateGroupChanged(int stateGroupCode)
         {
             if (stateGroupCode > 0)
@@ -79,6 +96,22 @@ namespace NewTekkenApp.Pages.Admin.MoveCommands
 
         private async Task SetKeyUp(KeyboardEventArgs e)
         {
+            if (e.Key.ToLower() == "t")
+            {
+                await TransCommands();
+            }
+
+            if (e.Key.ToLower() == "u")
+            {
+                await SaveEdit();
+            }
+
+            if (e.Key.ToLower() == "r")
+            {
+                await AddRecentState();
+            }
+
+
             bool isFinish = CommandService.RemoveKey(e.Key);
             if (isFinish)
             {
@@ -118,8 +151,14 @@ namespace NewTekkenApp.Pages.Admin.MoveCommands
             else
             {
                 CommandService.AddState(stateGroupType, state.Code);
-                await SetCommand();
+
+                await SetRecentState(stateGroupType, state.Code.ToString());
+
             }
+
+            await SetCommand();
+
+            await commandInput.FocusAsync();
         }
 
         private async Task ShowStateModal(string stateGroupType, int stateCode)
@@ -142,12 +181,43 @@ namespace NewTekkenApp.Pages.Admin.MoveCommands
             if (result.Data != null)
             {
                 CommandService.AddState(stateGroupType, stateCode, (int)result.Data);
+                await SetRecentState(stateGroupType, stateCode.ToString(), (int)result.Data);
+
                 SetCommand();
+                await commandInput.FocusAsync();
             }
 
         }
 
+        private async Task SetRecentState(string stateGroupType, string stateCode, int data = 0)
+        {
+            await cookie.SetValue("stateGroupType", stateGroupType);
+            await cookie.SetValue("state", stateCode);
+            await cookie.SetValue("data", data.ToString());
+        }
 
+
+        private async Task AddRecentState()
+        {
+            string stateGroupTypeValue = await cookie.GetValue("stateGroupType");
+            int stateValue = int.Parse(await cookie.GetValue("state"));
+            int dataValue = int.Parse(await cookie.GetValue("data"));
+
+
+
+
+            if (dataValue != null && dataValue != 0)
+            {
+                CommandService.AddState(stateGroupTypeValue, stateValue, dataValue);
+            }
+            else
+            {
+                CommandService.AddState(stateGroupTypeValue, stateValue);
+            }
+
+            SetCommand();
+            await commandInput.FocusAsync();
+        }
         #endregion
     }
 

@@ -11,6 +11,7 @@ namespace TekkenApp.Data
         private IStateService StateService { get; set; }
         private IMoveService MoveService { get; set; }
         private IMoveTextService MoveTextService { get; set; }
+        private IMoveSubTypeService MoveSubTypeService { get; set; }
         private ICommanderMapperService CommanderMapperService { get; set; }
         private int Timer { get; set; }
         private string RawCommand { get; set; }
@@ -19,7 +20,7 @@ namespace TekkenApp.Data
         private List<string> clickedKey { get; set; }
 
 
-        public CommandService(TekkenDbContext tekkenDbContext, ICommanderMapperService _commanderMapperService, IStateService _stateService, IMoveService _moveService, IMoveTextService _moveTextService) : base(tekkenDbContext, tekkenDbContext.Command, tekkenDbContext.Command_name)
+        public CommandService(TekkenDbContext tekkenDbContext, ICommanderMapperService _commanderMapperService, IStateService _stateService, IMoveService _moveService, IMoveTextService _moveTextService, IMoveSubTypeService _moveSubTypeService) : base(tekkenDbContext, tekkenDbContext.Command, tekkenDbContext.Command_name)
         {
             MainTable = TableName.Command.ToString();
             NameTable = TableName.Command_name.ToString();
@@ -27,6 +28,7 @@ namespace TekkenApp.Data
             this.StateService = _stateService;
             this.MoveService = _moveService;
             this.MoveTextService = _moveTextService;
+            this.MoveSubTypeService = _moveSubTypeService;
 
             this.CommanderMapperService = _commanderMapperService;
         }
@@ -174,10 +176,17 @@ namespace TekkenApp.Data
                 string stateName = CommanderMapperService.MapState(commandInfo.Command, language_code);
                 result = stateName.Replace("{MOVE}", move);
             }
+            else if (commandInfo.Type == "U")
+            {
+                string moveSubTypeText = await GetMoveSubType(commandInfo.Data, language_code);
+                string stateName = CommanderMapperService.MapState(commandInfo.Command, language_code);
+                result = stateName.Replace("{TEXT}", moveSubTypeText);
+            }
             else if (commandInfo.Type == "S")
             {
                 result = CommanderMapperService.MapState(commandInfo.Command, language_code);
             }
+
             return result;
         }
 
@@ -194,10 +203,16 @@ namespace TekkenApp.Data
             Move_name move_Name = await MoveService.GetNameEntitiyByBaseCodeAndLanguageCode(int.Parse(code), language_code);
             return move_Name.Name;
         }
+        public async Task<string> GetMoveSubType(string code, string language_code = "en")
+        {
+            // 없을 경우 예외 처리 필요
+            MoveSubType_name moveSubType_Name = await MoveSubTypeService.GetNameEntitiyByBaseCodeAndLanguageCode(int.Parse(code), language_code);
+            return moveSubType_Name.Name;
+        }
         private CommandDetail GetCommand(string cmd)
         {
             string[] devidedCommands = cmd.Replace("{", "").Replace("}", "").Split(":");
-            string[] commandType = new string[] { "S:", "M:", "T:" };
+            string[] commandType = new string[] { "S:", "M:", "T:", "U:" };
 
             string type = "C";
             string command = cmd;
@@ -226,6 +241,10 @@ namespace TekkenApp.Data
             else if (stateGroupCode == 80000016)
             {
                 type = "T";
+            }
+            else if (stateGroupCode == 80000018)
+            {
+                type = "U";
             }
             return type;
         }

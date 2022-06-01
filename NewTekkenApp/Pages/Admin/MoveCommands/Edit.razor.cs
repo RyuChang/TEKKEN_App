@@ -144,7 +144,7 @@ namespace NewTekkenApp.Pages.Admin.MoveCommands
         {
             string stateGroupType = CommandService.GetStateGroupType(_stateGroupCode);
 
-            if (stateGroupType == "M" || stateGroupType == "T")
+            if (stateGroupType == "M" || stateGroupType == "T" || stateGroupType == "U")
             {
                 await ShowStateModal(stateGroupType, state.Code);
             }
@@ -175,6 +175,10 @@ namespace NewTekkenApp.Pages.Admin.MoveCommands
             {
                 moveData = Modal.Show<MoveTextListComponent>("State Text", parameters);
             }
+            else if (stateGroupType == "U")
+            {
+                moveData = Modal.Show<MoveSubTypeListComponent>("State SubType", parameters);
+            }
 
             var result = await moveData.Result;
 
@@ -183,7 +187,7 @@ namespace NewTekkenApp.Pages.Admin.MoveCommands
                 CommandService.AddState(stateGroupType, stateCode, (int)result.Data);
                 await SetRecentState(stateGroupType, stateCode.ToString(), (int)result.Data);
 
-                SetCommand();
+                await SetCommand();
                 await commandInput.FocusAsync();
             }
 

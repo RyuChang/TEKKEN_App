@@ -1,0 +1,54 @@
+﻿@inject IModalService ModalService
+
+@if (moveSubTypeList != null && ShowForm)
+{
+    <div>
+        <select @bind="moveSubTypeCode" id="SelectMoveSubTypeList" class="form-control">
+            @foreach (var moveSubType in moveSubTypeList)
+            {
+                <option value=@moveSubType.Code>@moveSubType.Description</option>
+            }
+        </select>
+    </div>
+
+    <div class="modal-footer">
+        <button @onclick="Submit" class="btn btn-primary">Submit</button>
+        <button @onclick="Cancel" class="btn btn-secondary">Cancel</button>
+    </div>
+}
+else
+{
+    @*<div class="alert alert-success" role="alert">
+        Thanks @FirstName @LastName, form (Id: @FormId) submitted successfully.<br />
+        <button class="btn btn-primary" @onclick="Done">Done</button>
+        </div>*@
+}
+
+@code {
+    [CascadingParameter] BlazoredModalInstance ModalInstance { get; set; } = default!;
+    [Parameter] public int Character_code { get; set; } = default!;
+    [Inject] protected IMoveSubTypeService MoveSubTypeService { get; set; } = default!;
+
+
+    public IList<MoveSubType> moveSubTypeList { get; set; }
+
+    bool ShowForm { get; set; } = true;
+    public int moveSubTypeCode { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        moveSubTypeList = await MoveSubTypeService.GetEntitiesByCharacterCode(Character_code);
+    }
+
+    void Submit()
+    {
+        ShowForm = false;
+        ModalInstance.CloseAsync(ModalResult.Ok<int>(moveSubTypeCode));
+    }
+
+    void Cancel()
+    {
+        ModalInstance.CancelAsync();
+    }
+}
+

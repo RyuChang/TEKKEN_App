@@ -12,6 +12,7 @@ namespace NewTekkenApp.Pages.Admin.MoveDatas
         [Inject] protected IMoveSubTypeService moveSubTypeService { get; set; } = default!;
         [Inject] protected IHitTypeService hitTypeService { get; set; } = default!;
 
+        [Inject] protected ICharacterService CharacterService { get; set; } = default!;
         public BasePageComponent()
         {
             SetAppType(AppType.MoveDatas);

@@ -8,6 +8,7 @@ namespace TekkenApp.Data
     {
         Task<List<MoveData>> GetEntitiesWithMoveByCharacterCode(int characterCode);
         Task<List<MoveData>> GetEntitiesWithMoves();
+        Task<MigrationDataVM> GetMigrationData(string characterName, string description);
         Task<MoveData> GetMoveDataWithMovesByIdAsync(int id);
         Task<MoveData> UpdateHitTypeAsync(MoveData moveData);
     }

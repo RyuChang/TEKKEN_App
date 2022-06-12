@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using System.Runtime.CompilerServices;
+using Microsoft.AspNetCore.Components;
 using NewTekkenApp.Pages.Common.Components.Base;
 using TekkenApp.Models;
 
@@ -8,6 +9,7 @@ namespace NewTekkenApp.Pages.Admin.Components.Base.Data
                                                                                                            where TNameEntity : BaseNameEntity, new()
     {
         public IList<TDataEntity> baseEntities { get; set; } = default!;
+        private bool Loading = false;
 
         protected override async Task OnInitializedAsync()
         {
@@ -34,7 +36,20 @@ namespace NewTekkenApp.Pages.Admin.Components.Base.Data
 
         public async void GetEntitiesByCharacterCode(int characterCode)
         {
-            baseEntities = await baseService.GetEntitiesByCharacterCode(characterCode);
+            if (Loading)
+            {
+                return;
+            }
+            try
+            {
+                Loading = true;
+
+                baseEntities = await baseService.GetEntitiesByCharacterCode(characterCode);
+            }
+            finally
+            {
+                Loading = false;
+            }
             StateHasChanged();
         }
     }

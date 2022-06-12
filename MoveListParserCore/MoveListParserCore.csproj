@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TekkenApp.Models\TekkenApp.Models.csproj" />
+    <ProjectReference Include="..\TEKKEN_WEB\TEKKEN_WEB.csproj" />
   </ItemGroup>
 
   <ItemGroup>

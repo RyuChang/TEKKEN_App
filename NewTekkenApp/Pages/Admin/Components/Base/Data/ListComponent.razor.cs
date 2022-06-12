@@ -9,8 +9,7 @@ namespace NewTekkenApp.Pages.Admin.Components.Base.Data
                                                                                                            where TNameEntity : BaseNameEntity, new()
     {
         public IList<TDataEntity> baseEntities { get; set; } = default!;
-        private bool Loading = false;
-
+        
         protected override async Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
@@ -43,7 +42,6 @@ namespace NewTekkenApp.Pages.Admin.Components.Base.Data
             try
             {
                 Loading = true;
-
                 baseEntities = await baseService.GetEntitiesByCharacterCode(characterCode);
             }
             finally

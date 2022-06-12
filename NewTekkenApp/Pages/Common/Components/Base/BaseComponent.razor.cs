@@ -18,6 +18,8 @@ namespace NewTekkenApp.Pages.Common.Components.Base
         [Inject] public IJSRuntime JSRuntime { get; set; } = default!;
         [Inject] protected NavigationUtil navigationUtil { get; set; } = default!;
 
+        protected bool Loading = false;
+
         //[Inject]
         //protected ILogger<EditComponent<TDataEntity, TNameEntity>> Logger { get; set; }
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using System.Runtime.CompilerServices;
+using Microsoft.AspNetCore.Components;
 using TekkenApp.Data;
 using TekkenApp.Models;
 
@@ -24,7 +25,15 @@ namespace NewTekkenApp.Pages.Admin.MoveCommands
         async void OnCharacterChanged(int characterCode)
         {
             CharacterCode = characterCode;
-            MoveCommandEntities = await CommonService.GetEntitiesWithMoveByCharacterCode(CharacterCode.Value);
+            if (Loading) { return; }
+            try
+            {
+                Loading = true;
+                MoveCommandEntities = await CommonService.GetEntitiesWithMoveByCharacterCode(CharacterCode.Value);
+            }
+            finally {
+                Loading = false;
+            }
             StateHasChanged();
         }
 

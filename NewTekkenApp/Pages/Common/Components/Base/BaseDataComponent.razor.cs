@@ -17,6 +17,7 @@ namespace NewTekkenApp.Pages.Common.Components.Base
         [Inject]
         protected NavigationUtil navigationUtil { get; set; } = default!;
 
+        protected bool Loading = false;
 
         public string GetAppTitle()
         {

@@ -10,8 +10,19 @@ namespace NewTekkenApp.Pages.User.Punishments
         protected async void OnCharacterChanged(int characterCode)
         {
             CharacterCode = characterCode;
-            
-           moveLists = await CommonService?.GetMoveListWithCommandsAndVideoByCharacterCodeAsync(CharacterCode);
+            if (Loading)
+            {
+                return;
+            }
+            try
+            {
+                Loading = true;
+                moveLists = await CommonService?.GetMoveListWithCommandsAndVideoByCharacterCodeAsync(CharacterCode);
+            }
+            finally
+            {
+                Loading = false;
+            }
             StateHasChanged();
 
         }

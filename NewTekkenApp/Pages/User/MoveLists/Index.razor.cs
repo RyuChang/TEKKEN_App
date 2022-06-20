@@ -1,12 +1,23 @@
 ﻿using System.Globalization;
 using System.Runtime.CompilerServices;
+using System.Linq;
+using Microsoft.AspNetCore.Components;
+using NewTekkenApp.Pages.Common.Components.Filters;
+using NewTekkenApp.Shared;
 using TekkenApp.Models;
 
 namespace NewTekkenApp.Pages.User.MoveLists
 {
     public partial class Index : BasePageComponent
     {
+        [Inject] IMoveFilters moveFilters { get; set; }
+        [Inject] MoveQueryAdapter QueryAdapter { get; set; }
         public IEnumerable<Move> moveLists { get; set; } = default!;
+
+        /// <summary>
+        /// A wrapper for grid-related activity (like delete).
+        /// </summary>
+        private GridWrapper Wrapper { get; set; } = new GridWrapper();
 
         protected async void OnCharacterChanged(int characterCode)
         {
@@ -26,6 +37,42 @@ namespace NewTekkenApp.Pages.User.MoveLists
             }
             StateHasChanged();
 
+        }
+
+        private async Task ReloadAsync()
+        {
+            if (moveFilters.Loading)
+            {
+                return;
+            }
+
+            moveFilters.Loading = true;
+
+            /*
+
+            if (Wrapper is not null)
+            {
+                Wrapper.DeleteRequestId = 0;
+            }
+
+            Contacts = new List<Contact>();
+
+            using var context = DbFactory.CreateDbContext();
+            var query = context.Contacts?.AsQueryable();
+            */
+
+            var query = CommonService?.GetMoveListWithCommandsByCharacterCodeAsync(CharacterCode).Result.AsQueryable();
+            if (query is not null)
+            {
+                // run the query to load the current page
+                //Contacts = await QueryAdapter.FetchAsync(query);
+                moveLists = await QueryAdapter.FetchAsync(query);
+                    
+            }
+            /*
+            */
+            // now we're done
+            moveFilters.Loading = false;
         }
     }
 }

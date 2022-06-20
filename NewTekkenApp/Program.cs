@@ -9,7 +9,7 @@ using NewTekkenApp.Data;
 using NewTekkenApp.Utilities;
 using TekkenApp.Data;
 using Ljbc1994.Blazor.IntersectionObserver;
-
+using NewTekkenApp.Pages.Common.Components.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -74,6 +74,10 @@ builder.Services.AddTransient<ICommandService, CommandService>();
 builder.Services.AddScoped<ClipboardService>();
 
 builder.Services.AddTransient<NavigationUtil>();
+
+builder.Services.AddScoped<IMoveFilters, MoveFilters>();
+builder.Services.AddScoped<MoveQueryAdapter>();
+
 builder.Services.AddScoped<ICookie, Cookie>();
 
 builder.Services.AddAntiforgery(options =>

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using TekkenApp.Models;
 
 namespace TekkenApp.Data
@@ -23,5 +24,6 @@ namespace TekkenApp.Data
         Task<List<TDataEntity>> GetEntitiesByStateGroup(int stateGroupCode);
         Task<TDataEntity> UpdateDataAsync(TDataEntity BaseDataEntity);
         Task<TDataEntity> GetDataEntityWithAllNameByIdAsync(int id);
+        DbSet<TDataEntity> GetDbSet();
     }
 }

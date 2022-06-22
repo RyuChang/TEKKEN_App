@@ -28,6 +28,10 @@ namespace TekkenApp.Data
         }
 
         #region 메인 데이터
+        public DbSet<TDataEntity> GetDbSet()
+        {
+            return this._dataDbSet;
+        }
 
         public async Task<TDataEntity?> GetDataEntityByIdAsync(int id)
         {

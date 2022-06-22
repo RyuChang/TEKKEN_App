@@ -2,6 +2,7 @@
 @page "/User/MoveLists"
 @page "/User/MoveLists/Index"
 
+@using Common.Components.Filters
 @inherits BasePageComponent
 
 <h3>@GetAppTitle()</h3>
@@ -36,6 +37,22 @@
         <CharacterSelectBox OnCharacterChanged="OnCharacterChanged">
         </CharacterSelectBox>
 
+        <div class="row contact-header">
+            <div class="col-1">&nbsp;</div>
+            <div class="col-2"
+                 @onclick="@(async ()=>await ToggleAsync(MoveFilterColumns.Number))">
+                <SortIndicator Column="@(MoveFilterColumns.Number)" />&nbsp;Number
+            </div>
+            <div class="col-2"
+                 @onclick="@(async ()=>await ToggleAsync(MoveFilterColumns.Title))">
+                <SortIndicator Column="@(MoveFilterColumns.Title)" />&nbsp;Title
+            </div>
+            <div class="col-2"
+                 @onclick="@(async ()=>await ToggleAsync(MoveFilterColumns.Hits))">
+                <SortIndicator Column="@(MoveFilterColumns.Hits)" />&nbsp;Hits
+            </div>
+        </div>
+
         <div class="m-auto" id="Character-list">
             <div class="container-fluid bg-black ">
                 @if (moveLists == null)
@@ -58,7 +75,7 @@
                                                 <h5>@move.Number.ToString("D3")</h5>
                                             </div>
                                             <div class="col my-0 py-0 text-white-50 text-white">
-                                                <h5>@move.Description</h5>
+                                                <h5>@move.NameSet.FirstOrDefault().Name</h5>
                                             </div>
                                         </div>
                                     </div>

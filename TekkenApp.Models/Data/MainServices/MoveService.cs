@@ -58,6 +58,7 @@ namespace TekkenApp.Data
         public async Task<IEnumerable<Move>> GetMoveListWithCommandsByCharacterCodeAsync(int Character_code)
         {
             return await _dataDbSet.Where(m => m.Character_code == Character_code)
+                .Include(m => m.NameSet.Where(n => n.Language_code.Equals(CultureInfo.CurrentCulture.TwoLetterISOLanguageName)))
                 .Include(m => m.MoveCommand)
                 .ThenInclude(c => c.NameSet.Where(n => n.Language_code.Equals(CultureInfo.CurrentCulture.TwoLetterISOLanguageName)))
                 .Include(m => m.MoveData)

@@ -4,28 +4,47 @@ using TekkenApp.Models;
 using System.Linq;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
+using Microsoft.EntityFrameworkCore;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using System.Globalization;
+using TekkenApp.Data;
 
 namespace NewTekkenApp.Pages.Common.Components.Filters
 {
+
+    public class CaseInsensitiveComparer : IComparer<string>
+    {
+        public int Compare(string x, string y)
+        {
+            return string.Compare(x, y, true);
+        }
+    }
+
     public class MoveQueryAdapter
     {
         /// <summary>
         /// Holds state of the grid.
         /// </summary>
         private readonly IMoveFilters _controls;
-
+        private TekkenDbContext dbContext { get; set; }
 
         /// <summary>
         /// Expressions for sorting.
         /// </summary>
-        private readonly Dictionary<MoveFilterColumns, Expression<Func<Move, string>>> _expressions
+        private readonly Dictionary<MoveFilterColumns, Expression<Func<Move, string>>> _stringOrderExpressions
             = new()
             {
-                { MoveFilterColumns.Number, c => c != null && c.Number != null ? c.Number.ToString(): string.Empty },
-                { MoveFilterColumns.Title, c => c != null && c.Description != null ? c.Description: string.Empty },
-                { MoveFilterColumns.Hits, c => c != null && c.MoveData.HitCount!= null ? c.MoveData.HitCount.ToString(): string.Empty },
+                { MoveFilterColumns.Title, c => c.NameSet.Where(n => n.Language_code.Equals(CultureInfo.CurrentCulture.TwoLetterISOLanguageName)).FirstOrDefault().Name },
+                { MoveFilterColumns.Number, c => string.Empty},
+                { MoveFilterColumns.Hits, c => string.Empty },
+            };
+
+        private readonly Dictionary<MoveFilterColumns, Expression<Func<Move, int>>> _NumberOrderExpressions
+            = new()
+            {
+                { MoveFilterColumns.Title, c => 0 },
+                { MoveFilterColumns.Number, c => c != null && c.Number != 0 ? c.Number : 0},
+                { MoveFilterColumns.Hits, c => c != null && c.MoveData.HitCount!= null ? c.MoveData.HitCount : 0},
             };
 
 
@@ -35,8 +54,9 @@ namespace NewTekkenApp.Pages.Common.Components.Filters
         private readonly Dictionary<MoveFilterColumns, Func<IQueryable<Move>, IQueryable<Move>>> _filterQueries =
             new Dictionary<MoveFilterColumns, Func<IQueryable<Move>, IQueryable<Move>>>();
 
-        public MoveQueryAdapter(IMoveFilters controls)
+        public MoveQueryAdapter(TekkenDbContext tekkenDbContext, IMoveFilters controls)
         {
+            dbContext = tekkenDbContext;
             _controls = controls;
             _filterQueries = new()
             {
@@ -55,11 +75,9 @@ namespace NewTekkenApp.Pages.Common.Components.Filters
             query = FilterAndQuery(query);
             await CountAsync(query);
             var collection = await FetchPageQuery(query)
-                .Include(d=>d.NameSet.Where(n => n.Language_code.Equals(CultureInfo.CurrentCulture.TwoLetterISOLanguageName)))
-                .Include(m => m.MoveCommand)
-                .ThenInclude(c => c.NameSet.Where(n => n.Language_code.Equals(CultureInfo.CurrentCulture.TwoLetterISOLanguageName)))
-                .Include(m => m.MoveData)
-                .ThenInclude(c => c.NameSet)
+                .Include(d => d.NameSet.Where(n => n.Language_code.Equals(CultureInfo.CurrentCulture.TwoLetterISOLanguageName)))
+                .Include(m => m.MoveCommand).ThenInclude(c => c.NameSet.Where(n => n.Language_code.Equals(CultureInfo.CurrentCulture.TwoLetterISOLanguageName)))
+                .Include(m => m.MoveData).ThenInclude(c => c.NameSet.Where(n => n.Language_code.Equals(CultureInfo.CurrentCulture.TwoLetterISOLanguageName)))
                 .ToListAsync();
             //return await _dataDbSet.Where(p => p.Character_code == characterCode).Include(p => p.NameSet).ToListAsync();
             //_controls.PageHelper.PageItems = collection.Count;
@@ -125,7 +143,10 @@ namespace NewTekkenApp.Pages.Common.Components.Filters
             }
 
             //apply the expression
-            var expression = _expressions[_controls.SortColumn];
+            var stringExpression = _stringOrderExpressions[_controls.SortColumn];
+            var numberExpression = _NumberOrderExpressions[_controls.SortColumn];
+
+
             sb.Append($"Sort: '{_controls.SortColumn}' ");
 
             // fix up name
@@ -139,8 +160,12 @@ namespace NewTekkenApp.Pages.Common.Components.Filters
             sb.Append(sortDir);
 
             Debug.WriteLine(sb.ToString());
-            // return the unfiltered query for total count, and the filtered for fetching
-            return _controls.SortAscending ? root.OrderBy(expression) : root.OrderByDescending(expression);
+            if (_controls.SortColumn == MoveFilterColumns.Title)
+            {
+
+                return _controls.SortAscending ? root.OrderBy(stringExpression) : root.OrderByDescending(stringExpression);
+            }
+            return _controls.SortAscending ? root.OrderBy(numberExpression) : root.OrderByDescending(numberExpression);
         }
     }
 }

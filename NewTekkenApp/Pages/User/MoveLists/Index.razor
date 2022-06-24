@@ -5,7 +5,7 @@
 @using Common.Components.Filters
 @inherits BasePageComponent
 
-<h3>@GetAppTitle()</h3>
+<h3 class="main-title">@GetAppTitle()</h3>
 
 <style>
 
@@ -30,15 +30,20 @@
         color: white;
         text-align: right;
     }
+
+    .sort {
+        color:white
+    }
 </style>
 <GridWrapper @ref="Wrapper"
              FilterChanged="ReloadAsync">
     <CascadingValue Value="CharacterCode">
-        <CharacterSelectBox OnCharacterChanged="OnCharacterChanged">
-        </CharacterSelectBox>
-
-        <div class="row contact-header">
-            <div class="col-1">&nbsp;</div>
+        <div class="col-4">
+            <CharacterSelectBox OnCharacterChanged="OnCharacterChanged">
+            </CharacterSelectBox>
+        </div>
+        <div class="row col-8 contact-header sort">
+            <div class="col-2">Sort By</div>
             <div class="col-2"
                  @onclick="@(async ()=>await ToggleAsync(MoveFilterColumns.Number))">
                 <SortIndicator Column="@(MoveFilterColumns.Number)" />&nbsp;Number

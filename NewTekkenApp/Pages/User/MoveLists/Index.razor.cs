@@ -31,7 +31,8 @@ namespace NewTekkenApp.Pages.User.MoveLists
             try
             {
                 Loading = true;
-                moveLists = await CommonService?.GetMoveListWithCommandsByCharacterCodeAsync(CharacterCode);
+                //moveLists = await CommonService?.GetMoveListWithCommandsByCharacterCodeAsync(CharacterCode);
+                await ReloadAsync();
             }
             finally
             {

@@ -4,8 +4,7 @@
 @inject IMoveFilters Filters
 @implements IDisposable
 
-<h3>TextFilter</h3>
-
+Name 
 <input type="text" autofocus @bind-value="FilterText" @bind-value:event="oninput" />
 <button class="btn btn-danger" @onclick="@(()=>FilterText=string.Empty)">Clear</button>
 

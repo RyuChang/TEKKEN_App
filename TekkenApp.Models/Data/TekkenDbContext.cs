@@ -703,5 +703,12 @@ namespace TekkenApp.Data
             return base.SaveChangesAsync(cancellationToken);
         }
 
+        [DbFunction("To3dInt", "dbo")]
+        public static string To3dInt(int number)
+        {
+
+            return number.ToString("D3");
+        }
+
     }
 }

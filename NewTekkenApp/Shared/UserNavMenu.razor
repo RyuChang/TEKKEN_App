@@ -1,73 +1,89 @@
-﻿<nav class="navbar navbar-dark bg-dark navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-0">
-    <div class="container d-md-inline-flex border border-1 border-white p-0 m-0">
-    <a class="navbar-brand d-md-inline-flex flex-md-grow-1" href="#">Tekken Frame</a>
-    <button class="navbar-toggler d-md-inline-flex flex-md-grow-1" type="button" data-bs-toggle="collapse" data-bs-target=".multiNav" aria-controls="navbarColor02 navbarColor03" aria-expanded="false" aria-label="Toggle navigation" @onclick="ToggleNavMenu">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-        <div class="@NavMenuCssClass border border-1  border-white multiNav   justify-content-start flex-md-grow-0 text-start" id="navbarColor02">
-
-            <nav class="navbar-nav">
-                <div class="nav-item">
-                    <NavLink class="nav-link" href="/User/MoveLists/">
-                        MoveLists
-                    </NavLink>
-                </div>
-                <div class="nav-item">
-                    <NavLink class="nav-link" href="/User/Punishments/">
-                        Punishments
-                    </NavLink>
-                </div>
-                <div class="nav-item">
-                    <NavLink class="nav-link" href="/">
-                        About
-                    </NavLink>
-                </div>
-            </nav>
-        </div>
-
-        <div class="@NavMenuCssClass border border-1  border-white  multiNav justify-content-end  flex-md-grow-0  text-end" id="navbarColor03">
-            <nav class="navbar-nav   mb-2 mb-lg-0 ms-auto ">
-                <div class="nav-item">
-                    <NavLink>
-                        <CultureSelector />
-                    </NavLink>
-                </div>
-                <div class="nav-item">
-                    <NavLink class="nav-link" href="Identity/Account/Register">
-                        Register
-                    </NavLink>
-                </div>
-                <div class="nav-item">
+﻿<nav class="navbar navbar-dark bg-dark navbar-expand-sm navbar-light border-bottom  box-shadow p-0 m-0">
+    <div class="container-fluid border  p-0 m-0">
+        <a class="navbar-brand" href="#">Tekken Frame</a>
+        <CultureSelector />
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation" @onclick="ToggleNavMenu1">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="@NavMenuCssClass1 border-white justify-content-end" id="navbarColor03">
+            <div class="navbar-nav px-3">
+                <div>
                     <NavLink class="nav-link" href="Identity/Account/Login">
-                        Log in
+                        <span class="btn btn-outline-light">Login</span>
                     </NavLink>
                 </div>
-                <div class="nav-item">
-                    <NavLink class="nav-link" href="Identity/Account/LogOut">
-                        Log out
+                <div>
+                    <NavLink class="nav-link" href="Identity/Account/Register">
+                        <span class="btn btn-outline-light">Sign-up</span>
                     </NavLink>
                 </div>
-            </nav>
-
+            </div>
         </div>
     </div>
 </nav>
+<nav class="navbar navbar-dark bg-dark navbar-expand-sm navbar-light  box-shadow p-0 m-0">
+    <div class="navbar row">
+        <div class="col-4">
+            <NavLink class="nav-link" href="/User/MoveLists/">
+                MoveLists
+            </NavLink>
+        </div>
+        <div class="col-4">
+            <NavLink class="nav-link" href="/User/Punishments/">
+                Punishments
+            </NavLink>
+        </div>
+        <div class="col-4">
+            <NavLink class="nav-link" href="/">
+                About
+            </NavLink>
+        </div>
+    </div>
+</nav>
+
+@*<nav class="navbar navbar-dark bg-dark navbar-expand-sm navbar-light border border-3  box-shadow p-0 m-0">
+        <div class="container-fluid border border-1 border-white p-0 m-0">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation" @onclick="ToggleNavMenu2">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="@NavMenuCssClass2  fs-6 border-white justify-content-end bg-info" id="navbarColor02">
+
+            </div>
+
+        </div>
+    </nav>*@
+
+
+
+@*<div>
+        <div class="row">
+
+            <div class="col-6 col-sm-4 bg-white">
+                a
+            </div>
+            <div class="col-6 col-sm-4 bg-danger">
+                a
+            </div>
+        </div>
+    </div>*@
 <style>
-    .navbar-collapse {
-        flex-basis: 50%;
-    }
 </style>
 
 @code {
-    bool collapseNavMenu = true;
+    bool collapseNavMenu1 = true;
+    bool collapseNavMenu2 = true;
 
     string baseMenuClass = "navbar-collapse";
     //d-sm-inline-flex flex-sm-row-reverse
-    string NavMenuCssClass => baseMenuClass + (collapseNavMenu ? " collapse" : "");
+    string NavMenuCssClass1 => baseMenuClass + (collapseNavMenu1 ? " collapse" : "");
+    string NavMenuCssClass2 => baseMenuClass + (collapseNavMenu2 ? " collapse" : "");
 
-    void ToggleNavMenu()
+    void ToggleNavMenu1()
     {
-        collapseNavMenu = !collapseNavMenu;
+        collapseNavMenu1 = !collapseNavMenu1;
+    }
+    void ToggleNavMenu2()
+    {
+        collapseNavMenu2 = !collapseNavMenu2;
     }
 }

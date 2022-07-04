@@ -8,6 +8,9 @@
 <h3 class="main-title">@GetAppTitle()</h3>
 
 <style>
+    html {
+        background-color: black;
+    }
 
     .table tbody tr td:nth-child(1) {
         border: none;
@@ -29,107 +32,151 @@
     .moveFrame {
         color: white;
         text-align: right;
+        padding-left: 0.5em;
+        padding-right: 0.5em;
+    }
+
+    .moveTitle {
+        padding-left: 0.5em;
+        padding-right: 0.5em;
     }
 
     .sort {
-        color:white
+        color: white
     }
 </style>
 <GridWrapper @ref="Wrapper"
              FilterChanged="ReloadAsync">
     <CascadingValue Value="CharacterCode">
-        <div class="col-4">
+        <div class="col-auto mb-2">
             <CharacterSelectBox OnCharacterChanged="OnCharacterChanged">
             </CharacterSelectBox>
         </div>
-        <div class="row col-8 contact-header sort">
-            <div class="col-2">Sort By</div>
-            <div class="col-2"
-                 @onclick="@(async ()=>await ToggleAsync(MoveFilterColumns.Number))">
-                <SortIndicator Column="@(MoveFilterColumns.Number)" />&nbsp;Number
-            </div>
-            <div class="col-2"
-                 @onclick="@(async ()=>await ToggleAsync(MoveFilterColumns.Title))">
-                <SortIndicator Column="@(MoveFilterColumns.Title)" />&nbsp;Title
-            </div>
-            <div class="col-2"
-                 @onclick="@(async ()=>await ToggleAsync(MoveFilterColumns.Hits))">
-                <SortIndicator Column="@(MoveFilterColumns.Hits)" />&nbsp;Hits
-            </div>
-        </div>
 
         <div class="m-auto" id="Character-list">
-            <div class="container-fluid bg-black ">
-                @if (moveLists == null)
-                {
-                    <p><em>Loading...</em></p>
-                }
-                else
+            <div class="container-fluid">
+                <div class="row mb-3">
+                    <div class="col-12"><TextFilter /></div>
+                </div>
+                <div class="row mb-2 contact-header sort">
+                    <div class="col-3">Sort By</div>
+                    <div class="col-3 float-end"
+                         @onclick="@(async ()=>await ToggleAsync(MoveFilterColumns.Number))">
+                        Number<SortIndicator Column="@(MoveFilterColumns.Number)" />
+                    </div>
+                    <div class="col-3"
+                         @onclick="@(async ()=>await ToggleAsync(MoveFilterColumns.Title))">
+                        Title<SortIndicator Column="@(MoveFilterColumns.Title)" />
+                    </div>
+                    <div class="col-3"
+                         @onclick="@(async ()=>await ToggleAsync(MoveFilterColumns.Hits))">
+                        Hits<SortIndicator Column="@(MoveFilterColumns.Hits)" />
+                    </div>
+                </div>
+
+                @if (moveFilters.Loading || moveLists == null)
                 {
                     <div class="row">
-                        <div class="col-8"><TextFilter /></div>
+                        <div class="col-12 loading">
+                            Loading...
+                        </div>
                     </div>
+                }
+                @if (moveLists is not null && moveLists.Count() == 0)
+                {
+                    <div class="row">
+                        <div class="col-12 loading">
+                            No contacts found.
+                        </div>
+                    </div>
+                }
+                @if (moveLists is not null)
+                {
+
                     @foreach (Move move in moveLists)
                     {
                         <div class="row mb-2">
                             <div class="col">
-                                <div class="card p-1 bg-black border border-2 border-whites rounded-3" style="max-width: 38rem;">
-                                    <div class="card-header my-0 py-0 ">
-                                        <div class="row py-0 my-0 card-title">
-                                            <div class="col-3 my-0 py-0 text-warning">
-                                                <h5>@move.Number.ToString("D3")</h5>
-                                            </div>
-                                            <div class="col my-0 py-0 text-white-50 text-white">
-                                                <h5>@move.NameSet.FirstOrDefault().Name</h5>
-                                            </div>
+                                <div class="p-0 border border-1 rounded-3" style="max-width: 38rem;">
+                                    <div class="row">
+                                        <div class="col-3 ms-3  text-warning">
+                                            <h5 class="mb-0">@move.Number.ToString("D3")</h5>
+                                        </div>
+                                        <div class="col-auto text-white-50">
+                                            <h5 class="mb-0">@move.NameSet.FirstOrDefault().Name</h5>
                                         </div>
                                     </div>
 
-                                    <div class="card-body text-white-50 border border-1 py-0 px-1">
-                                        <div class="row my-1 mx-0">
-                                            <div class="col col-sm me-0 me-sm-2">
-                                                <div class="row border mb-1">
-                                                    <div class="col fs-6 m-0 p-0" style="min-height:3.5rem;">
+                                    <div class="text-white-50 border-top border-1 my-1">
+                                        <div class="row  mx-0">
+                                            <div class="col-12 col-sm-8 px-2 py-1 ">
+                                                <div class="row  px-2 py-0 align-items-start">
+                                                    <div class="col-12 px-1 h-75 border" style="min-height:5.4rem;">
                                                         @((MarkupString)move.MoveCommand.NameSet.FirstOrDefault().Name)
-                                                        @*@CommandService.TranseCommandToImage(move.MoveCommand.NameSet.FirstOrDefault().Name))*@
                                                     </div>
                                                 </div>
-                                                <div class="row gx-4 mb-1">
-                                                    <div class="col-2 border me-2 text-danger text-center">
-                                                        @move.MoveData.HitCount Hits
-                                                    </div>
-                                                    <div class="col border text-info text-start">
-                                                        @move.MoveData.HitLevel
-                                                    </div>
-                                                    <div class="col-2 ms-2 border text-danger text-end">
-                                                        @move.MoveData.Damage
+                                                <div class="row px-2 pt-1">
+                                                    <div class="col-12 p-0">
+                                                        <div class="row p-0 g-1">
+                                                            <div class="col-3">
+                                                                <div class="border px-1 text-warning">
+                                                                    @move.MoveData.HitCount <span class="me-0  pe-0">H</span><span class="d-none d-sm-inline-block mx-0 ps-0">its</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-6 text-info text-start">
+                                                                <div class="px-1 border text-danger">
+                                                                    @move.MoveData.HitLevel
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-3 text-danger text-end">
+                                                                <div class="px-1 border text-danger">
+                                                                    @move.MoveData.Damage
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="row border">
-                                                    <div class="col" placeholder="Note">
+                                            </div>
+
+                                            <div class="col-12 p-1 col-sm-4">
+                                                <div class="row mb-1 g-1 text-white-50">
+                                                    <div class="col-3 col-sm-6">
+                                                        <div class="moveTitle border">Start</div>
+                                                    </div>
+                                                    <div class="col-3 col-sm-6">
+                                                        <div class="moveFrame border">@move.MoveData.StartFrame_Display</div>
+                                                    </div>
+                                                    <div class="col-3 col-sm-6">
+                                                        <div class="moveTitle border">Block</div>
+                                                    </div>
+                                                    <div class="col-3 col-sm-6">
+                                                        <div class="moveFrame border">@move.MoveData.GuardFrame_Display</div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row mb-1 g-1 text-white-50">
+                                                    <div class="col-3 col-sm-6">
+                                                        <div class="moveTitle border">Hit</div>
+                                                    </div>
+                                                    <div class="col-3 col-sm-6">
+                                                        <div class="moveFrame border">@move.MoveData.HitFrame_Display</div>
+
+                                                    </div>
+                                                    <div class="col-3 col-sm-6">
+                                                        <div class="moveTitle border">Counter</div>
+                                                    </div>
+                                                    <div class="col-3 col-sm-6">
+                                                        <div class="moveFrame border">@move.MoveData.CounterFrame_Display</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12  px-1" placeholder="Note">
+                                                <div class="row mx-0 text-white-50 border">
+                                                    <div class="col">
                                                         Note
                                                         @move.MoveData.Note
                                                     </div>
-                                                </div>
-
-                                            </div>
-
-                                            <div class="col col-sm-3 mx-0">
-                                                <div class="row  text-white-50 border">
-                                                    <div class="col-8">Start Up</div>
-                                                    <div class="col moveFrame">@move.MoveData.StartFrame_Display</div>
-                                                </div>
-                                                <div class="row px-0 text-white-50 border my-1">
-                                                    <div class="col-8">Block</div>
-                                                    <div class="col moveFrame">@move.MoveData.GuardFrame_Display</div>
-                                                </div>
-                                                <div class="row px-0 text-white-50 border my-1">
-                                                    <div class="col-8">Hit</div>
-                                                    <div class="col moveFrame">@move.MoveData.HitFrame_Display</div>
-                                                </div>
-                                                <div class="row px-0 text-white-50 border my-1">
-                                                    <div class="col-8">Count Hit</div>
-                                                    <div class="col moveFrame">@move.MoveData.CounterFrame_Display</div>
                                                 </div>
                                             </div>
                                         </div>

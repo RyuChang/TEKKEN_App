@@ -22,6 +22,6 @@
         /// Column to sort by.
         /// </summary>
         public MoveFilterColumns SortColumn { get; set; }
-            = MoveFilterColumns.Title;
+            = MoveFilterColumns.Number;
     }
 }

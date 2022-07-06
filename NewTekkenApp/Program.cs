@@ -31,6 +31,7 @@ builder.Services.AddControllers().AddJsonOptions(x =>
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddAuthentication().AddGoogle(googleOptions =>
@@ -39,6 +40,13 @@ builder.Services.AddAuthentication().AddGoogle(googleOptions =>
     googleOptions.ClientId = configuration["Google:ClientId"];
     googleOptions.ClientSecret = configuration["Google:ClientSecret"];
 });
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("IsAdmin", policy => policy.RequireRole("Admin"));
+    options.AddPolicy("IsUser", policy => policy.RequireRole("Admin", "User"));
+});
+
 
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();

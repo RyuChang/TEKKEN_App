@@ -1,5 +1,7 @@
-﻿using NewTekkenApp.Pages.Admin.Components.Base.Data;
+﻿using Microsoft.AspNetCore.Authorization;
+using NewTekkenApp.Pages.Admin.Components.Base.Data;
 using TekkenApp.Models;
+
 
 namespace NewTekkenApp.Pages.Admin.Moves
 {

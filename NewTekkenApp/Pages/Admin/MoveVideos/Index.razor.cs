@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Components;
 using TekkenApp.Data;
 using TekkenApp.Models;
 
 namespace NewTekkenApp.Pages.Admin.MoveVideos
 {
+    [Authorize(Policy = "IsAdmin")]
     public partial class Index : BasePageComponent
     {
         [Inject] ILanguageService LanguageService { get; set; } = default!;

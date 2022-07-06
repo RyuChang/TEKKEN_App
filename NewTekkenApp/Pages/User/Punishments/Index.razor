@@ -1,20 +1,18 @@
 ﻿@page "/User/Punishments"
+@page "/User/Punishments/{Page:int}"
 @page "/User/Punishments/Index"
+@page "/User/Punishments/Index/{Page:int}"
+
 @using Ljbc1994.Blazor.IntersectionObserver.Components
 
-
+@using Common.Components.Filters
 @inherits BasePageComponent
 
-<h3>@GetAppTitle()</h3>
+<h3 class="main-title">@GetAppTitle()</h3>
 
 <style>
-
-    .table tbody tr td:nth-child(1) {
-        border: none;
-    }
-
-    .table tbody tr td:nth-child(2) {
-        border: thin;
+    html {
+        background-color: black;
     }
 
     .move {
@@ -30,98 +28,172 @@
         color: white;
         text-align: right;
     }
+
+    .sort {
+        color: white
+    }
+
+    .embed-container {
+        position: relative;
+        padding-bottom: 56.25%;
+        height: 0;
+        overflow: hidden;
+        max-width: 100%;
+    }
+
+        .embed-container iframe, .embed-container object, .embed-container embed {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
 </style>
 
-<CascadingValue Value="CharacterCode">
-    <div class="col-4">
-        <CharacterSelectBox OnCharacterChanged="OnCharacterChanged">
-        </CharacterSelectBox>
-    </div>
-    <div class="m-auto" id="Character-list">
-        <div class="container-fluid bg-black ">
-            @if (moveLists == null)
-            {
-                <p><em>Loading...</em></p>
-            }
-            else
-            {
-                @foreach (Move move in moveLists)
-                {
+<GridWrapper @ref="Wrapper"
+             FilterChanged="ReloadAsync">
+    <CascadingValue Value="CharacterCode">
+        <div class="col-auto mb-2">
+            <CharacterSelectBox OnCharacterChanged="OnCharacterChanged">
+            </CharacterSelectBox>
+        </div>
 
-                    <IntersectionObserve>
-                        <div class="row mb-2" @ref="context.Ref.Current">
-                            <div class="col">
-                                <div class="card p-1 bg-black border border-2 border-whites rounded-3" style="max-width: 38rem;">
-                                    <div class="card-header my-0 py-0 ">
-                                        <div class="row py-0 my-0 card-title">
-                                            <div class="col-3 my-0 py-0 text-warning">
-                                                <h5>@move.Number.ToString("D3")</h5>
-                                            </div>
-                                            <div class="col my-0 py-0 text-white-50 text-white">
-                                                <h5>@move.Description</h5>
-                                                Hey... I'm @(context.IsIntersecting ? "in view": "out of view")
+        <div class="m-auto" id="Character-list">
+            <div class="container-fluid ">
+                <div class="row mb-3">
+                    <div class="col-12"><TextFilter /></div>
+                </div>
+                <div class="row mb-2 contact-header sort">
+                    <div class="col-3">Sort By</div>
+                    <div class="col-3 float-end"
+                         @onclick="@(async ()=>await ToggleAsync(MoveFilterColumns.Number))">
+                        Number<SortIndicator Column="@(MoveFilterColumns.Number)" />
+                    </div>
+                    <div class="col-3"
+                         @onclick="@(async ()=>await ToggleAsync(MoveFilterColumns.Title))">
+                        Title<SortIndicator Column="@(MoveFilterColumns.Title)" />
+                    </div>
+                    <div class="col-3"
+                         @onclick="@(async ()=>await ToggleAsync(MoveFilterColumns.Hits))">
+                        Hits<SortIndicator Column="@(MoveFilterColumns.Hits)" />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        Page @moveFilters.PageHelper.Page of @moveFilters.PageHelper.PageCount:
+                        showing @moveFilters.PageHelper.PageItems of
+                        @moveFilters.PageHelper.TotalItemCount items.
+                        <a disabled="@(moveFilters.Loading || !moveFilters.PageHelper.HasPrev)"
+                           class="btn btn-primary @IsDisabled(moveFilters.PageHelper.HasPrev)"
+                           href="/User/Punishments/@moveFilters.PageHelper.PrevPage">
+                            Previous
+                        </a>
+                        <a disabled="@(moveFilters.Loading || !moveFilters.PageHelper.HasNext)"
+                           class="btn btn-primary @IsDisabled(moveFilters.PageHelper.HasNext)"
+                           href="/User/Punishments/@moveFilters.PageHelper.NextPage">
+                            Next
+                        </a>
+                    </div>
+                </div>
+
+                @if (moveFilters.Loading || moveLists == null)
+                {
+                    <div class="row">
+                        <div class="col-12 loading">
+                            Loading...
+                        </div>
+                    </div>
+                }
+                @if (moveLists is not null && moveLists.Count() == 0)
+                {
+                    <div class="row">
+                        <div class="col-12 loading">
+                            No contacts found.
+                        </div>
+                    </div>
+                }
+                @if (moveLists is not null)
+                {
+                    @foreach (Move move in moveLists)
+                    {
+
+                        <IntersectionObserve>
+                            <div class="row mb-2" @ref="context.Ref.Current">
+                                <div class="col">
+                                    <div class="card p-1 bg-black border border-2 border-whites rounded-3" style="max-width: 38rem;">
+                                        <div class="card-header my-0 py-0 ">
+                                            <div class="row py-0 my-0 card-title">
+                                                <div class="col-3 my-0 py-0 text-warning">
+                                                    <h5>@move.Number.ToString("D3")</h5>
+                                                </div>
+                                                <div class="col my-0 py-0 text-white-50 text-white">
+                                                    <h5>@move.Description</h5>
+                                                    Hey... I'm @(context.IsIntersecting ? "in view": "out of view")
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
 
-                                    <div class="card-body text-white-50 border border-1 py-0 px-1">
-                                        <div class="row my-1 mx-0">
-                                            <div class="col col-sm me-0 me-sm-2">
-                                                <div class="row border mb-1">
-                                                    <div class="col-auto">
-                                                        @if (move.MoveVideo.YoutubeId is not null)
-                                                        {
-                                                            <iframe id="ytplayer" type="text/html" width="356" height="200" src="https://www.youtube.com/embed/@($"{move.MoveVideo.YoutubeId}")?autoplay=@($"{(context.IsIntersecting ? "1" : "0")}")&mute=1&controls=0&loop=1&playlist=@($"{move.MoveVideo.YoutubeId}")" frameborder="0"></iframe>
-                                                        }
-                                                        else
-                                                        {
-                                                            <img width="356" height="200" src="/images/no-video.svg" />
-                                                        }
+                                        <div class="card-body text-white-50 border border-1 py-0 px-1">
+                                            <div class="row my-1 mx-0">
+                                                <div class="col col-sm me-0 me-sm-2">
+                                                    <div class="row border mb-1">
+                                                        <div class="col-12">
+                                                            <div class="embed-container">
+                                                                @if (move.MoveVideo.YoutubeId is not null)
+                                                                {
+                                                                    <iframe id="ytplayer" type="text/html" width="356" height="200" src="https://www.youtube.com/embed/@($"{move.MoveVideo.YoutubeId}")?autoplay=@($"{(context.IsIntersecting ? "1" : "0" )}")&mute=1&controls=0&loop=1&playlist=@($"{move.MoveVideo.YoutubeId}")" frameborder="0"></iframe>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <img width="356" height="200" src="/images/no-video.svg" />
+                                                                }
+                                                            </div>
 
+                                                        </div>
+                                                    </div>
+                                                    <div class="row gx-4 mb-1">
+                                                        <div class="col-2 border me-2 text-danger text-center">
+                                                            @move.MoveData.HitCount Hits
+                                                        </div>
+                                                        <div class="col border text-info text-start">
+                                                            @move.MoveData.HitLevel
+                                                        </div>
+                                                        <div class="col-2 ms-2 border text-danger text-end">
+                                                            @move.MoveData.Damage
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="row gx-4 mb-1">
-                                                    <div class="col-2 border me-2 text-danger text-center">
-                                                        @move.MoveData.HitCount Hits
-                                                    </div>
-                                                    <div class="col border text-info text-start">
-                                                        @move.MoveData.HitLevel
-                                                    </div>
-                                                    <div class="col-2 ms-2 border text-danger text-end">
-                                                        @move.MoveData.Damage
-                                                    </div>
-                                                </div>
-                                            </div>
 
-                                            <div class="col col-sm-3 mx-0">
-                                                <div class="row  text-white-50 border">
+                                                <div class="col col-sm-3 mx-0">
+                                                    <div class="row  text-white-50 border">
 
-                                                    <div class="col-8">Start Up</div>
-                                                    <div class="col moveFrame">@move.MoveData.StartFrame_Display</div>
-                                                </div>
-                                                <div class="row px-0 text-white-50 border my-1">
-                                                    <div class="col-8">Block</div>
-                                                    <div class="col moveFrame">@move.MoveData.GuardFrame_Display</div>
-                                                </div>
-                                                <div class="row px-0 text-white-50 border my-1">
-                                                    <div class="col-8">Hit</div>
-                                                    <div class="col moveFrame">@move.MoveData.HitFrame_Display</div>
-                                                </div>
-                                                <div class="row px-0 text-white-50 border my-1">
-                                                    <div class="col-8">Count Hit</div>
-                                                    <div class="col moveFrame">@move.MoveData.CounterFrame_Display</div>
+                                                        <div class="col-8">Start Up</div>
+                                                        <div class="col moveFrame">@move.MoveData.StartFrame_Display</div>
+                                                    </div>
+                                                    <div class="row px-0 text-white-50 border my-1">
+                                                        <div class="col-8">Block</div>
+                                                        <div class="col moveFrame">@move.MoveData.GuardFrame_Display</div>
+                                                    </div>
+                                                    <div class="row px-0 text-white-50 border my-1">
+                                                        <div class="col-8">Hit</div>
+                                                        <div class="col moveFrame">@move.MoveData.HitFrame_Display</div>
+                                                    </div>
+                                                    <div class="row px-0 text-white-50 border my-1">
+                                                        <div class="col-8">Count Hit</div>
+                                                        <div class="col moveFrame">@move.MoveData.CounterFrame_Display</div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
-
-                        </div>
-                    </IntersectionObserve>
+                        </IntersectionObserve>
+                    }
                 }
-            }
+            </div>
         </div>
-    </div>
-</CascadingValue>
-
+    </CascadingValue>
+</GridWrapper>

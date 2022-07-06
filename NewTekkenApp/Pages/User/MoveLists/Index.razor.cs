@@ -11,9 +11,6 @@ namespace NewTekkenApp.Pages.User.MoveLists
         [Inject] MoveQueryAdapter QueryAdapter { get; set; }
         public IEnumerable<Move> moveLists { get; set; } = default!;
 
-        /// <summary>
-        /// A wrapper for grid-related activity (like delete).
-        /// </summary>
         private GridWrapper Wrapper { get; set; } = new GridWrapper();
 
         protected async void OnCharacterChanged(int characterCode)
@@ -45,7 +42,7 @@ namespace NewTekkenApp.Pages.User.MoveLists
 
             moveFilters.Loading = true;
 
-            var moveDbSet = CommonService?.GetDbSet();
+            var moveDbSet = MoveService?.GetDbSet();
             var query = moveDbSet?.AsQueryable().Where(m => m.Character_code == CharacterCode);
 
             if (query is not null)

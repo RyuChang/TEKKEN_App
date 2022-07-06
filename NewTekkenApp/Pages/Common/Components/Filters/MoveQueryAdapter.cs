@@ -80,7 +80,7 @@ namespace NewTekkenApp.Pages.Common.Components.Filters
                 .Include(m => m.MoveData).ThenInclude(c => c.NameSet.Where(n => n.Language_code.Equals(CultureInfo.CurrentCulture.TwoLetterISOLanguageName)))
                 .ToListAsync();
             //return await _dataDbSet.Where(p => p.Character_code == characterCode).Include(p => p.NameSet).ToListAsync();
-            //_controls.PageHelper.PageItems = collection.Count;
+            _controls.PageHelper.PageItems = collection.Count;
             return collection;
         }
         /*
@@ -99,7 +99,7 @@ namespace NewTekkenApp.Pages.Common.Components.Filters
         /// <returns>Asynchronous <see cref="Task"/>.</returns>
         public async Task CountAsync(IQueryable<Move> query)
         {
-            //_controls.PageHelper.TotalItemCount = await query.CountAsync();
+            _controls.PageHelper.TotalItemCount = await query.CountAsync();
         }
 
 
@@ -110,9 +110,14 @@ namespace NewTekkenApp.Pages.Common.Components.Filters
         /// <returns>The new <see cref="IQueryable{Move}"/> for a page.</returns>
         public IQueryable<Move> FetchPageQuery(IQueryable<Move> query)
         {
+            if (_controls.PageHelper.Skip < 0)
+            {
+                return query
+                    .AsNoTracking();
+            }
             return query
-                //.Skip(_controls.PageHelper.Skip)
-                //.Take(_controls.PageHelper.PageSize)
+                .Skip(_controls.PageHelper.Skip)
+                .Take(_controls.PageHelper.PageSize)
                 .AsNoTracking();
         }
 

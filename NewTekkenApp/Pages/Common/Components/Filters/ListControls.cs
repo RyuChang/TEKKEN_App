@@ -2,10 +2,14 @@
 {
     public class ListControls : IMoveFilters
     {
+        /// <summary>
+        /// Keep state of paging.
+        /// </summary>
+        public IPageHelper PageHelper { get; set; }
 
-        public ListControls()
+        public ListControls(IPageHelper pageHelper)
         {
-
+            PageHelper = pageHelper;
         }
 
         /// <summary>
@@ -30,6 +34,8 @@
 
         public MoveFilterColumns SortColumn { get; set; }
             = MoveFilterColumns.Title;
+
+
     }
 }
 

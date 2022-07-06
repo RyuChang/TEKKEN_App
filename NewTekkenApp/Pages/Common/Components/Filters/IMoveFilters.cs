@@ -28,5 +28,11 @@ namespace NewTekkenApp.Pages.Common.Components.Filters
         /// The <see cref="MoveFilterColumns"/> being sorted.
         /// </summary>
         MoveFilterColumns SortColumn { get; set; }
+
+        /// <summary>
+        /// Paging state in <see cref="PageHelper"/>.
+        /// </summary>
+        IPageHelper PageHelper { get; set; }
     }
+
 }

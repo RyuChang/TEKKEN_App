@@ -75,7 +75,9 @@ builder.Services.AddScoped<ClipboardService>();
 
 builder.Services.AddTransient<NavigationUtil>();
 
-builder.Services.AddScoped<IMoveFilters, MoveFilters>();
+builder.Services.AddScoped<IMoveFilters, ListControls>();
+builder.Services.AddScoped<IPageHelper, PageHelper>();
+
 builder.Services.AddScoped<MoveQueryAdapter>();
 
 builder.Services.AddScoped<ICookie, Cookie>();

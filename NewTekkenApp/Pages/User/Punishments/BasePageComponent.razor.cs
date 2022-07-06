@@ -9,12 +9,12 @@ namespace NewTekkenApp.Pages.User.Punishments
     {
         public int CharacterCode { get; set; }
         [Inject]
-        protected IMoveService? CommonService { get; set; }
+        protected IMoveService? MoveService { get; set; }
 
 
         public BasePageComponent()
         {
-            SetAppType(AppType.Moves);
+            SetAppType(AppType.Punishments);
         }
     }
 }

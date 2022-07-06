@@ -18,6 +18,7 @@
         MoveVideo,
         MoveCommands,
         Commands,
+        Punishments,
     }
 
     public enum ActionType
@@ -63,6 +64,4 @@
         HitType_name,
         Language,
     }
-
-
 }

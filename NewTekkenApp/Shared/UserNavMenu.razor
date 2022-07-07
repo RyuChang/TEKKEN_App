@@ -26,47 +26,19 @@
             </NavLink>
         </div>
         <div class="col-auto">
-            <NavLink class="nav-link" href="/">
+            <NavLink class="nav-link" href="/User/About">
                 About
             </NavLink>
         </div>
     </div>
 </nav>
 
-@*<nav class="navbar navbar-dark bg-dark navbar-expand-sm navbar-light border border-3  box-shadow p-0 m-0">
-        <div class="container-fluid border border-1 border-white p-0 m-0">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation" @onclick="ToggleNavMenu2">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="@NavMenuCssClass2  fs-6 border-white justify-content-end bg-info" id="navbarColor02">
-
-            </div>
-
-        </div>
-    </nav>*@
-
-
-
-@*<div>
-        <div class="row">
-
-            <div class="col-6 col-sm-4 bg-white">
-                a
-            </div>
-            <div class="col-6 col-sm-4 bg-danger">
-                a
-            </div>
-        </div>
-    </div>*@
-<style>
-</style>
-
 @code {
     bool collapseNavMenu1 = true;
     bool collapseNavMenu2 = true;
 
     string baseMenuClass = "navbar-collapse";
-    //d-sm-inline-flex flex-sm-row-reverse
+    
     string NavMenuCssClass1 => baseMenuClass + (collapseNavMenu1 ? " collapse" : "");
     string NavMenuCssClass2 => baseMenuClass + (collapseNavMenu2 ? " collapse" : "");
 

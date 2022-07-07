@@ -33,7 +33,7 @@
         public bool SortAscending { get; set; } = true;
 
         public MoveFilterColumns SortColumn { get; set; }
-            = MoveFilterColumns.Title;
+            = MoveFilterColumns.Number;
 
 
     }

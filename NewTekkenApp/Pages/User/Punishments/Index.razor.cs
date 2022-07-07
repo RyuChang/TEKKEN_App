@@ -3,6 +3,7 @@ using System.Globalization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
 using NewTekkenApp.Pages.Common.Components.Filters;
+using NewTekkenApp.Pages.User.MoveLists;
 using NewTekkenApp.Shared;
 using TekkenApp.Models;
 using static NuGet.Packaging.PackagingConstants;
@@ -14,7 +15,7 @@ namespace NewTekkenApp.Pages.User.Punishments
     {
         [Inject] IMoveFilters moveFilters { get; set; }
 
-        [Inject] MoveQueryAdapter QueryAdapter { get; set; }
+        [Inject] PunishmentQueryAdapter QueryAdapter { get; set; }
         [Inject] NavigationManager Nav { get; set; }
 
 

@@ -1,15 +1,12 @@
 ﻿using System.Diagnostics;
-using Microsoft.EntityFrameworkCore;
-using TekkenApp.Models;
-using System.Linq;
-using System.Linq.Expressions;
-using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
-using Microsoft.EntityFrameworkCore;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using System.Globalization;
+using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
+using NewTekkenApp.Pages.Common.Components.Filters;
 using TekkenApp.Data;
+using TekkenApp.Models;
 
-namespace NewTekkenApp.Pages.Common.Components.Filters
+namespace NewTekkenApp.Pages.User.Punishments
 {
 
     public class CaseInsensitiveComparer : IComparer<string>
@@ -20,7 +17,7 @@ namespace NewTekkenApp.Pages.Common.Components.Filters
         }
     }
 
-    public class MoveQueryAdapter
+    public class PunishmentQueryAdapter
     {
         /// <summary>
         /// Holds state of the grid.
@@ -54,7 +51,7 @@ namespace NewTekkenApp.Pages.Common.Components.Filters
         private readonly Dictionary<MoveFilterColumns, Func<IQueryable<Move>, IQueryable<Move>>> _filterQueries =
             new Dictionary<MoveFilterColumns, Func<IQueryable<Move>, IQueryable<Move>>>();
 
-        public MoveQueryAdapter(TekkenDbContext tekkenDbContext, IMoveFilters controls)
+        public PunishmentQueryAdapter(TekkenDbContext tekkenDbContext, IMoveFilters controls)
         {
             dbContext = tekkenDbContext;
             _controls = controls;
@@ -79,18 +76,10 @@ namespace NewTekkenApp.Pages.Common.Components.Filters
                 .Include(m => m.MoveCommand).ThenInclude(c => c.NameSet.Where(n => n.Language_code.Equals(CultureInfo.CurrentCulture.TwoLetterISOLanguageName)))
                 .Include(m => m.MoveData).ThenInclude(c => c.NameSet.Where(n => n.Language_code.Equals(CultureInfo.CurrentCulture.TwoLetterISOLanguageName)))
                 .ToListAsync();
-            //return await _dataDbSet.Where(p => p.Character_code == characterCode).Include(p => p.NameSet).ToListAsync();
+
             _controls.PageHelper.PageItems = collection.Count;
             return collection;
         }
-        /*
-         *  return await _dataDbSet.Where(m => m.Character_code == Character_code)
-                .Include(m => m.MoveCommand)
-                .ThenInclude(c => c.NameSet.Where(n => n.Language_code.Equals(CultureInfo.CurrentCulture.TwoLetterISOLanguageName)))
-                .Include(m => m.MoveData)
-                .ThenInclude(c => c.NameSet)
-                .ToListAsync<Move>();*/
-
 
         /// <summary>
         /// Get total filtered items count.
@@ -110,11 +99,6 @@ namespace NewTekkenApp.Pages.Common.Components.Filters
         /// <returns>The new <see cref="IQueryable{Move}"/> for a page.</returns>
         public IQueryable<Move> FetchPageQuery(IQueryable<Move> query)
         {
-            if (_controls.PageHelper.Skip < 0)
-            {
-                return query
-                    .AsNoTracking();
-            }
             return query
                 .Skip(_controls.PageHelper.Skip)
                 .Take(_controls.PageHelper.PageSize)
@@ -154,18 +138,11 @@ namespace NewTekkenApp.Pages.Common.Components.Filters
 
             sb.Append($"Sort: '{_controls.SortColumn}' ");
 
-            // fix up name
-            /*if (_controls.SortColumn == ContactFilterColumns.Name && _controls.ShowFirstNameFirst)
-            {
-                sb.Append($"(first name first) ");
-                expression = c => c.FirstName != null ? c.FirstName : string.Empty;
-            }*/
-
             var sortDir = _controls.SortAscending ? "ASC" : "DESC";
             sb.Append(sortDir);
 
             Debug.WriteLine(sb.ToString());
-            if (_controls.SortColumn == MoveFilterColumns.Title)
+            if (_controls.SortColumn == MoveFilterColumns.Number)
             {
 
                 return _controls.SortAscending ? root.OrderBy(stringExpression) : root.OrderByDescending(stringExpression);

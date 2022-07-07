@@ -8,7 +8,7 @@ namespace NewTekkenApp.Pages.User.MoveLists
     public partial class Index : BasePageComponent
     {
         [Inject] IMoveFilters moveFilters { get; set; }
-        [Inject] MoveQueryAdapter QueryAdapter { get; set; }
+        [Inject] MoveListQueryAdapter QueryAdapter { get; set; }
         public IEnumerable<Move> moveLists { get; set; } = default!;
 
         private GridWrapper Wrapper { get; set; } = new GridWrapper();

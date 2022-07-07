@@ -1,15 +1,17 @@
 using System.Text.Json.Serialization;
 using Blazored.Modal;
+using Ljbc1994.Blazor.IntersectionObserver;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Net.Http.Headers;
 using NewTekkenApp.Areas.Identity;
 using NewTekkenApp.Data;
+using NewTekkenApp.Pages.Common.Components.Filters;
+using NewTekkenApp.Pages.User.MoveLists;
+using NewTekkenApp.Pages.User.Punishments;
 using NewTekkenApp.Utilities;
 using TekkenApp.Data;
-using Ljbc1994.Blazor.IntersectionObserver;
-using NewTekkenApp.Pages.Common.Components.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -83,10 +85,10 @@ builder.Services.AddScoped<ClipboardService>();
 
 builder.Services.AddTransient<NavigationUtil>();
 
+builder.Services.AddScoped<MoveListQueryAdapter>();
+builder.Services.AddScoped<PunishmentQueryAdapter>();
 builder.Services.AddScoped<IMoveFilters, ListControls>();
 builder.Services.AddScoped<IPageHelper, PageHelper>();
-
-builder.Services.AddScoped<MoveQueryAdapter>();
 
 builder.Services.AddScoped<ICookie, Cookie>();
 

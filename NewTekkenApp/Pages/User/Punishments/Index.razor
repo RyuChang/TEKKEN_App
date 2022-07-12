@@ -78,24 +78,28 @@
                         Hits<SortIndicator Column="@(MoveFilterColumns.Hits)" />
                     </div>
                 </div>
-
-                <div class="row">
-                    <div class="col-12">
-                        Page @moveFilters.PageHelper.Page of @moveFilters.PageHelper.PageCount:
-                        showing @moveFilters.PageHelper.PageItems of
-                        @moveFilters.PageHelper.TotalItemCount items.
-                        <a disabled="@(moveFilters.Loading || !moveFilters.PageHelper.HasPrev)"
-                           class="btn btn-primary @IsDisabled(moveFilters.PageHelper.HasPrev)"
-                           href="/User/Punishments/@moveFilters.PageHelper.PrevPage">
-                            Previous
-                        </a>
-                        <a disabled="@(moveFilters.Loading || !moveFilters.PageHelper.HasNext)"
-                           class="btn btn-primary @IsDisabled(moveFilters.PageHelper.HasNext)"
-                           href="/User/Punishments/@moveFilters.PageHelper.NextPage">
-                            Next
-                        </a>
+                @if (moveLists is not null && @moveFilters.PageHelper.TotalItemCount > 5)
+                {
+                    <div class="row">
+                        <div class="col-12">
+                            Page @moveFilters.PageHelper.Page of @moveFilters.PageHelper.PageCount:
+                            showing @moveFilters.PageHelper.PageItems of
+                            @moveFilters.PageHelper.TotalItemCount items.
+                        </div>
+                        <div class="col-12">
+                            <a disabled="@(moveFilters.Loading || !moveFilters.PageHelper.HasPrev)"
+                               class="btn btn-primary @IsDisabled(moveFilters.PageHelper.HasPrev)"
+                               href="/User/Punishments/@moveFilters.PageHelper.PrevPage">
+                                Previous
+                            </a>
+                            <a disabled="@(moveFilters.Loading || !moveFilters.PageHelper.HasNext)"
+                               class="btn btn-primary @IsDisabled(moveFilters.PageHelper.HasNext)"
+                               href="/User/Punishments/@moveFilters.PageHelper.NextPage">
+                                Next
+                            </a>
+                        </div>
                     </div>
-                </div>
+                }
 
                 @if (moveFilters.Loading || moveLists == null)
                 {
@@ -136,7 +140,7 @@
 
                                         <div class="card-body text-white-50 border border-1 py-0 px-1">
                                             <div class="row my-1 mx-0">
-                                                <div class="col col-sm me-0 me-sm-2">
+                                                <div class="col-12 col-sm me-0 me-sm-2">
                                                     <div class="row border mb-1">
                                                         <div class="col-12">
                                                             <div class="embed-container">
@@ -154,7 +158,7 @@
                                                     </div>
                                                     <div class="row gx-4 mb-1">
                                                         <div class="col-2 border me-2 text-danger text-center">
-                                                            @move.MoveData.HitCount Hits
+                                                            @move.MoveData.HitCount <span class="me-0  pe-0">H</span><span class="d-none d-sm-inline-block mx-0 ps-0">its</span>
                                                         </div>
                                                         <div class="col border text-info text-start">
                                                             @move.MoveData.HitLevel
@@ -193,7 +197,30 @@
                         </IntersectionObserve>
                     }
                 }
+                @if (moveLists is not null && @moveFilters.PageHelper.TotalItemCount > 5)
+                {
+                    <div class="row">
+                        <div class="col-12">
+                            Page @moveFilters.PageHelper.Page of @moveFilters.PageHelper.PageCount:
+                            showing @moveFilters.PageHelper.PageItems of
+                            @moveFilters.PageHelper.TotalItemCount items.
+                        </div>
+                        <div class="col-12">
+                            <a disabled="@(moveFilters.Loading || !moveFilters.PageHelper.HasPrev)"
+                               class="btn btn-primary @IsDisabled(moveFilters.PageHelper.HasPrev)"
+                               href="/User/Punishments/@moveFilters.PageHelper.PrevPage">
+                                Previous
+                            </a>
+                            <a disabled="@(moveFilters.Loading || !moveFilters.PageHelper.HasNext)"
+                               class="btn btn-primary @IsDisabled(moveFilters.PageHelper.HasNext)"
+                               href="/User/Punishments/@moveFilters.PageHelper.NextPage">
+                                Next
+                            </a>
+                        </div>
+                    </div>
+                }
             </div>
         </div>
+
     </CascadingValue>
 </GridWrapper>

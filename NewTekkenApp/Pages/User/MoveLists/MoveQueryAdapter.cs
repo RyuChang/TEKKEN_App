@@ -133,7 +133,7 @@ namespace NewTekkenApp.Pages.User.MoveLists
             sb.Append(sortDir);
 
             Debug.WriteLine(sb.ToString());
-            if (_controls.SortColumn == MoveFilterColumns.Number)
+            if (_controls.SortColumn == MoveFilterColumns.Title)
             {
 
                 return _controls.SortAscending ? root.OrderBy(stringExpression) : root.OrderByDescending(stringExpression);

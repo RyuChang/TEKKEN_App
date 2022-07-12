@@ -142,9 +142,8 @@ namespace NewTekkenApp.Pages.User.Punishments
             sb.Append(sortDir);
 
             Debug.WriteLine(sb.ToString());
-            if (_controls.SortColumn == MoveFilterColumns.Number)
+            if (_controls.SortColumn == MoveFilterColumns.Title)
             {
-
                 return _controls.SortAscending ? root.OrderBy(stringExpression) : root.OrderByDescending(stringExpression);
             }
             return _controls.SortAscending ? root.OrderBy(numberExpression) : root.OrderByDescending(numberExpression);

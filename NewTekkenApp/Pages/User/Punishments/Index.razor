@@ -132,7 +132,7 @@
                                                     <h5>@move.Number.ToString("D3")</h5>
                                                 </div>
                                                 <div class="col my-0 py-0 text-white-50 text-white">
-                                                    <h5>@move.Description</h5>
+                                                    <h5>@move.NameSet.FirstOrDefault().Name</h5>
                                                     Hey... I'm @(context.IsIntersecting ? "in view": "out of view")
                                                 </div>
                                             </div>

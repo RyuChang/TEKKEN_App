@@ -1,8 +1,9 @@
 {
   "dependencies": {
-    "mssql1": {
-      "type": "mssql.local",
-      "connectionId": "ConnectionStrings:DefaultConnection"
+    "mssql_ConnectionStrings:TekkenConnection": {
+      "ignored": "true",
+      "type": "mssql",
+      "connectionId": "ConnectionStrings:TekkenConnection"
     }
   }
 }

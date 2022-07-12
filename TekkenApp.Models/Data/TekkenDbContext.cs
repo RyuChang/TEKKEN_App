@@ -57,7 +57,7 @@ namespace TekkenApp.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog = Tekken; Integrated Security = True; Connect Timeout = 30; Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False", b => b.MigrationsAssembly("TekkenApp")).EnableSensitiveDataLogging(true);
+                //optionsBuilder.UseSqlServer("Server=tcp:tekkenapp.database.windows.net,1433;Initial Catalog=Tekken;Persist Security Info=False;User ID=zbkof1;Password=23fbckd45!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30", b => b.MigrationsAssembly("TekkenApp")).EnableSensitiveDataLogging(true);
             }
         }
 

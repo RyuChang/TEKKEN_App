@@ -51,6 +51,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Blazor-Analytics" Version="3.11.0" />
     <PackageReference Include="Blazored.Modal" Version="6.0.1" />
     <PackageReference Include="BlazorIntersectionObserver" Version="3.1.0" />
     <PackageReference Include="bootstrap" Version="5.1.3" />

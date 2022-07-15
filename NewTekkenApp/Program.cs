@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Blazor.Analytics;
 using Blazored.Modal;
 using Ljbc1994.Blazor.IntersectionObserver;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -56,6 +57,7 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
 builder.Services.AddLocalization();
 builder.Services.AddDatabaseDeveloperPageExceptionFilter(); // 개발 환경에 유용한 오류 정보 제공
+builder.Services.AddGoogleAnalytics("G-7E1DGS584L");
 
 builder.Services.AddBlazoredModal();
 

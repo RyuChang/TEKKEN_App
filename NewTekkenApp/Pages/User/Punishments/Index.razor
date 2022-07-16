@@ -64,18 +64,17 @@
                     <div class="col-12"><TextFilter /></div>
                 </div>
                 <div class="row mb-2 contact-header sort">
-                    <div class="col-3">Sort By</div>
-                    <div class="col-3 float-end"
-                         @onclick="@(async ()=>await ToggleAsync(MoveFilterColumns.Number))">
-                        Number<SortIndicator Column="@(MoveFilterColumns.Number)" />
-                    </div>
-                    <div class="col-3"
-                         @onclick="@(async ()=>await ToggleAsync(MoveFilterColumns.Title))">
-                        Title<SortIndicator Column="@(MoveFilterColumns.Title)" />
-                    </div>
-                    <div class="col-3"
-                         @onclick="@(async ()=>await ToggleAsync(MoveFilterColumns.Hits))">
-                        Hits<SortIndicator Column="@(MoveFilterColumns.Hits)" />
+                    <div class="col">
+                        <span>Sort By</span>
+                        <span class="ms-5 me-md-5"  @onclick="@(async ()=>await ToggleAsync(MoveFilterColumns.Number))">
+                            Number<SortIndicator Column="@(MoveFilterColumns.Number)" />
+                        </span>
+                        <span class="ms-5 me-md-5" @onclick="@(async ()=>await ToggleAsync(MoveFilterColumns.Title))">
+                            Title<SortIndicator Column="@(MoveFilterColumns.Title)" />
+                        </span>
+                        <span class="ms-5" @onclick="@(async ()=>await ToggleAsync(MoveFilterColumns.Hits))">
+                            Hits<SortIndicator Column="@(MoveFilterColumns.Hits)" />
+                        </span>
                     </div>
                 </div>
                 @if (moveLists is not null && @moveFilters.PageHelper.TotalItemCount > 5)

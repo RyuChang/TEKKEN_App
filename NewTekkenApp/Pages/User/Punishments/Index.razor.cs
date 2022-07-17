@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using NewTekkenApp.Pages.Common.Components.Filters;
 using NewTekkenApp.Pages.User.MoveLists;
@@ -32,6 +33,7 @@ namespace NewTekkenApp.Pages.User.Punishments
             }
         }
         public IEnumerable<Move> moveLists { get; set; } = default!;
+        public List<SelectListItem> selectListPageCountItems { get; set; } = default!;
 
         private GridWrapper Wrapper { get; set; } = new GridWrapper();
 
@@ -47,7 +49,23 @@ namespace NewTekkenApp.Pages.User.Punishments
         /// Keeps track of the last page loaded.
         /// </summary>
         private int _lastPage = -1;
+        protected override void OnInitialized()
+        {
+            selectListPageCountItems = new List<SelectListItem>();
+            selectListPageCountItems.Insert(0, new SelectListItem()
+            {
+                Value = "1",
+                Text = "1"
+            });
+            selectListPageCountItems.Insert(1, new SelectListItem()
+            {
+                Value = "3",
+                Text = "3"
+            });
 
+
+            base.OnInitialized();
+        }
         /// <summary>
         /// Main logic when getting started.
         /// </summary>
@@ -155,6 +173,12 @@ namespace NewTekkenApp.Pages.User.Punishments
                 moveFilters.SortColumn = col;
             }
             return ReloadAsync();
+        }
+
+        private Task OnPageCountChanged(ChangeEventArgs e)
+        {
+            moveFilters.PageHelper.PageSize = int.Parse(e.Value.ToString());
+            return  ReloadAsync();
         }
     }
 }

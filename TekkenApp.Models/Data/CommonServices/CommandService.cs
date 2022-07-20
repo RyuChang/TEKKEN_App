@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using TekkenApp.Models;
@@ -13,11 +12,7 @@ namespace TekkenApp.Data
         private IMoveTextService MoveTextService { get; set; }
         private IMoveSubTypeService MoveSubTypeService { get; set; }
         private ICommanderMapperService CommanderMapperService { get; set; }
-        private int Timer { get; set; }
-        private string RawCommand { get; set; }
-        private string DisplayCommand { get; set; }
-        private List<string> resultKey { get; set; }
-        private List<string> clickedKey { get; set; }
+        public string RawCommand { get; set; }
 
 
         public CommandService(TekkenDbContext tekkenDbContext, ICommanderMapperService _commanderMapperService, IStateService _stateService, IMoveService _moveService, IMoveTextService _moveTextService, IMoveSubTypeService _moveSubTypeService) : base(tekkenDbContext, tekkenDbContext.Command, tekkenDbContext.Command_name)
@@ -29,109 +24,38 @@ namespace TekkenApp.Data
             this.MoveService = _moveService;
             this.MoveTextService = _moveTextService;
             this.MoveSubTypeService = _moveSubTypeService;
-
             this.CommanderMapperService = _commanderMapperService;
         }
 
-        #region Key 입력 이벤트 처리
-        public void InitCommand(string rawCommand)
-        {
-            this.RawCommand = rawCommand;
-            clickedKey = new List<string>();
-            resultKey = new List<string>();
-        }
-
-        public void AddKey(string key)
-        {
-            Timer++;
-            if (!clickedKey.Contains(key))
-            {
-                clickedKey.Add(key);
-                resultKey.Add(key);
-            }
-        }
-
-        public void AddCommand(string key)
-        {
-            string result = RawCommand;
-            string formedKey = String.Empty;
-
-            if (key == "Backspace")
-            {
-                int lastIndex = RawCommand.LastIndexOf("/");
-                if (lastIndex < 0) { lastIndex = 0; }
-                result = RawCommand.Substring(0, lastIndex);
-            }
-            else if (clickedKey.Count == 1)
-            {
-                formedKey = $"{(Timer > 1 ? "L" : "")}{key.ToUpper()}";
-            }
-            else if (clickedKey.Count >= 2)
-            {
-                clickedKey.Sort();
-                formedKey = String.Join("+", clickedKey.ToArray()).ToUpper();
-            }
-
-            string mapppedKey = CommanderMapperService.MapKey(formedKey);
-            if (!string.IsNullOrEmpty(mapppedKey))
-            {
-                result += '/' + mapppedKey;
-            }
-
-            RawCommand = result;
-        }
-
-        public bool RemoveKey(string key)
-        {
-            bool isExist = this.resultKey.Contains(key);
-            if (isExist)
-            {
-                resultKey.Remove(key);
-            }
-
-            if (resultKey.Count == 0)
-            {
-                AddCommand(key);
-                return true;
-            }
-            return false;
-        }
-
-        private void ClearCommand()
-        {
-            clickedKey.Clear();
-            Timer = 0;
-        }
-        #endregion
-
-
+        /// <summary>
+        /// RawCommand 구분자 제거
+        /// </summary>
         public async Task SetCommand()
         {
             if (RawCommand.Length > 0 && RawCommand[0] == '/')
             {
                 RawCommand = RawCommand.Substring(1, RawCommand.Length - 1);
             }
-
-            DisplayCommand = await TransCommand(RawCommand, "en");
-            ClearCommand();
         }
 
-        public string GetRawCommand()
+        /// <summary>
+        /// State를 입력받은 형식에 맞게 변환하여 리턴
+        /// </summary>
+        /// <param name="stateGroupType"></param>
+        /// <param name="stateCode"></param>
+        /// <param name="dataCode"></param>
+        /// <returns>State추가 된 RawCommand</returns>
+        public string AddState(string stateGroupType, int stateCode, int dataCode = 0)
         {
-            return RawCommand;
+            return $"{RawCommand}/{{{stateGroupType}:{stateCode}{(dataCode == 0 ? "" : $":{dataCode}")}}}";
         }
 
-        public string GetDisplayCommand()
-        {
-            return DisplayCommand;
-        }
-
-        public void AddState(string stateGroupType, int stateCode, int dataCode = 0)
-        {
-            RawCommand = $"{RawCommand}/{{{stateGroupType}:{stateCode}{(dataCode == 0 ? "" : $":{dataCode}")}}}";
-        }
-
-
+        /// <summary>
+        /// 언어에 맞게 변환된 TAG 커맨드 리턴
+        /// </summary>
+        /// <param name="rawCommand"></param>
+        /// <param name="language_code"></param>
+        /// <returns>이미지로 변환된 TAG 커맨드</returns>
         public async Task<string> TransCommand(string rawCommand, string language_code)
         {
             string[] arrayCommand = rawCommand.Split('/');
@@ -144,17 +68,39 @@ namespace TekkenApp.Data
 
                 ResultCommand += result + " ";
             }
-
             return TranseCommandToImage(ResultCommand);
         }
 
-        public String TranseCommandToImage(String command)
+        /// <summary>
+        /// StateGroup 코드를 이용하여 StateGroup타입 리턴
+        /// </summary>
+        /// <param name="stateGroupCode"></param>
+        /// <returns>StateGroup타입 </returns>
+        public string GetStateGroupType(int stateGroupCode)
+        {
+            string type = "S";
+            if (stateGroupCode == 80000007)
+            {
+                type = "M";
+            }
+            else if (stateGroupCode == 80000016)
+            {
+                type = "T";
+            }
+            else if (stateGroupCode == 80000018)
+            {
+                type = "U";
+            }
+            return type;
+        }
+
+
+        internal String TranseCommandToImage(String command)
         {
             string displayCommand = command.Replace("[NL]", "<BR>").Replace("/", " ");
             var result = $"<img class=\"move\" src=\"/images/[C].svg\" />";
             return Regex.Replace(displayCommand, @"\[(\S+?)\]", m => result.Replace("[C]", m.Value.Replace("[", "").Replace("]", "")), RegexOptions.Multiline | RegexOptions.IgnoreCase);
         }
-
 
         internal async Task<string> Trans(CommandDetail commandInfo, string language_code)
         {
@@ -190,26 +136,54 @@ namespace TekkenApp.Data
             return result;
         }
 
-
-        public async Task<string> GetMoveText(string code, string language_code = "en")
+        /// <summary>
+        /// moveCode와 언어를 입력 값으로 받아 MoveText출력
+        /// 언어 기본값은 영어
+        /// </summary>
+        /// <param name="code"></param>
+        /// <param name="language_code"></param>
+        /// <returns>MoveText 문자열 출력</returns>
+        internal async Task<string> GetMoveText(string code, string language_code = "en")
         {
             // 없을 경우 예외 처리 필요
             MoveText_name moveText_Name = await MoveTextService.GetNameEntitiyByBaseCodeAndLanguageCode(int.Parse(code), language_code);
             return moveText_Name.Name;
         }
-        public async Task<string> GetMove(string code, string language_code = "en")
+
+        /// <summary>
+        /// moveCode와 언어를 입력 값으로 받아 Move명 출력
+        /// 언어 기본값은 영어
+        /// </summary>
+        /// <param name="code"></param>
+        /// <param name="language_code"></param>
+        /// <returns>Move 문자열 출력</returns>
+        internal async Task<string> GetMove(string code, string language_code = "en")
         {
             // 없을 경우 예외 처리 필요
             Move_name move_Name = await MoveService.GetNameEntitiyByBaseCodeAndLanguageCode(int.Parse(code), language_code);
             return move_Name.Name;
         }
-        public async Task<string> GetMoveSubType(string code, string language_code = "en")
+
+        /// <summary>
+        /// moveCode와 언어를 입력 값으로 받아 MoveSubType명 출력
+        /// 언어 기본값은 영어
+        /// </summary>
+        /// <param name="code"></param>
+        /// <param name="language_code"></param>
+        /// <returns>Move 문자열 출력</returns>
+        internal async Task<string> GetMoveSubType(string code, string language_code = "en")
         {
             // 없을 경우 예외 처리 필요
             MoveSubType_name moveSubType_Name = await MoveSubTypeService.GetNameEntitiyByBaseCodeAndLanguageCode(int.Parse(code), language_code);
             return moveSubType_Name.Name;
         }
-        private CommandDetail GetCommand(string cmd)
+
+        /// <summary>
+        /// state와 move코드를 받아 CommandDetail객체로 변환된 값을 출력
+        /// </summary>
+        /// <param name="cmd"></param>
+        /// <returns>CommandDetail 객체</returns>
+        internal CommandDetail GetCommand(string cmd)
         {
             string[] devidedCommands = cmd.Replace("{", "").Replace("}", "").Split(":");
             string[] commandType = new string[] { "S:", "M:", "T:", "U:" };
@@ -231,24 +205,6 @@ namespace TekkenApp.Data
             return new CommandDetail(type, command, data);
         }
 
-        public string GetStateGroupType(int stateGroupCode)
-        {
-            string type = "S";
-            if (stateGroupCode == 80000007)
-            {
-                type = "M";
-            }
-            else if (stateGroupCode == 80000016)
-            {
-                type = "T";
-            }
-            else if (stateGroupCode == 80000018)
-            {
-                type = "U";
-            }
-            return type;
-        }
-
 
         internal class CommandDetail
         {
@@ -263,7 +219,6 @@ namespace TekkenApp.Data
             }
         }
     }
-
 }
 
 

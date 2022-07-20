@@ -14,19 +14,20 @@ namespace TekkenApp.Data
         Dictionary<int, StateMap> StateMap { get; set; }
         Dictionary<string, string> TextMap { get; set; }
         TekkenDbContext TekkenDbContext { get; set; }
-        public CommanderMapperService()
-        {
-            TekkenDbContext = new TekkenDbContext();
-            SetMaps();
 
+        public CommanderMapperService(TekkenDbContext _tekkenDbContext)
+        {
+            TekkenDbContext = _tekkenDbContext;
+            SetMaps();
         }
-        private async Task SetMaps()
+
+        private void SetMaps()
         {
             StateGroupMap = new Dictionary<int, StateGroupMap>();
             StateMap = new Dictionary<int, StateMap>();
             SetKeyMaps();
-            await SetStateGroups();
-            await SetState();
+            SetStateGroups();
+            SetState();
 
         }
         private void SetKeyMaps()
@@ -36,9 +37,9 @@ namespace TekkenApp.Data
             .ToDictionary(k => k.key, v => v.CommandCode);
         }
 
-        private async Task SetStateGroups()
+        private void SetStateGroups()
         {
-            IList<StateGroup> StateGroupList = await TekkenDbContext.StateGroup.Include(s => s.NameSet).ToListAsync();
+            IList<StateGroup> StateGroupList = TekkenDbContext.StateGroup.Include(s => s.NameSet).ToList();
 
             foreach (StateGroup s in StateGroupList)
             {
@@ -53,9 +54,9 @@ namespace TekkenApp.Data
             }
         }
 
-        private async Task SetState()
+        private void SetState()
         {
-            IList<State> StateList = await TekkenDbContext.State.Include(s => s.NameSet).ToListAsync();
+            IList<State> StateList = TekkenDbContext.State.Include(s => s.NameSet).ToList();
 
             foreach (State s in StateList)
             {
@@ -86,9 +87,5 @@ namespace TekkenApp.Data
             return StateMap[int.Parse(stateCode)].name[languageCode];
         }
 
-        //public Dictionary<string, string> GetKeyMaps()
-        //{
-        //    return KeyMap;
-        //}
     }
 }

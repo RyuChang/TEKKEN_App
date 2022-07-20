@@ -1,11 +1,10 @@
 ﻿using Blazored.Modal;
 using Blazored.Modal.Services;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
 using NewTekkenApp.Pages.Admin.Components.Base.Data;
+using NewTekkenApp.Shared;
 using NewTekkenApp.Utilities;
-using TekkenApp.Data;
 using TekkenApp.Models;
 
 namespace NewTekkenApp.Pages.Admin.MoveCommands
@@ -19,9 +18,10 @@ namespace NewTekkenApp.Pages.Admin.MoveCommands
         private Move moveEntity { get; set; } = default!;
 
         private int _stateGroupCode { get; set; }
-        private string DisplayCommand { get; set; } = default!;
+
         private string RawCommand { get; set; } = default!;
-        private ElementReference commandInput;
+
+        private CommandComponent CommandComponent { get; set; }
 
 
         [Inject]
@@ -45,20 +45,18 @@ namespace NewTekkenApp.Pages.Admin.MoveCommands
             {
                 moveEntity = await MoveService.GetMoveListWithCommandsByCharacterCodeAndNumberAsync(CharacterCode.Value, int.Parse(NextNumber));
             }
-            if (moveEntity is not null)
-            {
-                await InitCommand();
-            }
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             if (firstRender)
             {
-                await commandInput.FocusAsync();
+                if (moveEntity is not null)
+                {
+                    await InitCommand();
+                }
             }
         }
-
 
 
         private async void OnStateGroupChanged(int stateGroupCode)
@@ -85,50 +83,32 @@ namespace NewTekkenApp.Pages.Admin.MoveCommands
         private async Task InitCommand()
         {
             RawCommand = moveEntity.MoveCommand.Command;
-            CommandService.InitCommand(RawCommand);
             await SetCommand();
         }
 
-        private void SetKeyDown(KeyboardEventArgs e)
+        /// <summary>
+        /// CommandComponent의 rawCommand를 가져와 세팅
+        /// </summary>
+        /// <param name="rawCommand"></param>
+        /// <returns></returns>
+        private async Task AfterSetKeyUp(string rawCommand)
         {
-            CommandService.AddKey(e.Key);
+            RawCommand = CommandComponent.RawCommand;
+            await SetCommand();
         }
-
-        private async Task SetKeyUp(KeyboardEventArgs e)
-        {
-            if (e.Key.ToLower() == "t")
-            {
-                await TransCommands();
-            }
-
-            if (e.Key.ToLower() == "u")
-            {
-                await SaveEdit();
-            }
-
-            if (e.Key.ToLower() == "r")
-            {
-                await AddRecentState();
-            }
-
-
-            bool isFinish = CommandService.RemoveKey(e.Key);
-            if (isFinish)
-            {
-                await SetCommand();
-            }
-        }
-
 
         private async Task SetCommand()
         {
-            await CommandService.SetCommand();
-            moveEntity.MoveCommand.Command = CommandService.GetRawCommand();
-            //moveEntity.MoveCommand.Description = RawCommand;
-            //displayCommand = await CommandService.TransCommand(RawCommand, "");
-            DisplayCommand = CommandService.GetDisplayCommand();
-            RawCommand = moveEntity.MoveCommand.Command;
+            CommandService.RawCommand = RawCommand;
+            CommandComponent.RawCommand = RawCommand;
+            await CommandComponent.SetDisplayCommand();
+
+            moveEntity.MoveCommand.Description = RawCommand;
+            moveEntity.MoveCommand.Command = RawCommand;
+
             StateHasChanged();
+            await CommandComponent.StateChanged();
+            await CommandComponent.SetFocusAsync();
         }
 
         private async Task TransCommands()
@@ -140,6 +120,7 @@ namespace NewTekkenApp.Pages.Admin.MoveCommands
             }
             await SetCommand();
         }
+
         private async Task AddState(State state)
         {
             string stateGroupType = CommandService.GetStateGroupType(_stateGroupCode);
@@ -150,15 +131,10 @@ namespace NewTekkenApp.Pages.Admin.MoveCommands
             }
             else
             {
-                CommandService.AddState(stateGroupType, state.Code);
-
+                RawCommand = CommandService.AddState(stateGroupType, state.Code);
                 await SetRecentState(stateGroupType, state.Code.ToString());
-
             }
-
             await SetCommand();
-
-            await commandInput.FocusAsync();
         }
 
         private async Task ShowStateModal(string stateGroupType, int stateCode)
@@ -179,18 +155,14 @@ namespace NewTekkenApp.Pages.Admin.MoveCommands
             {
                 moveData = Modal.Show<MoveSubTypeListComponent>("State SubType", parameters);
             }
-
             var result = await moveData.Result;
 
             if (result.Data != null)
             {
-                CommandService.AddState(stateGroupType, stateCode, (int)result.Data);
+                RawCommand = CommandService.AddState(stateGroupType, stateCode, (int)result.Data);
                 await SetRecentState(stateGroupType, stateCode.ToString(), (int)result.Data);
-
                 await SetCommand();
-                await commandInput.FocusAsync();
             }
-
         }
 
         private async Task SetRecentState(string stateGroupType, string stateCode, int data = 0)
@@ -207,23 +179,45 @@ namespace NewTekkenApp.Pages.Admin.MoveCommands
             int stateValue = int.Parse(await cookie.GetValue("state"));
             int dataValue = int.Parse(await cookie.GetValue("data"));
 
-
-
-
             if (dataValue != null && dataValue != 0)
             {
-                CommandService.AddState(stateGroupTypeValue, stateValue, dataValue);
+                RawCommand = CommandService.AddState(stateGroupTypeValue, stateValue, dataValue);
             }
             else
             {
-                CommandService.AddState(stateGroupTypeValue, stateValue);
+                RawCommand = CommandService.AddState(stateGroupTypeValue, stateValue);
             }
 
-            SetCommand();
-            await commandInput.FocusAsync();
+            await SetCommand();
         }
         #endregion
     }
-
 }
 
+
+
+/* private async Task EventBeforeKeyUp(string key)
+ {
+     if (key.ToLower() == "t")
+     {
+         await TransCommands();
+     }
+
+     if (key.ToLower() == "u")
+     {
+         await SaveEdit();
+     }
+
+     if (key.ToLower() == "r")
+     {
+         await AddRecentState();
+     }
+
+
+       bool isFinish = CommandService.RemoveKey(key);
+       if (isFinish)
+       {
+           await SetCommand();
+       }
+ }
+*/

@@ -361,3 +361,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/NewTekkenApp/Pages/Test/test.razor
+/NewTekkenApp/Pages/Test/_Imports.razor
+/NewTekkenApp/Shared/TestLayout.razor

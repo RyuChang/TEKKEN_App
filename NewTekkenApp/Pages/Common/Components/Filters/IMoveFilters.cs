@@ -19,6 +19,13 @@ namespace NewTekkenApp.Pages.Common.Components.Filters
         /// </summary>
         string? FilterText { get; set; }
 
+
+        /// <summary>
+        /// The FilterCommand of the filter.
+        /// </summary>
+        string? FilterCommand { get; set; }
+
+
         /// <summary>
         /// Gets or sets a value indicating if the sort is ascending or descending.
         /// </summary>

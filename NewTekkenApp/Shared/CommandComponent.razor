@@ -1,200 +1,180 @@
-﻿@using System.Timers
-@using NewTekkenApp.Pages.Common.Components.Filters
-
-@inject IMoveFilters Filters
+﻿
 @inject ICommandService CommandService
 @inject ICommanderMapperService CommanderMapperService
-@implements IDisposable
 
 
-    <div @ref="commandInput" tabindex="0" style="min-height:3.5rem;" id="Command" type="text" readonly class="form-control" placeholder="커맨드 입력" @onkeydown="SetKeyDown" @onkeydown:preventDefault="true" @onkeydown:stopPropagation="true" @onkeyup="SetKeyUp" @onkeyup:preventDefault="true" @onkeyup:stopPropagation="true">
-        @((MarkupString)DisplayCommand)
-    </div>
 
-    @code {
-        /// <summary>
-        /// 키보드 클릭 후 콜백 이벤트
-        /// </summary>
-        [Parameter] public EventCallback<string> EventAfterSetKeyUp { get; set; }
+<div @ref="commandInput" tabindex="0" style="min-height:2.5rem;" id="Command" type="text" readonly class="form-control" placeholder="커맨드 입력" @onkeydown="SetKeyDown" @onkeydown:preventDefault="true" @onkeydown:stopPropagation="true" @onkeyup="SetKeyUp" @onkeyup:preventDefault="true" @onkeyup:stopPropagation="true">
+    @((MarkupString)DisplayCommand)
+</div>
 
-
-        public string DisplayCommand { get; set; }
-        public string RawCommand { get; set; }
-
-        private ElementReference commandInput;
-
-        private List<string> clickedKey { get; set; }
-        private List<string> resultKey { get; set; }
+@code {
+    /// <summary>
+    /// 키보드 클릭 후 콜백 이벤트
+    /// </summary>
+    [Parameter] public EventCallback<string> EventAfterSetKeyUp { get; set; }
 
 
-        private int Timer { get; set; }
+    public string DisplayCommand { get; set; }
+    public string RawCommand { get; set; } 
 
-        /// <summary>
-        /// Wait period in (ms) after the user stops typing.
-        /// </summary>
-        const int DebounceMs = 300;
+    private ElementReference commandInput;
 
-        /// <summary>
-        /// Timer for debounce.
-        /// </summary>
-        Timer? timer;
+    private List<string> clickedKey { get; set; }
+    private List<string> resultKey { get; set; }
 
-        /// <summary>
-        /// 컴포넌트 초기화 이벤트
-        /// </summary>
-        /// <returns></returns>
-        protected override Task OnInitializedAsync()
+
+    private int Timer { get; set; }
+
+    /// <summary>
+    /// 컴포넌트 초기화 이벤트
+    /// </summary>
+    /// <returns></returns>
+    protected override Task OnInitializedAsync()
+    {
+        InitKeys();
+        return base.OnInitializedAsync();
+    }
+
+    #region Key 입력 이벤트 처리
+    /// <summary>
+    /// 입력된 키 리스트 초기화
+    /// </summary>
+    private void InitKeys()
+    {
+        clickedKey = new List<string>();
+        resultKey = new List<string>();
+    }
+
+    /// <summary>
+    /// 입력키 추가
+    /// </summary>
+    /// <param name="key"></param>
+    public void AddKey(string key)
+    {
+        Timer++;
+        if (!clickedKey.Contains(key))
         {
-            InitKeys();
-            return base.OnInitializedAsync();
-        }
-
-        #region Key 입력 이벤트 처리
-        /// <summary>
-        /// 입력된 키 리스트 초기화
-        /// </summary>
-        private void InitKeys()
-        {
-            clickedKey = new List<string>();
-            resultKey = new List<string>();
-        }
-
-        /// <summary>
-        /// 입력키 추가
-        /// </summary>
-        /// <param name="key"></param>
-        public void AddKey(string key)
-        {
-            Timer++;
-            if (!clickedKey.Contains(key))
-            {
-                clickedKey.Add(key);
-                resultKey.Add(key);
-            }
-        }
-
-        /// <summary>
-        /// 입력키 처리
-        /// </summary>
-        /// <param name="key">입력키</param>
-        private void AddCommand(string key)
-        {
-            string result = RawCommand;
-            string formedKey = String.Empty;
-
-            if (key == "Backspace")
-            {
-                int lastIndex = RawCommand.LastIndexOf("/");
-                if (lastIndex < 0) { lastIndex = 0; }
-                result = RawCommand.Substring(0, lastIndex);
-            }
-            else if (clickedKey.Count == 1)
-            {
-                formedKey = $"{(Timer > 1 ? "L" : "")}{key.ToUpper()}";
-            }
-            else if (clickedKey.Count >= 2)
-            {
-                clickedKey.Sort();
-                formedKey = String.Join("+", clickedKey.ToArray()).ToUpper();
-            }
-
-            string mapppedKey = CommanderMapperService.MapKey(formedKey);
-            if (!string.IsNullOrEmpty(mapppedKey))
-            {
-                result += '/' + mapppedKey;
-            }
-
-            RawCommand = result;
-        }
-
-        /// <summary>
-        /// 입력키 제거
-        /// </summary>
-        /// <param name="key">입력키</param>
-        /// <returns></returns>
-        private bool RemoveKey(string key)
-        {
-            bool isExist = this.resultKey.Contains(key);
-            if (isExist)
-            {
-                resultKey.Remove(key);
-            }
-
-            if (resultKey.Count == 0)
-            {
-                AddCommand(key);
-                return true;
-            }
-            return false;
-        }
-
-        /// <summary>
-        /// 입력키 초기화
-        /// </summary>
-        private void ClearCommand()
-        {
-            clickedKey.Clear();
-            Timer = 0;
-        }
-        #endregion
-
-        /// <summary>
-        /// 키보드 뗐을 때 이벤트
-        /// </summary>
-        /// <param name="e">키보드 이벤트</param>
-        private async Task SetKeyUp(KeyboardEventArgs e)
-        {
-            //await EventBeforeKeyUp.InvokeAsync(e.Key);
-            bool isFinish = RemoveKey(e.Key);
-            if (isFinish)
-            {
-                await SetDisplayCommand();
-                ClearCommand();
-                await EventAfterSetKeyUp.InvokeAsync();
-            }
-        }
-
-        /// <summary>
-        /// 키보드 눌렸을 때 이벤트
-        /// </summary>
-        /// <param name="e">키보드 이벤트</param>
-        private void SetKeyDown(KeyboardEventArgs e)
-        {
-            AddKey(e.Key);
-        }
-
-        /// <summary>
-        /// 입력창으로 포커스 이동
-        /// </summary>
-        public async Task SetFocusAsync()
-        {
-            await commandInput.FocusAsync();
-        }
-
-        /// <summary>
-        /// 디스플레이 콤포넌트에 변환된 키 출력
-        /// </summary>
-        public async Task SetDisplayCommand()
-        {
-            DisplayCommand = await CommandService.TransCommand(RawCommand, "en");
-        }
-
-        /// <summary>
-        /// 커맨드 컴포넌트 갱신
-        /// </summary>
-        public async Task StateChanged()
-        {
-            StateHasChanged();
-        }
-
-        /// <summary>
-        /// Disposable pattern - override to dispose any ticking timers.
-        /// </summary>
-        /// <param name="disposing"><c>True</c> when disposing.</param>
-        public void Dispose()
-        {
-            timer?.Dispose();
-            timer = null;
+            clickedKey.Add(key);
+            resultKey.Add(key);
         }
     }
+
+    /// <summary>
+    /// 입력키 처리
+    /// </summary>
+    /// <param name="key">입력키</param>
+    private void AddCommand(string key)
+    {
+        string result = RawCommand;
+        string formedKey = String.Empty;
+
+        if (key == "Backspace")
+        {
+            int lastIndex = RawCommand.LastIndexOf("/");
+            if (lastIndex < 0) { lastIndex = 0; }
+            result = RawCommand.Substring(0, lastIndex);
+        }
+        else if (clickedKey.Count == 1)
+        {
+            formedKey = $"{(Timer > 1 ? "L" : "")}{key.ToUpper()}";
+        }
+        else if (clickedKey.Count >= 2)
+        {
+            clickedKey.Sort();
+            formedKey = String.Join("+", clickedKey.ToArray()).ToUpper();
+        }
+
+        string mapppedKey = CommanderMapperService.MapKey(formedKey);
+        if (!string.IsNullOrEmpty(mapppedKey))
+        {
+            result += '/' + mapppedKey;
+        }
+
+        RawCommand = result;
+    }
+
+    /// <summary>
+    /// 입력키 제거
+    /// </summary>
+    /// <param name="key">입력키</param>
+    /// <returns></returns>
+    private bool RemoveKey(string key)
+    {
+        bool isExist = this.resultKey.Contains(key);
+        if (isExist)
+        {
+            resultKey.Remove(key);
+        }
+
+        if (resultKey.Count == 0)
+        {
+            AddCommand(key);
+            return true;
+        }
+        return false;
+    }
+
+
+    #endregion
+
+    /// <summary>
+    /// 키보드 뗐을 때 이벤트
+    /// </summary>
+    /// <param name="e">키보드 이벤트</param>
+    private async Task SetKeyUp(KeyboardEventArgs e)
+    {
+        //await EventBeforeKeyUp.InvokeAsync(e.Key);
+        bool isFinish = RemoveKey(e.Key);
+        if (isFinish)
+        {
+            await SetDisplayCommand();
+            ClearCommand();
+            await EventAfterSetKeyUp.InvokeAsync();
+        }
+    }
+
+    /// <summary>
+    /// 키보드 눌렸을 때 이벤트
+    /// </summary>
+    /// <param name="e">키보드 이벤트</param>
+    private void SetKeyDown(KeyboardEventArgs e)
+    {
+        AddKey(e.Key);
+    }
+
+    /// <summary>
+    /// 입력창으로 포커스 이동
+    /// </summary>
+    public async Task SetFocusAsync()
+    {
+        await commandInput.FocusAsync();
+    }
+
+    /// <summary>
+    /// 디스플레이 콤포넌트에 변환된 키 출력
+    /// </summary>
+    public async Task SetDisplayCommand()
+    {
+        DisplayCommand = await CommandService.TransCommand(RawCommand, "en");
+    }
+
+    /// <summary>
+    /// 커맨드 컴포넌트 갱신
+    /// </summary>
+    public async Task StateChanged()
+    {
+        StateHasChanged();
+    }
+
+    /// <summary>
+    /// 입력키 초기화
+    /// </summary>
+    private void ClearCommand()
+    {
+        clickedKey.Clear();
+        Timer = 0;
+    }
+
+}
 

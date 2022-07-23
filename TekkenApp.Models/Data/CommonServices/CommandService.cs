@@ -34,7 +34,7 @@ namespace TekkenApp.Data
         {
             if (RawCommand.Length > 0 && RawCommand[0] == '/')
             {
-                RawCommand = RawCommand.Substring(1, RawCommand.Length - 1);
+                RawCommand = RawCommand.Substring(1);
             }
         }
 

@@ -48,17 +48,25 @@ namespace NewTekkenApp.Pages.User.Punishments
         /// <summary>
         /// Queryables for filtering.
         /// </summary>
-        private readonly Dictionary<MoveFilterColumns, Func<IQueryable<Move>, IQueryable<Move>>> _filterQueries =
+        private readonly Dictionary<MoveFilterColumns, Func<IQueryable<Move>, IQueryable<Move>>> _textFilterQueries =
+            new Dictionary<MoveFilterColumns, Func<IQueryable<Move>, IQueryable<Move>>>();
+
+        private readonly Dictionary<MoveFilterColumns, Func<IQueryable<Move>, IQueryable<Move>>> _commandFilterQueries =
             new Dictionary<MoveFilterColumns, Func<IQueryable<Move>, IQueryable<Move>>>();
 
         public PunishmentQueryAdapter(TekkenDbContext tekkenDbContext, IMoveFilters controls)
         {
             dbContext = tekkenDbContext;
             _controls = controls;
-            _filterQueries = new()
+            _textFilterQueries = new()
             {
-                { MoveFilterColumns.Title, cs => cs.Where(c => c != null && c.Description != null && _controls.FilterText != null ? c.NameSet.Where(n => n.Language_code.Equals(CultureInfo.CurrentCulture.TwoLetterISOLanguageName)).FirstOrDefault().Name.Contains(_controls.FilterText) : false ) },
-
+                { MoveFilterColumns.Title, cs => cs.Where(c => c != null && c.Description != null && _controls.FilterText != null ? c.NameSet.Where(n => n.Language_code.Equals(CultureInfo.CurrentCulture.TwoLetterISOLanguageName)).FirstOrDefault().Name.Contains(_controls.FilterText) : false)
+                 }
+            };
+            _commandFilterQueries = new()
+            {
+                { MoveFilterColumns.Command, cs => cs.Where(c => c != null && c.MoveCommand.Command!= null && _controls.FilterCommand!= null ? c.MoveCommand.Command.Contains(_controls.FilterCommand) : false )
+                 }
             };
         }
 
@@ -125,12 +133,19 @@ namespace NewTekkenApp.Pages.User.Punishments
             // apply a filter?
             if (!string.IsNullOrWhiteSpace(_controls.FilterText))
             {
-                var filter = _filterQueries[_controls.FilterColumn];
+                _controls.FilterColumn = MoveFilterColumns.Title;
+                var textFilter = _textFilterQueries[_controls.FilterColumn];
                 sb.Append($"Filter: '{_controls.FilterColumn}' ");
-                root = filter(root);
-
+                root = textFilter(root);
             }
 
+            if (!string.IsNullOrWhiteSpace(_controls.FilterCommand))
+            {
+                _controls.FilterColumn = MoveFilterColumns.Command;
+                var commandFilter = _commandFilterQueries[_controls.FilterColumn];
+                sb.Append($"Filter: '{_controls.FilterColumn}' ");
+                root = commandFilter(root);
+            }
             //apply the expression
             var stringExpression = _stringOrderExpressions[_controls.SortColumn];
             var numberExpression = _NumberOrderExpressions[_controls.SortColumn];

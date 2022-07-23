@@ -1,0 +1,92 @@
+﻿@using System.Timers
+@using NewTekkenApp.Pages.Common.Components.Filters
+
+@inject IMoveFilters Filters
+@implements IDisposable
+
+<div class="mb-3 row">
+    <label class="col-1 col-form-label text-white">Cmd</label>
+    <div class="col">
+        <CommandComponent @ref="CommandComponent" EventAfterSetKeyUp="AfterSetKeyUp" />
+    </div>
+</div>
+
+@code {
+    [CascadingParameter]
+    public GridWrapper? Wrapper { get; set; }
+    private CommandComponent CommandComponent { get; set; }
+
+    private string? filterCommand;
+
+    /// <summary>
+    /// Wait period in (ms) after the user stops typing.
+    /// </summary>
+    const int DebounceMs = 300;
+
+    /// <summary>
+    /// Timer for debounce.
+    /// </summary>
+    Timer? timer;
+
+    private void AfterSetKeyUp()
+    {
+        FilterCommand = CommandComponent.RawCommand;
+    }
+
+    /// <summary>
+    /// Command to filter on.
+    /// </summary>
+    private string? FilterCommand
+    {
+        get => filterCommand;
+        set
+        {
+            if (value.Length > 0 && value[0] == '/')
+            {
+                value = value.Substring(1);
+            }
+
+            if (value != filterCommand)
+            {
+                filterCommand = value;
+                // more text means restart the debounce timer
+                timer?.Dispose();
+                timer = new(DebounceMs);
+                timer.Elapsed += NotifyTimerElapsed;
+                timer.Enabled = true;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Fired after debounce time.
+    /// </summary>
+    /// <param name="sender">Timer.</param>
+    /// <param name="e">Event args.</param>
+    private async void NotifyTimerElapsed(object? sender, ElapsedEventArgs e)
+    {
+        timer?.Dispose();
+        timer = null;
+        if (Filters.FilterCommand != FilterCommand)
+        {
+            // notify the controls
+            Filters.FilterCommand = FilterCommand?.Trim();
+
+            if (Wrapper is not null)
+            {
+                await InvokeAsync(() => Wrapper.FilterChanged.InvokeAsync(this));
+            }
+        }
+    }
+
+
+    /// <summary>
+    /// Disposable pattern - override to dispose any ticking timers.
+    /// </summary>
+    /// <param name="disposing"><c>True</c> when disposing.</param>
+    public void Dispose()
+    {
+        timer?.Dispose();
+        timer = null;
+    }
+}

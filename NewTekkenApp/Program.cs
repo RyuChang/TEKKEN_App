@@ -66,8 +66,6 @@ builder.Services.AddSingleton<HttpClient>();
 builder.Services.AddSingleton<WeatherForecastService>();
 
 builder.Services.AddIntersectionObserver();
-
-builder.Services.AddSingleton<ICommanderMapperService, CommanderMapperService>();
 builder.Services.AddTransient<IHitTypeService, HitTypeService>();
 builder.Services.AddTransient<IStateService, StateService>();
 builder.Services.AddTransient<IStateGroupService, StateGroupService>();
@@ -78,6 +76,8 @@ builder.Services.AddTransient<IMoveService, MoveService>();
 builder.Services.AddTransient<IMoveDataService, MoveDataService>();
 builder.Services.AddTransient<IMoveCommandService, MoveCommandService>();
 builder.Services.AddTransient<IMoveVideoService, MoveVideoService>();
+builder.Services.AddScoped<ICommanderMapperService, CommanderMapperService>();
+
 
 builder.Services.AddTransient<ICharacterService, CharacterService>();
 builder.Services.AddTransient<ILanguageService, LanguageService>();

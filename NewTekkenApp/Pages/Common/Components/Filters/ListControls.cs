@@ -3,7 +3,7 @@
     public class ListControls : IMoveFilters
     {
         /// <summary>
-        /// Keep state of paging.
+        /// 페이징 처리 객체
         /// </summary>
         public IPageHelper PageHelper { get; set; }
 
@@ -13,28 +13,35 @@
         }
 
         /// <summary>
-        /// Column filtered text is against.
+        /// 필터링 컬럼
         /// </summary>
         public MoveFilterColumns FilterColumn { get; set; } = MoveFilterColumns.Title;
 
         /// <summary>
-        /// Avoid multiple concurrent requests.
+        /// 다중요청 출돌 처리 방지 상태값
         /// </summary>
         public bool Loading { get; set; }
 
         /// <summary>
-        /// Text to filter on.
+        /// 필터링 텍스트
         /// </summary>
         public string? FilterText { get; set; }
 
         /// <summary>
-        /// True when sorting ascending, otherwise sort descending.
+        /// 필터링 커맨드
+        /// </summary>
+        public string? FilterCommand { get; set; }
+
+        /// <summary>
+        /// True 내림차순 False 오름차순
         /// </summary>
         public bool SortAscending { get; set; } = true;
 
+        /// <summary>
+        /// 정렬 컬럼
+        /// </summary>
         public MoveFilterColumns SortColumn { get; set; }
             = MoveFilterColumns.Number;
-
 
     }
 }

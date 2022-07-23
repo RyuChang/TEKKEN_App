@@ -3,43 +3,40 @@ namespace NewTekkenApp.Pages.Common.Components.Filters
 {
     public interface IMoveFilters
     {
-        /// <summary>
-        /// The <see cref="ContactFilterColumns"/> being filtered on.
-        /// </summary>
-        MoveFilterColumns FilterColumn { get; set; }
+
 
         /// <summary>
-        /// Loading indicator.
+        /// 다중요청 출돌 처리 방지 상태값
         /// </summary>
         bool Loading { get; set; }
-
+        /// <summary>
+        /// 페이징 상태 처리 객체
+        /// </summary>
+        IPageHelper PageHelper { get; set; }
 
         /// <summary>
-        /// The text of the filter.
+        /// 다중요청 출돌 처리 방지 상태값
         /// </summary>
         string? FilterText { get; set; }
 
-
         /// <summary>
-        /// The FilterCommand of the filter.
+        /// 필터링 커맨드
         /// </summary>
         string? FilterCommand { get; set; }
 
-
         /// <summary>
-        /// Gets or sets a value indicating if the sort is ascending or descending.
+        /// True 내림차순 False 오름차순
         /// </summary>
         bool SortAscending { get; set; }
 
         /// <summary>
-        /// The <see cref="MoveFilterColumns"/> being sorted.
+        /// 정렬 컬럼
         /// </summary>
         MoveFilterColumns SortColumn { get; set; }
 
         /// <summary>
-        /// Paging state in <see cref="PageHelper"/>.
+        /// 필터링 컬럼
         /// </summary>
-        IPageHelper PageHelper { get; set; }
+        MoveFilterColumns FilterColumn { get; set; }
     }
-
 }

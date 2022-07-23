@@ -17,16 +17,19 @@ namespace NewTekkenApp.Pages.User.Punishments
         }
     }
 
+    /// <summary>
+    /// Punishment 필터 및 정렬 관리
+    /// </summary>
     public class PunishmentQueryAdapter
     {
         /// <summary>
-        /// Holds state of the grid.
+        /// MoveFilters 상태 객체
         /// </summary>
         private readonly IMoveFilters _controls;
         private TekkenDbContext dbContext { get; set; }
 
         /// <summary>
-        /// Expressions for sorting.
+        /// 문자 정렬 표현식
         /// </summary>
         private readonly Dictionary<MoveFilterColumns, Expression<Func<Move, string>>> _stringOrderExpressions
             = new()
@@ -36,6 +39,9 @@ namespace NewTekkenApp.Pages.User.Punishments
                 { MoveFilterColumns.Hits, c => string.Empty },
             };
 
+        /// <summary>
+        /// 숫자
+        /// </summary>
         private readonly Dictionary<MoveFilterColumns, Expression<Func<Move, int>>> _NumberOrderExpressions
             = new()
             {
@@ -44,13 +50,15 @@ namespace NewTekkenApp.Pages.User.Punishments
                 { MoveFilterColumns.Hits, c => c != null && c.MoveData.HitCount!= null ? c.MoveData.HitCount : 0},
             };
 
-
         /// <summary>
-        /// Queryables for filtering.
+        /// 텍스트 필터링 쿼리
         /// </summary>
         private readonly Dictionary<MoveFilterColumns, Func<IQueryable<Move>, IQueryable<Move>>> _textFilterQueries =
             new Dictionary<MoveFilterColumns, Func<IQueryable<Move>, IQueryable<Move>>>();
 
+        /// <summary>
+        /// 커맨드 필터링 쿼리
+        /// </summary>
         private readonly Dictionary<MoveFilterColumns, Func<IQueryable<Move>, IQueryable<Move>>> _commandFilterQueries =
             new Dictionary<MoveFilterColumns, Func<IQueryable<Move>, IQueryable<Move>>>();
 
@@ -71,7 +79,7 @@ namespace NewTekkenApp.Pages.User.Punishments
         }
 
         /// <summary>
-        /// Uses the query to return a count and a page.
+        /// 페이징 카운트 하여 결과 반환
         /// </summary>
         /// <param name="query">The <see cref="IQueryable{Move}"/> to work from.</param>
         /// <returns>The resulting <see cref="ICollection{Move}"/>.</returns>
@@ -90,7 +98,7 @@ namespace NewTekkenApp.Pages.User.Punishments
         }
 
         /// <summary>
-        /// Get total filtered items count.
+        /// 필터링된 아이템 갯수 반환
         /// </summary>
         /// <param name="query">The <see cref="IQueryable{Contact}"/> to use.</param>
         /// <returns>Asynchronous <see cref="Task"/>.</returns>
@@ -99,9 +107,8 @@ namespace NewTekkenApp.Pages.User.Punishments
             _controls.PageHelper.TotalItemCount = await query.CountAsync();
         }
 
-
         /// <summary>
-        /// Build the query to bring back a single page.
+        /// 싱글페이지 호출을 위한 쿼리 빌드
         /// </summary>
         /// <param name="query">The <see cref="IQueryable{Move}"/> to modify.</param>
         /// <returns>The new <see cref="IQueryable{Move}"/> for a page.</returns>
@@ -113,8 +120,6 @@ namespace NewTekkenApp.Pages.User.Punishments
                 .AsNoTracking();
         }
 
-
-
         /// <summary>
         /// Builds the query.
         /// </summary>
@@ -125,9 +130,7 @@ namespace NewTekkenApp.Pages.User.Punishments
         /// </returns>
         private IQueryable<Move> FilterAndQuery(IQueryable<Move> root)
         {
-
             //root = root.Where(n => n.Equals(CultureInfo.CurrentCulture.TwoLetterISOLanguageName)).AsQueryable<Move>();
-
             var sb = new System.Text.StringBuilder();
 
             // apply a filter?
@@ -149,7 +152,6 @@ namespace NewTekkenApp.Pages.User.Punishments
             //apply the expression
             var stringExpression = _stringOrderExpressions[_controls.SortColumn];
             var numberExpression = _NumberOrderExpressions[_controls.SortColumn];
-
 
             sb.Append($"Sort: '{_controls.SortColumn}' ");
 

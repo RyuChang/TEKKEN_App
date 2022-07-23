@@ -95,7 +95,7 @@
 
                     @foreach (Move move in moveLists)
                     {
-                        <div class="row mb-2">
+                        <div class="row mb-3">
                             <div class="col">
                                 <div class="p-0 border border-1 rounded-3" style="max-width: 38rem;">
                                     <div class="row">
@@ -107,11 +107,11 @@
                                         </div>
                                     </div>
 
-                                    <div class="text-white-50 border-top border-1 my-1">
+                                    <div class="text-white-50 border-top border-1 mt-1 mb-1 mb-sm-0">
                                         <div class="row  mx-0">
-                                            <div class="col-12 col-sm-8 px-2 py-1 ">
+                                            <div class="col-12 col-sm-8 px-2 py-1">
                                                 <div class="row  px-2 py-0 align-items-start">
-                                                    <div class="col-12 px-1 h-75 border" style="min-height:5.4rem;">
+                                                    <div class="col-12 px-1 h-75 border" style="min-height:1.2rem;">
                                                         @((MarkupString)move.MoveCommand.NameSet.FirstOrDefault().Name)
                                                     </div>
                                                 </div>
@@ -134,6 +134,12 @@
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row row-2 d-none d-sm-block  px-2 pt-1">
+                                                    <div class="col border p-1 m-0" style="min-height:3.5rem;">
+                                                        Note
+                                                        @move.MoveData.Note
                                                     </div>
                                                 </div>
                                             </div>
@@ -171,7 +177,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-12  px-1" placeholder="Note">
+                                            <div class="col-12 	d-block d-sm-none px-1" placeholder="Note">
                                                 <div class="row mx-0 text-white-50 border">
                                                     <div class="col">
                                                         Note
